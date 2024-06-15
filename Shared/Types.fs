@@ -1,0 +1,7 @@
+﻿module Shared.Types
+
+//[TypeManaged]{
+
+//}
+
+
