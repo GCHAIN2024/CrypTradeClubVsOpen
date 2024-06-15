@@ -3464,6 +3464,390 @@ let json__CWCo (json:Json):CWC option =
         p = p } |> Some
     
 
+// [MOMENT] Structure
+
+let pMOMENT__bin (bb:BytesBuilder) (p:pMOMENT) =
+
+    
+    p.Agent |> BitConverter.GetBytes |> bb.append
+    
+    p.Bind |> BitConverter.GetBytes |> bb.append
+    
+    p.BindType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.Lang |> BitConverter.GetBytes |> bb.append
+    
+    let binShortText = p.ShortText |> Encoding.UTF8.GetBytes
+    binShortText.Length |> BitConverter.GetBytes |> bb.append
+    binShortText |> bb.append
+    
+    let binMediaUrls = p.MediaUrls |> Encoding.UTF8.GetBytes
+    binMediaUrls.Length |> BitConverter.GetBytes |> bb.append
+    binMediaUrls |> bb.append
+    
+    let binPreviewImgUrl = p.PreviewImgUrl |> Encoding.UTF8.GetBytes
+    binPreviewImgUrl.Length |> BitConverter.GetBytes |> bb.append
+    binPreviewImgUrl |> bb.append
+    
+    let binLink = p.Link |> Encoding.UTF8.GetBytes
+    binLink.Length |> BitConverter.GetBytes |> bb.append
+    binLink |> bb.append
+    
+    p.Type |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.Question |> BitConverter.GetBytes |> bb.append
+    
+    p.State |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.Group |> BitConverter.GetBytes |> bb.append
+    
+    p.AutoTranslate |> BitConverter.GetBytes |> bb.append
+    
+    p.OriginalMoment |> BitConverter.GetBytes |> bb.append
+    
+    p.Postedat.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.ContentBind |> BitConverter.GetBytes |> bb.append
+    
+    let binKeywords = p.Keywords |> Encoding.UTF8.GetBytes
+    binKeywords.Length |> BitConverter.GetBytes |> bb.append
+    binKeywords |> bb.append
+    
+    p.Sticky |> BitConverter.GetBytes |> bb.append
+    
+    p.Protection |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.MediaType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    let binUrlOriginal = p.UrlOriginal |> Encoding.UTF8.GetBytes
+    binUrlOriginal.Length |> BitConverter.GetBytes |> bb.append
+    binUrlOriginal |> bb.append
+    
+    let binOID = p.OID |> Encoding.UTF8.GetBytes
+    binOID.Length |> BitConverter.GetBytes |> bb.append
+    binOID |> bb.append
+    
+    p.PostType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    let binAudioUrl = p.AudioUrl |> Encoding.UTF8.GetBytes
+    binAudioUrl.Length |> BitConverter.GetBytes |> bb.append
+    binAudioUrl |> bb.append
+
+let MOMENT__bin (bb:BytesBuilder) (v:MOMENT) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pMOMENT__bin bb v.p
+
+let bin__pMOMENT (bi:BinIndexed):pMOMENT =
+    let bin,index = bi
+
+    let p = pMOMENT_empty()
+    
+    p.Agent <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Bind <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.BindType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.Lang <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_ShortText = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.ShortText <- Encoding.UTF8.GetString(bin,index.Value,count_ShortText)
+    index.Value <- index.Value + count_ShortText
+    
+    let count_MediaUrls = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.MediaUrls <- Encoding.UTF8.GetString(bin,index.Value,count_MediaUrls)
+    index.Value <- index.Value + count_MediaUrls
+    
+    let count_PreviewImgUrl = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.PreviewImgUrl <- Encoding.UTF8.GetString(bin,index.Value,count_PreviewImgUrl)
+    index.Value <- index.Value + count_PreviewImgUrl
+    
+    let count_Link = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Link <- Encoding.UTF8.GetString(bin,index.Value,count_Link)
+    index.Value <- index.Value + count_Link
+    
+    p.Type <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.Question <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.State <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.Group <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.AutoTranslate <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.OriginalMoment <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Postedat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.ContentBind <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_Keywords = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Keywords <- Encoding.UTF8.GetString(bin,index.Value,count_Keywords)
+    index.Value <- index.Value + count_Keywords
+    
+    p.Sticky <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Protection <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.MediaType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    let count_UrlOriginal = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.UrlOriginal <- Encoding.UTF8.GetString(bin,index.Value,count_UrlOriginal)
+    index.Value <- index.Value + count_UrlOriginal
+    
+    let count_OID = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.OID <- Encoding.UTF8.GetString(bin,index.Value,count_OID)
+    index.Value <- index.Value + count_OID
+    
+    p.PostType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    let count_AudioUrl = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.AudioUrl <- Encoding.UTF8.GetString(bin,index.Value,count_AudioUrl)
+    index.Value <- index.Value + count_AudioUrl
+    
+    p
+
+let bin__MOMENT (bi:BinIndexed):MOMENT =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pMOMENT bi }
+
+let pMOMENT__json (p:pMOMENT) =
+
+    [|
+        ("Agent",p.Agent.ToString() |> Json.Num)
+        ("Bind",p.Bind.ToString() |> Json.Num)
+        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
+        ("Lang",p.Lang.ToString() |> Json.Num)
+        ("ShortText",p.ShortText |> Json.Str)
+        ("MediaUrls",p.MediaUrls |> Json.Str)
+        ("PreviewImgUrl",p.PreviewImgUrl |> Json.Str)
+        ("Link",p.Link |> Json.Str)
+        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
+        ("Question",p.Question.ToString() |> Json.Num)
+        ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
+        ("Group",p.Group.ToString() |> Json.Num)
+        ("AutoTranslate",p.AutoTranslate.ToString() |> Json.Num)
+        ("OriginalMoment",p.OriginalMoment.ToString() |> Json.Num)
+        ("Postedat",(p.Postedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("ContentBind",p.ContentBind.ToString() |> Json.Num)
+        ("Keywords",p.Keywords |> Json.Str)
+        ("Sticky",p.Sticky.ToString() |> Json.Num)
+        ("Protection",(p.Protection |> EnumToValue).ToString() |> Json.Num)
+        ("MediaType",(p.MediaType |> EnumToValue).ToString() |> Json.Num)
+        ("UrlOriginal",p.UrlOriginal |> Json.Str)
+        ("OID",p.OID |> Json.Str)
+        ("PostType",(p.PostType |> EnumToValue).ToString() |> Json.Num)
+        ("AudioUrl",p.AudioUrl |> Json.Str) |]
+    |> Json.Braket
+
+let MOMENT__json (v:MOMENT) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Agent",p.Agent.ToString() |> Json.Num)
+        ("Bind",p.Bind.ToString() |> Json.Num)
+        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
+        ("Lang",p.Lang.ToString() |> Json.Num)
+        ("ShortText",p.ShortText |> Json.Str)
+        ("MediaUrls",p.MediaUrls |> Json.Str)
+        ("PreviewImgUrl",p.PreviewImgUrl |> Json.Str)
+        ("Link",p.Link |> Json.Str)
+        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
+        ("Question",p.Question.ToString() |> Json.Num)
+        ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
+        ("Group",p.Group.ToString() |> Json.Num)
+        ("AutoTranslate",p.AutoTranslate.ToString() |> Json.Num)
+        ("OriginalMoment",p.OriginalMoment.ToString() |> Json.Num)
+        ("Postedat",(p.Postedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("ContentBind",p.ContentBind.ToString() |> Json.Num)
+        ("Keywords",p.Keywords |> Json.Str)
+        ("Sticky",p.Sticky.ToString() |> Json.Num)
+        ("Protection",(p.Protection |> EnumToValue).ToString() |> Json.Num)
+        ("MediaType",(p.MediaType |> EnumToValue).ToString() |> Json.Num)
+        ("UrlOriginal",p.UrlOriginal |> Json.Str)
+        ("OID",p.OID |> Json.Str)
+        ("PostType",(p.PostType |> EnumToValue).ToString() |> Json.Num)
+        ("AudioUrl",p.AudioUrl |> Json.Str) |]
+    |> Json.Braket
+
+let MOMENT__jsonTbw (w:TextBlockWriter) (v:MOMENT) =
+    json__str w (MOMENT__json v)
+
+let MOMENT__jsonStr (v:MOMENT) =
+    (MOMENT__json v) |> json__strFinal
+
+
+let json__pMOMENTo (json:Json):pMOMENT option =
+    let fields = json |> json__items
+
+    let p = pMOMENT_empty()
+    
+    p.Agent <- checkfield fields "Agent" |> parse_int64
+    
+    p.Bind <- checkfield fields "Bind" |> parse_int64
+    
+    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    p.Lang <- checkfield fields "Lang" |> parse_int64
+    
+    p.ShortText <- checkfield fields "ShortText"
+    
+    p.MediaUrls <- checkfield fields "MediaUrls"
+    
+    p.PreviewImgUrl <- checkfield fields "PreviewImgUrl"
+    
+    p.Link <- checkfield fields "Link"
+    
+    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+    
+    p.Question <- checkfield fields "Question" |> parse_int64
+    
+    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+    
+    p.Group <- checkfield fields "Group" |> parse_int64
+    
+    p.AutoTranslate <- checkfield fields "AutoTranslate" |> parse_int64
+    
+    p.OriginalMoment <- checkfield fields "OriginalMoment" |> parse_int64
+    
+    p.Postedat <- checkfield fields "Postedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.ContentBind <- checkfield fields "ContentBind" |> parse_int64
+    
+    p.Keywords <- checkfield fields "Keywords"
+    
+    p.Sticky <- checkfield fields "Sticky" |> parse_int64
+    
+    p.Protection <- checkfield fields "Protection" |> parse_int32 |> EnumOfValue
+    
+    p.MediaType <- checkfield fields "MediaType" |> parse_int32 |> EnumOfValue
+    
+    p.UrlOriginal <- checkfield fields "UrlOriginal"
+    
+    p.OID <- checkfieldz fields "OID" 256
+    
+    p.PostType <- checkfield fields "PostType" |> parse_int32 |> EnumOfValue
+    
+    p.AudioUrl <- checkfield fields "AudioUrl"
+    
+    p |> Some
+    
+
+let json__MOMENTo (json:Json):MOMENT option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pMOMENT_empty()
+    
+    p.Agent <- checkfield fields "Agent" |> parse_int64
+    
+    p.Bind <- checkfield fields "Bind" |> parse_int64
+    
+    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    p.Lang <- checkfield fields "Lang" |> parse_int64
+    
+    p.ShortText <- checkfield fields "ShortText"
+    
+    p.MediaUrls <- checkfield fields "MediaUrls"
+    
+    p.PreviewImgUrl <- checkfield fields "PreviewImgUrl"
+    
+    p.Link <- checkfield fields "Link"
+    
+    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+    
+    p.Question <- checkfield fields "Question" |> parse_int64
+    
+    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+    
+    p.Group <- checkfield fields "Group" |> parse_int64
+    
+    p.AutoTranslate <- checkfield fields "AutoTranslate" |> parse_int64
+    
+    p.OriginalMoment <- checkfield fields "OriginalMoment" |> parse_int64
+    
+    p.Postedat <- checkfield fields "Postedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.ContentBind <- checkfield fields "ContentBind" |> parse_int64
+    
+    p.Keywords <- checkfield fields "Keywords"
+    
+    p.Sticky <- checkfield fields "Sticky" |> parse_int64
+    
+    p.Protection <- checkfield fields "Protection" |> parse_int32 |> EnumOfValue
+    
+    p.MediaType <- checkfield fields "MediaType" |> parse_int32 |> EnumOfValue
+    
+    p.UrlOriginal <- checkfield fields "UrlOriginal"
+    
+    p.OID <- checkfieldz fields "OID" 256
+    
+    p.PostType <- checkfield fields "PostType" |> parse_int32 |> EnumOfValue
+    
+    p.AudioUrl <- checkfield fields "AudioUrl"
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
 let mutable conn = ""
 
 let db__pADDRESS(line:Object[]): pADDRESS =
@@ -5250,6 +5634,180 @@ let CWCTxSqlServer =
     """
 
 
+let db__pMOMENT(line:Object[]): pMOMENT =
+    let p = pMOMENT_empty()
+
+    p.Agent <- if Convert.IsDBNull(line.[4]) then 0L else line.[4] :?> int64
+    p.Bind <- if Convert.IsDBNull(line.[5]) then 0L else line.[5] :?> int64
+    p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
+    p.Lang <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
+    p.ShortText <- string(line.[8]).TrimEnd()
+    p.MediaUrls <- string(line.[9]).TrimEnd()
+    p.PreviewImgUrl <- string(line.[10]).TrimEnd()
+    p.Link <- string(line.[11]).TrimEnd()
+    p.Type <- EnumOfValue(if Convert.IsDBNull(line.[12]) then 0 else line.[12] :?> int)
+    p.Question <- if Convert.IsDBNull(line.[13]) then 0L else line.[13] :?> int64
+    p.State <- EnumOfValue(if Convert.IsDBNull(line.[14]) then 0 else line.[14] :?> int)
+    p.Group <- if Convert.IsDBNull(line.[15]) then 0L else line.[15] :?> int64
+    p.AutoTranslate <- if Convert.IsDBNull(line.[16]) then 0L else line.[16] :?> int64
+    p.OriginalMoment <- if Convert.IsDBNull(line.[17]) then 0L else line.[17] :?> int64
+    p.Postedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[18]) then DateTime.MinValue.Ticks else line.[18] :?> int64)
+    p.ContentBind <- if Convert.IsDBNull(line.[19]) then 0L else line.[19] :?> int64
+    p.Keywords <- string(line.[20]).TrimEnd()
+    p.Sticky <- if Convert.IsDBNull(line.[21]) then 0L else line.[21] :?> int64
+    p.Protection <- EnumOfValue(if Convert.IsDBNull(line.[22]) then 0 else line.[22] :?> int)
+    p.MediaType <- EnumOfValue(if Convert.IsDBNull(line.[23]) then 0 else line.[23] :?> int)
+    p.UrlOriginal <- string(line.[24]).TrimEnd()
+    p.OID <- string(line.[25]).TrimEnd()
+    p.PostType <- EnumOfValue(if Convert.IsDBNull(line.[26]) then 0 else line.[26] :?> int)
+    p.AudioUrl <- string(line.[27]).TrimEnd()
+
+    p
+
+let pMOMENT__sps (p:pMOMENT) = [|
+    new SqlParameter("Agent", p.Agent)
+    new SqlParameter("Bind", p.Bind)
+    new SqlParameter("BindType", p.BindType)
+    new SqlParameter("Lang", p.Lang)
+    new SqlParameter("ShortText", p.ShortText)
+    new SqlParameter("MediaUrls", p.MediaUrls)
+    new SqlParameter("PreviewImgUrl", p.PreviewImgUrl)
+    new SqlParameter("Link", p.Link)
+    new SqlParameter("Type", p.Type)
+    new SqlParameter("Question", p.Question)
+    new SqlParameter("State", p.State)
+    new SqlParameter("Group", p.Group)
+    new SqlParameter("AutoTranslate", p.AutoTranslate)
+    new SqlParameter("OriginalMoment", p.OriginalMoment)
+    new SqlParameter("Postedat", p.Postedat.Ticks)
+    new SqlParameter("ContentBind", p.ContentBind)
+    new SqlParameter("Keywords", p.Keywords)
+    new SqlParameter("Sticky", p.Sticky)
+    new SqlParameter("Protection", p.Protection)
+    new SqlParameter("MediaType", p.MediaType)
+    new SqlParameter("UrlOriginal", p.UrlOriginal)
+    new SqlParameter("OID", p.OID)
+    new SqlParameter("PostType", p.PostType)
+    new SqlParameter("AudioUrl", p.AudioUrl) |]
+
+let db__MOMENT = db__Rcd db__pMOMENT
+
+let MOMENT_wrapper item: MOMENT =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pMOMENT_clone (p:pMOMENT): pMOMENT = {
+    Agent = p.Agent
+    Bind = p.Bind
+    BindType = p.BindType
+    Lang = p.Lang
+    ShortText = p.ShortText
+    MediaUrls = p.MediaUrls
+    PreviewImgUrl = p.PreviewImgUrl
+    Link = p.Link
+    Type = p.Type
+    Question = p.Question
+    State = p.State
+    Group = p.Group
+    AutoTranslate = p.AutoTranslate
+    OriginalMoment = p.OriginalMoment
+    Postedat = p.Postedat
+    ContentBind = p.ContentBind
+    Keywords = p.Keywords
+    Sticky = p.Sticky
+    Protection = p.Protection
+    MediaType = p.MediaType
+    UrlOriginal = p.UrlOriginal
+    OID = p.OID
+    PostType = p.PostType
+    AudioUrl = p.AudioUrl }
+
+let MOMENT_update_transaction output (updater,suc,fail) (rcd:MOMENT) =
+    let rollback_p = rcd.p |> pMOMENT_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,MOMENT_table,MOMENT_sql_update,pMOMENT__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let MOMENT_update output (rcd:MOMENT) =
+    rcd
+    |> MOMENT_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let MOMENT_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment MOMENT_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,MOMENT_table,pMOMENT__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> MOMENT_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let MOMENT_create output p =
+    MOMENT_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__MOMENTo id: MOMENT option = id__rcd(conn,MOMENT_fieldorders,MOMENT_table,db__MOMENT) id
+
+let MOMENT_metadata = {
+    fieldorders = MOMENT_fieldorders
+    db__rcd = db__MOMENT 
+    wrapper = MOMENT_wrapper
+    sps = pMOMENT__sps
+    id = MOMENT_id
+    id__rcdo = id__MOMENTo
+    clone = pMOMENT_clone
+    empty__p = pMOMENT_empty
+    rcd__bin = MOMENT__bin
+    bin__rcd = bin__MOMENT
+    sql_update = MOMENT_sql_update
+    rcd_update = MOMENT_update
+    table = MOMENT_table
+    shorthand = "moment" }
+
+let MOMENTTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Moment' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Social_Moment ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[Agent]
+    ,[Bind]
+    ,[BindType]
+    ,[Lang]
+    ,[ShortText]
+    ,[MediaUrls]
+    ,[PreviewImgUrl]
+    ,[Link]
+    ,[Type]
+    ,[Question]
+    ,[State]
+    ,[Group]
+    ,[AutoTranslate]
+    ,[OriginalMoment]
+    ,[Postedat]
+    ,[ContentBind]
+    ,[Keywords]
+    ,[Sticky]
+    ,[Protection]
+    ,[MediaType]
+    ,[UrlOriginal]
+    ,[OID]
+    ,[PostType]
+    ,[AudioUrl])
+    END
+    """
+
+
 type MetadataEnum = 
 | ADDRESS = 0
 | AIRPORT = 1
@@ -5265,6 +5823,7 @@ type MetadataEnum =
 | LOCALE = 11
 | CSI = 12
 | CWC = 13
+| MOMENT = 14
 
 let tablenames = [|
     ADDRESS_metadata.table
@@ -5280,7 +5839,8 @@ let tablenames = [|
     LANG_metadata.table
     LOCALE_metadata.table
     CSI_metadata.table
-    CWC_metadata.table |]
+    CWC_metadata.table
+    MOMENT_metadata.table |]
 
 let init() =
 
@@ -5436,5 +5996,16 @@ let init() =
 
     match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Ca_WebCredential]") with
     | Some v -> CWC_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Social_Moment]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > MOMENT_id.Value then
+            MOMENT_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Social_Moment]") with
+    | Some v -> MOMENT_count.Value <- v :?> int32
     | None -> ()
     ()

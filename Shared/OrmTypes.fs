@@ -1496,3 +1496,332 @@ let pCWC_empty(): pCWC = {
 let CWC_id = ref 0L
 let CWC_count = ref 0
 let CWC_table = "Ca_WebCredential"
+
+// [Social_Moment] (MOMENT)
+
+type momentBindTypeEnum = 
+| EndUser = 0 // 用户
+| Biz = 1 // 机构
+
+let momentBindTypeEnums = [| momentBindTypeEnum.EndUser; momentBindTypeEnum.Biz |]
+let momentBindTypeEnumstrs = [| "momentBindTypeEnum"; "momentBindTypeEnum" |]
+let momentBindTypeNum = 2
+
+let int__momentBindTypeEnum v =
+    match v with
+    | 0 -> Some momentBindTypeEnum.EndUser
+    | 1 -> Some momentBindTypeEnum.Biz
+    | _ -> None
+
+let str__momentBindTypeEnum s =
+    match s with
+    | "EndUser" -> Some momentBindTypeEnum.EndUser
+    | "Biz" -> Some momentBindTypeEnum.Biz
+    | _ -> None
+
+let momentBindTypeEnum__caption e =
+    match e with
+    | momentBindTypeEnum.EndUser -> "用户"
+    | momentBindTypeEnum.Biz -> "机构"
+    | _ -> ""
+
+type momentTypeEnum = 
+| Original = 0 // 原创图文视频
+| Repost = 1 // 转发
+| Thread = 2 // 文章
+| Forum = 3 // 论坛
+| Question = 4 // 问题
+| Answer = 5 // 回答
+| BookmarkList = 6 // 收藏夹
+| Poll = 7 // 投票
+| Miles = 8 // 文贵直播文字版
+| Dict = 9 // 辞典
+| WebPage = 10 // 页面
+| MediaFile = 11 // 媒体文件
+
+let momentTypeEnums = [| momentTypeEnum.Original; momentTypeEnum.Repost; momentTypeEnum.Thread; momentTypeEnum.Forum; momentTypeEnum.Question; momentTypeEnum.Answer; momentTypeEnum.BookmarkList; momentTypeEnum.Poll; momentTypeEnum.Miles; momentTypeEnum.Dict; momentTypeEnum.WebPage; momentTypeEnum.MediaFile |]
+let momentTypeEnumstrs = [| "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum"; "momentTypeEnum" |]
+let momentTypeNum = 12
+
+let int__momentTypeEnum v =
+    match v with
+    | 0 -> Some momentTypeEnum.Original
+    | 1 -> Some momentTypeEnum.Repost
+    | 2 -> Some momentTypeEnum.Thread
+    | 3 -> Some momentTypeEnum.Forum
+    | 4 -> Some momentTypeEnum.Question
+    | 5 -> Some momentTypeEnum.Answer
+    | 6 -> Some momentTypeEnum.BookmarkList
+    | 7 -> Some momentTypeEnum.Poll
+    | 8 -> Some momentTypeEnum.Miles
+    | 9 -> Some momentTypeEnum.Dict
+    | 10 -> Some momentTypeEnum.WebPage
+    | 11 -> Some momentTypeEnum.MediaFile
+    | _ -> None
+
+let str__momentTypeEnum s =
+    match s with
+    | "Original" -> Some momentTypeEnum.Original
+    | "Repost" -> Some momentTypeEnum.Repost
+    | "Thread" -> Some momentTypeEnum.Thread
+    | "Forum" -> Some momentTypeEnum.Forum
+    | "Question" -> Some momentTypeEnum.Question
+    | "Answer" -> Some momentTypeEnum.Answer
+    | "BookmarkList" -> Some momentTypeEnum.BookmarkList
+    | "Poll" -> Some momentTypeEnum.Poll
+    | "Miles" -> Some momentTypeEnum.Miles
+    | "Dict" -> Some momentTypeEnum.Dict
+    | "WebPage" -> Some momentTypeEnum.WebPage
+    | "MediaFile" -> Some momentTypeEnum.MediaFile
+    | _ -> None
+
+let momentTypeEnum__caption e =
+    match e with
+    | momentTypeEnum.Original -> "原创图文视频"
+    | momentTypeEnum.Repost -> "转发"
+    | momentTypeEnum.Thread -> "文章"
+    | momentTypeEnum.Forum -> "论坛"
+    | momentTypeEnum.Question -> "问题"
+    | momentTypeEnum.Answer -> "回答"
+    | momentTypeEnum.BookmarkList -> "收藏夹"
+    | momentTypeEnum.Poll -> "投票"
+    | momentTypeEnum.Miles -> "文贵直播文字版"
+    | momentTypeEnum.Dict -> "辞典"
+    | momentTypeEnum.WebPage -> "页面"
+    | momentTypeEnum.MediaFile -> "媒体文件"
+    | _ -> ""
+
+type momentStateEnum = 
+| Normal = 0 // 正常
+| Deleted = 1 // 标记删除
+| Scratch = 2 // 草稿
+| Submitted = 3 // 已投稿
+
+let momentStateEnums = [| momentStateEnum.Normal; momentStateEnum.Deleted; momentStateEnum.Scratch; momentStateEnum.Submitted |]
+let momentStateEnumstrs = [| "momentStateEnum"; "momentStateEnum"; "momentStateEnum"; "momentStateEnum" |]
+let momentStateNum = 4
+
+let int__momentStateEnum v =
+    match v with
+    | 0 -> Some momentStateEnum.Normal
+    | 1 -> Some momentStateEnum.Deleted
+    | 2 -> Some momentStateEnum.Scratch
+    | 3 -> Some momentStateEnum.Submitted
+    | _ -> None
+
+let str__momentStateEnum s =
+    match s with
+    | "Normal" -> Some momentStateEnum.Normal
+    | "Deleted" -> Some momentStateEnum.Deleted
+    | "Scratch" -> Some momentStateEnum.Scratch
+    | "Submitted" -> Some momentStateEnum.Submitted
+    | _ -> None
+
+let momentStateEnum__caption e =
+    match e with
+    | momentStateEnum.Normal -> "正常"
+    | momentStateEnum.Deleted -> "标记删除"
+    | momentStateEnum.Scratch -> "草稿"
+    | momentStateEnum.Submitted -> "已投稿"
+    | _ -> ""
+
+type momentProtectionEnum = 
+| Normal = 0 // 常规
+| Archive = 1 // 存档
+
+let momentProtectionEnums = [| momentProtectionEnum.Normal; momentProtectionEnum.Archive |]
+let momentProtectionEnumstrs = [| "momentProtectionEnum"; "momentProtectionEnum" |]
+let momentProtectionNum = 2
+
+let int__momentProtectionEnum v =
+    match v with
+    | 0 -> Some momentProtectionEnum.Normal
+    | 1 -> Some momentProtectionEnum.Archive
+    | _ -> None
+
+let str__momentProtectionEnum s =
+    match s with
+    | "Normal" -> Some momentProtectionEnum.Normal
+    | "Archive" -> Some momentProtectionEnum.Archive
+    | _ -> None
+
+let momentProtectionEnum__caption e =
+    match e with
+    | momentProtectionEnum.Normal -> "常规"
+    | momentProtectionEnum.Archive -> "存档"
+    | _ -> ""
+
+type momentMediaTypeEnum = 
+| None = 0 // 无
+| Video = 1 // 视频
+| Audio = 2 // 音频
+
+let momentMediaTypeEnums = [| momentMediaTypeEnum.None; momentMediaTypeEnum.Video; momentMediaTypeEnum.Audio |]
+let momentMediaTypeEnumstrs = [| "momentMediaTypeEnum"; "momentMediaTypeEnum"; "momentMediaTypeEnum" |]
+let momentMediaTypeNum = 3
+
+let int__momentMediaTypeEnum v =
+    match v with
+    | 0 -> Some momentMediaTypeEnum.None
+    | 1 -> Some momentMediaTypeEnum.Video
+    | 2 -> Some momentMediaTypeEnum.Audio
+    | _ -> None
+
+let str__momentMediaTypeEnum s =
+    match s with
+    | "None" -> Some momentMediaTypeEnum.None
+    | "Video" -> Some momentMediaTypeEnum.Video
+    | "Audio" -> Some momentMediaTypeEnum.Audio
+    | _ -> None
+
+let momentMediaTypeEnum__caption e =
+    match e with
+    | momentMediaTypeEnum.None -> "无"
+    | momentMediaTypeEnum.Video -> "视频"
+    | momentMediaTypeEnum.Audio -> "音频"
+    | _ -> ""
+
+type momentPostTypeEnum = 
+| Normal = 0 // 正常
+| Repost = 1 // 重发
+| Quote = 2 // 引用
+
+let momentPostTypeEnums = [| momentPostTypeEnum.Normal; momentPostTypeEnum.Repost; momentPostTypeEnum.Quote |]
+let momentPostTypeEnumstrs = [| "momentPostTypeEnum"; "momentPostTypeEnum"; "momentPostTypeEnum" |]
+let momentPostTypeNum = 3
+
+let int__momentPostTypeEnum v =
+    match v with
+    | 0 -> Some momentPostTypeEnum.Normal
+    | 1 -> Some momentPostTypeEnum.Repost
+    | 2 -> Some momentPostTypeEnum.Quote
+    | _ -> None
+
+let str__momentPostTypeEnum s =
+    match s with
+    | "Normal" -> Some momentPostTypeEnum.Normal
+    | "Repost" -> Some momentPostTypeEnum.Repost
+    | "Quote" -> Some momentPostTypeEnum.Quote
+    | _ -> None
+
+let momentPostTypeEnum__caption e =
+    match e with
+    | momentPostTypeEnum.Normal -> "正常"
+    | momentPostTypeEnum.Repost -> "重发"
+    | momentPostTypeEnum.Quote -> "引用"
+    | _ -> ""
+
+type pMOMENT = {
+mutable Agent: FK
+mutable Bind: Integer
+mutable BindType: momentBindTypeEnum
+mutable Lang: FK
+mutable ShortText: Text
+mutable MediaUrls: Text
+mutable PreviewImgUrl: Text
+mutable Link: Text
+mutable Type: momentTypeEnum
+mutable Question: FK
+mutable State: momentStateEnum
+mutable Group: FK
+mutable AutoTranslate: Integer
+mutable OriginalMoment: FK
+mutable Postedat: Timestamp
+mutable ContentBind: Integer
+mutable Keywords: Text
+mutable Sticky: Integer
+mutable Protection: momentProtectionEnum
+mutable MediaType: momentMediaTypeEnum
+mutable UrlOriginal: Text
+mutable OID: Caption
+mutable PostType: momentPostTypeEnum
+mutable AudioUrl: Text}
+
+
+type MOMENT = Rcd<pMOMENT>
+
+let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[Lang],[ShortText],[MediaUrls],[PreviewImgUrl],[Link],[Type],[Question],[State],[Group],[AutoTranslate],[OriginalMoment],[Postedat],[ContentBind],[Keywords],[Sticky],[Protection],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
+
+let pMOMENT_fieldordersArray = [|
+    "Agent"
+    "Bind"
+    "BindType"
+    "Lang"
+    "ShortText"
+    "MediaUrls"
+    "PreviewImgUrl"
+    "Link"
+    "Type"
+    "Question"
+    "State"
+    "Group"
+    "AutoTranslate"
+    "OriginalMoment"
+    "Postedat"
+    "ContentBind"
+    "Keywords"
+    "Sticky"
+    "Protection"
+    "MediaType"
+    "UrlOriginal"
+    "OID"
+    "PostType"
+    "AudioUrl" |]
+
+let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[Lang]=@Lang,[ShortText]=@ShortText,[MediaUrls]=@MediaUrls,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[Group]=@Group,[AutoTranslate]=@AutoTranslate,[OriginalMoment]=@OriginalMoment,[Postedat]=@Postedat,[ContentBind]=@ContentBind,[Keywords]=@Keywords,[Sticky]=@Sticky,[Protection]=@Protection,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
+
+let pMOMENT_fields = [|
+    FK("Agent")
+    Integer("Bind")
+    SelectLines("BindType", [| ("EndUser","用户");("Biz","机构") |])
+    FK("Lang")
+    Text("ShortText")
+    Text("MediaUrls")
+    Text("PreviewImgUrl")
+    Text("Link")
+    SelectLines("Type", [| ("Original","原创图文视频");("Repost","转发");("Thread","文章");("Forum","论坛");("Question","问题");("Answer","回答");("BookmarkList","收藏夹");("Poll","投票");("Miles","文贵直播文字版");("Dict","辞典");("WebPage","页面");("MediaFile","媒体文件") |])
+    FK("Question")
+    SelectLines("State", [| ("Normal","正常");("Deleted","标记删除");("Scratch","草稿");("Submitted","已投稿") |])
+    FK("Group")
+    Integer("AutoTranslate")
+    FK("OriginalMoment")
+    Timestamp("Postedat")
+    Integer("ContentBind")
+    Text("Keywords")
+    Integer("Sticky")
+    SelectLines("Protection", [| ("Normal","常规");("Archive","存档") |])
+    SelectLines("MediaType", [| ("None","无");("Video","视频");("Audio","音频") |])
+    Text("UrlOriginal")
+    Caption("OID", 256)
+    SelectLines("PostType", [| ("Normal","正常");("Repost","重发");("Quote","引用") |])
+    Text("AudioUrl") |]
+
+let pMOMENT_empty(): pMOMENT = {
+    Agent = 0L
+    Bind = 0L
+    BindType = EnumOfValue 0
+    Lang = 0L
+    ShortText = ""
+    MediaUrls = ""
+    PreviewImgUrl = ""
+    Link = ""
+    Type = EnumOfValue 0
+    Question = 0L
+    State = EnumOfValue 0
+    Group = 0L
+    AutoTranslate = 0L
+    OriginalMoment = 0L
+    Postedat = DateTime.MinValue
+    ContentBind = 0L
+    Keywords = ""
+    Sticky = 0L
+    Protection = EnumOfValue 0
+    MediaType = EnumOfValue 0
+    UrlOriginal = ""
+    OID = ""
+    PostType = EnumOfValue 0
+    AudioUrl = "" }
+
+let MOMENT_id = ref 0L
+let MOMENT_count = ref 0
+let MOMENT_table = "Social_Moment"

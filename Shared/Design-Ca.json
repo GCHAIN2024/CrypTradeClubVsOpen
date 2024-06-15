@@ -7,7 +7,7 @@
       {
         "enum": "Chars",
         "length": 2,
-        "cmt": "ISO 639-1±ê×¼2Î»´úÂë",
+        "cmt": "ISO 639-1ï¿½ï¿½×¼2Î»ï¿½ï¿½ï¿½ï¿½",
         "name": "Code2"
       },
       {
@@ -27,32 +27,32 @@
       },
       {
         "enum": "Boolean",
-        "cmt": "¿Õ¸ñ·Ö´Ê",
+        "cmt": "ï¿½Õ¸ï¿½Ö´ï¿½",
         "name": "IsBlank"
       },
       {
         "enum": "Boolean",
-        "cmt": "½çÃæÓïÑÔ",
+        "cmt": "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "IsLocale"
       },
       {
         "enum": "Boolean",
-        "cmt": "ÄÚÈÝÓïÑÔ",
+        "cmt": "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "IsContent"
       },
       {
         "enum": "Boolean",
-        "cmt": "Ö§³Ö×Ô¶¯·­Òë",
+        "cmt": "Ö§ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "IsAutoTranslate"
       },
       {
         "enum": "Boolean",
-        "cmt": "¹ùÏÈÉúÖ±²¥Ö§³ÖÓïÑÔ",
+        "cmt": "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "IsMiles"
       },
       {
         "enum": "SelectLines",
-        "lines": "Default//Ä¬ÈÏ///RightToLeft//´ÓÓÒÍù×óÅÅ",
+        "lines": "Default//Ä¬ï¿½ï¿½///RightToLeft//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "TextDirection"
       }
     ],
@@ -215,7 +215,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Normal//Õý³£///Hidden//Òþ²Ø///Obsolete//¹ýÊ±",
+        "lines": "Normal//ï¿½ï¿½ï¿½ï¿½///Hidden//ï¿½ï¿½ï¿½ï¿½///Obsolete//ï¿½ï¿½Ê±",
         "name": "State"
       }
     ],
@@ -226,7 +226,7 @@
     "fields": [
       {
         "enum": "SelectLines",
-        "lines": "Normal//³£¹æ///ToplinesGlobalNews//È«Õ¾ÐÂÎÅÖÃ¶¥///ToplinesGlobalPerson//È«Õ¾ÈËÎïÖÃ¶¥///ToplinesGlobalEvent//È«Õ¾ÊÂ¼þÖÃ¶¥",
+        "lines": "Normal//ï¿½ï¿½ï¿½ï¿½///ToplinesGlobalNews//È«Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½///ToplinesGlobalPerson//È«Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½///ToplinesGlobalEvent//È«Õ¾ï¿½Â¼ï¿½ï¿½Ã¶ï¿½",
         "name": "Type"
       },
       {
@@ -260,27 +260,27 @@
       },
       {
         "enum": "Boolean",
-        "cmt": "Ö§³Ö´´½¨×ÓÕË»§",
+        "cmt": "Ö§ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½",
         "name": "IsSac"
       },
       {
         "enum": "Boolean",
-        "cmt": "Ö§³Ö×ªÕË",
+        "cmt": "Ö§ï¿½ï¿½×ªï¿½ï¿½",
         "name": "IsTransfer"
       },
       {
         "enum": "Boolean",
-        "cmt": "Ö§³ÖÈë½ð³ö½ð",
+        "cmt": "Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "IsCash"
       },
       {
         "enum": "Boolean",
-        "cmt": "Ö§³Ö´òÉÍ",
+        "cmt": "Ö§ï¿½Ö´ï¿½ï¿½ï¿½",
         "name": "EnableReward"
       },
       {
         "enum": "Boolean",
-        "cmt": "Ö§³ÖOTC",
+        "cmt": "Ö§ï¿½ï¿½OTC",
         "name": "EnableOTC"
       },
       {
@@ -290,27 +290,27 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Legal//·¨±Ò///Crypto//Êý×Ö±Ò",
+        "lines": "Legal//ï¿½ï¿½ï¿½ï¿½///Crypto//ï¿½ï¿½ï¿½Ö±ï¿½",
         "name": "CurType"
       },
       {
         "enum": "Integer",
-        "cmt": "ÏÔÊ¾Ð¡ÊýÎ»Êý",
+        "cmt": "ï¿½ï¿½Ê¾Ð¡ï¿½ï¿½Î»ï¿½ï¿½",
         "name": "Dec"
       },
       {
         "enum": "Float",
-        "cmt": "¶ÔÃª¶¨»õ±Ò»ãÂÊ£¬Ò»ÂÉÓÃUSD/XXX",
+        "cmt": "ï¿½ï¿½Ãªï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê£ï¿½Ò»ï¿½ï¿½ï¿½ï¿½USD/XXX",
         "name": "AnchorRate"
       },
       {
         "enum": "Boolean",
-        "cmt": "Ö§³ÖËø±Ò",
+        "cmt": "Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "Freezable"
       },
       {
         "enum": "Boolean",
-        "cmt": "Ö§³Ö¿Û¿î",
+        "cmt": "Ö§ï¿½Ö¿Û¿ï¿½",
         "name": "Authorizable"
       },
       {
@@ -342,7 +342,7 @@
         "wrap": "FloatWithMeasure<b/base_cur>",
         "unwrap": "float",
         "enum": "Float",
-        "cmt": "A FX rate that converts <base_cur>-denoted asset to <b>-denoted asset  <b/base_cur>, °´ÕÕ±¾±Ò¼ÆËãµÄ×Ê²ú£¬×ª»»Îª°´ÕÕÆ·ÖÖµÄb¼ÆËã×Ê²úµÄ×ª»»ÂÊ",
+        "cmt": "A FX rate that converts <base_cur>-denoted asset to <b>-denoted asset  <b/base_cur>, ï¿½ï¿½ï¿½Õ±ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê²ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Æ·ï¿½Öµï¿½bï¿½ï¿½ï¿½ï¿½ï¿½Ê²ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½",
         "name": "BaseRate"
       }
     ],
@@ -409,7 +409,7 @@
       },
       {
         "enum": "Boolean",
-        "cmt": "ÊÇ·ñÎªÖ§¸¶ÇþµÀ£ºÓëÖ§¸¶·½Ê½Ïà¹Ø",
+        "cmt": "ï¿½Ç·ï¿½ÎªÖ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½",
         "name": "IsPay"
       },
       {
@@ -455,7 +455,7 @@
       },
       {
         "enum": "Text",
-        "cmt": "Æ½Ì¨±¸×¢",
+        "cmt": "Æ½Ì¨ï¿½ï¿½×¢",
         "name": "RemarksCentral"
       },
       {
@@ -465,12 +465,12 @@
       },
       {
         "enum": "Text",
-        "cmt": "Ô´ÄÚÈÝ·ÖÀàÐÅÏ¢",
+        "cmt": "Ô´ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢",
         "name": "SiteCats"
       },
       {
         "enum": "Text",
-        "cmt": "ÎÄÕÂ·ÖÀàÅäÖÃ",
+        "cmt": "ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "ConfiguredCats"
       }
     ],
@@ -518,17 +518,17 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Unknown//Î´Öª///Male//ÄÐ///Female//Å®",
+        "lines": "Unknown//Î´Öª///Male//ï¿½ï¿½///Female//Å®",
         "name": "Gender"
       },
       {
         "enum": "SelectLines",
-        "lines": "Normal//Õý³£///Frozen//¶³½á///Terminated//×¢Ïú",
+        "lines": "Normal//ï¿½ï¿½ï¿½ï¿½///Frozen//ï¿½ï¿½ï¿½ï¿½///Terminated//×¢ï¿½ï¿½",
         "name": "Status"
       },
       {
         "enum": "SelectLines",
-        "lines": "None//ÎÞ///Admin//¹ÜÀíÔ±",
+        "lines": "None//ï¿½ï¿½///Admin//ï¿½ï¿½ï¿½ï¿½Ô±",
         "name": "Admin"
       },
       {
@@ -537,7 +537,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Normal//³£¹æ///Verified//ÈÏÖ¤",
+        "lines": "Normal//ï¿½ï¿½ï¿½ï¿½///Verified//ï¿½ï¿½Ö¤",
         "name": "Verify"
       },
       {
@@ -683,7 +683,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "No//·ñ///Yes//¿É",
+        "lines": "No//ï¿½ï¿½///Yes//ï¿½ï¿½",
         "name": "Agentable"
       }
     ],
@@ -760,7 +760,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "None//Î´¼ÓÃÜ///Sys//ÏµÍ³¼ÓÃÜ///Usr//ÓÃ»§¼ÓÃÜ",
+        "lines": "None//Î´ï¿½ï¿½ï¿½ï¿½///Sys//ÏµÍ³ï¿½ï¿½ï¿½ï¿½///Usr//ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "Encrypt"
       },
       {
@@ -769,7 +769,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Sys//ÏµÍ³///EndUser//ÓÃ»§///Biz//»ú¹¹///Group//Èº",
+        "lines": "Sys//ÏµÍ³///EndUser//ï¿½Ã»ï¿½///Biz//ï¿½ï¿½ï¿½ï¿½///Group//Èº",
         "name": "BindType"
       },
       {
@@ -795,7 +795,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "None//Î´¼ÓÃÜ///Sys//ÏµÍ³¼ÓÃÜ///Usr//ÓÃ»§¼ÓÃÜ",
+        "lines": "None//Î´ï¿½ï¿½ï¿½ï¿½///Sys//ÏµÍ³ï¿½ï¿½ï¿½ï¿½///Usr//ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½",
         "name": "Encrypt"
       },
       {
@@ -813,12 +813,12 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Sys//ÏµÍ³///EndUser//ÓÃ»§///Biz//»ú¹¹///Group//Èº",
+        "lines": "Sys//ÏµÍ³///EndUser//ï¿½Ã»ï¿½///Biz//ï¿½ï¿½ï¿½ï¿½///Group//Èº",
         "name": "BindType"
       },
       {
         "enum": "SelectLines",
-        "lines": "Normal//Õý³£///Canceled//ÒÑÈ¡Ïû///Uploading//ÉÏ´«ÖÐ///PendingTranscode//´ýÃ½Ìå×ªÂë///PendingBlockchain//´ýÇø¿éÁ´Í¬²½///Deleted//ÒÑÉ¾³ý",
+        "lines": "Normal//ï¿½ï¿½ï¿½ï¿½///Canceled//ï¿½ï¿½È¡ï¿½ï¿½///Uploading//ï¿½Ï´ï¿½ï¿½ï¿½///PendingTranscode//ï¿½ï¿½Ã½ï¿½ï¿½×ªï¿½ï¿½///PendingBlockchain//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½///Deleted//ï¿½ï¿½É¾ï¿½ï¿½",
         "name": "State"
       },
       {
@@ -827,7 +827,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Default//Ä¬ÈÏ///Text//ÎÄ±¾///Bin//¶þ½øÖÆ///Img//Í¼Æ¬///Video//ÊÓÆµ",
+        "lines": "Default//Ä¬ï¿½ï¿½///Text//ï¿½Ä±ï¿½///Bin//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½///Img//Í¼Æ¬///Video//ï¿½ï¿½Æµ",
         "name": "FileType"
       },
       {
@@ -852,7 +852,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Default//Ä¬ÈÏ///Biz//»ú¹¹///EndUser//ÓÃ»§",
+        "lines": "Default//Ä¬ï¿½ï¿½///Biz//ï¿½ï¿½ï¿½ï¿½///EndUser//ï¿½Ã»ï¿½",
         "name": "Type"
       },
 

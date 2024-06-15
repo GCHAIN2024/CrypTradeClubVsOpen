@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Design.json" />
     <Content Include="Design-Ca.json" />
+    <Content Include="Design-Social.json" />
     <Compile Include="PreOrm.fs" />
     <Compile Include="OrmTypes.fs" />
     <Compile Include="Types.fs" />
@@ -14,9 +16,7 @@
     <Compile Include="CustomMor.fs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Design.json" />
-  </ItemGroup>
+  <ItemGroup />
 
   <ItemGroup>
     <None Include="OrmTypes.sql" />

@@ -13,15 +13,19 @@ Dependencies:
 
 Proprietary:
 - Shared: Logical data design. Automatically generated code. Serialization and deserialization of the share types.
+- Server: The main entrance of the back-end.
 - Apps/WebCrawler: Web crawlers that are deployed in a distributed manner to crawl market data and market news.
 
 ### Logical data structure
 
 Database name: CTC
 
-### Setup production or development environment
+### Production or development environment
 
+Initial setup
 - Install latest version of SQL server
 - Install latest version of SSMS
 - Create database instance [CTC]
 - Manually run automatically generated SQL
+
+

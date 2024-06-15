@@ -1,0 +1,118 @@
+[
+
+  {
+    "name": "Social_Moment",
+    "shorthand": "moment",
+    "fields": [
+      {
+        "enum": "FK",
+        "ref": "Ca_EndUser",
+        "name": "Agent"
+      },
+      {
+        "enum": "Integer",
+        "name": "Bind"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "EndUser//用户///Biz//机构",
+        "name": "BindType"
+      },
+      {
+        "enum": "FK",
+        "name": "Lang"
+      },
+      {
+        "enum": "Text",
+        "name": "ShortText"
+      },
+      {
+        "enum": "Text",
+        "name": "MediaUrls"
+      },
+      {
+        "enum": "Text",
+        "name": "PreviewImgUrl"
+      },
+      {
+        "enum": "Text",
+        "name": "Link"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Original//原创图文视频///Repost//转发///Thread//文章///Forum//论坛///Question//问题///Answer//回答///BookmarkList//收藏夹///Poll//投票///Miles//文贵直播文字版///Dict//辞典///WebPage//页面///MediaFile//媒体文件",
+        "name": "Type"
+      },
+      {
+        "enum": "FK",
+        "ref": "Social_Moment",
+        "name": "Question"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Normal//正常///Deleted//标记删除///Scratch//草稿///Submitted//已投稿",
+        "name": "State"
+      },
+
+      {
+        "enum": "FK",
+        "ref": "Social_Group",
+        "name": "Group"
+      },
+      {
+        "enum": "Integer",
+        "name": "AutoTranslate"
+      },
+      {
+        "enum": "FK",
+        "name": "OriginalMoment"
+      },
+      {
+        "enum": "Timestamp",
+        "name": "Postedat"
+      },
+      {
+        "enum": "Integer",
+        "name": "ContentBind"
+      },
+      {
+        "enum": "Text",
+        "name": "Keywords"
+      },
+      {
+        "enum": "Integer",
+        "name": "Sticky"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Normal//常规///Archive//存档",
+        "name": "Protection"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "None//无///Video//视频///Audio//音频",
+        "name": "MediaType"
+      },
+      {
+        "enum": "Text",
+        "name": "UrlOriginal"
+      },
+      {
+        "enum": "Caption",
+        "length": 256,
+        "cmt": "Original Identifier",
+        "name": "OID"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Normal//正常///Repost//重发///Quote//引用",
+        "name": "PostType"
+      },
+      {
+        "enum": "Text",
+        "name": "AudioUrl"
+      }
+    ]
+  }
+
+]
