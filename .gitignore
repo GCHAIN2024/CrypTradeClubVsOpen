@@ -7,3 +7,6 @@
 /.vs
 /Shared/bin/Debug/net8.0
 /Shared/obj
+/Apps/WebCrawler/bin/Debug/net8.0
+/Apps/WebCrawler/obj/Debug/net8.0
+/Apps/WebCrawler/obj
