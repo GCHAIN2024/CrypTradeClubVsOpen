@@ -11,3 +11,4 @@ Dependencies:
 
 Proprietary:
 - Shared: Logical data design. Automatically generated code. Serialization and deserialization of the share types.
+- 
