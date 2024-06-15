@@ -5,3 +5,5 @@
 /.vs/CrypTradeClubVsOpen/v17
 /.vs/CrypTradeClubVsOpen/FileContentIndex
 /.vs
+/Shared/bin/Debug/net8.0
+/Shared/obj
