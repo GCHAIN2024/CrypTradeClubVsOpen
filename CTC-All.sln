@@ -14,7 +14,14 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Util", "..\..\Common\Util\U
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Shared", "Shared\Shared.fsproj", "{78975D7B-F75E-4B51-8655-B8CA8758BF01}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebCrawler", "Apps\WebCrawler\WebCrawler.fsproj", "{05EA2F55-40BC-498E-8DDE-0587240C4DCA}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WebCrawler", "Apps\WebCrawler\WebCrawler.fsproj", "{05EA2F55-40BC-498E-8DDE-0587240C4DCA}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Server", "Server\Server.fsproj", "{DDACC469-4811-4F66-BFDC-258305160FFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{88C20F56-A094-4A12-A8C2-C58F714F8856}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\index.html = Deploy\index.html
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +41,10 @@ Global
 		{05EA2F55-40BC-498E-8DDE-0587240C4DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05EA2F55-40BC-498E-8DDE-0587240C4DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05EA2F55-40BC-498E-8DDE-0587240C4DCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDACC469-4811-4F66-BFDC-258305160FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDACC469-4811-4F66-BFDC-258305160FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDACC469-4811-4F66-BFDC-258305160FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDACC469-4811-4F66-BFDC-258305160FFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

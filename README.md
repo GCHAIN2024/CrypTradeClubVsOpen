@@ -1,4 +1,4 @@
-# CrypTradeClubVsOpen
+# CrypTradeClub Visual Studio Open Repository
 
 Abbreviation: CTC
 
