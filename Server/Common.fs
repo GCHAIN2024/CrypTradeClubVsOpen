@@ -1,4 +1,4 @@
-﻿module Server.Types
+﻿module Server.Common
 
 open System
 open System.Text

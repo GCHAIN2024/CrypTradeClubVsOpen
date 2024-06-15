@@ -9,7 +9,7 @@ open Util.Cat
 open Util.Perf
 open Util.Zmq
 
-open Server.Types
+open Server.Common
 
 let branch x =
     match x.service with

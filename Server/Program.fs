@@ -10,14 +10,13 @@ open Util.Cat
 open Util.Perf
 open Util.Zmq
 
-open Server.Types
+open Server.Common
 open Server.WebHandler
 
 
 [<EntryPoint>]
 
 let main argv =
-
 
     zweb.disconnector.Add(fun bin -> ())
     lauchWebServer 
