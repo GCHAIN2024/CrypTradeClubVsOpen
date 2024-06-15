@@ -14,7 +14,7 @@ type Error =
 type Fact =
 | Moment of MOMENT
 
-type Msg<'Req,'Rep> = 
+type Msg = 
 | Heartbeat
 | ApiRequest of Json
 | ApiResponse of Json
