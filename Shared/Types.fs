@@ -8,6 +8,7 @@ open Shared.OrmTypes
 //[TypeManaged]{
 
 type Error = 
+| ApiNotExists
 | InvalideParameter
 | Internal
 

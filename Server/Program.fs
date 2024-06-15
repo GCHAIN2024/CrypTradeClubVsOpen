@@ -21,7 +21,7 @@ let main argv =
     zweb.disconnector.Add(fun bin -> ())
     lauchWebServer 
         output 
-        (httpHandler (httpEcho runtime.host.fsDir runtime.host.defaultHtml runtime branch))
+        (httpHandler (httpEcho runtime.host.fsDir runtime.host.defaultHtml runtime echoHandler))
         wsHandler 
         zweb
 

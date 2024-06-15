@@ -17,14 +17,13 @@ open Shared.CustomMor
 
 open Server.Common
 
-let branch x =
+let echoHandler x =
     match x.service with
     | "public" -> 
         match x.api with
         | _ -> Fail(Error.ApiNotExists, x)
     | "admin" -> 
         match x.api with
-        //| "sRK" -> setRolfKey |> bindOK x 
         | _ -> Fail(Error.ApiNotExists, x)
     | _ -> Fail(Error.ApiNotExists, x)
 
