@@ -5,6 +5,7 @@ open System
 open Util.Zmq
 
 type Host = {
+defaultHtml: string
 fsDir: string }
 
 type Runtime = {

@@ -20,6 +20,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Server", "Server\Server.fsp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{88C20F56-A094-4A12-A8C2-C58F714F8856}"
 	ProjectSection(SolutionItems) = preProject
+		Deploy\favicon.ico = Deploy\favicon.ico
 		Deploy\index.html = Deploy\index.html
 	EndProjectSection
 EndProject

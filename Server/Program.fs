@@ -46,6 +46,7 @@ let main argv =
 
     let runtime = {
         host = {
+            defaultHtml = "index.html"
             fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
         zweb = zweb
         output = output }
@@ -74,7 +75,11 @@ let main argv =
         None
 
     zweb.disconnector.Add(fun bin -> ())
-    lauchWebServer output (httpHandler (httpEcho runtime.host.fsDir runtime branch)) wsHandler zweb
+    lauchWebServer 
+        output 
+        (httpHandler (httpEcho runtime.host.fsDir runtime.host.defaultHtml runtime branch))
+        wsHandler 
+        zweb
 
     Util.Runtime.halt output "" ""
 
