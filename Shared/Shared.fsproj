@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <Content Include="Design.json" />
-    <Content Include="Design-Ca.json" />
-    <Content Include="Design-Sys.json" />
   </ItemGroup>
 
   <ItemGroup>

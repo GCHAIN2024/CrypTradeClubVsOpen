@@ -11,4 +11,4 @@ Dependencies:
 
 Proprietary:
 - Shared: Logical data design. Automatically generated code. Serialization and deserialization of the share types.
-- 
+- Apps/WebCrawler: Web crawlers that are deployed in a distributed manner to crawl market data and market news.
