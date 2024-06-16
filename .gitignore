@@ -19,3 +19,5 @@
 /Server/obj/project.assets.json
 /Server/obj/project.nuget.cache
 /Server/obj/Server.fsproj.nuget.dgspec.json
+/BizLogics/bin/Debug/net8.0
+/BizLogics/obj
