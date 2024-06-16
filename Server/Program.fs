@@ -10,7 +10,9 @@ open Util.Cat
 open Util.Perf
 open Util.Zmq
 
-open Server.Common
+open BizLogics.Common
+open BizLogics.Init
+
 open Server.WebHandler
 
 open UtilWebServer.Common
@@ -20,7 +22,7 @@ open UtilWebServer.Common
 
 let main argv =
 
-    init()
+    init runtime
 
     zweb.disconnector.Add(fun bin -> ())
     lauchWebServer 

@@ -11,12 +11,6 @@ open Util.HttpClient
 open Shared.OrmTypes
 open Shared.Types
 
-type SrcSite = { 
-mutable linkLoader: pMomentExt -> unit
-mutable validator: pMomentExt -> unit
-mutable populater: pMomentExt -> unit
-mutable html__markdown: string -> string }
-
 
 let test output = 
 

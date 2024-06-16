@@ -10,11 +10,6 @@ open Shared.OrmTypes
 
 //[TypeManaged]{
 
-type pMomentExt = { 
-p: pMOMENT
-mutable MarkdownA: string
-mutable MarkdownB: string }
-
 type Album = {
 sbl: SBL
 items: List<MOMENT> }
