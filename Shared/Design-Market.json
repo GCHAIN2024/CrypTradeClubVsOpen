@@ -1,0 +1,953 @@
+[
+
+  {
+    "name": "Market_TradeAcct",
+    "shorthand": "tacct",
+    "id": 96721375,
+    "fields": [
+      {
+        "enum": "FK",
+        "ref": "Fi_Subacct",
+        "name": "SAC"
+      },
+
+      {
+        "enum": "SelectLines",
+        "lines": "Normal//正常///Frozen//冻结///FrozenInvisible//冻结且不得查询///LimitTrade//限制交易///FrozenTrade//冻结交易",
+        "name": "State",
+        "cmt": "账户状态"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Cash//现金///Match//撮合///Make//做市",
+        "name": "TradeType"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Real//真实///Demo//模拟",
+        "name": "RealDemo"
+      },
+
+      {
+        "enum": "Float",
+        "name": "PnL"
+      },
+      {
+        "enum": "Float",
+        "name": "Frozen"
+      },
+      {
+        "enum": "Float",
+        "name": "Leverage"
+      },
+      {
+        "enum": "Float",
+        "name": "Margin"
+      },
+      {
+        "enum": "Float",
+        "name": "MarginCallRateWarning"
+      },
+      {
+        "enum": "Float",
+        "name": "MarginCallRateWarningII"
+      },
+      {
+        "enum": "Float",
+        "name": "MarginCallRateLiq"
+      },
+
+      {
+        "enum": "Caption",
+        "length": 64,
+        "name": "PwdTrade"
+      },
+      {
+        "enum": "Caption",
+        "length": 64,
+        "name": "PwdReadonly"
+      },
+
+      {
+        "enum": "Text",
+        "cmt": "备注",
+        "name": "Desc"
+      }
+    ]
+  },
+
+
+  {
+    "name": "Ex_Instrument",
+    "shorthand": "ins",
+    "fields": [
+      {
+        "enum": "Text",
+        "name": "Desc"
+      },
+      {
+        "enum": "Boolean",
+        "name": "Hidden"
+      },
+      {
+        "enum": "Boolean",
+        "cmt": "允许接入行情",
+        "name": "EnableQuote"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Code"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Caption"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ca_Cur",
+        "name": "Long"
+      },
+      {
+        "enum": "Chars",
+        "length": "64",
+        "cmt": "例如 =百万英国热量(天然气10000百万英国热量), =桶(原油1000桶), =(恒生指数50港币X指数)",
+        "name": "AssetName"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ca_Cur",
+        "name": "Short"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_Instrument",
+        "name": "Convertor"
+      },
+      {
+        "type": "LotPerQuantum",
+        "wrap": "FloatWithMeasure<lot/quanta>",
+        "unwrap": "float",
+        "enum": "Float",
+        "cmt": "最小交易单位(lot)，盘口x轴网格化单位",
+        "name": "m"
+      },
+      {
+        "type": "float<(b/a)/quanta>",
+        "wrap": "FloatWithMeasure<(b/a)/quanta>",
+        "unwrap": "float",
+        "enum": "Float",
+        "cmt": "mu = minimum price change, 最小价格波动(b/a)，盘口y轴网格化单位",
+        "name": "mu"
+      },
+      {
+        "type": "AssetPerLot",
+        "wrap": "FloatWithMeasure<a/lot>",
+        "unwrap": "float",
+        "enum": "Float",
+        "cmt": "每手所对应的资产，以a或者long计价，例如 =10000(天然气10000百万英国热量), =1000(原油1000桶), =50(恒生指数50港币X指数)",
+        "name": "eta"
+      },
+      {
+        "type": "float<base_cur/b>",
+        "wrap": "FloatWithMeasure<base_cur/b>",
+        "unwrap": "float",
+        "enum": "Float",
+        "cmt": "A FX rate that converts <b>-denoted asset to <base_cur>-denoted asset <base_cur/b>, 按照品种的b或者short计算的资产，转换为按照本币计算资产的转换率",
+        "name": "psi"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Normal//正常模式，按市值和账户杠杆计算///BaseCur//按照每手本币计算///Short//按照每手b或short计算///Long//按照每手a或long计算",
+        "cmt": "保证金计算模式",
+        "name": "MarginCalc"
+      },
+      {
+        "enum": "Float",
+        "cmt": "初始保证金率",
+        "name": "MarginRateInit"
+      },
+      {
+        "enum": "Float",
+        "cmt": "维持保证金率",
+        "name": "MarginRateMntn"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Hedged//双向对冲///Abs//仓位保证金绝对值累计",
+        "cmt": "保证金模式",
+        "name": "MarginMode"
+      },
+      {
+        "enum": "Integer",
+        "name": "Dec"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Formatter"
+      },
+      {
+        "enum": "Chars",
+        "length": 256,
+        "name": "Path"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "Ask"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "Bid"
+      },
+      {
+        "enum": "Float",
+        "name": "Middle"
+      },
+
+      {
+        "enum": "Float",
+        "cmt": "固定点差",
+        "name": "FixedSpread"
+      },
+      {
+        "enum": "Float",
+        "cmt": "百分比点差，如未设置固定点差则启用百分比点差",
+        "name": "PercentageSpread"
+      },
+
+      {
+        "enum": "SelectLines",
+        "cmt": "开仓手续费模式",
+        "lines": "Fixed//固定///Percentage//按百分比",
+        "name": "TaxOpenMode"
+      },
+      {
+        "enum": "Float",
+        "cmt": "开仓手续费(百分比值/每手固定值)",
+        "name": "TaxOpen"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "平仓手续费模式",
+        "lines": "Fixed//固定///Percentage//按百分比",
+        "name": "TaxCloseMode"
+      },
+      {
+        "enum": "Float",
+        "cmt": "平仓手续费(百分比值/每手固定值)",
+        "name": "TaxClose"
+      },
+      {
+        "enum": "Float",
+        "cmt": "每手手续费",
+        "name": "Tax"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ca_Cur",
+        "name": "TaxCur"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "TaxCurCode"
+      },
+      {
+        "enum": "Float",
+        "name": "LastPrice"
+      },
+      {
+        "enum": "Timestamp",
+        "name": "LastUpdatedat"
+      },
+      {
+        "enum": "Timestamp",
+        "cmt": "上次价格变动时间，长期价格不变动用于判断停盘",
+        "name": "LastPriceChange"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "On//交易时段///Off//非交易时段///Disabled//禁用///Sustained//持续交易",
+        "name": "TradeStatus"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "Rollover隔夜展期模式",
+        "lines": "Forex//外汇模式（提前两个工作日，周三收到周末）///Daily//每日收取模式",
+        "name": "RoMode"
+      },
+      {
+        "enum": "Text",
+        "cmt": "交易时段、交割、展期、隔夜等方面的设置,JSON文档",
+        "name": "Schedule"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "External//External///Indictive//Indictive///Match//Match///Make//Make///OTC//OTC",
+        "name": "TradeMode"
+      },
+
+
+
+      {
+        "enum": "SelectLines",
+        "cmt": "衍生品模式",
+        "lines": "None//无///Futures//远期///Options//期权",
+        "name": "DerivativeMode"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "期权模式",
+        "lines": "None//无///Simple//简化模式///LimitBSM//极限BSM",
+        "name": "OptionsMode"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "期权方向",
+        "lines": "Call//看涨///Put//看跌",
+        "name": "OptionsCP"
+      },
+      {
+        "enum": "Timestamp",
+        "cmt": "到期时间",
+        "name": "OptionsExpiry"
+      },
+      {
+        "enum": "Float",
+        "cmt": "行权价",
+        "name": "OptionsStrike"
+      },
+      {
+        "enum": "Text",
+        "cmt": "期权收费设置",
+        "name": "OptionsPricing"
+      },
+      {
+        "enum": "Text",
+        "cmt": "期权周期设置",
+        "name": "OptionsPeriod"
+      },
+      {
+        "enum": "Float",
+        "cmt": "期权手续费",
+        "name": "OptionsTax"
+      },
+      {
+        "enum": "Float",
+        "cmt": "单笔最小期权费",
+        "name": "OptionsPremiumPerTradeMin"
+      },
+      {
+        "enum": "Float",
+        "cmt": "单笔最大期权费",
+        "name": "OptionsPremiumPerTradeMax"
+      },
+
+
+
+
+      {
+        "enum": "Float",
+        "cmt": "最大单笔交易量(lot)",
+        "name": "LimitLotPerTrade"
+      },
+      {
+        "enum": "Float",
+        "cmt": "最大净持仓量(lot)",
+        "name": "LimitLotPosition"
+      },
+
+
+
+
+      {
+        "enum": "Float",
+        "cmt": "今开",
+        "name": "CurrentOpen"
+      },
+      {
+        "enum": "Float",
+        "cmt": "今高",
+        "name": "CurrentHigh"
+      },
+      {
+        "enum": "Float",
+        "cmt": "今低",
+        "name": "CurrentLow"
+      },
+      {
+        "enum": "Float",
+        "cmt": "前收",
+        "name": "PrevClose"
+      },
+      {
+        "enum": "Timestamp",
+        "cmt": "前收时间",
+        "name": "PrevClosedat"
+      },
+      {
+        "enum": "Timestamp",
+        "cmt": "今开时间",
+        "name": "CurrentOpenat"
+      },
+
+
+
+      {
+        "enum": "FK",
+        "ref": "Ca_Biz",
+        "cmt": "外部品种的来源Biz",
+        "name": "ExtBiz"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "cmt": "如果符合其中的正则表达式，则为外部提交的metadata创建外部品种",
+        "name": "RefExternal"
+      },
+      {
+        "enum": "Text",
+        "cmt": "Internal Instruments内部品种，用|分隔的品种ID，本品种的价格改变会触发这些内部品种的价格改变",
+        "name": "ItrnInss"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "内部品种处理模式",
+        "lines": "All//All///Price//Update Price Only///History//Update History Only",
+        "name": "ItrnInssMode"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "None//不刷新///FlushLong//刷新多头///FlushShort//刷新空头///Both//多空刷新",
+        "name": "FlushType"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "None//不触发///LongTrigger//多头触发///ShortTrigger//空头触发///Both//多空触发",
+        "cmt": "货币价格变动触发模式，用货币的Cur.AnchorRate刷新品种的价格",
+        "name": "CurTrigger"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "None//无///Trigger//触发",
+        "name": "RobotType"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "ExtLong"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "ExtShort"
+      },
+      {
+        "enum": "Float",
+        "name": "ExtPrice"
+      },
+      {
+        "enum": "Boolean",
+        "name": "SaveM1"
+      },
+      {
+        "enum": "Timestamp",
+        "name": "HistSavedat"
+      },
+      {
+        "enum": "Boolean",
+        "name": "SaveD1"
+      },
+      {
+        "enum": "Float",
+        "cmt": "止损偏离现价点差",
+        "name": "SlPips"
+      },
+      {
+        "enum": "Float",
+        "cmt": "止盈偏离现价点差",
+        "name": "TpPips"
+      },
+      {
+        "enum": "Float",
+        "cmt": "挂少单偏离现价点差",
+        "name": "PendingLimitPips"
+      },
+      {
+        "enum": "Float",
+        "cmt": "挂多单偏离现价点差",
+        "name": "PendingStopPips"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Up//上升///Dn//下降///NoChange//无变化",
+        "name": "LastDirection"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "None//连续交易///PeriodicLiq//周期结算",
+        "name": "LiqMode"
+      },
+      {
+        "enum": "Timestamp",
+        "cmt": "上次周期结算时间",
+        "name": "LiqPeriodSince"
+      },
+      {
+        "enum": "FK",
+        "cmt": "周期结算间隔时间",
+        "name": "LiqPeriodTill"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "结算时间单位",
+        "lines": "None//无///Daily//每天///Weekly//每周///Monthly//每月///Quarterly//每季度",
+        "name": "LiqPeriod"
+      },
+      {
+        "enum": "Float",
+        "cmt": "结算时间",
+        "name": "LiqTime"
+      },
+      {
+        "enum": "Float",
+        "cmt": "转换系数",
+        "name": "ConvertRatio"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "买入延期费模式",
+        "lines": "Fixed//固定///Percentage//按百分比",
+        "name": "RoBuyMode"
+      },
+      {
+        "enum": "Float",
+        "cmt": "买入延期费(百分比值/每手固定值)",
+        "name": "RoBuy"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "卖出延期费模式",
+        "lines": "Fixed//固定///Percentage//按百分比",
+        "name": "RoSellMode"
+      },
+      {
+        "enum": "Float",
+        "cmt": "卖出延期费(百分比值/每手固定值)",
+        "name": "RoSell"
+      },
+      {
+        "enum": "Float",
+        "cmt": "买最大净持仓量(lot)",
+        "name": "PosLimitBuy"
+      },
+      {
+        "enum": "Float",
+        "cmt": "卖最大净持仓量(lot)",
+        "name": "PosLimitSell"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ca_Cur",
+        "name": "RoCur"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "RoCurCode"
+      },
+      {
+        "enum": "Float",
+        "cmt": "偏移值",
+        "name": "AdjBias"
+      },
+      {
+        "enum": "Float",
+        "cmt": "OTC买入手续费",
+        "name": "TaxBuy"
+      },
+      {
+        "enum": "Float",
+        "cmt": "OTC卖出手续费",
+        "name": "TaxSell"
+      },
+      {
+        "enum": "Text",
+        "cmt": "各种杂项JSON",
+        "name": "Misc"
+      },
+      {
+        "enum": "Timestamp",
+        "cmt": "主引用行情源上次价格变动时间，规定时间价格不变动用于判断切换备用行情源",
+        "name": "RefLastPriceChange"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "cmt": "指定外部对冲品种",
+        "name": "HedgeExternal"
+      },
+      {
+        "enum": "Float",
+        "cmt": "发行价",
+        "name": "OfferingPrice"
+      },
+      {
+        "enum": "Integer",
+        "cmt": "发行量",
+        "name": "IssuanceAmount"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "None//未知///Pending//未上市///Trading//交易中",
+        "cmt": "交易状态",
+        "name": "ListingStatus"
+      },
+      {
+        "enum": "Float",
+        "cmt": "除权交易额",
+        "name": "Turnover"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "PriceOpened"
+      }
+    ]
+  },
+
+
+  {
+    "name": "Ex_Ticket",
+    "shorthand": "ticket",
+    "id": 75921367,
+    "fields": [
+      {
+        "enum": "FK",
+        "name": "EndUser"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_TradeAcct",
+        "name": "TradeAcct"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_Instrument",
+        "name": "Ins"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Code"
+      },
+
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Caption"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Match//撮合///Make//做市///CapAlloc//配资///MakeDerivative//做市衍生品",
+        "name": "TradeMode"
+      },
+
+      {
+        "type": "LotInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "Lot"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "PriceOpened"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "PriceOpen"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "PriceSL"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "PriceTP"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "name": "PriceClose"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Pending//挂单///Cancel//撤单///Open//开单///Close//平单///RO//展期///Opening//开仓待确认///Closing//平仓待确认///PendingAwait//挂单待确认///CancelAwait//撤单待确认///OpenSplited//开单分单///CloseSplited//关单分单///Closer//关单者",
+        "cmt": "Opening//开仓待确认：逐单对冲，提交不可撤销的外盘委托，在外盘确认之前为[[开仓待确认状态]]；平仓类似",
+        "name": "Status"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_Ticket",
+        "name": "CP"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_TradeAcct",
+        "name": "CptAcct"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_Ticket",
+        "name": "Ref"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_Ticket",
+        "name": "OpenRef"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_Ticket",
+        "name": "CloseRef"
+      },
+      {
+        "enum": "FK",
+        "ref": "Ex_Ticket",
+        "name": "Origin"
+      },
+      {
+        "enum": "Float",
+        "name": "PnL"
+      },
+      {
+        "enum": "Float",
+        "name": "PnLSpread"
+      },
+      {
+        "enum": "Float",
+        "name": "Margin"
+      },
+      {
+        "enum": "Float",
+        "name": "RO"
+      },
+      {
+        "enum": "Float",
+        "name": "Tax"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Manual//Manual///TakeProfit//Take Profit///StopLoss//Stop Loss///Liquidation//Liquidation///Expire//Expire",
+        "name": "CloseType"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "MarketExe//市价执行///PendingLimit//限价挂单///PendingStop//止损挂单///Ext//展期///Passive//被动执行",
+        "name": "CommitType"
+      },
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Cmt"
+      },
+      {
+        "enum": "Timestamp",
+        "name": "Opendat"
+      },
+      {
+        "enum": "Timestamp",
+        "name": "Closedat"
+      },
+      {
+        "enum": "Float",
+        "cmt": "策略金额",
+        "name": "CaStrategyAmt"
+      },
+      {
+        "enum": "Boolean",
+        "cmt": "自动递延",
+        "name": "CaRo"
+      },
+      {
+        "enum": "Boolean",
+        "cmt": "自动追加金额 Auto SuperAddition",
+        "name": "CaAsa"
+      },
+      {
+        "enum": "Float",
+        "cmt": "综合服务费 comprehensive charge",
+        "name": "CaCmphsvCharge"
+      },
+      {
+        "enum": "Timestamp",
+        "cmt": "R/O检查时间：涉及每日R/O相关的展期处理",
+        "name": "RoCheckedat"
+      },
+      {
+        "enum": "Timestamp",
+        "name": "Expiry"
+      },
+      {
+        "enum": "FK",
+        "cmt": "对冲单号",
+        "ref": "Ex_Ticket",
+        "name": "HedgetCP"
+      },
+      {
+        "type": "PriceInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "cmt": "记录委托价格",
+        "name": "PendingPrice"
+      },
+      {
+        "type": "LotInQuantum",
+        "wrap": "Int64WithMeasure<quanta>",
+        "unwrap": "int64",
+        "enum": "Integer",
+        "cmt": "成交量",
+        "name": "ClosedLot"
+      },
+      {
+        "enum": "Float",
+        "cmt": "成交额",
+        "name": "ClosedAmt"
+      },
+      {
+        "enum": "Float",
+        "cmt": "委托总额",
+        "name": "PendingAmt"
+      },
+
+      {
+        "enum": "Float",
+        "cmt": "衍生品权益金",
+        "name": "DrvPreminum"
+      },
+      {
+        "enum": "Timestamp",
+        "cmt": "衍生品到期时间",
+        "name": "DrvExpiry"
+      },
+      {
+        "enum": "Integer",
+        "cmt": "衍生品订单周期",
+        "name": "DrvPeriod"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "衍生品方向",
+        "lines": "Unchanged//平///Up//涨///Dn//跌",
+        "name": "DrvDirection"
+      },
+      {
+        "enum": "Float",
+        "cmt": "衍生品行权价",
+        "name": "DrvPrice"
+      },
+      {
+        "enum": "FK",
+        "cmt": "双仓单号关联",
+        "ref": "Ex_Ticket",
+        "name": "DoubleCp"
+      },
+      {
+        "enum": "SelectLines",
+        "cmt": "清算状态",
+        "lines": "UnClear//未清算///Clear//已清算",
+        "name": "ClearStatus"
+      },
+
+      {
+        "enum": "FK",
+        "ref": "Ex_Ticket",
+        "cmt": "跟单单号",
+        "name": "FollowTicket"
+      },
+      {
+        "enum": "Text",
+        "cmt": "用户自定义配置JSON",
+        "name": "Config"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Normal//通用///Inquiring//待询价///Inquiried//已询价///Receiving//待接单///Received//已接单///Exercising//待行权///Exercised//已行权",
+        "name": "OptionStatus"
+      },
+      {
+        "enum": "Float",
+        "cmt": "行权名义本金",
+        "name": "NotionalPrincipal"
+      },
+      {
+        "enum": "Float",
+        "cmt": "已行权名义本金",
+        "name": "ExercisedPrincipal"
+      },
+      {
+        "enum": "Float",
+        "cmt": "行权类型",
+        "name": "ExerciseMode"
+      },
+      {
+        "enum": "Float",
+        "cmt": "行权价",
+        "name": "ExercisePrice"
+      },
+      {
+        "enum": "FK",
+        "cmt": "外部对冲开仓单号",
+        "name": "ExternalTicketOpen"
+      },
+      {
+        "enum": "FK",
+        "cmt": "外部对冲平仓单号",
+        "name": "ExternalTicketClose"
+      },
+      {
+        "enum": "FK",
+        "cmt": "外部对冲挂单单号",
+        "name": "ExternalTicketPending"
+      },
+      {
+        "enum": "FK",
+        "cmt": "外部对冲撤销单单号",
+        "name": "ExternalTicketCancel"
+      },
+
+      {
+        "enum": "Text",
+        "cmt": "备注",
+        "name": "Desc"
+      }
+    ]
+  }
+
+]

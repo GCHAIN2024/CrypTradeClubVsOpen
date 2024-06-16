@@ -3464,6 +3464,2273 @@ let json__CWCo (json:Json):CWC option =
         p = p } |> Some
     
 
+// [INS] Structure
+
+let pINS__bin (bb:BytesBuilder) (p:pINS) =
+
+    
+    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
+    binDesc.Length |> BitConverter.GetBytes |> bb.append
+    binDesc |> bb.append
+    
+    p.Hidden |> BitConverter.GetBytes |> bb.append
+    
+    p.EnableQuote |> BitConverter.GetBytes |> bb.append
+    
+    let binCode = p.Code |> Encoding.UTF8.GetBytes
+    binCode.Length |> BitConverter.GetBytes |> bb.append
+    binCode |> bb.append
+    
+    let binCaption = p.Caption |> Encoding.UTF8.GetBytes
+    binCaption.Length |> BitConverter.GetBytes |> bb.append
+    binCaption |> bb.append
+    
+    p.Long |> BitConverter.GetBytes |> bb.append
+    
+    let binAssetName = p.AssetName |> Encoding.UTF8.GetBytes
+    binAssetName.Length |> BitConverter.GetBytes |> bb.append
+    binAssetName |> bb.append
+    
+    p.Short |> BitConverter.GetBytes |> bb.append
+    
+    p.Convertor |> BitConverter.GetBytes |> bb.append
+    
+    p.m |> BitConverter.GetBytes |> bb.append
+    
+    p.mu |> BitConverter.GetBytes |> bb.append
+    
+    p.eta |> BitConverter.GetBytes |> bb.append
+    
+    p.psi |> BitConverter.GetBytes |> bb.append
+    
+    p.MarginCalc |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.MarginRateInit |> BitConverter.GetBytes |> bb.append
+    
+    p.MarginRateMntn |> BitConverter.GetBytes |> bb.append
+    
+    p.MarginMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.Dec |> BitConverter.GetBytes |> bb.append
+    
+    let binFormatter = p.Formatter |> Encoding.UTF8.GetBytes
+    binFormatter.Length |> BitConverter.GetBytes |> bb.append
+    binFormatter |> bb.append
+    
+    let binPath = p.Path |> Encoding.UTF8.GetBytes
+    binPath.Length |> BitConverter.GetBytes |> bb.append
+    binPath |> bb.append
+    
+    p.Ask |> BitConverter.GetBytes |> bb.append
+    
+    p.Bid |> BitConverter.GetBytes |> bb.append
+    
+    p.Middle |> BitConverter.GetBytes |> bb.append
+    
+    p.FixedSpread |> BitConverter.GetBytes |> bb.append
+    
+    p.PercentageSpread |> BitConverter.GetBytes |> bb.append
+    
+    p.TaxOpenMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.TaxOpen |> BitConverter.GetBytes |> bb.append
+    
+    p.TaxCloseMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.TaxClose |> BitConverter.GetBytes |> bb.append
+    
+    p.Tax |> BitConverter.GetBytes |> bb.append
+    
+    p.TaxCur |> BitConverter.GetBytes |> bb.append
+    
+    let binTaxCurCode = p.TaxCurCode |> Encoding.UTF8.GetBytes
+    binTaxCurCode.Length |> BitConverter.GetBytes |> bb.append
+    binTaxCurCode |> bb.append
+    
+    p.LastPrice |> BitConverter.GetBytes |> bb.append
+    
+    p.LastUpdatedat.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.LastPriceChange.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.TradeStatus |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.RoMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    let binSchedule = p.Schedule |> Encoding.UTF8.GetBytes
+    binSchedule.Length |> BitConverter.GetBytes |> bb.append
+    binSchedule |> bb.append
+    
+    p.TradeMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.DerivativeMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.OptionsMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.OptionsCP |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.OptionsExpiry.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.OptionsStrike |> BitConverter.GetBytes |> bb.append
+    
+    let binOptionsPricing = p.OptionsPricing |> Encoding.UTF8.GetBytes
+    binOptionsPricing.Length |> BitConverter.GetBytes |> bb.append
+    binOptionsPricing |> bb.append
+    
+    let binOptionsPeriod = p.OptionsPeriod |> Encoding.UTF8.GetBytes
+    binOptionsPeriod.Length |> BitConverter.GetBytes |> bb.append
+    binOptionsPeriod |> bb.append
+    
+    p.OptionsTax |> BitConverter.GetBytes |> bb.append
+    
+    p.OptionsPremiumPerTradeMin |> BitConverter.GetBytes |> bb.append
+    
+    p.OptionsPremiumPerTradeMax |> BitConverter.GetBytes |> bb.append
+    
+    p.LimitLotPerTrade |> BitConverter.GetBytes |> bb.append
+    
+    p.LimitLotPosition |> BitConverter.GetBytes |> bb.append
+    
+    p.CurrentOpen |> BitConverter.GetBytes |> bb.append
+    
+    p.CurrentHigh |> BitConverter.GetBytes |> bb.append
+    
+    p.CurrentLow |> BitConverter.GetBytes |> bb.append
+    
+    p.PrevClose |> BitConverter.GetBytes |> bb.append
+    
+    p.PrevClosedat.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.CurrentOpenat.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.ExtBiz |> BitConverter.GetBytes |> bb.append
+    
+    let binRefExternal = p.RefExternal |> Encoding.UTF8.GetBytes
+    binRefExternal.Length |> BitConverter.GetBytes |> bb.append
+    binRefExternal |> bb.append
+    
+    let binItrnInss = p.ItrnInss |> Encoding.UTF8.GetBytes
+    binItrnInss.Length |> BitConverter.GetBytes |> bb.append
+    binItrnInss |> bb.append
+    
+    p.ItrnInssMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.FlushType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.CurTrigger |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.RobotType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    let binExtLong = p.ExtLong |> Encoding.UTF8.GetBytes
+    binExtLong.Length |> BitConverter.GetBytes |> bb.append
+    binExtLong |> bb.append
+    
+    let binExtShort = p.ExtShort |> Encoding.UTF8.GetBytes
+    binExtShort.Length |> BitConverter.GetBytes |> bb.append
+    binExtShort |> bb.append
+    
+    p.ExtPrice |> BitConverter.GetBytes |> bb.append
+    
+    p.SaveM1 |> BitConverter.GetBytes |> bb.append
+    
+    p.HistSavedat.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.SaveD1 |> BitConverter.GetBytes |> bb.append
+    
+    p.SlPips |> BitConverter.GetBytes |> bb.append
+    
+    p.TpPips |> BitConverter.GetBytes |> bb.append
+    
+    p.PendingLimitPips |> BitConverter.GetBytes |> bb.append
+    
+    p.PendingStopPips |> BitConverter.GetBytes |> bb.append
+    
+    p.LastDirection |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.LiqMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.LiqPeriodSince.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.LiqPeriodTill |> BitConverter.GetBytes |> bb.append
+    
+    p.LiqPeriod |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.LiqTime |> BitConverter.GetBytes |> bb.append
+    
+    p.ConvertRatio |> BitConverter.GetBytes |> bb.append
+    
+    p.RoBuyMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.RoBuy |> BitConverter.GetBytes |> bb.append
+    
+    p.RoSellMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.RoSell |> BitConverter.GetBytes |> bb.append
+    
+    p.PosLimitBuy |> BitConverter.GetBytes |> bb.append
+    
+    p.PosLimitSell |> BitConverter.GetBytes |> bb.append
+    
+    p.RoCur |> BitConverter.GetBytes |> bb.append
+    
+    let binRoCurCode = p.RoCurCode |> Encoding.UTF8.GetBytes
+    binRoCurCode.Length |> BitConverter.GetBytes |> bb.append
+    binRoCurCode |> bb.append
+    
+    p.AdjBias |> BitConverter.GetBytes |> bb.append
+    
+    p.TaxBuy |> BitConverter.GetBytes |> bb.append
+    
+    p.TaxSell |> BitConverter.GetBytes |> bb.append
+    
+    let binMisc = p.Misc |> Encoding.UTF8.GetBytes
+    binMisc.Length |> BitConverter.GetBytes |> bb.append
+    binMisc |> bb.append
+    
+    p.RefLastPriceChange.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    let binHedgeExternal = p.HedgeExternal |> Encoding.UTF8.GetBytes
+    binHedgeExternal.Length |> BitConverter.GetBytes |> bb.append
+    binHedgeExternal |> bb.append
+    
+    p.OfferingPrice |> BitConverter.GetBytes |> bb.append
+    
+    p.IssuanceAmount |> BitConverter.GetBytes |> bb.append
+    
+    p.ListingStatus |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.Turnover |> BitConverter.GetBytes |> bb.append
+    
+    p.PriceOpened |> BitConverter.GetBytes |> bb.append
+
+let INS__bin (bb:BytesBuilder) (v:INS) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pINS__bin bb v.p
+
+let bin__pINS (bi:BinIndexed):pINS =
+    let bin,index = bi
+
+    let p = pINS_empty()
+    
+    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
+    index.Value <- index.Value + count_Desc
+    
+    p.Hidden <- BitConverter.ToBoolean(bin,index.Value)
+    index.Value <- index.Value + 1
+    
+    p.EnableQuote <- BitConverter.ToBoolean(bin,index.Value)
+    index.Value <- index.Value + 1
+    
+    let count_Code = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Code <- Encoding.UTF8.GetString(bin,index.Value,count_Code)
+    index.Value <- index.Value + count_Code
+    
+    let count_Caption = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
+    index.Value <- index.Value + count_Caption
+    
+    p.Long <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_AssetName = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.AssetName <- Encoding.UTF8.GetString(bin,index.Value,count_AssetName)
+    index.Value <- index.Value + count_AssetName
+    
+    p.Short <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Convertor <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.m <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.mu <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.eta <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.psi <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.MarginCalc <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.MarginRateInit <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.MarginRateMntn <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.MarginMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.Dec <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_Formatter = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Formatter <- Encoding.UTF8.GetString(bin,index.Value,count_Formatter)
+    index.Value <- index.Value + count_Formatter
+    
+    let count_Path = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Path <- Encoding.UTF8.GetString(bin,index.Value,count_Path)
+    index.Value <- index.Value + count_Path
+    
+    p.Ask <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Bid <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Middle <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.FixedSpread <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PercentageSpread <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.TaxOpenMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.TaxOpen <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.TaxCloseMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.TaxClose <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Tax <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.TaxCur <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_TaxCurCode = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.TaxCurCode <- Encoding.UTF8.GetString(bin,index.Value,count_TaxCurCode)
+    index.Value <- index.Value + count_TaxCurCode
+    
+    p.LastPrice <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.LastUpdatedat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.LastPriceChange <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.TradeStatus <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.RoMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    let count_Schedule = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Schedule <- Encoding.UTF8.GetString(bin,index.Value,count_Schedule)
+    index.Value <- index.Value + count_Schedule
+    
+    p.TradeMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.DerivativeMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.OptionsMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.OptionsCP <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.OptionsExpiry <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.OptionsStrike <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_OptionsPricing = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.OptionsPricing <- Encoding.UTF8.GetString(bin,index.Value,count_OptionsPricing)
+    index.Value <- index.Value + count_OptionsPricing
+    
+    let count_OptionsPeriod = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.OptionsPeriod <- Encoding.UTF8.GetString(bin,index.Value,count_OptionsPeriod)
+    index.Value <- index.Value + count_OptionsPeriod
+    
+    p.OptionsTax <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.OptionsPremiumPerTradeMin <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.OptionsPremiumPerTradeMax <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.LimitLotPerTrade <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.LimitLotPosition <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.CurrentOpen <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.CurrentHigh <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.CurrentLow <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PrevClose <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PrevClosedat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.CurrentOpenat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.ExtBiz <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_RefExternal = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.RefExternal <- Encoding.UTF8.GetString(bin,index.Value,count_RefExternal)
+    index.Value <- index.Value + count_RefExternal
+    
+    let count_ItrnInss = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.ItrnInss <- Encoding.UTF8.GetString(bin,index.Value,count_ItrnInss)
+    index.Value <- index.Value + count_ItrnInss
+    
+    p.ItrnInssMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.FlushType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.CurTrigger <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.RobotType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    let count_ExtLong = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.ExtLong <- Encoding.UTF8.GetString(bin,index.Value,count_ExtLong)
+    index.Value <- index.Value + count_ExtLong
+    
+    let count_ExtShort = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.ExtShort <- Encoding.UTF8.GetString(bin,index.Value,count_ExtShort)
+    index.Value <- index.Value + count_ExtShort
+    
+    p.ExtPrice <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.SaveM1 <- BitConverter.ToBoolean(bin,index.Value)
+    index.Value <- index.Value + 1
+    
+    p.HistSavedat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.SaveD1 <- BitConverter.ToBoolean(bin,index.Value)
+    index.Value <- index.Value + 1
+    
+    p.SlPips <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.TpPips <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PendingLimitPips <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PendingStopPips <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.LastDirection <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.LiqMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.LiqPeriodSince <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.LiqPeriodTill <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.LiqPeriod <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.LiqTime <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ConvertRatio <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.RoBuyMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.RoBuy <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.RoSellMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.RoSell <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PosLimitBuy <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PosLimitSell <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.RoCur <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_RoCurCode = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.RoCurCode <- Encoding.UTF8.GetString(bin,index.Value,count_RoCurCode)
+    index.Value <- index.Value + count_RoCurCode
+    
+    p.AdjBias <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.TaxBuy <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.TaxSell <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_Misc = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Misc <- Encoding.UTF8.GetString(bin,index.Value,count_Misc)
+    index.Value <- index.Value + count_Misc
+    
+    p.RefLastPriceChange <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    let count_HedgeExternal = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.HedgeExternal <- Encoding.UTF8.GetString(bin,index.Value,count_HedgeExternal)
+    index.Value <- index.Value + count_HedgeExternal
+    
+    p.OfferingPrice <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.IssuanceAmount <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ListingStatus <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.Turnover <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PriceOpened <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p
+
+let bin__INS (bi:BinIndexed):INS =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pINS bi }
+
+let pINS__json (p:pINS) =
+
+    [|
+        ("Desc",p.Desc |> Json.Str)
+        ("Hidden",if p.Hidden then Json.True else Json.False)
+        ("EnableQuote",if p.EnableQuote then Json.True else Json.False)
+        ("Code",p.Code |> Json.Str)
+        ("Caption",p.Caption |> Json.Str)
+        ("Long",p.Long.ToString() |> Json.Num)
+        ("AssetName",p.AssetName |> Json.Str)
+        ("Short",p.Short.ToString() |> Json.Num)
+        ("Convertor",p.Convertor.ToString() |> Json.Num)
+        ("m",p.m.ToString() |> Json.Num)
+        ("mu",p.mu.ToString() |> Json.Num)
+        ("eta",p.eta.ToString() |> Json.Num)
+        ("psi",p.psi.ToString() |> Json.Num)
+        ("MarginCalc",(p.MarginCalc |> EnumToValue).ToString() |> Json.Num)
+        ("MarginRateInit",p.MarginRateInit.ToString() |> Json.Num)
+        ("MarginRateMntn",p.MarginRateMntn.ToString() |> Json.Num)
+        ("MarginMode",(p.MarginMode |> EnumToValue).ToString() |> Json.Num)
+        ("Dec",p.Dec.ToString() |> Json.Num)
+        ("Formatter",p.Formatter |> Json.Str)
+        ("Path",p.Path |> Json.Str)
+        ("Ask",p.Ask.ToString() |> Json.Num)
+        ("Bid",p.Bid.ToString() |> Json.Num)
+        ("Middle",p.Middle.ToString() |> Json.Num)
+        ("FixedSpread",p.FixedSpread.ToString() |> Json.Num)
+        ("PercentageSpread",p.PercentageSpread.ToString() |> Json.Num)
+        ("TaxOpenMode",(p.TaxOpenMode |> EnumToValue).ToString() |> Json.Num)
+        ("TaxOpen",p.TaxOpen.ToString() |> Json.Num)
+        ("TaxCloseMode",(p.TaxCloseMode |> EnumToValue).ToString() |> Json.Num)
+        ("TaxClose",p.TaxClose.ToString() |> Json.Num)
+        ("Tax",p.Tax.ToString() |> Json.Num)
+        ("TaxCur",p.TaxCur.ToString() |> Json.Num)
+        ("TaxCurCode",p.TaxCurCode |> Json.Str)
+        ("LastPrice",p.LastPrice.ToString() |> Json.Num)
+        ("LastUpdatedat",(p.LastUpdatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("LastPriceChange",(p.LastPriceChange |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("TradeStatus",(p.TradeStatus |> EnumToValue).ToString() |> Json.Num)
+        ("RoMode",(p.RoMode |> EnumToValue).ToString() |> Json.Num)
+        ("Schedule",p.Schedule |> Json.Str)
+        ("TradeMode",(p.TradeMode |> EnumToValue).ToString() |> Json.Num)
+        ("DerivativeMode",(p.DerivativeMode |> EnumToValue).ToString() |> Json.Num)
+        ("OptionsMode",(p.OptionsMode |> EnumToValue).ToString() |> Json.Num)
+        ("OptionsCP",(p.OptionsCP |> EnumToValue).ToString() |> Json.Num)
+        ("OptionsExpiry",(p.OptionsExpiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("OptionsStrike",p.OptionsStrike.ToString() |> Json.Num)
+        ("OptionsPricing",p.OptionsPricing |> Json.Str)
+        ("OptionsPeriod",p.OptionsPeriod |> Json.Str)
+        ("OptionsTax",p.OptionsTax.ToString() |> Json.Num)
+        ("OptionsPremiumPerTradeMin",p.OptionsPremiumPerTradeMin.ToString() |> Json.Num)
+        ("OptionsPremiumPerTradeMax",p.OptionsPremiumPerTradeMax.ToString() |> Json.Num)
+        ("LimitLotPerTrade",p.LimitLotPerTrade.ToString() |> Json.Num)
+        ("LimitLotPosition",p.LimitLotPosition.ToString() |> Json.Num)
+        ("CurrentOpen",p.CurrentOpen.ToString() |> Json.Num)
+        ("CurrentHigh",p.CurrentHigh.ToString() |> Json.Num)
+        ("CurrentLow",p.CurrentLow.ToString() |> Json.Num)
+        ("PrevClose",p.PrevClose.ToString() |> Json.Num)
+        ("PrevClosedat",(p.PrevClosedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("CurrentOpenat",(p.CurrentOpenat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("ExtBiz",p.ExtBiz.ToString() |> Json.Num)
+        ("RefExternal",p.RefExternal |> Json.Str)
+        ("ItrnInss",p.ItrnInss |> Json.Str)
+        ("ItrnInssMode",(p.ItrnInssMode |> EnumToValue).ToString() |> Json.Num)
+        ("FlushType",(p.FlushType |> EnumToValue).ToString() |> Json.Num)
+        ("CurTrigger",(p.CurTrigger |> EnumToValue).ToString() |> Json.Num)
+        ("RobotType",(p.RobotType |> EnumToValue).ToString() |> Json.Num)
+        ("ExtLong",p.ExtLong |> Json.Str)
+        ("ExtShort",p.ExtShort |> Json.Str)
+        ("ExtPrice",p.ExtPrice.ToString() |> Json.Num)
+        ("SaveM1",if p.SaveM1 then Json.True else Json.False)
+        ("HistSavedat",(p.HistSavedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("SaveD1",if p.SaveD1 then Json.True else Json.False)
+        ("SlPips",p.SlPips.ToString() |> Json.Num)
+        ("TpPips",p.TpPips.ToString() |> Json.Num)
+        ("PendingLimitPips",p.PendingLimitPips.ToString() |> Json.Num)
+        ("PendingStopPips",p.PendingStopPips.ToString() |> Json.Num)
+        ("LastDirection",(p.LastDirection |> EnumToValue).ToString() |> Json.Num)
+        ("LiqMode",(p.LiqMode |> EnumToValue).ToString() |> Json.Num)
+        ("LiqPeriodSince",(p.LiqPeriodSince |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("LiqPeriodTill",p.LiqPeriodTill.ToString() |> Json.Num)
+        ("LiqPeriod",(p.LiqPeriod |> EnumToValue).ToString() |> Json.Num)
+        ("LiqTime",p.LiqTime.ToString() |> Json.Num)
+        ("ConvertRatio",p.ConvertRatio.ToString() |> Json.Num)
+        ("RoBuyMode",(p.RoBuyMode |> EnumToValue).ToString() |> Json.Num)
+        ("RoBuy",p.RoBuy.ToString() |> Json.Num)
+        ("RoSellMode",(p.RoSellMode |> EnumToValue).ToString() |> Json.Num)
+        ("RoSell",p.RoSell.ToString() |> Json.Num)
+        ("PosLimitBuy",p.PosLimitBuy.ToString() |> Json.Num)
+        ("PosLimitSell",p.PosLimitSell.ToString() |> Json.Num)
+        ("RoCur",p.RoCur.ToString() |> Json.Num)
+        ("RoCurCode",p.RoCurCode |> Json.Str)
+        ("AdjBias",p.AdjBias.ToString() |> Json.Num)
+        ("TaxBuy",p.TaxBuy.ToString() |> Json.Num)
+        ("TaxSell",p.TaxSell.ToString() |> Json.Num)
+        ("Misc",p.Misc |> Json.Str)
+        ("RefLastPriceChange",(p.RefLastPriceChange |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("HedgeExternal",p.HedgeExternal |> Json.Str)
+        ("OfferingPrice",p.OfferingPrice.ToString() |> Json.Num)
+        ("IssuanceAmount",p.IssuanceAmount.ToString() |> Json.Num)
+        ("ListingStatus",(p.ListingStatus |> EnumToValue).ToString() |> Json.Num)
+        ("Turnover",p.Turnover.ToString() |> Json.Num)
+        ("PriceOpened",p.PriceOpened.ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let INS__json (v:INS) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Desc",p.Desc |> Json.Str)
+        ("Hidden",if p.Hidden then Json.True else Json.False)
+        ("EnableQuote",if p.EnableQuote then Json.True else Json.False)
+        ("Code",p.Code |> Json.Str)
+        ("Caption",p.Caption |> Json.Str)
+        ("Long",p.Long.ToString() |> Json.Num)
+        ("AssetName",p.AssetName |> Json.Str)
+        ("Short",p.Short.ToString() |> Json.Num)
+        ("Convertor",p.Convertor.ToString() |> Json.Num)
+        ("m",p.m.ToString() |> Json.Num)
+        ("mu",p.mu.ToString() |> Json.Num)
+        ("eta",p.eta.ToString() |> Json.Num)
+        ("psi",p.psi.ToString() |> Json.Num)
+        ("MarginCalc",(p.MarginCalc |> EnumToValue).ToString() |> Json.Num)
+        ("MarginRateInit",p.MarginRateInit.ToString() |> Json.Num)
+        ("MarginRateMntn",p.MarginRateMntn.ToString() |> Json.Num)
+        ("MarginMode",(p.MarginMode |> EnumToValue).ToString() |> Json.Num)
+        ("Dec",p.Dec.ToString() |> Json.Num)
+        ("Formatter",p.Formatter |> Json.Str)
+        ("Path",p.Path |> Json.Str)
+        ("Ask",p.Ask.ToString() |> Json.Num)
+        ("Bid",p.Bid.ToString() |> Json.Num)
+        ("Middle",p.Middle.ToString() |> Json.Num)
+        ("FixedSpread",p.FixedSpread.ToString() |> Json.Num)
+        ("PercentageSpread",p.PercentageSpread.ToString() |> Json.Num)
+        ("TaxOpenMode",(p.TaxOpenMode |> EnumToValue).ToString() |> Json.Num)
+        ("TaxOpen",p.TaxOpen.ToString() |> Json.Num)
+        ("TaxCloseMode",(p.TaxCloseMode |> EnumToValue).ToString() |> Json.Num)
+        ("TaxClose",p.TaxClose.ToString() |> Json.Num)
+        ("Tax",p.Tax.ToString() |> Json.Num)
+        ("TaxCur",p.TaxCur.ToString() |> Json.Num)
+        ("TaxCurCode",p.TaxCurCode |> Json.Str)
+        ("LastPrice",p.LastPrice.ToString() |> Json.Num)
+        ("LastUpdatedat",(p.LastUpdatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("LastPriceChange",(p.LastPriceChange |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("TradeStatus",(p.TradeStatus |> EnumToValue).ToString() |> Json.Num)
+        ("RoMode",(p.RoMode |> EnumToValue).ToString() |> Json.Num)
+        ("Schedule",p.Schedule |> Json.Str)
+        ("TradeMode",(p.TradeMode |> EnumToValue).ToString() |> Json.Num)
+        ("DerivativeMode",(p.DerivativeMode |> EnumToValue).ToString() |> Json.Num)
+        ("OptionsMode",(p.OptionsMode |> EnumToValue).ToString() |> Json.Num)
+        ("OptionsCP",(p.OptionsCP |> EnumToValue).ToString() |> Json.Num)
+        ("OptionsExpiry",(p.OptionsExpiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("OptionsStrike",p.OptionsStrike.ToString() |> Json.Num)
+        ("OptionsPricing",p.OptionsPricing |> Json.Str)
+        ("OptionsPeriod",p.OptionsPeriod |> Json.Str)
+        ("OptionsTax",p.OptionsTax.ToString() |> Json.Num)
+        ("OptionsPremiumPerTradeMin",p.OptionsPremiumPerTradeMin.ToString() |> Json.Num)
+        ("OptionsPremiumPerTradeMax",p.OptionsPremiumPerTradeMax.ToString() |> Json.Num)
+        ("LimitLotPerTrade",p.LimitLotPerTrade.ToString() |> Json.Num)
+        ("LimitLotPosition",p.LimitLotPosition.ToString() |> Json.Num)
+        ("CurrentOpen",p.CurrentOpen.ToString() |> Json.Num)
+        ("CurrentHigh",p.CurrentHigh.ToString() |> Json.Num)
+        ("CurrentLow",p.CurrentLow.ToString() |> Json.Num)
+        ("PrevClose",p.PrevClose.ToString() |> Json.Num)
+        ("PrevClosedat",(p.PrevClosedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("CurrentOpenat",(p.CurrentOpenat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("ExtBiz",p.ExtBiz.ToString() |> Json.Num)
+        ("RefExternal",p.RefExternal |> Json.Str)
+        ("ItrnInss",p.ItrnInss |> Json.Str)
+        ("ItrnInssMode",(p.ItrnInssMode |> EnumToValue).ToString() |> Json.Num)
+        ("FlushType",(p.FlushType |> EnumToValue).ToString() |> Json.Num)
+        ("CurTrigger",(p.CurTrigger |> EnumToValue).ToString() |> Json.Num)
+        ("RobotType",(p.RobotType |> EnumToValue).ToString() |> Json.Num)
+        ("ExtLong",p.ExtLong |> Json.Str)
+        ("ExtShort",p.ExtShort |> Json.Str)
+        ("ExtPrice",p.ExtPrice.ToString() |> Json.Num)
+        ("SaveM1",if p.SaveM1 then Json.True else Json.False)
+        ("HistSavedat",(p.HistSavedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("SaveD1",if p.SaveD1 then Json.True else Json.False)
+        ("SlPips",p.SlPips.ToString() |> Json.Num)
+        ("TpPips",p.TpPips.ToString() |> Json.Num)
+        ("PendingLimitPips",p.PendingLimitPips.ToString() |> Json.Num)
+        ("PendingStopPips",p.PendingStopPips.ToString() |> Json.Num)
+        ("LastDirection",(p.LastDirection |> EnumToValue).ToString() |> Json.Num)
+        ("LiqMode",(p.LiqMode |> EnumToValue).ToString() |> Json.Num)
+        ("LiqPeriodSince",(p.LiqPeriodSince |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("LiqPeriodTill",p.LiqPeriodTill.ToString() |> Json.Num)
+        ("LiqPeriod",(p.LiqPeriod |> EnumToValue).ToString() |> Json.Num)
+        ("LiqTime",p.LiqTime.ToString() |> Json.Num)
+        ("ConvertRatio",p.ConvertRatio.ToString() |> Json.Num)
+        ("RoBuyMode",(p.RoBuyMode |> EnumToValue).ToString() |> Json.Num)
+        ("RoBuy",p.RoBuy.ToString() |> Json.Num)
+        ("RoSellMode",(p.RoSellMode |> EnumToValue).ToString() |> Json.Num)
+        ("RoSell",p.RoSell.ToString() |> Json.Num)
+        ("PosLimitBuy",p.PosLimitBuy.ToString() |> Json.Num)
+        ("PosLimitSell",p.PosLimitSell.ToString() |> Json.Num)
+        ("RoCur",p.RoCur.ToString() |> Json.Num)
+        ("RoCurCode",p.RoCurCode |> Json.Str)
+        ("AdjBias",p.AdjBias.ToString() |> Json.Num)
+        ("TaxBuy",p.TaxBuy.ToString() |> Json.Num)
+        ("TaxSell",p.TaxSell.ToString() |> Json.Num)
+        ("Misc",p.Misc |> Json.Str)
+        ("RefLastPriceChange",(p.RefLastPriceChange |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("HedgeExternal",p.HedgeExternal |> Json.Str)
+        ("OfferingPrice",p.OfferingPrice.ToString() |> Json.Num)
+        ("IssuanceAmount",p.IssuanceAmount.ToString() |> Json.Num)
+        ("ListingStatus",(p.ListingStatus |> EnumToValue).ToString() |> Json.Num)
+        ("Turnover",p.Turnover.ToString() |> Json.Num)
+        ("PriceOpened",p.PriceOpened.ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let INS__jsonTbw (w:TextBlockWriter) (v:INS) =
+    json__str w (INS__json v)
+
+let INS__jsonStr (v:INS) =
+    (INS__json v) |> json__strFinal
+
+
+let json__pINSo (json:Json):pINS option =
+    let fields = json |> json__items
+
+    let p = pINS_empty()
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Hidden <- checkfield fields "Hidden" = "true"
+    
+    p.EnableQuote <- checkfield fields "EnableQuote" = "true"
+    
+    p.Code <- checkfieldz fields "Code" 64
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.Long <- checkfield fields "Long" |> parse_int64
+    
+    p.AssetName <- checkfieldz fields "AssetName" 64
+    
+    p.Short <- checkfield fields "Short" |> parse_int64
+    
+    p.Convertor <- checkfield fields "Convertor" |> parse_int64
+    
+    p.m <- checkfield fields "m" |> parse_float
+    
+    p.mu <- checkfield fields "mu" |> parse_float
+    
+    p.eta <- checkfield fields "eta" |> parse_float
+    
+    p.psi <- checkfield fields "psi" |> parse_float
+    
+    p.MarginCalc <- checkfield fields "MarginCalc" |> parse_int32 |> EnumOfValue
+    
+    p.MarginRateInit <- checkfield fields "MarginRateInit" |> parse_float
+    
+    p.MarginRateMntn <- checkfield fields "MarginRateMntn" |> parse_float
+    
+    p.MarginMode <- checkfield fields "MarginMode" |> parse_int32 |> EnumOfValue
+    
+    p.Dec <- checkfield fields "Dec" |> parse_int64
+    
+    p.Formatter <- checkfieldz fields "Formatter" 64
+    
+    p.Path <- checkfieldz fields "Path" 256
+    
+    p.Ask <- checkfield fields "Ask" |> parse_int64
+    
+    p.Bid <- checkfield fields "Bid" |> parse_int64
+    
+    p.Middle <- checkfield fields "Middle" |> parse_float
+    
+    p.FixedSpread <- checkfield fields "FixedSpread" |> parse_float
+    
+    p.PercentageSpread <- checkfield fields "PercentageSpread" |> parse_float
+    
+    p.TaxOpenMode <- checkfield fields "TaxOpenMode" |> parse_int32 |> EnumOfValue
+    
+    p.TaxOpen <- checkfield fields "TaxOpen" |> parse_float
+    
+    p.TaxCloseMode <- checkfield fields "TaxCloseMode" |> parse_int32 |> EnumOfValue
+    
+    p.TaxClose <- checkfield fields "TaxClose" |> parse_float
+    
+    p.Tax <- checkfield fields "Tax" |> parse_float
+    
+    p.TaxCur <- checkfield fields "TaxCur" |> parse_int64
+    
+    p.TaxCurCode <- checkfieldz fields "TaxCurCode" 64
+    
+    p.LastPrice <- checkfield fields "LastPrice" |> parse_float
+    
+    p.LastUpdatedat <- checkfield fields "LastUpdatedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.LastPriceChange <- checkfield fields "LastPriceChange" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.TradeStatus <- checkfield fields "TradeStatus" |> parse_int32 |> EnumOfValue
+    
+    p.RoMode <- checkfield fields "RoMode" |> parse_int32 |> EnumOfValue
+    
+    p.Schedule <- checkfield fields "Schedule"
+    
+    p.TradeMode <- checkfield fields "TradeMode" |> parse_int32 |> EnumOfValue
+    
+    p.DerivativeMode <- checkfield fields "DerivativeMode" |> parse_int32 |> EnumOfValue
+    
+    p.OptionsMode <- checkfield fields "OptionsMode" |> parse_int32 |> EnumOfValue
+    
+    p.OptionsCP <- checkfield fields "OptionsCP" |> parse_int32 |> EnumOfValue
+    
+    p.OptionsExpiry <- checkfield fields "OptionsExpiry" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.OptionsStrike <- checkfield fields "OptionsStrike" |> parse_float
+    
+    p.OptionsPricing <- checkfield fields "OptionsPricing"
+    
+    p.OptionsPeriod <- checkfield fields "OptionsPeriod"
+    
+    p.OptionsTax <- checkfield fields "OptionsTax" |> parse_float
+    
+    p.OptionsPremiumPerTradeMin <- checkfield fields "OptionsPremiumPerTradeMin" |> parse_float
+    
+    p.OptionsPremiumPerTradeMax <- checkfield fields "OptionsPremiumPerTradeMax" |> parse_float
+    
+    p.LimitLotPerTrade <- checkfield fields "LimitLotPerTrade" |> parse_float
+    
+    p.LimitLotPosition <- checkfield fields "LimitLotPosition" |> parse_float
+    
+    p.CurrentOpen <- checkfield fields "CurrentOpen" |> parse_float
+    
+    p.CurrentHigh <- checkfield fields "CurrentHigh" |> parse_float
+    
+    p.CurrentLow <- checkfield fields "CurrentLow" |> parse_float
+    
+    p.PrevClose <- checkfield fields "PrevClose" |> parse_float
+    
+    p.PrevClosedat <- checkfield fields "PrevClosedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.CurrentOpenat <- checkfield fields "CurrentOpenat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.ExtBiz <- checkfield fields "ExtBiz" |> parse_int64
+    
+    p.RefExternal <- checkfieldz fields "RefExternal" 64
+    
+    p.ItrnInss <- checkfield fields "ItrnInss"
+    
+    p.ItrnInssMode <- checkfield fields "ItrnInssMode" |> parse_int32 |> EnumOfValue
+    
+    p.FlushType <- checkfield fields "FlushType" |> parse_int32 |> EnumOfValue
+    
+    p.CurTrigger <- checkfield fields "CurTrigger" |> parse_int32 |> EnumOfValue
+    
+    p.RobotType <- checkfield fields "RobotType" |> parse_int32 |> EnumOfValue
+    
+    p.ExtLong <- checkfieldz fields "ExtLong" 64
+    
+    p.ExtShort <- checkfieldz fields "ExtShort" 64
+    
+    p.ExtPrice <- checkfield fields "ExtPrice" |> parse_float
+    
+    p.SaveM1 <- checkfield fields "SaveM1" = "true"
+    
+    p.HistSavedat <- checkfield fields "HistSavedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.SaveD1 <- checkfield fields "SaveD1" = "true"
+    
+    p.SlPips <- checkfield fields "SlPips" |> parse_float
+    
+    p.TpPips <- checkfield fields "TpPips" |> parse_float
+    
+    p.PendingLimitPips <- checkfield fields "PendingLimitPips" |> parse_float
+    
+    p.PendingStopPips <- checkfield fields "PendingStopPips" |> parse_float
+    
+    p.LastDirection <- checkfield fields "LastDirection" |> parse_int32 |> EnumOfValue
+    
+    p.LiqMode <- checkfield fields "LiqMode" |> parse_int32 |> EnumOfValue
+    
+    p.LiqPeriodSince <- checkfield fields "LiqPeriodSince" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.LiqPeriodTill <- checkfield fields "LiqPeriodTill" |> parse_int64
+    
+    p.LiqPeriod <- checkfield fields "LiqPeriod" |> parse_int32 |> EnumOfValue
+    
+    p.LiqTime <- checkfield fields "LiqTime" |> parse_float
+    
+    p.ConvertRatio <- checkfield fields "ConvertRatio" |> parse_float
+    
+    p.RoBuyMode <- checkfield fields "RoBuyMode" |> parse_int32 |> EnumOfValue
+    
+    p.RoBuy <- checkfield fields "RoBuy" |> parse_float
+    
+    p.RoSellMode <- checkfield fields "RoSellMode" |> parse_int32 |> EnumOfValue
+    
+    p.RoSell <- checkfield fields "RoSell" |> parse_float
+    
+    p.PosLimitBuy <- checkfield fields "PosLimitBuy" |> parse_float
+    
+    p.PosLimitSell <- checkfield fields "PosLimitSell" |> parse_float
+    
+    p.RoCur <- checkfield fields "RoCur" |> parse_int64
+    
+    p.RoCurCode <- checkfieldz fields "RoCurCode" 64
+    
+    p.AdjBias <- checkfield fields "AdjBias" |> parse_float
+    
+    p.TaxBuy <- checkfield fields "TaxBuy" |> parse_float
+    
+    p.TaxSell <- checkfield fields "TaxSell" |> parse_float
+    
+    p.Misc <- checkfield fields "Misc"
+    
+    p.RefLastPriceChange <- checkfield fields "RefLastPriceChange" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.HedgeExternal <- checkfieldz fields "HedgeExternal" 64
+    
+    p.OfferingPrice <- checkfield fields "OfferingPrice" |> parse_float
+    
+    p.IssuanceAmount <- checkfield fields "IssuanceAmount" |> parse_int64
+    
+    p.ListingStatus <- checkfield fields "ListingStatus" |> parse_int32 |> EnumOfValue
+    
+    p.Turnover <- checkfield fields "Turnover" |> parse_float
+    
+    p.PriceOpened <- checkfield fields "PriceOpened" |> parse_int64
+    
+    p |> Some
+    
+
+let json__INSo (json:Json):INS option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pINS_empty()
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Hidden <- checkfield fields "Hidden" = "true"
+    
+    p.EnableQuote <- checkfield fields "EnableQuote" = "true"
+    
+    p.Code <- checkfieldz fields "Code" 64
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.Long <- checkfield fields "Long" |> parse_int64
+    
+    p.AssetName <- checkfieldz fields "AssetName" 64
+    
+    p.Short <- checkfield fields "Short" |> parse_int64
+    
+    p.Convertor <- checkfield fields "Convertor" |> parse_int64
+    
+    p.m <- checkfield fields "m" |> parse_float
+    
+    p.mu <- checkfield fields "mu" |> parse_float
+    
+    p.eta <- checkfield fields "eta" |> parse_float
+    
+    p.psi <- checkfield fields "psi" |> parse_float
+    
+    p.MarginCalc <- checkfield fields "MarginCalc" |> parse_int32 |> EnumOfValue
+    
+    p.MarginRateInit <- checkfield fields "MarginRateInit" |> parse_float
+    
+    p.MarginRateMntn <- checkfield fields "MarginRateMntn" |> parse_float
+    
+    p.MarginMode <- checkfield fields "MarginMode" |> parse_int32 |> EnumOfValue
+    
+    p.Dec <- checkfield fields "Dec" |> parse_int64
+    
+    p.Formatter <- checkfieldz fields "Formatter" 64
+    
+    p.Path <- checkfieldz fields "Path" 256
+    
+    p.Ask <- checkfield fields "Ask" |> parse_int64
+    
+    p.Bid <- checkfield fields "Bid" |> parse_int64
+    
+    p.Middle <- checkfield fields "Middle" |> parse_float
+    
+    p.FixedSpread <- checkfield fields "FixedSpread" |> parse_float
+    
+    p.PercentageSpread <- checkfield fields "PercentageSpread" |> parse_float
+    
+    p.TaxOpenMode <- checkfield fields "TaxOpenMode" |> parse_int32 |> EnumOfValue
+    
+    p.TaxOpen <- checkfield fields "TaxOpen" |> parse_float
+    
+    p.TaxCloseMode <- checkfield fields "TaxCloseMode" |> parse_int32 |> EnumOfValue
+    
+    p.TaxClose <- checkfield fields "TaxClose" |> parse_float
+    
+    p.Tax <- checkfield fields "Tax" |> parse_float
+    
+    p.TaxCur <- checkfield fields "TaxCur" |> parse_int64
+    
+    p.TaxCurCode <- checkfieldz fields "TaxCurCode" 64
+    
+    p.LastPrice <- checkfield fields "LastPrice" |> parse_float
+    
+    p.LastUpdatedat <- checkfield fields "LastUpdatedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.LastPriceChange <- checkfield fields "LastPriceChange" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.TradeStatus <- checkfield fields "TradeStatus" |> parse_int32 |> EnumOfValue
+    
+    p.RoMode <- checkfield fields "RoMode" |> parse_int32 |> EnumOfValue
+    
+    p.Schedule <- checkfield fields "Schedule"
+    
+    p.TradeMode <- checkfield fields "TradeMode" |> parse_int32 |> EnumOfValue
+    
+    p.DerivativeMode <- checkfield fields "DerivativeMode" |> parse_int32 |> EnumOfValue
+    
+    p.OptionsMode <- checkfield fields "OptionsMode" |> parse_int32 |> EnumOfValue
+    
+    p.OptionsCP <- checkfield fields "OptionsCP" |> parse_int32 |> EnumOfValue
+    
+    p.OptionsExpiry <- checkfield fields "OptionsExpiry" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.OptionsStrike <- checkfield fields "OptionsStrike" |> parse_float
+    
+    p.OptionsPricing <- checkfield fields "OptionsPricing"
+    
+    p.OptionsPeriod <- checkfield fields "OptionsPeriod"
+    
+    p.OptionsTax <- checkfield fields "OptionsTax" |> parse_float
+    
+    p.OptionsPremiumPerTradeMin <- checkfield fields "OptionsPremiumPerTradeMin" |> parse_float
+    
+    p.OptionsPremiumPerTradeMax <- checkfield fields "OptionsPremiumPerTradeMax" |> parse_float
+    
+    p.LimitLotPerTrade <- checkfield fields "LimitLotPerTrade" |> parse_float
+    
+    p.LimitLotPosition <- checkfield fields "LimitLotPosition" |> parse_float
+    
+    p.CurrentOpen <- checkfield fields "CurrentOpen" |> parse_float
+    
+    p.CurrentHigh <- checkfield fields "CurrentHigh" |> parse_float
+    
+    p.CurrentLow <- checkfield fields "CurrentLow" |> parse_float
+    
+    p.PrevClose <- checkfield fields "PrevClose" |> parse_float
+    
+    p.PrevClosedat <- checkfield fields "PrevClosedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.CurrentOpenat <- checkfield fields "CurrentOpenat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.ExtBiz <- checkfield fields "ExtBiz" |> parse_int64
+    
+    p.RefExternal <- checkfieldz fields "RefExternal" 64
+    
+    p.ItrnInss <- checkfield fields "ItrnInss"
+    
+    p.ItrnInssMode <- checkfield fields "ItrnInssMode" |> parse_int32 |> EnumOfValue
+    
+    p.FlushType <- checkfield fields "FlushType" |> parse_int32 |> EnumOfValue
+    
+    p.CurTrigger <- checkfield fields "CurTrigger" |> parse_int32 |> EnumOfValue
+    
+    p.RobotType <- checkfield fields "RobotType" |> parse_int32 |> EnumOfValue
+    
+    p.ExtLong <- checkfieldz fields "ExtLong" 64
+    
+    p.ExtShort <- checkfieldz fields "ExtShort" 64
+    
+    p.ExtPrice <- checkfield fields "ExtPrice" |> parse_float
+    
+    p.SaveM1 <- checkfield fields "SaveM1" = "true"
+    
+    p.HistSavedat <- checkfield fields "HistSavedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.SaveD1 <- checkfield fields "SaveD1" = "true"
+    
+    p.SlPips <- checkfield fields "SlPips" |> parse_float
+    
+    p.TpPips <- checkfield fields "TpPips" |> parse_float
+    
+    p.PendingLimitPips <- checkfield fields "PendingLimitPips" |> parse_float
+    
+    p.PendingStopPips <- checkfield fields "PendingStopPips" |> parse_float
+    
+    p.LastDirection <- checkfield fields "LastDirection" |> parse_int32 |> EnumOfValue
+    
+    p.LiqMode <- checkfield fields "LiqMode" |> parse_int32 |> EnumOfValue
+    
+    p.LiqPeriodSince <- checkfield fields "LiqPeriodSince" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.LiqPeriodTill <- checkfield fields "LiqPeriodTill" |> parse_int64
+    
+    p.LiqPeriod <- checkfield fields "LiqPeriod" |> parse_int32 |> EnumOfValue
+    
+    p.LiqTime <- checkfield fields "LiqTime" |> parse_float
+    
+    p.ConvertRatio <- checkfield fields "ConvertRatio" |> parse_float
+    
+    p.RoBuyMode <- checkfield fields "RoBuyMode" |> parse_int32 |> EnumOfValue
+    
+    p.RoBuy <- checkfield fields "RoBuy" |> parse_float
+    
+    p.RoSellMode <- checkfield fields "RoSellMode" |> parse_int32 |> EnumOfValue
+    
+    p.RoSell <- checkfield fields "RoSell" |> parse_float
+    
+    p.PosLimitBuy <- checkfield fields "PosLimitBuy" |> parse_float
+    
+    p.PosLimitSell <- checkfield fields "PosLimitSell" |> parse_float
+    
+    p.RoCur <- checkfield fields "RoCur" |> parse_int64
+    
+    p.RoCurCode <- checkfieldz fields "RoCurCode" 64
+    
+    p.AdjBias <- checkfield fields "AdjBias" |> parse_float
+    
+    p.TaxBuy <- checkfield fields "TaxBuy" |> parse_float
+    
+    p.TaxSell <- checkfield fields "TaxSell" |> parse_float
+    
+    p.Misc <- checkfield fields "Misc"
+    
+    p.RefLastPriceChange <- checkfield fields "RefLastPriceChange" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.HedgeExternal <- checkfieldz fields "HedgeExternal" 64
+    
+    p.OfferingPrice <- checkfield fields "OfferingPrice" |> parse_float
+    
+    p.IssuanceAmount <- checkfield fields "IssuanceAmount" |> parse_int64
+    
+    p.ListingStatus <- checkfield fields "ListingStatus" |> parse_int32 |> EnumOfValue
+    
+    p.Turnover <- checkfield fields "Turnover" |> parse_float
+    
+    p.PriceOpened <- checkfield fields "PriceOpened" |> parse_int64
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
+// [TICKET] Structure
+
+let pTICKET__bin (bb:BytesBuilder) (p:pTICKET) =
+
+    
+    p.EndUser |> BitConverter.GetBytes |> bb.append
+    
+    p.TradeAcct |> BitConverter.GetBytes |> bb.append
+    
+    p.Ins |> BitConverter.GetBytes |> bb.append
+    
+    let binCode = p.Code |> Encoding.UTF8.GetBytes
+    binCode.Length |> BitConverter.GetBytes |> bb.append
+    binCode |> bb.append
+    
+    let binCaption = p.Caption |> Encoding.UTF8.GetBytes
+    binCaption.Length |> BitConverter.GetBytes |> bb.append
+    binCaption |> bb.append
+    
+    p.TradeMode |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.Lot |> BitConverter.GetBytes |> bb.append
+    
+    p.PriceOpened |> BitConverter.GetBytes |> bb.append
+    
+    p.PriceOpen |> BitConverter.GetBytes |> bb.append
+    
+    p.PriceSL |> BitConverter.GetBytes |> bb.append
+    
+    p.PriceTP |> BitConverter.GetBytes |> bb.append
+    
+    p.PriceClose |> BitConverter.GetBytes |> bb.append
+    
+    p.Status |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.CP |> BitConverter.GetBytes |> bb.append
+    
+    p.CptAcct |> BitConverter.GetBytes |> bb.append
+    
+    p.Ref |> BitConverter.GetBytes |> bb.append
+    
+    p.OpenRef |> BitConverter.GetBytes |> bb.append
+    
+    p.CloseRef |> BitConverter.GetBytes |> bb.append
+    
+    p.Origin |> BitConverter.GetBytes |> bb.append
+    
+    p.PnL |> BitConverter.GetBytes |> bb.append
+    
+    p.PnLSpread |> BitConverter.GetBytes |> bb.append
+    
+    p.Margin |> BitConverter.GetBytes |> bb.append
+    
+    p.RO |> BitConverter.GetBytes |> bb.append
+    
+    p.Tax |> BitConverter.GetBytes |> bb.append
+    
+    p.CloseType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.CommitType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    let binCmt = p.Cmt |> Encoding.UTF8.GetBytes
+    binCmt.Length |> BitConverter.GetBytes |> bb.append
+    binCmt |> bb.append
+    
+    p.Opendat.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.Closedat.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.CaStrategyAmt |> BitConverter.GetBytes |> bb.append
+    
+    p.CaRo |> BitConverter.GetBytes |> bb.append
+    
+    p.CaAsa |> BitConverter.GetBytes |> bb.append
+    
+    p.CaCmphsvCharge |> BitConverter.GetBytes |> bb.append
+    
+    p.RoCheckedat.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.Expiry.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.HedgetCP |> BitConverter.GetBytes |> bb.append
+    
+    p.PendingPrice |> BitConverter.GetBytes |> bb.append
+    
+    p.ClosedLot |> BitConverter.GetBytes |> bb.append
+    
+    p.ClosedAmt |> BitConverter.GetBytes |> bb.append
+    
+    p.PendingAmt |> BitConverter.GetBytes |> bb.append
+    
+    p.DrvPreminum |> BitConverter.GetBytes |> bb.append
+    
+    p.DrvExpiry.Ticks |> BitConverter.GetBytes |> bb.append
+    
+    p.DrvPeriod |> BitConverter.GetBytes |> bb.append
+    
+    p.DrvDirection |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.DrvPrice |> BitConverter.GetBytes |> bb.append
+    
+    p.DoubleCp |> BitConverter.GetBytes |> bb.append
+    
+    p.ClearStatus |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.FollowTicket |> BitConverter.GetBytes |> bb.append
+    
+    let binConfig = p.Config |> Encoding.UTF8.GetBytes
+    binConfig.Length |> BitConverter.GetBytes |> bb.append
+    binConfig |> bb.append
+    
+    p.OptionStatus |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.NotionalPrincipal |> BitConverter.GetBytes |> bb.append
+    
+    p.ExercisedPrincipal |> BitConverter.GetBytes |> bb.append
+    
+    p.ExerciseMode |> BitConverter.GetBytes |> bb.append
+    
+    p.ExercisePrice |> BitConverter.GetBytes |> bb.append
+    
+    p.ExternalTicketOpen |> BitConverter.GetBytes |> bb.append
+    
+    p.ExternalTicketClose |> BitConverter.GetBytes |> bb.append
+    
+    p.ExternalTicketPending |> BitConverter.GetBytes |> bb.append
+    
+    p.ExternalTicketCancel |> BitConverter.GetBytes |> bb.append
+    
+    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
+    binDesc.Length |> BitConverter.GetBytes |> bb.append
+    binDesc |> bb.append
+
+let TICKET__bin (bb:BytesBuilder) (v:TICKET) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pTICKET__bin bb v.p
+
+let bin__pTICKET (bi:BinIndexed):pTICKET =
+    let bin,index = bi
+
+    let p = pTICKET_empty()
+    
+    p.EndUser <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.TradeAcct <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Ins <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_Code = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Code <- Encoding.UTF8.GetString(bin,index.Value,count_Code)
+    index.Value <- index.Value + count_Code
+    
+    let count_Caption = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
+    index.Value <- index.Value + count_Caption
+    
+    p.TradeMode <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.Lot <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PriceOpened <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PriceOpen <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PriceSL <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PriceTP <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PriceClose <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Status <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.CP <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.CptAcct <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Ref <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.OpenRef <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.CloseRef <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Origin <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PnL <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PnLSpread <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Margin <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.RO <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Tax <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.CloseType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.CommitType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    let count_Cmt = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Cmt <- Encoding.UTF8.GetString(bin,index.Value,count_Cmt)
+    index.Value <- index.Value + count_Cmt
+    
+    p.Opendat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.Closedat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.CaStrategyAmt <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.CaRo <- BitConverter.ToBoolean(bin,index.Value)
+    index.Value <- index.Value + 1
+    
+    p.CaAsa <- BitConverter.ToBoolean(bin,index.Value)
+    index.Value <- index.Value + 1
+    
+    p.CaCmphsvCharge <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.RoCheckedat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.Expiry <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.HedgetCP <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PendingPrice <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ClosedLot <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ClosedAmt <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.PendingAmt <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.DrvPreminum <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.DrvExpiry <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
+    index.Value <- index.Value + 8
+    
+    p.DrvPeriod <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.DrvDirection <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.DrvPrice <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.DoubleCp <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ClearStatus <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.FollowTicket <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_Config = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Config <- Encoding.UTF8.GetString(bin,index.Value,count_Config)
+    index.Value <- index.Value + count_Config
+    
+    p.OptionStatus <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.NotionalPrincipal <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ExercisedPrincipal <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ExerciseMode <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ExercisePrice <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ExternalTicketOpen <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ExternalTicketClose <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ExternalTicketPending <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.ExternalTicketCancel <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
+    index.Value <- index.Value + count_Desc
+    
+    p
+
+let bin__TICKET (bi:BinIndexed):TICKET =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pTICKET bi }
+
+let pTICKET__json (p:pTICKET) =
+
+    [|
+        ("EndUser",p.EndUser.ToString() |> Json.Num)
+        ("TradeAcct",p.TradeAcct.ToString() |> Json.Num)
+        ("Ins",p.Ins.ToString() |> Json.Num)
+        ("Code",p.Code |> Json.Str)
+        ("Caption",p.Caption |> Json.Str)
+        ("TradeMode",(p.TradeMode |> EnumToValue).ToString() |> Json.Num)
+        ("Lot",p.Lot.ToString() |> Json.Num)
+        ("PriceOpened",p.PriceOpened.ToString() |> Json.Num)
+        ("PriceOpen",p.PriceOpen.ToString() |> Json.Num)
+        ("PriceSL",p.PriceSL.ToString() |> Json.Num)
+        ("PriceTP",p.PriceTP.ToString() |> Json.Num)
+        ("PriceClose",p.PriceClose.ToString() |> Json.Num)
+        ("Status",(p.Status |> EnumToValue).ToString() |> Json.Num)
+        ("CP",p.CP.ToString() |> Json.Num)
+        ("CptAcct",p.CptAcct.ToString() |> Json.Num)
+        ("Ref",p.Ref.ToString() |> Json.Num)
+        ("OpenRef",p.OpenRef.ToString() |> Json.Num)
+        ("CloseRef",p.CloseRef.ToString() |> Json.Num)
+        ("Origin",p.Origin.ToString() |> Json.Num)
+        ("PnL",p.PnL.ToString() |> Json.Num)
+        ("PnLSpread",p.PnLSpread.ToString() |> Json.Num)
+        ("Margin",p.Margin.ToString() |> Json.Num)
+        ("RO",p.RO.ToString() |> Json.Num)
+        ("Tax",p.Tax.ToString() |> Json.Num)
+        ("CloseType",(p.CloseType |> EnumToValue).ToString() |> Json.Num)
+        ("CommitType",(p.CommitType |> EnumToValue).ToString() |> Json.Num)
+        ("Cmt",p.Cmt |> Json.Str)
+        ("Opendat",(p.Opendat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Closedat",(p.Closedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("CaStrategyAmt",p.CaStrategyAmt.ToString() |> Json.Num)
+        ("CaRo",if p.CaRo then Json.True else Json.False)
+        ("CaAsa",if p.CaAsa then Json.True else Json.False)
+        ("CaCmphsvCharge",p.CaCmphsvCharge.ToString() |> Json.Num)
+        ("RoCheckedat",(p.RoCheckedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Expiry",(p.Expiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("HedgetCP",p.HedgetCP.ToString() |> Json.Num)
+        ("PendingPrice",p.PendingPrice.ToString() |> Json.Num)
+        ("ClosedLot",p.ClosedLot.ToString() |> Json.Num)
+        ("ClosedAmt",p.ClosedAmt.ToString() |> Json.Num)
+        ("PendingAmt",p.PendingAmt.ToString() |> Json.Num)
+        ("DrvPreminum",p.DrvPreminum.ToString() |> Json.Num)
+        ("DrvExpiry",(p.DrvExpiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("DrvPeriod",p.DrvPeriod.ToString() |> Json.Num)
+        ("DrvDirection",(p.DrvDirection |> EnumToValue).ToString() |> Json.Num)
+        ("DrvPrice",p.DrvPrice.ToString() |> Json.Num)
+        ("DoubleCp",p.DoubleCp.ToString() |> Json.Num)
+        ("ClearStatus",(p.ClearStatus |> EnumToValue).ToString() |> Json.Num)
+        ("FollowTicket",p.FollowTicket.ToString() |> Json.Num)
+        ("Config",p.Config |> Json.Str)
+        ("OptionStatus",(p.OptionStatus |> EnumToValue).ToString() |> Json.Num)
+        ("NotionalPrincipal",p.NotionalPrincipal.ToString() |> Json.Num)
+        ("ExercisedPrincipal",p.ExercisedPrincipal.ToString() |> Json.Num)
+        ("ExerciseMode",p.ExerciseMode.ToString() |> Json.Num)
+        ("ExercisePrice",p.ExercisePrice.ToString() |> Json.Num)
+        ("ExternalTicketOpen",p.ExternalTicketOpen.ToString() |> Json.Num)
+        ("ExternalTicketClose",p.ExternalTicketClose.ToString() |> Json.Num)
+        ("ExternalTicketPending",p.ExternalTicketPending.ToString() |> Json.Num)
+        ("ExternalTicketCancel",p.ExternalTicketCancel.ToString() |> Json.Num)
+        ("Desc",p.Desc |> Json.Str) |]
+    |> Json.Braket
+
+let TICKET__json (v:TICKET) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("EndUser",p.EndUser.ToString() |> Json.Num)
+        ("TradeAcct",p.TradeAcct.ToString() |> Json.Num)
+        ("Ins",p.Ins.ToString() |> Json.Num)
+        ("Code",p.Code |> Json.Str)
+        ("Caption",p.Caption |> Json.Str)
+        ("TradeMode",(p.TradeMode |> EnumToValue).ToString() |> Json.Num)
+        ("Lot",p.Lot.ToString() |> Json.Num)
+        ("PriceOpened",p.PriceOpened.ToString() |> Json.Num)
+        ("PriceOpen",p.PriceOpen.ToString() |> Json.Num)
+        ("PriceSL",p.PriceSL.ToString() |> Json.Num)
+        ("PriceTP",p.PriceTP.ToString() |> Json.Num)
+        ("PriceClose",p.PriceClose.ToString() |> Json.Num)
+        ("Status",(p.Status |> EnumToValue).ToString() |> Json.Num)
+        ("CP",p.CP.ToString() |> Json.Num)
+        ("CptAcct",p.CptAcct.ToString() |> Json.Num)
+        ("Ref",p.Ref.ToString() |> Json.Num)
+        ("OpenRef",p.OpenRef.ToString() |> Json.Num)
+        ("CloseRef",p.CloseRef.ToString() |> Json.Num)
+        ("Origin",p.Origin.ToString() |> Json.Num)
+        ("PnL",p.PnL.ToString() |> Json.Num)
+        ("PnLSpread",p.PnLSpread.ToString() |> Json.Num)
+        ("Margin",p.Margin.ToString() |> Json.Num)
+        ("RO",p.RO.ToString() |> Json.Num)
+        ("Tax",p.Tax.ToString() |> Json.Num)
+        ("CloseType",(p.CloseType |> EnumToValue).ToString() |> Json.Num)
+        ("CommitType",(p.CommitType |> EnumToValue).ToString() |> Json.Num)
+        ("Cmt",p.Cmt |> Json.Str)
+        ("Opendat",(p.Opendat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Closedat",(p.Closedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("CaStrategyAmt",p.CaStrategyAmt.ToString() |> Json.Num)
+        ("CaRo",if p.CaRo then Json.True else Json.False)
+        ("CaAsa",if p.CaAsa then Json.True else Json.False)
+        ("CaCmphsvCharge",p.CaCmphsvCharge.ToString() |> Json.Num)
+        ("RoCheckedat",(p.RoCheckedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Expiry",(p.Expiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("HedgetCP",p.HedgetCP.ToString() |> Json.Num)
+        ("PendingPrice",p.PendingPrice.ToString() |> Json.Num)
+        ("ClosedLot",p.ClosedLot.ToString() |> Json.Num)
+        ("ClosedAmt",p.ClosedAmt.ToString() |> Json.Num)
+        ("PendingAmt",p.PendingAmt.ToString() |> Json.Num)
+        ("DrvPreminum",p.DrvPreminum.ToString() |> Json.Num)
+        ("DrvExpiry",(p.DrvExpiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("DrvPeriod",p.DrvPeriod.ToString() |> Json.Num)
+        ("DrvDirection",(p.DrvDirection |> EnumToValue).ToString() |> Json.Num)
+        ("DrvPrice",p.DrvPrice.ToString() |> Json.Num)
+        ("DoubleCp",p.DoubleCp.ToString() |> Json.Num)
+        ("ClearStatus",(p.ClearStatus |> EnumToValue).ToString() |> Json.Num)
+        ("FollowTicket",p.FollowTicket.ToString() |> Json.Num)
+        ("Config",p.Config |> Json.Str)
+        ("OptionStatus",(p.OptionStatus |> EnumToValue).ToString() |> Json.Num)
+        ("NotionalPrincipal",p.NotionalPrincipal.ToString() |> Json.Num)
+        ("ExercisedPrincipal",p.ExercisedPrincipal.ToString() |> Json.Num)
+        ("ExerciseMode",p.ExerciseMode.ToString() |> Json.Num)
+        ("ExercisePrice",p.ExercisePrice.ToString() |> Json.Num)
+        ("ExternalTicketOpen",p.ExternalTicketOpen.ToString() |> Json.Num)
+        ("ExternalTicketClose",p.ExternalTicketClose.ToString() |> Json.Num)
+        ("ExternalTicketPending",p.ExternalTicketPending.ToString() |> Json.Num)
+        ("ExternalTicketCancel",p.ExternalTicketCancel.ToString() |> Json.Num)
+        ("Desc",p.Desc |> Json.Str) |]
+    |> Json.Braket
+
+let TICKET__jsonTbw (w:TextBlockWriter) (v:TICKET) =
+    json__str w (TICKET__json v)
+
+let TICKET__jsonStr (v:TICKET) =
+    (TICKET__json v) |> json__strFinal
+
+
+let json__pTICKETo (json:Json):pTICKET option =
+    let fields = json |> json__items
+
+    let p = pTICKET_empty()
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p.TradeAcct <- checkfield fields "TradeAcct" |> parse_int64
+    
+    p.Ins <- checkfield fields "Ins" |> parse_int64
+    
+    p.Code <- checkfieldz fields "Code" 64
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.TradeMode <- checkfield fields "TradeMode" |> parse_int32 |> EnumOfValue
+    
+    p.Lot <- checkfield fields "Lot" |> parse_int64
+    
+    p.PriceOpened <- checkfield fields "PriceOpened" |> parse_int64
+    
+    p.PriceOpen <- checkfield fields "PriceOpen" |> parse_int64
+    
+    p.PriceSL <- checkfield fields "PriceSL" |> parse_int64
+    
+    p.PriceTP <- checkfield fields "PriceTP" |> parse_int64
+    
+    p.PriceClose <- checkfield fields "PriceClose" |> parse_int64
+    
+    p.Status <- checkfield fields "Status" |> parse_int32 |> EnumOfValue
+    
+    p.CP <- checkfield fields "CP" |> parse_int64
+    
+    p.CptAcct <- checkfield fields "CptAcct" |> parse_int64
+    
+    p.Ref <- checkfield fields "Ref" |> parse_int64
+    
+    p.OpenRef <- checkfield fields "OpenRef" |> parse_int64
+    
+    p.CloseRef <- checkfield fields "CloseRef" |> parse_int64
+    
+    p.Origin <- checkfield fields "Origin" |> parse_int64
+    
+    p.PnL <- checkfield fields "PnL" |> parse_float
+    
+    p.PnLSpread <- checkfield fields "PnLSpread" |> parse_float
+    
+    p.Margin <- checkfield fields "Margin" |> parse_float
+    
+    p.RO <- checkfield fields "RO" |> parse_float
+    
+    p.Tax <- checkfield fields "Tax" |> parse_float
+    
+    p.CloseType <- checkfield fields "CloseType" |> parse_int32 |> EnumOfValue
+    
+    p.CommitType <- checkfield fields "CommitType" |> parse_int32 |> EnumOfValue
+    
+    p.Cmt <- checkfieldz fields "Cmt" 64
+    
+    p.Opendat <- checkfield fields "Opendat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.Closedat <- checkfield fields "Closedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.CaStrategyAmt <- checkfield fields "CaStrategyAmt" |> parse_float
+    
+    p.CaRo <- checkfield fields "CaRo" = "true"
+    
+    p.CaAsa <- checkfield fields "CaAsa" = "true"
+    
+    p.CaCmphsvCharge <- checkfield fields "CaCmphsvCharge" |> parse_float
+    
+    p.RoCheckedat <- checkfield fields "RoCheckedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.Expiry <- checkfield fields "Expiry" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.HedgetCP <- checkfield fields "HedgetCP" |> parse_int64
+    
+    p.PendingPrice <- checkfield fields "PendingPrice" |> parse_int64
+    
+    p.ClosedLot <- checkfield fields "ClosedLot" |> parse_int64
+    
+    p.ClosedAmt <- checkfield fields "ClosedAmt" |> parse_float
+    
+    p.PendingAmt <- checkfield fields "PendingAmt" |> parse_float
+    
+    p.DrvPreminum <- checkfield fields "DrvPreminum" |> parse_float
+    
+    p.DrvExpiry <- checkfield fields "DrvExpiry" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.DrvPeriod <- checkfield fields "DrvPeriod" |> parse_int64
+    
+    p.DrvDirection <- checkfield fields "DrvDirection" |> parse_int32 |> EnumOfValue
+    
+    p.DrvPrice <- checkfield fields "DrvPrice" |> parse_float
+    
+    p.DoubleCp <- checkfield fields "DoubleCp" |> parse_int64
+    
+    p.ClearStatus <- checkfield fields "ClearStatus" |> parse_int32 |> EnumOfValue
+    
+    p.FollowTicket <- checkfield fields "FollowTicket" |> parse_int64
+    
+    p.Config <- checkfield fields "Config"
+    
+    p.OptionStatus <- checkfield fields "OptionStatus" |> parse_int32 |> EnumOfValue
+    
+    p.NotionalPrincipal <- checkfield fields "NotionalPrincipal" |> parse_float
+    
+    p.ExercisedPrincipal <- checkfield fields "ExercisedPrincipal" |> parse_float
+    
+    p.ExerciseMode <- checkfield fields "ExerciseMode" |> parse_float
+    
+    p.ExercisePrice <- checkfield fields "ExercisePrice" |> parse_float
+    
+    p.ExternalTicketOpen <- checkfield fields "ExternalTicketOpen" |> parse_int64
+    
+    p.ExternalTicketClose <- checkfield fields "ExternalTicketClose" |> parse_int64
+    
+    p.ExternalTicketPending <- checkfield fields "ExternalTicketPending" |> parse_int64
+    
+    p.ExternalTicketCancel <- checkfield fields "ExternalTicketCancel" |> parse_int64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p |> Some
+    
+
+let json__TICKETo (json:Json):TICKET option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pTICKET_empty()
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p.TradeAcct <- checkfield fields "TradeAcct" |> parse_int64
+    
+    p.Ins <- checkfield fields "Ins" |> parse_int64
+    
+    p.Code <- checkfieldz fields "Code" 64
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.TradeMode <- checkfield fields "TradeMode" |> parse_int32 |> EnumOfValue
+    
+    p.Lot <- checkfield fields "Lot" |> parse_int64
+    
+    p.PriceOpened <- checkfield fields "PriceOpened" |> parse_int64
+    
+    p.PriceOpen <- checkfield fields "PriceOpen" |> parse_int64
+    
+    p.PriceSL <- checkfield fields "PriceSL" |> parse_int64
+    
+    p.PriceTP <- checkfield fields "PriceTP" |> parse_int64
+    
+    p.PriceClose <- checkfield fields "PriceClose" |> parse_int64
+    
+    p.Status <- checkfield fields "Status" |> parse_int32 |> EnumOfValue
+    
+    p.CP <- checkfield fields "CP" |> parse_int64
+    
+    p.CptAcct <- checkfield fields "CptAcct" |> parse_int64
+    
+    p.Ref <- checkfield fields "Ref" |> parse_int64
+    
+    p.OpenRef <- checkfield fields "OpenRef" |> parse_int64
+    
+    p.CloseRef <- checkfield fields "CloseRef" |> parse_int64
+    
+    p.Origin <- checkfield fields "Origin" |> parse_int64
+    
+    p.PnL <- checkfield fields "PnL" |> parse_float
+    
+    p.PnLSpread <- checkfield fields "PnLSpread" |> parse_float
+    
+    p.Margin <- checkfield fields "Margin" |> parse_float
+    
+    p.RO <- checkfield fields "RO" |> parse_float
+    
+    p.Tax <- checkfield fields "Tax" |> parse_float
+    
+    p.CloseType <- checkfield fields "CloseType" |> parse_int32 |> EnumOfValue
+    
+    p.CommitType <- checkfield fields "CommitType" |> parse_int32 |> EnumOfValue
+    
+    p.Cmt <- checkfieldz fields "Cmt" 64
+    
+    p.Opendat <- checkfield fields "Opendat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.Closedat <- checkfield fields "Closedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.CaStrategyAmt <- checkfield fields "CaStrategyAmt" |> parse_float
+    
+    p.CaRo <- checkfield fields "CaRo" = "true"
+    
+    p.CaAsa <- checkfield fields "CaAsa" = "true"
+    
+    p.CaCmphsvCharge <- checkfield fields "CaCmphsvCharge" |> parse_float
+    
+    p.RoCheckedat <- checkfield fields "RoCheckedat" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.Expiry <- checkfield fields "Expiry" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.HedgetCP <- checkfield fields "HedgetCP" |> parse_int64
+    
+    p.PendingPrice <- checkfield fields "PendingPrice" |> parse_int64
+    
+    p.ClosedLot <- checkfield fields "ClosedLot" |> parse_int64
+    
+    p.ClosedAmt <- checkfield fields "ClosedAmt" |> parse_float
+    
+    p.PendingAmt <- checkfield fields "PendingAmt" |> parse_float
+    
+    p.DrvPreminum <- checkfield fields "DrvPreminum" |> parse_float
+    
+    p.DrvExpiry <- checkfield fields "DrvExpiry" |> parse_int64 |> Util.Time.unixtime__wintime
+    
+    p.DrvPeriod <- checkfield fields "DrvPeriod" |> parse_int64
+    
+    p.DrvDirection <- checkfield fields "DrvDirection" |> parse_int32 |> EnumOfValue
+    
+    p.DrvPrice <- checkfield fields "DrvPrice" |> parse_float
+    
+    p.DoubleCp <- checkfield fields "DoubleCp" |> parse_int64
+    
+    p.ClearStatus <- checkfield fields "ClearStatus" |> parse_int32 |> EnumOfValue
+    
+    p.FollowTicket <- checkfield fields "FollowTicket" |> parse_int64
+    
+    p.Config <- checkfield fields "Config"
+    
+    p.OptionStatus <- checkfield fields "OptionStatus" |> parse_int32 |> EnumOfValue
+    
+    p.NotionalPrincipal <- checkfield fields "NotionalPrincipal" |> parse_float
+    
+    p.ExercisedPrincipal <- checkfield fields "ExercisedPrincipal" |> parse_float
+    
+    p.ExerciseMode <- checkfield fields "ExerciseMode" |> parse_float
+    
+    p.ExercisePrice <- checkfield fields "ExercisePrice" |> parse_float
+    
+    p.ExternalTicketOpen <- checkfield fields "ExternalTicketOpen" |> parse_int64
+    
+    p.ExternalTicketClose <- checkfield fields "ExternalTicketClose" |> parse_int64
+    
+    p.ExternalTicketPending <- checkfield fields "ExternalTicketPending" |> parse_int64
+    
+    p.ExternalTicketCancel <- checkfield fields "ExternalTicketCancel" |> parse_int64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
+// [TACCT] Structure
+
+let pTACCT__bin (bb:BytesBuilder) (p:pTACCT) =
+
+    
+    p.SAC |> BitConverter.GetBytes |> bb.append
+    
+    p.State |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.TradeType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.RealDemo |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.PnL |> BitConverter.GetBytes |> bb.append
+    
+    p.Frozen |> BitConverter.GetBytes |> bb.append
+    
+    p.Leverage |> BitConverter.GetBytes |> bb.append
+    
+    p.Margin |> BitConverter.GetBytes |> bb.append
+    
+    p.MarginCallRateWarning |> BitConverter.GetBytes |> bb.append
+    
+    p.MarginCallRateWarningII |> BitConverter.GetBytes |> bb.append
+    
+    p.MarginCallRateLiq |> BitConverter.GetBytes |> bb.append
+    
+    let binPwdTrade = p.PwdTrade |> Encoding.UTF8.GetBytes
+    binPwdTrade.Length |> BitConverter.GetBytes |> bb.append
+    binPwdTrade |> bb.append
+    
+    let binPwdReadonly = p.PwdReadonly |> Encoding.UTF8.GetBytes
+    binPwdReadonly.Length |> BitConverter.GetBytes |> bb.append
+    binPwdReadonly |> bb.append
+    
+    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
+    binDesc.Length |> BitConverter.GetBytes |> bb.append
+    binDesc |> bb.append
+
+let TACCT__bin (bb:BytesBuilder) (v:TACCT) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pTACCT__bin bb v.p
+
+let bin__pTACCT (bi:BinIndexed):pTACCT =
+    let bin,index = bi
+
+    let p = pTACCT_empty()
+    
+    p.SAC <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.State <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.TradeType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.RealDemo <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.PnL <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Frozen <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Leverage <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Margin <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.MarginCallRateWarning <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.MarginCallRateWarningII <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.MarginCallRateLiq <- BitConverter.ToDouble(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_PwdTrade = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.PwdTrade <- Encoding.UTF8.GetString(bin,index.Value,count_PwdTrade)
+    index.Value <- index.Value + count_PwdTrade
+    
+    let count_PwdReadonly = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.PwdReadonly <- Encoding.UTF8.GetString(bin,index.Value,count_PwdReadonly)
+    index.Value <- index.Value + count_PwdReadonly
+    
+    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
+    index.Value <- index.Value + count_Desc
+    
+    p
+
+let bin__TACCT (bi:BinIndexed):TACCT =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pTACCT bi }
+
+let pTACCT__json (p:pTACCT) =
+
+    [|
+        ("SAC",p.SAC.ToString() |> Json.Num)
+        ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
+        ("TradeType",(p.TradeType |> EnumToValue).ToString() |> Json.Num)
+        ("RealDemo",(p.RealDemo |> EnumToValue).ToString() |> Json.Num)
+        ("PnL",p.PnL.ToString() |> Json.Num)
+        ("Frozen",p.Frozen.ToString() |> Json.Num)
+        ("Leverage",p.Leverage.ToString() |> Json.Num)
+        ("Margin",p.Margin.ToString() |> Json.Num)
+        ("MarginCallRateWarning",p.MarginCallRateWarning.ToString() |> Json.Num)
+        ("MarginCallRateWarningII",p.MarginCallRateWarningII.ToString() |> Json.Num)
+        ("MarginCallRateLiq",p.MarginCallRateLiq.ToString() |> Json.Num)
+        ("PwdTrade",p.PwdTrade |> Json.Str)
+        ("PwdReadonly",p.PwdReadonly |> Json.Str)
+        ("Desc",p.Desc |> Json.Str) |]
+    |> Json.Braket
+
+let TACCT__json (v:TACCT) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("SAC",p.SAC.ToString() |> Json.Num)
+        ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
+        ("TradeType",(p.TradeType |> EnumToValue).ToString() |> Json.Num)
+        ("RealDemo",(p.RealDemo |> EnumToValue).ToString() |> Json.Num)
+        ("PnL",p.PnL.ToString() |> Json.Num)
+        ("Frozen",p.Frozen.ToString() |> Json.Num)
+        ("Leverage",p.Leverage.ToString() |> Json.Num)
+        ("Margin",p.Margin.ToString() |> Json.Num)
+        ("MarginCallRateWarning",p.MarginCallRateWarning.ToString() |> Json.Num)
+        ("MarginCallRateWarningII",p.MarginCallRateWarningII.ToString() |> Json.Num)
+        ("MarginCallRateLiq",p.MarginCallRateLiq.ToString() |> Json.Num)
+        ("PwdTrade",p.PwdTrade |> Json.Str)
+        ("PwdReadonly",p.PwdReadonly |> Json.Str)
+        ("Desc",p.Desc |> Json.Str) |]
+    |> Json.Braket
+
+let TACCT__jsonTbw (w:TextBlockWriter) (v:TACCT) =
+    json__str w (TACCT__json v)
+
+let TACCT__jsonStr (v:TACCT) =
+    (TACCT__json v) |> json__strFinal
+
+
+let json__pTACCTo (json:Json):pTACCT option =
+    let fields = json |> json__items
+
+    let p = pTACCT_empty()
+    
+    p.SAC <- checkfield fields "SAC" |> parse_int64
+    
+    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+    
+    p.TradeType <- checkfield fields "TradeType" |> parse_int32 |> EnumOfValue
+    
+    p.RealDemo <- checkfield fields "RealDemo" |> parse_int32 |> EnumOfValue
+    
+    p.PnL <- checkfield fields "PnL" |> parse_float
+    
+    p.Frozen <- checkfield fields "Frozen" |> parse_float
+    
+    p.Leverage <- checkfield fields "Leverage" |> parse_float
+    
+    p.Margin <- checkfield fields "Margin" |> parse_float
+    
+    p.MarginCallRateWarning <- checkfield fields "MarginCallRateWarning" |> parse_float
+    
+    p.MarginCallRateWarningII <- checkfield fields "MarginCallRateWarningII" |> parse_float
+    
+    p.MarginCallRateLiq <- checkfield fields "MarginCallRateLiq" |> parse_float
+    
+    p.PwdTrade <- checkfieldz fields "PwdTrade" 64
+    
+    p.PwdReadonly <- checkfieldz fields "PwdReadonly" 64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p |> Some
+    
+
+let json__TACCTo (json:Json):TACCT option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pTACCT_empty()
+    
+    p.SAC <- checkfield fields "SAC" |> parse_int64
+    
+    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+    
+    p.TradeType <- checkfield fields "TradeType" |> parse_int32 |> EnumOfValue
+    
+    p.RealDemo <- checkfield fields "RealDemo" |> parse_int32 |> EnumOfValue
+    
+    p.PnL <- checkfield fields "PnL" |> parse_float
+    
+    p.Frozen <- checkfield fields "Frozen" |> parse_float
+    
+    p.Leverage <- checkfield fields "Leverage" |> parse_float
+    
+    p.Margin <- checkfield fields "Margin" |> parse_float
+    
+    p.MarginCallRateWarning <- checkfield fields "MarginCallRateWarning" |> parse_float
+    
+    p.MarginCallRateWarningII <- checkfield fields "MarginCallRateWarningII" |> parse_float
+    
+    p.MarginCallRateLiq <- checkfield fields "MarginCallRateLiq" |> parse_float
+    
+    p.PwdTrade <- checkfieldz fields "PwdTrade" 64
+    
+    p.PwdReadonly <- checkfieldz fields "PwdReadonly" 64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
 // [BOOKMARK] Structure
 
 let pBOOKMARK__bin (bb:BytesBuilder) (p:pBOOKMARK) =
@@ -3855,6 +6122,127 @@ let json__SBLo (json:Json):SBL option =
         p = p } |> Some
     
 
+// [FOLLOW] Structure
+
+let pFOLLOW__bin (bb:BytesBuilder) (p:pFOLLOW) =
+
+    
+    p.EndUser |> BitConverter.GetBytes |> bb.append
+    
+    p.Followee |> BitConverter.GetBytes |> bb.append
+    
+    p.FollowType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+
+let FOLLOW__bin (bb:BytesBuilder) (v:FOLLOW) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pFOLLOW__bin bb v.p
+
+let bin__pFOLLOW (bi:BinIndexed):pFOLLOW =
+    let bin,index = bi
+
+    let p = pFOLLOW_empty()
+    
+    p.EndUser <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Followee <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.FollowType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p
+
+let bin__FOLLOW (bi:BinIndexed):FOLLOW =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pFOLLOW bi }
+
+let pFOLLOW__json (p:pFOLLOW) =
+
+    [|
+        ("EndUser",p.EndUser.ToString() |> Json.Num)
+        ("Followee",p.Followee.ToString() |> Json.Num)
+        ("FollowType",(p.FollowType |> EnumToValue).ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let FOLLOW__json (v:FOLLOW) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("EndUser",p.EndUser.ToString() |> Json.Num)
+        ("Followee",p.Followee.ToString() |> Json.Num)
+        ("FollowType",(p.FollowType |> EnumToValue).ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let FOLLOW__jsonTbw (w:TextBlockWriter) (v:FOLLOW) =
+    json__str w (FOLLOW__json v)
+
+let FOLLOW__jsonStr (v:FOLLOW) =
+    (FOLLOW__json v) |> json__strFinal
+
+
+let json__pFOLLOWo (json:Json):pFOLLOW option =
+    let fields = json |> json__items
+
+    let p = pFOLLOW_empty()
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p.Followee <- checkfield fields "Followee" |> parse_int64
+    
+    p.FollowType <- checkfield fields "FollowType" |> parse_int32 |> EnumOfValue
+    
+    p |> Some
+    
+
+let json__FOLLOWo (json:Json):FOLLOW option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pFOLLOW_empty()
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p.Followee <- checkfield fields "Followee" |> parse_int64
+    
+    p.FollowType <- checkfield fields "FollowType" |> parse_int32 |> EnumOfValue
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
 // [MOMENT] Structure
 
 let pMOMENT__bin (bb:BytesBuilder) (p:pMOMENT) =
@@ -4230,6 +6618,437 @@ let json__MOMENTo (json:Json):MOMENT option =
     p.PostType <- checkfield fields "PostType" |> parse_int32 |> EnumOfValue
     
     p.AudioUrl <- checkfield fields "AudioUrl"
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
+// [FUND] Structure
+
+let pFUND__bin (bb:BytesBuilder) (p:pFUND) =
+
+    
+    let binCaption = p.Caption |> Encoding.UTF8.GetBytes
+    binCaption.Length |> BitConverter.GetBytes |> bb.append
+    binCaption |> bb.append
+    
+    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
+    binDesc.Length |> BitConverter.GetBytes |> bb.append
+    binDesc |> bb.append
+    
+    p.Bind |> BitConverter.GetBytes |> bb.append
+    
+    p.BindType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+
+let FUND__bin (bb:BytesBuilder) (v:FUND) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pFUND__bin bb v.p
+
+let bin__pFUND (bi:BinIndexed):pFUND =
+    let bin,index = bi
+
+    let p = pFUND_empty()
+    
+    let count_Caption = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
+    index.Value <- index.Value + count_Caption
+    
+    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
+    index.Value <- index.Value + count_Desc
+    
+    p.Bind <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.BindType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p
+
+let bin__FUND (bi:BinIndexed):FUND =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pFUND bi }
+
+let pFUND__json (p:pFUND) =
+
+    [|
+        ("Caption",p.Caption |> Json.Str)
+        ("Desc",p.Desc |> Json.Str)
+        ("Bind",p.Bind.ToString() |> Json.Num)
+        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let FUND__json (v:FUND) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Caption",p.Caption |> Json.Str)
+        ("Desc",p.Desc |> Json.Str)
+        ("Bind",p.Bind.ToString() |> Json.Num)
+        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let FUND__jsonTbw (w:TextBlockWriter) (v:FUND) =
+    json__str w (FUND__json v)
+
+let FUND__jsonStr (v:FUND) =
+    (FUND__json v) |> json__strFinal
+
+
+let json__pFUNDo (json:Json):pFUND option =
+    let fields = json |> json__items
+
+    let p = pFUND_empty()
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Bind <- checkfield fields "Bind" |> parse_int64
+    
+    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    p |> Some
+    
+
+let json__FUNDo (json:Json):FUND option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pFUND_empty()
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Bind <- checkfield fields "Bind" |> parse_int64
+    
+    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
+// [PORTFOLIO] Structure
+
+let pPORTFOLIO__bin (bb:BytesBuilder) (p:pPORTFOLIO) =
+
+    
+    let binCaption = p.Caption |> Encoding.UTF8.GetBytes
+    binCaption.Length |> BitConverter.GetBytes |> bb.append
+    binCaption |> bb.append
+    
+    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
+    binDesc.Length |> BitConverter.GetBytes |> bb.append
+    binDesc |> bb.append
+    
+    p.Fund |> BitConverter.GetBytes |> bb.append
+    
+    p.Bind |> BitConverter.GetBytes |> bb.append
+    
+    p.BindType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+
+let PORTFOLIO__bin (bb:BytesBuilder) (v:PORTFOLIO) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pPORTFOLIO__bin bb v.p
+
+let bin__pPORTFOLIO (bi:BinIndexed):pPORTFOLIO =
+    let bin,index = bi
+
+    let p = pPORTFOLIO_empty()
+    
+    let count_Caption = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
+    index.Value <- index.Value + count_Caption
+    
+    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
+    index.Value <- index.Value + count_Desc
+    
+    p.Fund <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Bind <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.BindType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p
+
+let bin__PORTFOLIO (bi:BinIndexed):PORTFOLIO =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pPORTFOLIO bi }
+
+let pPORTFOLIO__json (p:pPORTFOLIO) =
+
+    [|
+        ("Caption",p.Caption |> Json.Str)
+        ("Desc",p.Desc |> Json.Str)
+        ("Fund",p.Fund.ToString() |> Json.Num)
+        ("Bind",p.Bind.ToString() |> Json.Num)
+        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let PORTFOLIO__json (v:PORTFOLIO) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Caption",p.Caption |> Json.Str)
+        ("Desc",p.Desc |> Json.Str)
+        ("Fund",p.Fund.ToString() |> Json.Num)
+        ("Bind",p.Bind.ToString() |> Json.Num)
+        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let PORTFOLIO__jsonTbw (w:TextBlockWriter) (v:PORTFOLIO) =
+    json__str w (PORTFOLIO__json v)
+
+let PORTFOLIO__jsonStr (v:PORTFOLIO) =
+    (PORTFOLIO__json v) |> json__strFinal
+
+
+let json__pPORTFOLIOo (json:Json):pPORTFOLIO option =
+    let fields = json |> json__items
+
+    let p = pPORTFOLIO_empty()
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Fund <- checkfield fields "Fund" |> parse_int64
+    
+    p.Bind <- checkfield fields "Bind" |> parse_int64
+    
+    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    p |> Some
+    
+
+let json__PORTFOLIOo (json:Json):PORTFOLIO option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pPORTFOLIO_empty()
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Fund <- checkfield fields "Fund" |> parse_int64
+    
+    p.Bind <- checkfield fields "Bind" |> parse_int64
+    
+    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
+// [TRADER] Structure
+
+let pTRADER__bin (bb:BytesBuilder) (p:pTRADER) =
+
+    
+    let binCaption = p.Caption |> Encoding.UTF8.GetBytes
+    binCaption.Length |> BitConverter.GetBytes |> bb.append
+    binCaption |> bb.append
+    
+    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
+    binDesc.Length |> BitConverter.GetBytes |> bb.append
+    binDesc |> bb.append
+    
+    p.Fund |> BitConverter.GetBytes |> bb.append
+    
+    p.EndUser |> BitConverter.GetBytes |> bb.append
+
+let TRADER__bin (bb:BytesBuilder) (v:TRADER) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pTRADER__bin bb v.p
+
+let bin__pTRADER (bi:BinIndexed):pTRADER =
+    let bin,index = bi
+
+    let p = pTRADER_empty()
+    
+    let count_Caption = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
+    index.Value <- index.Value + count_Caption
+    
+    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
+    index.Value <- index.Value + count_Desc
+    
+    p.Fund <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.EndUser <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p
+
+let bin__TRADER (bi:BinIndexed):TRADER =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pTRADER bi }
+
+let pTRADER__json (p:pTRADER) =
+
+    [|
+        ("Caption",p.Caption |> Json.Str)
+        ("Desc",p.Desc |> Json.Str)
+        ("Fund",p.Fund.ToString() |> Json.Num)
+        ("EndUser",p.EndUser.ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let TRADER__json (v:TRADER) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Caption",p.Caption |> Json.Str)
+        ("Desc",p.Desc |> Json.Str)
+        ("Fund",p.Fund.ToString() |> Json.Num)
+        ("EndUser",p.EndUser.ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let TRADER__jsonTbw (w:TextBlockWriter) (v:TRADER) =
+    json__str w (TRADER__json v)
+
+let TRADER__jsonStr (v:TRADER) =
+    (TRADER__json v) |> json__strFinal
+
+
+let json__pTRADERo (json:Json):pTRADER option =
+    let fields = json |> json__items
+
+    let p = pTRADER_empty()
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Fund <- checkfield fields "Fund" |> parse_int64
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p |> Some
+    
+
+let json__TRADERo (json:Json):TRADER option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pTRADER_empty()
+    
+    p.Caption <- checkfieldz fields "Caption" 64
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Fund <- checkfield fields "Fund" |> parse_int64
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
     
     {
         ID = ID
@@ -6025,6 +8844,932 @@ let CWCTxSqlServer =
     """
 
 
+let db__pINS(line:Object[]): pINS =
+    let p = pINS_empty()
+
+    p.Desc <- string(line.[4]).TrimEnd()
+    p.Hidden <- if Convert.IsDBNull(line.[5]) then false else line.[5] :?> bool
+    p.EnableQuote <- if Convert.IsDBNull(line.[6]) then false else line.[6] :?> bool
+    p.Code <- string(line.[7]).TrimEnd()
+    p.Caption <- string(line.[8]).TrimEnd()
+    p.Long <- if Convert.IsDBNull(line.[9]) then 0L else line.[9] :?> int64
+    p.AssetName <- string(line.[10]).TrimEnd()
+    p.Short <- if Convert.IsDBNull(line.[11]) then 0L else line.[11] :?> int64
+    p.Convertor <- if Convert.IsDBNull(line.[12]) then 0L else line.[12] :?> int64
+    p.m <- if Convert.IsDBNull(line.[13]) then 0.0 else line.[13] :?> float
+    p.mu <- if Convert.IsDBNull(line.[14]) then 0.0 else line.[14] :?> float
+    p.eta <- if Convert.IsDBNull(line.[15]) then 0.0 else line.[15] :?> float
+    p.psi <- if Convert.IsDBNull(line.[16]) then 0.0 else line.[16] :?> float
+    p.MarginCalc <- EnumOfValue(if Convert.IsDBNull(line.[17]) then 0 else line.[17] :?> int)
+    p.MarginRateInit <- if Convert.IsDBNull(line.[18]) then 0.0 else line.[18] :?> float
+    p.MarginRateMntn <- if Convert.IsDBNull(line.[19]) then 0.0 else line.[19] :?> float
+    p.MarginMode <- EnumOfValue(if Convert.IsDBNull(line.[20]) then 0 else line.[20] :?> int)
+    p.Dec <- if Convert.IsDBNull(line.[21]) then 0L else line.[21] :?> int64
+    p.Formatter <- string(line.[22]).TrimEnd()
+    p.Path <- string(line.[23]).TrimEnd()
+    p.Ask <- if Convert.IsDBNull(line.[24]) then 0L else line.[24] :?> int64
+    p.Bid <- if Convert.IsDBNull(line.[25]) then 0L else line.[25] :?> int64
+    p.Middle <- if Convert.IsDBNull(line.[26]) then 0.0 else line.[26] :?> float
+    p.FixedSpread <- if Convert.IsDBNull(line.[27]) then 0.0 else line.[27] :?> float
+    p.PercentageSpread <- if Convert.IsDBNull(line.[28]) then 0.0 else line.[28] :?> float
+    p.TaxOpenMode <- EnumOfValue(if Convert.IsDBNull(line.[29]) then 0 else line.[29] :?> int)
+    p.TaxOpen <- if Convert.IsDBNull(line.[30]) then 0.0 else line.[30] :?> float
+    p.TaxCloseMode <- EnumOfValue(if Convert.IsDBNull(line.[31]) then 0 else line.[31] :?> int)
+    p.TaxClose <- if Convert.IsDBNull(line.[32]) then 0.0 else line.[32] :?> float
+    p.Tax <- if Convert.IsDBNull(line.[33]) then 0.0 else line.[33] :?> float
+    p.TaxCur <- if Convert.IsDBNull(line.[34]) then 0L else line.[34] :?> int64
+    p.TaxCurCode <- string(line.[35]).TrimEnd()
+    p.LastPrice <- if Convert.IsDBNull(line.[36]) then 0.0 else line.[36] :?> float
+    p.LastUpdatedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[37]) then DateTime.MinValue.Ticks else line.[37] :?> int64)
+    p.LastPriceChange <- DateTime.FromBinary(if Convert.IsDBNull(line.[38]) then DateTime.MinValue.Ticks else line.[38] :?> int64)
+    p.TradeStatus <- EnumOfValue(if Convert.IsDBNull(line.[39]) then 0 else line.[39] :?> int)
+    p.RoMode <- EnumOfValue(if Convert.IsDBNull(line.[40]) then 0 else line.[40] :?> int)
+    p.Schedule <- string(line.[41]).TrimEnd()
+    p.TradeMode <- EnumOfValue(if Convert.IsDBNull(line.[42]) then 0 else line.[42] :?> int)
+    p.DerivativeMode <- EnumOfValue(if Convert.IsDBNull(line.[43]) then 0 else line.[43] :?> int)
+    p.OptionsMode <- EnumOfValue(if Convert.IsDBNull(line.[44]) then 0 else line.[44] :?> int)
+    p.OptionsCP <- EnumOfValue(if Convert.IsDBNull(line.[45]) then 0 else line.[45] :?> int)
+    p.OptionsExpiry <- DateTime.FromBinary(if Convert.IsDBNull(line.[46]) then DateTime.MinValue.Ticks else line.[46] :?> int64)
+    p.OptionsStrike <- if Convert.IsDBNull(line.[47]) then 0.0 else line.[47] :?> float
+    p.OptionsPricing <- string(line.[48]).TrimEnd()
+    p.OptionsPeriod <- string(line.[49]).TrimEnd()
+    p.OptionsTax <- if Convert.IsDBNull(line.[50]) then 0.0 else line.[50] :?> float
+    p.OptionsPremiumPerTradeMin <- if Convert.IsDBNull(line.[51]) then 0.0 else line.[51] :?> float
+    p.OptionsPremiumPerTradeMax <- if Convert.IsDBNull(line.[52]) then 0.0 else line.[52] :?> float
+    p.LimitLotPerTrade <- if Convert.IsDBNull(line.[53]) then 0.0 else line.[53] :?> float
+    p.LimitLotPosition <- if Convert.IsDBNull(line.[54]) then 0.0 else line.[54] :?> float
+    p.CurrentOpen <- if Convert.IsDBNull(line.[55]) then 0.0 else line.[55] :?> float
+    p.CurrentHigh <- if Convert.IsDBNull(line.[56]) then 0.0 else line.[56] :?> float
+    p.CurrentLow <- if Convert.IsDBNull(line.[57]) then 0.0 else line.[57] :?> float
+    p.PrevClose <- if Convert.IsDBNull(line.[58]) then 0.0 else line.[58] :?> float
+    p.PrevClosedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[59]) then DateTime.MinValue.Ticks else line.[59] :?> int64)
+    p.CurrentOpenat <- DateTime.FromBinary(if Convert.IsDBNull(line.[60]) then DateTime.MinValue.Ticks else line.[60] :?> int64)
+    p.ExtBiz <- if Convert.IsDBNull(line.[61]) then 0L else line.[61] :?> int64
+    p.RefExternal <- string(line.[62]).TrimEnd()
+    p.ItrnInss <- string(line.[63]).TrimEnd()
+    p.ItrnInssMode <- EnumOfValue(if Convert.IsDBNull(line.[64]) then 0 else line.[64] :?> int)
+    p.FlushType <- EnumOfValue(if Convert.IsDBNull(line.[65]) then 0 else line.[65] :?> int)
+    p.CurTrigger <- EnumOfValue(if Convert.IsDBNull(line.[66]) then 0 else line.[66] :?> int)
+    p.RobotType <- EnumOfValue(if Convert.IsDBNull(line.[67]) then 0 else line.[67] :?> int)
+    p.ExtLong <- string(line.[68]).TrimEnd()
+    p.ExtShort <- string(line.[69]).TrimEnd()
+    p.ExtPrice <- if Convert.IsDBNull(line.[70]) then 0.0 else line.[70] :?> float
+    p.SaveM1 <- if Convert.IsDBNull(line.[71]) then false else line.[71] :?> bool
+    p.HistSavedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[72]) then DateTime.MinValue.Ticks else line.[72] :?> int64)
+    p.SaveD1 <- if Convert.IsDBNull(line.[73]) then false else line.[73] :?> bool
+    p.SlPips <- if Convert.IsDBNull(line.[74]) then 0.0 else line.[74] :?> float
+    p.TpPips <- if Convert.IsDBNull(line.[75]) then 0.0 else line.[75] :?> float
+    p.PendingLimitPips <- if Convert.IsDBNull(line.[76]) then 0.0 else line.[76] :?> float
+    p.PendingStopPips <- if Convert.IsDBNull(line.[77]) then 0.0 else line.[77] :?> float
+    p.LastDirection <- EnumOfValue(if Convert.IsDBNull(line.[78]) then 0 else line.[78] :?> int)
+    p.LiqMode <- EnumOfValue(if Convert.IsDBNull(line.[79]) then 0 else line.[79] :?> int)
+    p.LiqPeriodSince <- DateTime.FromBinary(if Convert.IsDBNull(line.[80]) then DateTime.MinValue.Ticks else line.[80] :?> int64)
+    p.LiqPeriodTill <- if Convert.IsDBNull(line.[81]) then 0L else line.[81] :?> int64
+    p.LiqPeriod <- EnumOfValue(if Convert.IsDBNull(line.[82]) then 0 else line.[82] :?> int)
+    p.LiqTime <- if Convert.IsDBNull(line.[83]) then 0.0 else line.[83] :?> float
+    p.ConvertRatio <- if Convert.IsDBNull(line.[84]) then 0.0 else line.[84] :?> float
+    p.RoBuyMode <- EnumOfValue(if Convert.IsDBNull(line.[85]) then 0 else line.[85] :?> int)
+    p.RoBuy <- if Convert.IsDBNull(line.[86]) then 0.0 else line.[86] :?> float
+    p.RoSellMode <- EnumOfValue(if Convert.IsDBNull(line.[87]) then 0 else line.[87] :?> int)
+    p.RoSell <- if Convert.IsDBNull(line.[88]) then 0.0 else line.[88] :?> float
+    p.PosLimitBuy <- if Convert.IsDBNull(line.[89]) then 0.0 else line.[89] :?> float
+    p.PosLimitSell <- if Convert.IsDBNull(line.[90]) then 0.0 else line.[90] :?> float
+    p.RoCur <- if Convert.IsDBNull(line.[91]) then 0L else line.[91] :?> int64
+    p.RoCurCode <- string(line.[92]).TrimEnd()
+    p.AdjBias <- if Convert.IsDBNull(line.[93]) then 0.0 else line.[93] :?> float
+    p.TaxBuy <- if Convert.IsDBNull(line.[94]) then 0.0 else line.[94] :?> float
+    p.TaxSell <- if Convert.IsDBNull(line.[95]) then 0.0 else line.[95] :?> float
+    p.Misc <- string(line.[96]).TrimEnd()
+    p.RefLastPriceChange <- DateTime.FromBinary(if Convert.IsDBNull(line.[97]) then DateTime.MinValue.Ticks else line.[97] :?> int64)
+    p.HedgeExternal <- string(line.[98]).TrimEnd()
+    p.OfferingPrice <- if Convert.IsDBNull(line.[99]) then 0.0 else line.[99] :?> float
+    p.IssuanceAmount <- if Convert.IsDBNull(line.[100]) then 0L else line.[100] :?> int64
+    p.ListingStatus <- EnumOfValue(if Convert.IsDBNull(line.[101]) then 0 else line.[101] :?> int)
+    p.Turnover <- if Convert.IsDBNull(line.[102]) then 0.0 else line.[102] :?> float
+    p.PriceOpened <- if Convert.IsDBNull(line.[103]) then 0L else line.[103] :?> int64
+
+    p
+
+let pINS__sps (p:pINS) = [|
+    new SqlParameter("Desc", p.Desc)
+    new SqlParameter("Hidden", p.Hidden)
+    new SqlParameter("EnableQuote", p.EnableQuote)
+    new SqlParameter("Code", p.Code)
+    new SqlParameter("Caption", p.Caption)
+    new SqlParameter("Long", p.Long)
+    new SqlParameter("AssetName", p.AssetName)
+    new SqlParameter("Short", p.Short)
+    new SqlParameter("Convertor", p.Convertor)
+    new SqlParameter("m", p.m)
+    new SqlParameter("mu", p.mu)
+    new SqlParameter("eta", p.eta)
+    new SqlParameter("psi", p.psi)
+    new SqlParameter("MarginCalc", p.MarginCalc)
+    new SqlParameter("MarginRateInit", p.MarginRateInit)
+    new SqlParameter("MarginRateMntn", p.MarginRateMntn)
+    new SqlParameter("MarginMode", p.MarginMode)
+    new SqlParameter("Dec", p.Dec)
+    new SqlParameter("Formatter", p.Formatter)
+    new SqlParameter("Path", p.Path)
+    new SqlParameter("Ask", p.Ask)
+    new SqlParameter("Bid", p.Bid)
+    new SqlParameter("Middle", p.Middle)
+    new SqlParameter("FixedSpread", p.FixedSpread)
+    new SqlParameter("PercentageSpread", p.PercentageSpread)
+    new SqlParameter("TaxOpenMode", p.TaxOpenMode)
+    new SqlParameter("TaxOpen", p.TaxOpen)
+    new SqlParameter("TaxCloseMode", p.TaxCloseMode)
+    new SqlParameter("TaxClose", p.TaxClose)
+    new SqlParameter("Tax", p.Tax)
+    new SqlParameter("TaxCur", p.TaxCur)
+    new SqlParameter("TaxCurCode", p.TaxCurCode)
+    new SqlParameter("LastPrice", p.LastPrice)
+    new SqlParameter("LastUpdatedat", p.LastUpdatedat.Ticks)
+    new SqlParameter("LastPriceChange", p.LastPriceChange.Ticks)
+    new SqlParameter("TradeStatus", p.TradeStatus)
+    new SqlParameter("RoMode", p.RoMode)
+    new SqlParameter("Schedule", p.Schedule)
+    new SqlParameter("TradeMode", p.TradeMode)
+    new SqlParameter("DerivativeMode", p.DerivativeMode)
+    new SqlParameter("OptionsMode", p.OptionsMode)
+    new SqlParameter("OptionsCP", p.OptionsCP)
+    new SqlParameter("OptionsExpiry", p.OptionsExpiry.Ticks)
+    new SqlParameter("OptionsStrike", p.OptionsStrike)
+    new SqlParameter("OptionsPricing", p.OptionsPricing)
+    new SqlParameter("OptionsPeriod", p.OptionsPeriod)
+    new SqlParameter("OptionsTax", p.OptionsTax)
+    new SqlParameter("OptionsPremiumPerTradeMin", p.OptionsPremiumPerTradeMin)
+    new SqlParameter("OptionsPremiumPerTradeMax", p.OptionsPremiumPerTradeMax)
+    new SqlParameter("LimitLotPerTrade", p.LimitLotPerTrade)
+    new SqlParameter("LimitLotPosition", p.LimitLotPosition)
+    new SqlParameter("CurrentOpen", p.CurrentOpen)
+    new SqlParameter("CurrentHigh", p.CurrentHigh)
+    new SqlParameter("CurrentLow", p.CurrentLow)
+    new SqlParameter("PrevClose", p.PrevClose)
+    new SqlParameter("PrevClosedat", p.PrevClosedat.Ticks)
+    new SqlParameter("CurrentOpenat", p.CurrentOpenat.Ticks)
+    new SqlParameter("ExtBiz", p.ExtBiz)
+    new SqlParameter("RefExternal", p.RefExternal)
+    new SqlParameter("ItrnInss", p.ItrnInss)
+    new SqlParameter("ItrnInssMode", p.ItrnInssMode)
+    new SqlParameter("FlushType", p.FlushType)
+    new SqlParameter("CurTrigger", p.CurTrigger)
+    new SqlParameter("RobotType", p.RobotType)
+    new SqlParameter("ExtLong", p.ExtLong)
+    new SqlParameter("ExtShort", p.ExtShort)
+    new SqlParameter("ExtPrice", p.ExtPrice)
+    new SqlParameter("SaveM1", p.SaveM1)
+    new SqlParameter("HistSavedat", p.HistSavedat.Ticks)
+    new SqlParameter("SaveD1", p.SaveD1)
+    new SqlParameter("SlPips", p.SlPips)
+    new SqlParameter("TpPips", p.TpPips)
+    new SqlParameter("PendingLimitPips", p.PendingLimitPips)
+    new SqlParameter("PendingStopPips", p.PendingStopPips)
+    new SqlParameter("LastDirection", p.LastDirection)
+    new SqlParameter("LiqMode", p.LiqMode)
+    new SqlParameter("LiqPeriodSince", p.LiqPeriodSince.Ticks)
+    new SqlParameter("LiqPeriodTill", p.LiqPeriodTill)
+    new SqlParameter("LiqPeriod", p.LiqPeriod)
+    new SqlParameter("LiqTime", p.LiqTime)
+    new SqlParameter("ConvertRatio", p.ConvertRatio)
+    new SqlParameter("RoBuyMode", p.RoBuyMode)
+    new SqlParameter("RoBuy", p.RoBuy)
+    new SqlParameter("RoSellMode", p.RoSellMode)
+    new SqlParameter("RoSell", p.RoSell)
+    new SqlParameter("PosLimitBuy", p.PosLimitBuy)
+    new SqlParameter("PosLimitSell", p.PosLimitSell)
+    new SqlParameter("RoCur", p.RoCur)
+    new SqlParameter("RoCurCode", p.RoCurCode)
+    new SqlParameter("AdjBias", p.AdjBias)
+    new SqlParameter("TaxBuy", p.TaxBuy)
+    new SqlParameter("TaxSell", p.TaxSell)
+    new SqlParameter("Misc", p.Misc)
+    new SqlParameter("RefLastPriceChange", p.RefLastPriceChange.Ticks)
+    new SqlParameter("HedgeExternal", p.HedgeExternal)
+    new SqlParameter("OfferingPrice", p.OfferingPrice)
+    new SqlParameter("IssuanceAmount", p.IssuanceAmount)
+    new SqlParameter("ListingStatus", p.ListingStatus)
+    new SqlParameter("Turnover", p.Turnover)
+    new SqlParameter("PriceOpened", p.PriceOpened) |]
+
+let db__INS = db__Rcd db__pINS
+
+let INS_wrapper item: INS =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pINS_clone (p:pINS): pINS = {
+    Desc = p.Desc
+    Hidden = p.Hidden
+    EnableQuote = p.EnableQuote
+    Code = p.Code
+    Caption = p.Caption
+    Long = p.Long
+    AssetName = p.AssetName
+    Short = p.Short
+    Convertor = p.Convertor
+    m = p.m
+    mu = p.mu
+    eta = p.eta
+    psi = p.psi
+    MarginCalc = p.MarginCalc
+    MarginRateInit = p.MarginRateInit
+    MarginRateMntn = p.MarginRateMntn
+    MarginMode = p.MarginMode
+    Dec = p.Dec
+    Formatter = p.Formatter
+    Path = p.Path
+    Ask = p.Ask
+    Bid = p.Bid
+    Middle = p.Middle
+    FixedSpread = p.FixedSpread
+    PercentageSpread = p.PercentageSpread
+    TaxOpenMode = p.TaxOpenMode
+    TaxOpen = p.TaxOpen
+    TaxCloseMode = p.TaxCloseMode
+    TaxClose = p.TaxClose
+    Tax = p.Tax
+    TaxCur = p.TaxCur
+    TaxCurCode = p.TaxCurCode
+    LastPrice = p.LastPrice
+    LastUpdatedat = p.LastUpdatedat
+    LastPriceChange = p.LastPriceChange
+    TradeStatus = p.TradeStatus
+    RoMode = p.RoMode
+    Schedule = p.Schedule
+    TradeMode = p.TradeMode
+    DerivativeMode = p.DerivativeMode
+    OptionsMode = p.OptionsMode
+    OptionsCP = p.OptionsCP
+    OptionsExpiry = p.OptionsExpiry
+    OptionsStrike = p.OptionsStrike
+    OptionsPricing = p.OptionsPricing
+    OptionsPeriod = p.OptionsPeriod
+    OptionsTax = p.OptionsTax
+    OptionsPremiumPerTradeMin = p.OptionsPremiumPerTradeMin
+    OptionsPremiumPerTradeMax = p.OptionsPremiumPerTradeMax
+    LimitLotPerTrade = p.LimitLotPerTrade
+    LimitLotPosition = p.LimitLotPosition
+    CurrentOpen = p.CurrentOpen
+    CurrentHigh = p.CurrentHigh
+    CurrentLow = p.CurrentLow
+    PrevClose = p.PrevClose
+    PrevClosedat = p.PrevClosedat
+    CurrentOpenat = p.CurrentOpenat
+    ExtBiz = p.ExtBiz
+    RefExternal = p.RefExternal
+    ItrnInss = p.ItrnInss
+    ItrnInssMode = p.ItrnInssMode
+    FlushType = p.FlushType
+    CurTrigger = p.CurTrigger
+    RobotType = p.RobotType
+    ExtLong = p.ExtLong
+    ExtShort = p.ExtShort
+    ExtPrice = p.ExtPrice
+    SaveM1 = p.SaveM1
+    HistSavedat = p.HistSavedat
+    SaveD1 = p.SaveD1
+    SlPips = p.SlPips
+    TpPips = p.TpPips
+    PendingLimitPips = p.PendingLimitPips
+    PendingStopPips = p.PendingStopPips
+    LastDirection = p.LastDirection
+    LiqMode = p.LiqMode
+    LiqPeriodSince = p.LiqPeriodSince
+    LiqPeriodTill = p.LiqPeriodTill
+    LiqPeriod = p.LiqPeriod
+    LiqTime = p.LiqTime
+    ConvertRatio = p.ConvertRatio
+    RoBuyMode = p.RoBuyMode
+    RoBuy = p.RoBuy
+    RoSellMode = p.RoSellMode
+    RoSell = p.RoSell
+    PosLimitBuy = p.PosLimitBuy
+    PosLimitSell = p.PosLimitSell
+    RoCur = p.RoCur
+    RoCurCode = p.RoCurCode
+    AdjBias = p.AdjBias
+    TaxBuy = p.TaxBuy
+    TaxSell = p.TaxSell
+    Misc = p.Misc
+    RefLastPriceChange = p.RefLastPriceChange
+    HedgeExternal = p.HedgeExternal
+    OfferingPrice = p.OfferingPrice
+    IssuanceAmount = p.IssuanceAmount
+    ListingStatus = p.ListingStatus
+    Turnover = p.Turnover
+    PriceOpened = p.PriceOpened }
+
+let INS_update_transaction output (updater,suc,fail) (rcd:INS) =
+    let rollback_p = rcd.p |> pINS_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,INS_table,INS_sql_update,pINS__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let INS_update output (rcd:INS) =
+    rcd
+    |> INS_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let INS_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment INS_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,INS_table,pINS__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> INS_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let INS_create output p =
+    INS_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__INSo id: INS option = id__rcd(conn,INS_fieldorders,INS_table,db__INS) id
+
+let INS_metadata = {
+    fieldorders = INS_fieldorders
+    db__rcd = db__INS 
+    wrapper = INS_wrapper
+    sps = pINS__sps
+    id = INS_id
+    id__rcdo = id__INSo
+    clone = pINS_clone
+    empty__p = pINS_empty
+    rcd__bin = INS__bin
+    bin__rcd = bin__INS
+    sql_update = INS_sql_update
+    rcd_update = INS_update
+    table = INS_table
+    shorthand = "ins" }
+
+let INSTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ex_Instrument' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Ex_Instrument ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[Desc]
+    ,[Hidden]
+    ,[EnableQuote]
+    ,[Code]
+    ,[Caption]
+    ,[Long]
+    ,[AssetName]
+    ,[Short]
+    ,[Convertor]
+    ,[m]
+    ,[mu]
+    ,[eta]
+    ,[psi]
+    ,[MarginCalc]
+    ,[MarginRateInit]
+    ,[MarginRateMntn]
+    ,[MarginMode]
+    ,[Dec]
+    ,[Formatter]
+    ,[Path]
+    ,[Ask]
+    ,[Bid]
+    ,[Middle]
+    ,[FixedSpread]
+    ,[PercentageSpread]
+    ,[TaxOpenMode]
+    ,[TaxOpen]
+    ,[TaxCloseMode]
+    ,[TaxClose]
+    ,[Tax]
+    ,[TaxCur]
+    ,[TaxCurCode]
+    ,[LastPrice]
+    ,[LastUpdatedat]
+    ,[LastPriceChange]
+    ,[TradeStatus]
+    ,[RoMode]
+    ,[Schedule]
+    ,[TradeMode]
+    ,[DerivativeMode]
+    ,[OptionsMode]
+    ,[OptionsCP]
+    ,[OptionsExpiry]
+    ,[OptionsStrike]
+    ,[OptionsPricing]
+    ,[OptionsPeriod]
+    ,[OptionsTax]
+    ,[OptionsPremiumPerTradeMin]
+    ,[OptionsPremiumPerTradeMax]
+    ,[LimitLotPerTrade]
+    ,[LimitLotPosition]
+    ,[CurrentOpen]
+    ,[CurrentHigh]
+    ,[CurrentLow]
+    ,[PrevClose]
+    ,[PrevClosedat]
+    ,[CurrentOpenat]
+    ,[ExtBiz]
+    ,[RefExternal]
+    ,[ItrnInss]
+    ,[ItrnInssMode]
+    ,[FlushType]
+    ,[CurTrigger]
+    ,[RobotType]
+    ,[ExtLong]
+    ,[ExtShort]
+    ,[ExtPrice]
+    ,[SaveM1]
+    ,[HistSavedat]
+    ,[SaveD1]
+    ,[SlPips]
+    ,[TpPips]
+    ,[PendingLimitPips]
+    ,[PendingStopPips]
+    ,[LastDirection]
+    ,[LiqMode]
+    ,[LiqPeriodSince]
+    ,[LiqPeriodTill]
+    ,[LiqPeriod]
+    ,[LiqTime]
+    ,[ConvertRatio]
+    ,[RoBuyMode]
+    ,[RoBuy]
+    ,[RoSellMode]
+    ,[RoSell]
+    ,[PosLimitBuy]
+    ,[PosLimitSell]
+    ,[RoCur]
+    ,[RoCurCode]
+    ,[AdjBias]
+    ,[TaxBuy]
+    ,[TaxSell]
+    ,[Misc]
+    ,[RefLastPriceChange]
+    ,[HedgeExternal]
+    ,[OfferingPrice]
+    ,[IssuanceAmount]
+    ,[ListingStatus]
+    ,[Turnover]
+    ,[PriceOpened])
+    END
+    """
+
+
+let db__pTICKET(line:Object[]): pTICKET =
+    let p = pTICKET_empty()
+
+    p.EndUser <- if Convert.IsDBNull(line.[4]) then 0L else line.[4] :?> int64
+    p.TradeAcct <- if Convert.IsDBNull(line.[5]) then 0L else line.[5] :?> int64
+    p.Ins <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
+    p.Code <- string(line.[7]).TrimEnd()
+    p.Caption <- string(line.[8]).TrimEnd()
+    p.TradeMode <- EnumOfValue(if Convert.IsDBNull(line.[9]) then 0 else line.[9] :?> int)
+    p.Lot <- if Convert.IsDBNull(line.[10]) then 0L else line.[10] :?> int64
+    p.PriceOpened <- if Convert.IsDBNull(line.[11]) then 0L else line.[11] :?> int64
+    p.PriceOpen <- if Convert.IsDBNull(line.[12]) then 0L else line.[12] :?> int64
+    p.PriceSL <- if Convert.IsDBNull(line.[13]) then 0L else line.[13] :?> int64
+    p.PriceTP <- if Convert.IsDBNull(line.[14]) then 0L else line.[14] :?> int64
+    p.PriceClose <- if Convert.IsDBNull(line.[15]) then 0L else line.[15] :?> int64
+    p.Status <- EnumOfValue(if Convert.IsDBNull(line.[16]) then 0 else line.[16] :?> int)
+    p.CP <- if Convert.IsDBNull(line.[17]) then 0L else line.[17] :?> int64
+    p.CptAcct <- if Convert.IsDBNull(line.[18]) then 0L else line.[18] :?> int64
+    p.Ref <- if Convert.IsDBNull(line.[19]) then 0L else line.[19] :?> int64
+    p.OpenRef <- if Convert.IsDBNull(line.[20]) then 0L else line.[20] :?> int64
+    p.CloseRef <- if Convert.IsDBNull(line.[21]) then 0L else line.[21] :?> int64
+    p.Origin <- if Convert.IsDBNull(line.[22]) then 0L else line.[22] :?> int64
+    p.PnL <- if Convert.IsDBNull(line.[23]) then 0.0 else line.[23] :?> float
+    p.PnLSpread <- if Convert.IsDBNull(line.[24]) then 0.0 else line.[24] :?> float
+    p.Margin <- if Convert.IsDBNull(line.[25]) then 0.0 else line.[25] :?> float
+    p.RO <- if Convert.IsDBNull(line.[26]) then 0.0 else line.[26] :?> float
+    p.Tax <- if Convert.IsDBNull(line.[27]) then 0.0 else line.[27] :?> float
+    p.CloseType <- EnumOfValue(if Convert.IsDBNull(line.[28]) then 0 else line.[28] :?> int)
+    p.CommitType <- EnumOfValue(if Convert.IsDBNull(line.[29]) then 0 else line.[29] :?> int)
+    p.Cmt <- string(line.[30]).TrimEnd()
+    p.Opendat <- DateTime.FromBinary(if Convert.IsDBNull(line.[31]) then DateTime.MinValue.Ticks else line.[31] :?> int64)
+    p.Closedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[32]) then DateTime.MinValue.Ticks else line.[32] :?> int64)
+    p.CaStrategyAmt <- if Convert.IsDBNull(line.[33]) then 0.0 else line.[33] :?> float
+    p.CaRo <- if Convert.IsDBNull(line.[34]) then false else line.[34] :?> bool
+    p.CaAsa <- if Convert.IsDBNull(line.[35]) then false else line.[35] :?> bool
+    p.CaCmphsvCharge <- if Convert.IsDBNull(line.[36]) then 0.0 else line.[36] :?> float
+    p.RoCheckedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[37]) then DateTime.MinValue.Ticks else line.[37] :?> int64)
+    p.Expiry <- DateTime.FromBinary(if Convert.IsDBNull(line.[38]) then DateTime.MinValue.Ticks else line.[38] :?> int64)
+    p.HedgetCP <- if Convert.IsDBNull(line.[39]) then 0L else line.[39] :?> int64
+    p.PendingPrice <- if Convert.IsDBNull(line.[40]) then 0L else line.[40] :?> int64
+    p.ClosedLot <- if Convert.IsDBNull(line.[41]) then 0L else line.[41] :?> int64
+    p.ClosedAmt <- if Convert.IsDBNull(line.[42]) then 0.0 else line.[42] :?> float
+    p.PendingAmt <- if Convert.IsDBNull(line.[43]) then 0.0 else line.[43] :?> float
+    p.DrvPreminum <- if Convert.IsDBNull(line.[44]) then 0.0 else line.[44] :?> float
+    p.DrvExpiry <- DateTime.FromBinary(if Convert.IsDBNull(line.[45]) then DateTime.MinValue.Ticks else line.[45] :?> int64)
+    p.DrvPeriod <- if Convert.IsDBNull(line.[46]) then 0L else line.[46] :?> int64
+    p.DrvDirection <- EnumOfValue(if Convert.IsDBNull(line.[47]) then 0 else line.[47] :?> int)
+    p.DrvPrice <- if Convert.IsDBNull(line.[48]) then 0.0 else line.[48] :?> float
+    p.DoubleCp <- if Convert.IsDBNull(line.[49]) then 0L else line.[49] :?> int64
+    p.ClearStatus <- EnumOfValue(if Convert.IsDBNull(line.[50]) then 0 else line.[50] :?> int)
+    p.FollowTicket <- if Convert.IsDBNull(line.[51]) then 0L else line.[51] :?> int64
+    p.Config <- string(line.[52]).TrimEnd()
+    p.OptionStatus <- EnumOfValue(if Convert.IsDBNull(line.[53]) then 0 else line.[53] :?> int)
+    p.NotionalPrincipal <- if Convert.IsDBNull(line.[54]) then 0.0 else line.[54] :?> float
+    p.ExercisedPrincipal <- if Convert.IsDBNull(line.[55]) then 0.0 else line.[55] :?> float
+    p.ExerciseMode <- if Convert.IsDBNull(line.[56]) then 0.0 else line.[56] :?> float
+    p.ExercisePrice <- if Convert.IsDBNull(line.[57]) then 0.0 else line.[57] :?> float
+    p.ExternalTicketOpen <- if Convert.IsDBNull(line.[58]) then 0L else line.[58] :?> int64
+    p.ExternalTicketClose <- if Convert.IsDBNull(line.[59]) then 0L else line.[59] :?> int64
+    p.ExternalTicketPending <- if Convert.IsDBNull(line.[60]) then 0L else line.[60] :?> int64
+    p.ExternalTicketCancel <- if Convert.IsDBNull(line.[61]) then 0L else line.[61] :?> int64
+    p.Desc <- string(line.[62]).TrimEnd()
+
+    p
+
+let pTICKET__sps (p:pTICKET) = [|
+    new SqlParameter("EndUser", p.EndUser)
+    new SqlParameter("TradeAcct", p.TradeAcct)
+    new SqlParameter("Ins", p.Ins)
+    new SqlParameter("Code", p.Code)
+    new SqlParameter("Caption", p.Caption)
+    new SqlParameter("TradeMode", p.TradeMode)
+    new SqlParameter("Lot", p.Lot)
+    new SqlParameter("PriceOpened", p.PriceOpened)
+    new SqlParameter("PriceOpen", p.PriceOpen)
+    new SqlParameter("PriceSL", p.PriceSL)
+    new SqlParameter("PriceTP", p.PriceTP)
+    new SqlParameter("PriceClose", p.PriceClose)
+    new SqlParameter("Status", p.Status)
+    new SqlParameter("CP", p.CP)
+    new SqlParameter("CptAcct", p.CptAcct)
+    new SqlParameter("Ref", p.Ref)
+    new SqlParameter("OpenRef", p.OpenRef)
+    new SqlParameter("CloseRef", p.CloseRef)
+    new SqlParameter("Origin", p.Origin)
+    new SqlParameter("PnL", p.PnL)
+    new SqlParameter("PnLSpread", p.PnLSpread)
+    new SqlParameter("Margin", p.Margin)
+    new SqlParameter("RO", p.RO)
+    new SqlParameter("Tax", p.Tax)
+    new SqlParameter("CloseType", p.CloseType)
+    new SqlParameter("CommitType", p.CommitType)
+    new SqlParameter("Cmt", p.Cmt)
+    new SqlParameter("Opendat", p.Opendat.Ticks)
+    new SqlParameter("Closedat", p.Closedat.Ticks)
+    new SqlParameter("CaStrategyAmt", p.CaStrategyAmt)
+    new SqlParameter("CaRo", p.CaRo)
+    new SqlParameter("CaAsa", p.CaAsa)
+    new SqlParameter("CaCmphsvCharge", p.CaCmphsvCharge)
+    new SqlParameter("RoCheckedat", p.RoCheckedat.Ticks)
+    new SqlParameter("Expiry", p.Expiry.Ticks)
+    new SqlParameter("HedgetCP", p.HedgetCP)
+    new SqlParameter("PendingPrice", p.PendingPrice)
+    new SqlParameter("ClosedLot", p.ClosedLot)
+    new SqlParameter("ClosedAmt", p.ClosedAmt)
+    new SqlParameter("PendingAmt", p.PendingAmt)
+    new SqlParameter("DrvPreminum", p.DrvPreminum)
+    new SqlParameter("DrvExpiry", p.DrvExpiry.Ticks)
+    new SqlParameter("DrvPeriod", p.DrvPeriod)
+    new SqlParameter("DrvDirection", p.DrvDirection)
+    new SqlParameter("DrvPrice", p.DrvPrice)
+    new SqlParameter("DoubleCp", p.DoubleCp)
+    new SqlParameter("ClearStatus", p.ClearStatus)
+    new SqlParameter("FollowTicket", p.FollowTicket)
+    new SqlParameter("Config", p.Config)
+    new SqlParameter("OptionStatus", p.OptionStatus)
+    new SqlParameter("NotionalPrincipal", p.NotionalPrincipal)
+    new SqlParameter("ExercisedPrincipal", p.ExercisedPrincipal)
+    new SqlParameter("ExerciseMode", p.ExerciseMode)
+    new SqlParameter("ExercisePrice", p.ExercisePrice)
+    new SqlParameter("ExternalTicketOpen", p.ExternalTicketOpen)
+    new SqlParameter("ExternalTicketClose", p.ExternalTicketClose)
+    new SqlParameter("ExternalTicketPending", p.ExternalTicketPending)
+    new SqlParameter("ExternalTicketCancel", p.ExternalTicketCancel)
+    new SqlParameter("Desc", p.Desc) |]
+
+let db__TICKET = db__Rcd db__pTICKET
+
+let TICKET_wrapper item: TICKET =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pTICKET_clone (p:pTICKET): pTICKET = {
+    EndUser = p.EndUser
+    TradeAcct = p.TradeAcct
+    Ins = p.Ins
+    Code = p.Code
+    Caption = p.Caption
+    TradeMode = p.TradeMode
+    Lot = p.Lot
+    PriceOpened = p.PriceOpened
+    PriceOpen = p.PriceOpen
+    PriceSL = p.PriceSL
+    PriceTP = p.PriceTP
+    PriceClose = p.PriceClose
+    Status = p.Status
+    CP = p.CP
+    CptAcct = p.CptAcct
+    Ref = p.Ref
+    OpenRef = p.OpenRef
+    CloseRef = p.CloseRef
+    Origin = p.Origin
+    PnL = p.PnL
+    PnLSpread = p.PnLSpread
+    Margin = p.Margin
+    RO = p.RO
+    Tax = p.Tax
+    CloseType = p.CloseType
+    CommitType = p.CommitType
+    Cmt = p.Cmt
+    Opendat = p.Opendat
+    Closedat = p.Closedat
+    CaStrategyAmt = p.CaStrategyAmt
+    CaRo = p.CaRo
+    CaAsa = p.CaAsa
+    CaCmphsvCharge = p.CaCmphsvCharge
+    RoCheckedat = p.RoCheckedat
+    Expiry = p.Expiry
+    HedgetCP = p.HedgetCP
+    PendingPrice = p.PendingPrice
+    ClosedLot = p.ClosedLot
+    ClosedAmt = p.ClosedAmt
+    PendingAmt = p.PendingAmt
+    DrvPreminum = p.DrvPreminum
+    DrvExpiry = p.DrvExpiry
+    DrvPeriod = p.DrvPeriod
+    DrvDirection = p.DrvDirection
+    DrvPrice = p.DrvPrice
+    DoubleCp = p.DoubleCp
+    ClearStatus = p.ClearStatus
+    FollowTicket = p.FollowTicket
+    Config = p.Config
+    OptionStatus = p.OptionStatus
+    NotionalPrincipal = p.NotionalPrincipal
+    ExercisedPrincipal = p.ExercisedPrincipal
+    ExerciseMode = p.ExerciseMode
+    ExercisePrice = p.ExercisePrice
+    ExternalTicketOpen = p.ExternalTicketOpen
+    ExternalTicketClose = p.ExternalTicketClose
+    ExternalTicketPending = p.ExternalTicketPending
+    ExternalTicketCancel = p.ExternalTicketCancel
+    Desc = p.Desc }
+
+let TICKET_update_transaction output (updater,suc,fail) (rcd:TICKET) =
+    let rollback_p = rcd.p |> pTICKET_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,TICKET_table,TICKET_sql_update,pTICKET__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let TICKET_update output (rcd:TICKET) =
+    rcd
+    |> TICKET_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let TICKET_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment TICKET_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,TICKET_table,pTICKET__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> TICKET_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let TICKET_create output p =
+    TICKET_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__TICKETo id: TICKET option = id__rcd(conn,TICKET_fieldorders,TICKET_table,db__TICKET) id
+
+let TICKET_metadata = {
+    fieldorders = TICKET_fieldorders
+    db__rcd = db__TICKET 
+    wrapper = TICKET_wrapper
+    sps = pTICKET__sps
+    id = TICKET_id
+    id__rcdo = id__TICKETo
+    clone = pTICKET_clone
+    empty__p = pTICKET_empty
+    rcd__bin = TICKET__bin
+    bin__rcd = bin__TICKET
+    sql_update = TICKET_sql_update
+    rcd_update = TICKET_update
+    table = TICKET_table
+    shorthand = "ticket" }
+
+let TICKETTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ex_Ticket' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Ex_Ticket ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[EndUser]
+    ,[TradeAcct]
+    ,[Ins]
+    ,[Code]
+    ,[Caption]
+    ,[TradeMode]
+    ,[Lot]
+    ,[PriceOpened]
+    ,[PriceOpen]
+    ,[PriceSL]
+    ,[PriceTP]
+    ,[PriceClose]
+    ,[Status]
+    ,[CP]
+    ,[CptAcct]
+    ,[Ref]
+    ,[OpenRef]
+    ,[CloseRef]
+    ,[Origin]
+    ,[PnL]
+    ,[PnLSpread]
+    ,[Margin]
+    ,[RO]
+    ,[Tax]
+    ,[CloseType]
+    ,[CommitType]
+    ,[Cmt]
+    ,[Opendat]
+    ,[Closedat]
+    ,[CaStrategyAmt]
+    ,[CaRo]
+    ,[CaAsa]
+    ,[CaCmphsvCharge]
+    ,[RoCheckedat]
+    ,[Expiry]
+    ,[HedgetCP]
+    ,[PendingPrice]
+    ,[ClosedLot]
+    ,[ClosedAmt]
+    ,[PendingAmt]
+    ,[DrvPreminum]
+    ,[DrvExpiry]
+    ,[DrvPeriod]
+    ,[DrvDirection]
+    ,[DrvPrice]
+    ,[DoubleCp]
+    ,[ClearStatus]
+    ,[FollowTicket]
+    ,[Config]
+    ,[OptionStatus]
+    ,[NotionalPrincipal]
+    ,[ExercisedPrincipal]
+    ,[ExerciseMode]
+    ,[ExercisePrice]
+    ,[ExternalTicketOpen]
+    ,[ExternalTicketClose]
+    ,[ExternalTicketPending]
+    ,[ExternalTicketCancel]
+    ,[Desc])
+    END
+    """
+
+
+let db__pTACCT(line:Object[]): pTACCT =
+    let p = pTACCT_empty()
+
+    p.SAC <- if Convert.IsDBNull(line.[4]) then 0L else line.[4] :?> int64
+    p.State <- EnumOfValue(if Convert.IsDBNull(line.[5]) then 0 else line.[5] :?> int)
+    p.TradeType <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
+    p.RealDemo <- EnumOfValue(if Convert.IsDBNull(line.[7]) then 0 else line.[7] :?> int)
+    p.PnL <- if Convert.IsDBNull(line.[8]) then 0.0 else line.[8] :?> float
+    p.Frozen <- if Convert.IsDBNull(line.[9]) then 0.0 else line.[9] :?> float
+    p.Leverage <- if Convert.IsDBNull(line.[10]) then 0.0 else line.[10] :?> float
+    p.Margin <- if Convert.IsDBNull(line.[11]) then 0.0 else line.[11] :?> float
+    p.MarginCallRateWarning <- if Convert.IsDBNull(line.[12]) then 0.0 else line.[12] :?> float
+    p.MarginCallRateWarningII <- if Convert.IsDBNull(line.[13]) then 0.0 else line.[13] :?> float
+    p.MarginCallRateLiq <- if Convert.IsDBNull(line.[14]) then 0.0 else line.[14] :?> float
+    p.PwdTrade <- string(line.[15]).TrimEnd()
+    p.PwdReadonly <- string(line.[16]).TrimEnd()
+    p.Desc <- string(line.[17]).TrimEnd()
+
+    p
+
+let pTACCT__sps (p:pTACCT) = [|
+    new SqlParameter("SAC", p.SAC)
+    new SqlParameter("State", p.State)
+    new SqlParameter("TradeType", p.TradeType)
+    new SqlParameter("RealDemo", p.RealDemo)
+    new SqlParameter("PnL", p.PnL)
+    new SqlParameter("Frozen", p.Frozen)
+    new SqlParameter("Leverage", p.Leverage)
+    new SqlParameter("Margin", p.Margin)
+    new SqlParameter("MarginCallRateWarning", p.MarginCallRateWarning)
+    new SqlParameter("MarginCallRateWarningII", p.MarginCallRateWarningII)
+    new SqlParameter("MarginCallRateLiq", p.MarginCallRateLiq)
+    new SqlParameter("PwdTrade", p.PwdTrade)
+    new SqlParameter("PwdReadonly", p.PwdReadonly)
+    new SqlParameter("Desc", p.Desc) |]
+
+let db__TACCT = db__Rcd db__pTACCT
+
+let TACCT_wrapper item: TACCT =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pTACCT_clone (p:pTACCT): pTACCT = {
+    SAC = p.SAC
+    State = p.State
+    TradeType = p.TradeType
+    RealDemo = p.RealDemo
+    PnL = p.PnL
+    Frozen = p.Frozen
+    Leverage = p.Leverage
+    Margin = p.Margin
+    MarginCallRateWarning = p.MarginCallRateWarning
+    MarginCallRateWarningII = p.MarginCallRateWarningII
+    MarginCallRateLiq = p.MarginCallRateLiq
+    PwdTrade = p.PwdTrade
+    PwdReadonly = p.PwdReadonly
+    Desc = p.Desc }
+
+let TACCT_update_transaction output (updater,suc,fail) (rcd:TACCT) =
+    let rollback_p = rcd.p |> pTACCT_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,TACCT_table,TACCT_sql_update,pTACCT__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let TACCT_update output (rcd:TACCT) =
+    rcd
+    |> TACCT_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let TACCT_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment TACCT_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,TACCT_table,pTACCT__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> TACCT_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let TACCT_create output p =
+    TACCT_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__TACCTo id: TACCT option = id__rcd(conn,TACCT_fieldorders,TACCT_table,db__TACCT) id
+
+let TACCT_metadata = {
+    fieldorders = TACCT_fieldorders
+    db__rcd = db__TACCT 
+    wrapper = TACCT_wrapper
+    sps = pTACCT__sps
+    id = TACCT_id
+    id__rcdo = id__TACCTo
+    clone = pTACCT_clone
+    empty__p = pTACCT_empty
+    rcd__bin = TACCT__bin
+    bin__rcd = bin__TACCT
+    sql_update = TACCT_sql_update
+    rcd_update = TACCT_update
+    table = TACCT_table
+    shorthand = "tacct" }
+
+let TACCTTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Market_TradeAcct' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Market_TradeAcct ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[SAC]
+    ,[State]
+    ,[TradeType]
+    ,[RealDemo]
+    ,[PnL]
+    ,[Frozen]
+    ,[Leverage]
+    ,[Margin]
+    ,[MarginCallRateWarning]
+    ,[MarginCallRateWarningII]
+    ,[MarginCallRateLiq]
+    ,[PwdTrade]
+    ,[PwdReadonly]
+    ,[Desc])
+    END
+    """
+
+
 let db__pBOOKMARK(line:Object[]): pBOOKMARK =
     let p = pBOOKMARK_empty()
 
@@ -6249,6 +9994,96 @@ let SBLTxSqlServer =
     """
 
 
+let db__pFOLLOW(line:Object[]): pFOLLOW =
+    let p = pFOLLOW_empty()
+
+    p.EndUser <- if Convert.IsDBNull(line.[4]) then 0L else line.[4] :?> int64
+    p.Followee <- if Convert.IsDBNull(line.[5]) then 0L else line.[5] :?> int64
+    p.FollowType <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
+
+    p
+
+let pFOLLOW__sps (p:pFOLLOW) = [|
+    new SqlParameter("EndUser", p.EndUser)
+    new SqlParameter("Followee", p.Followee)
+    new SqlParameter("FollowType", p.FollowType) |]
+
+let db__FOLLOW = db__Rcd db__pFOLLOW
+
+let FOLLOW_wrapper item: FOLLOW =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pFOLLOW_clone (p:pFOLLOW): pFOLLOW = {
+    EndUser = p.EndUser
+    Followee = p.Followee
+    FollowType = p.FollowType }
+
+let FOLLOW_update_transaction output (updater,suc,fail) (rcd:FOLLOW) =
+    let rollback_p = rcd.p |> pFOLLOW_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,FOLLOW_table,FOLLOW_sql_update,pFOLLOW__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let FOLLOW_update output (rcd:FOLLOW) =
+    rcd
+    |> FOLLOW_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let FOLLOW_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment FOLLOW_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,FOLLOW_table,pFOLLOW__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> FOLLOW_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let FOLLOW_create output p =
+    FOLLOW_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__FOLLOWo id: FOLLOW option = id__rcd(conn,FOLLOW_fieldorders,FOLLOW_table,db__FOLLOW) id
+
+let FOLLOW_metadata = {
+    fieldorders = FOLLOW_fieldorders
+    db__rcd = db__FOLLOW 
+    wrapper = FOLLOW_wrapper
+    sps = pFOLLOW__sps
+    id = FOLLOW_id
+    id__rcdo = id__FOLLOWo
+    clone = pFOLLOW_clone
+    empty__p = pFOLLOW_empty
+    rcd__bin = FOLLOW__bin
+    bin__rcd = bin__FOLLOW
+    sql_update = FOLLOW_sql_update
+    rcd_update = FOLLOW_update
+    table = FOLLOW_table
+    shorthand = "follow" }
+
+let FOLLOWTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Follow' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Social_Follow ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[EndUser]
+    ,[Followee]
+    ,[FollowType])
+    END
+    """
+
+
 let db__pMOMENT(line:Object[]): pMOMENT =
     let p = pMOMENT_empty()
 
@@ -6423,6 +10258,292 @@ let MOMENTTxSqlServer =
     """
 
 
+let db__pFUND(line:Object[]): pFUND =
+    let p = pFUND_empty()
+
+    p.Caption <- string(line.[4]).TrimEnd()
+    p.Desc <- string(line.[5]).TrimEnd()
+    p.Bind <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
+    p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[7]) then 0 else line.[7] :?> int)
+
+    p
+
+let pFUND__sps (p:pFUND) = [|
+    new SqlParameter("Caption", p.Caption)
+    new SqlParameter("Desc", p.Desc)
+    new SqlParameter("Bind", p.Bind)
+    new SqlParameter("BindType", p.BindType) |]
+
+let db__FUND = db__Rcd db__pFUND
+
+let FUND_wrapper item: FUND =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pFUND_clone (p:pFUND): pFUND = {
+    Caption = p.Caption
+    Desc = p.Desc
+    Bind = p.Bind
+    BindType = p.BindType }
+
+let FUND_update_transaction output (updater,suc,fail) (rcd:FUND) =
+    let rollback_p = rcd.p |> pFUND_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,FUND_table,FUND_sql_update,pFUND__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let FUND_update output (rcd:FUND) =
+    rcd
+    |> FUND_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let FUND_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment FUND_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,FUND_table,pFUND__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> FUND_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let FUND_create output p =
+    FUND_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__FUNDo id: FUND option = id__rcd(conn,FUND_fieldorders,FUND_table,db__FUND) id
+
+let FUND_metadata = {
+    fieldorders = FUND_fieldorders
+    db__rcd = db__FUND 
+    wrapper = FUND_wrapper
+    sps = pFUND__sps
+    id = FUND_id
+    id__rcdo = id__FUNDo
+    clone = pFUND_clone
+    empty__p = pFUND_empty
+    rcd__bin = FUND__bin
+    bin__rcd = bin__FUND
+    sql_update = FUND_sql_update
+    rcd_update = FUND_update
+    table = FUND_table
+    shorthand = "fund" }
+
+let FUNDTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Fund' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Trade_Fund ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[Caption]
+    ,[Desc]
+    ,[Bind]
+    ,[BindType])
+    END
+    """
+
+
+let db__pPORTFOLIO(line:Object[]): pPORTFOLIO =
+    let p = pPORTFOLIO_empty()
+
+    p.Caption <- string(line.[4]).TrimEnd()
+    p.Desc <- string(line.[5]).TrimEnd()
+    p.Fund <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
+    p.Bind <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
+    p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[8]) then 0 else line.[8] :?> int)
+
+    p
+
+let pPORTFOLIO__sps (p:pPORTFOLIO) = [|
+    new SqlParameter("Caption", p.Caption)
+    new SqlParameter("Desc", p.Desc)
+    new SqlParameter("Fund", p.Fund)
+    new SqlParameter("Bind", p.Bind)
+    new SqlParameter("BindType", p.BindType) |]
+
+let db__PORTFOLIO = db__Rcd db__pPORTFOLIO
+
+let PORTFOLIO_wrapper item: PORTFOLIO =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pPORTFOLIO_clone (p:pPORTFOLIO): pPORTFOLIO = {
+    Caption = p.Caption
+    Desc = p.Desc
+    Fund = p.Fund
+    Bind = p.Bind
+    BindType = p.BindType }
+
+let PORTFOLIO_update_transaction output (updater,suc,fail) (rcd:PORTFOLIO) =
+    let rollback_p = rcd.p |> pPORTFOLIO_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,PORTFOLIO_table,PORTFOLIO_sql_update,pPORTFOLIO__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let PORTFOLIO_update output (rcd:PORTFOLIO) =
+    rcd
+    |> PORTFOLIO_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let PORTFOLIO_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment PORTFOLIO_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,PORTFOLIO_table,pPORTFOLIO__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> PORTFOLIO_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let PORTFOLIO_create output p =
+    PORTFOLIO_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__PORTFOLIOo id: PORTFOLIO option = id__rcd(conn,PORTFOLIO_fieldorders,PORTFOLIO_table,db__PORTFOLIO) id
+
+let PORTFOLIO_metadata = {
+    fieldorders = PORTFOLIO_fieldorders
+    db__rcd = db__PORTFOLIO 
+    wrapper = PORTFOLIO_wrapper
+    sps = pPORTFOLIO__sps
+    id = PORTFOLIO_id
+    id__rcdo = id__PORTFOLIOo
+    clone = pPORTFOLIO_clone
+    empty__p = pPORTFOLIO_empty
+    rcd__bin = PORTFOLIO__bin
+    bin__rcd = bin__PORTFOLIO
+    sql_update = PORTFOLIO_sql_update
+    rcd_update = PORTFOLIO_update
+    table = PORTFOLIO_table
+    shorthand = "portfolio" }
+
+let PORTFOLIOTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Porfolio' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Trade_Porfolio ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[Caption]
+    ,[Desc]
+    ,[Fund]
+    ,[Bind]
+    ,[BindType])
+    END
+    """
+
+
+let db__pTRADER(line:Object[]): pTRADER =
+    let p = pTRADER_empty()
+
+    p.Caption <- string(line.[4]).TrimEnd()
+    p.Desc <- string(line.[5]).TrimEnd()
+    p.Fund <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
+    p.EndUser <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
+
+    p
+
+let pTRADER__sps (p:pTRADER) = [|
+    new SqlParameter("Caption", p.Caption)
+    new SqlParameter("Desc", p.Desc)
+    new SqlParameter("Fund", p.Fund)
+    new SqlParameter("EndUser", p.EndUser) |]
+
+let db__TRADER = db__Rcd db__pTRADER
+
+let TRADER_wrapper item: TRADER =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pTRADER_clone (p:pTRADER): pTRADER = {
+    Caption = p.Caption
+    Desc = p.Desc
+    Fund = p.Fund
+    EndUser = p.EndUser }
+
+let TRADER_update_transaction output (updater,suc,fail) (rcd:TRADER) =
+    let rollback_p = rcd.p |> pTRADER_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,TRADER_table,TRADER_sql_update,pTRADER__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let TRADER_update output (rcd:TRADER) =
+    rcd
+    |> TRADER_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let TRADER_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment TRADER_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,TRADER_table,pTRADER__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> TRADER_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let TRADER_create output p =
+    TRADER_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__TRADERo id: TRADER option = id__rcd(conn,TRADER_fieldorders,TRADER_table,db__TRADER) id
+
+let TRADER_metadata = {
+    fieldorders = TRADER_fieldorders
+    db__rcd = db__TRADER 
+    wrapper = TRADER_wrapper
+    sps = pTRADER__sps
+    id = TRADER_id
+    id__rcdo = id__TRADERo
+    clone = pTRADER_clone
+    empty__p = pTRADER_empty
+    rcd__bin = TRADER__bin
+    bin__rcd = bin__TRADER
+    sql_update = TRADER_sql_update
+    rcd_update = TRADER_update
+    table = TRADER_table
+    shorthand = "trader" }
+
+let TRADERTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Trader' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Trade_Trader ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[Caption]
+    ,[Desc]
+    ,[Fund]
+    ,[EndUser])
+    END
+    """
+
+
 type MetadataEnum = 
 | ADDRESS = 0
 | AIRPORT = 1
@@ -6438,9 +10559,16 @@ type MetadataEnum =
 | LOCALE = 11
 | CSI = 12
 | CWC = 13
-| BOOKMARK = 14
-| SBL = 15
-| MOMENT = 16
+| INS = 14
+| TICKET = 15
+| TACCT = 16
+| BOOKMARK = 17
+| SBL = 18
+| FOLLOW = 19
+| MOMENT = 20
+| FUND = 21
+| PORTFOLIO = 22
+| TRADER = 23
 
 let tablenames = [|
     ADDRESS_metadata.table
@@ -6457,9 +10585,16 @@ let tablenames = [|
     LOCALE_metadata.table
     CSI_metadata.table
     CWC_metadata.table
+    INS_metadata.table
+    TICKET_metadata.table
+    TACCT_metadata.table
     BOOKMARK_metadata.table
     SBL_metadata.table
-    MOMENT_metadata.table |]
+    FOLLOW_metadata.table
+    MOMENT_metadata.table
+    FUND_metadata.table
+    PORTFOLIO_metadata.table
+    TRADER_metadata.table |]
 
 let init() =
 
@@ -6617,6 +10752,39 @@ let init() =
     | Some v -> CWC_count.Value <- v :?> int32
     | None -> ()
 
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Ex_Instrument]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > INS_id.Value then
+            INS_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Ex_Instrument]") with
+    | Some v -> INS_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Ex_Ticket]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > TICKET_id.Value then
+            TICKET_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Ex_Ticket]") with
+    | Some v -> TICKET_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Market_TradeAcct]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > TACCT_id.Value then
+            TACCT_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Market_TradeAcct]") with
+    | Some v -> TACCT_count.Value <- v :?> int32
+    | None -> ()
+
     match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Social_Bookmark]") with
     | Some v ->
         let max = v :?> int64
@@ -6639,6 +10807,17 @@ let init() =
     | Some v -> SBL_count.Value <- v :?> int32
     | None -> ()
 
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Social_Follow]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > FOLLOW_id.Value then
+            FOLLOW_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Social_Follow]") with
+    | Some v -> FOLLOW_count.Value <- v :?> int32
+    | None -> ()
+
     match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Social_Moment]") with
     | Some v ->
         let max = v :?> int64
@@ -6648,5 +10827,38 @@ let init() =
 
     match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Social_Moment]") with
     | Some v -> MOMENT_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Trade_Fund]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > FUND_id.Value then
+            FUND_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Trade_Fund]") with
+    | Some v -> FUND_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Trade_Porfolio]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > PORTFOLIO_id.Value then
+            PORTFOLIO_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Trade_Porfolio]") with
+    | Some v -> PORTFOLIO_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Trade_Trader]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > TRADER_id.Value then
+            TRADER_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Trade_Trader]") with
+    | Some v -> TRADER_count.Value <- v :?> int32
     | None -> ()
     ()

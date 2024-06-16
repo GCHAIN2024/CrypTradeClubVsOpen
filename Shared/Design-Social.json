@@ -116,6 +116,27 @@
   },
 
   {
+    "name": "Social_Follow",
+    "shorthand": "follow",
+    "fields": [
+      {
+        "enum": "FK",
+        "name": "EndUser"
+      },
+      {
+        "enum": "Integer",
+        "name": "Followee"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "EndUser//用户///Biz//机构///BookmarkList//收藏夹",
+        "name": "FollowType"
+      }
+    ]
+  },
+
+
+  {
     "name": "Social_Bookmark",
     "shorthand": "bookmark",
     "fields": [

@@ -1,0 +1,85 @@
+[
+
+
+  {
+    "name": "Trade_Fund",
+    "shorthand": "fund",
+    "id": 781294,
+    "fields": [
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Caption"
+      },
+      {
+        "enum": "Text",
+        "name": "Desc"
+      },
+      {
+        "enum": "Integer",
+        "name": "Bind"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "EndUser//用户///Biz//机构",
+        "name": "BindType"
+      }
+    ]
+  },
+
+  {
+    "name": "Trade_Porfolio",
+    "shorthand": "portfolio",
+    "id": 9782937,
+    "fields": [
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Caption"
+      },
+      {
+        "enum": "Text",
+        "name": "Desc"
+      },
+      {
+        "enum": "FK",
+        "name": "Fund"
+      },
+      {
+        "enum": "Integer",
+        "name": "Bind"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "EndUser//用户///Biz//机构",
+        "name": "BindType"
+      }
+    ]
+  },
+
+  {
+    "name": "Trade_Trader",
+    "shorthand": "trader",
+    "id": 2978739,
+    "fields": [
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Caption"
+      },
+      {
+        "enum": "Text",
+        "name": "Desc"
+      },
+      {
+        "enum": "FK",
+        "name": "Fund"
+      },
+      {
+        "enum": "FK",
+        "name": "EndUser"
+      }
+    ]
+  }
+
+]

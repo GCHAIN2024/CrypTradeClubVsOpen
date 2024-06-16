@@ -1625,6 +1625,1578 @@ BEGIN
  ALTER TABLE Ca_WebCredential ADD [Json] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END
 
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ex_Instrument' AND xtype='U')
+BEGIN
+    CREATE TABLE Ex_Instrument ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Desc] NVARCHAR(MAX),[Hidden] BIT,[EnableQuote] BIT,[Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Long] BIGINT,[AssetName] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Short] BIGINT,[Convertor] BIGINT,[m] FLOAT,[mu] FLOAT,[eta] FLOAT,[psi] FLOAT,[MarginCalc] INT,[MarginRateInit] FLOAT,[MarginRateMntn] FLOAT,[MarginMode] INT,[Dec] BIGINT,[Formatter] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Path] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS,[Ask] BIGINT,[Bid] BIGINT,[Middle] FLOAT,[FixedSpread] FLOAT,[PercentageSpread] FLOAT,[TaxOpenMode] INT,[TaxOpen] FLOAT,[TaxCloseMode] INT,[TaxClose] FLOAT,[Tax] FLOAT,[TaxCur] BIGINT,[TaxCurCode] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[LastPrice] FLOAT,[LastUpdatedat] BIGINT,[LastPriceChange] BIGINT,[TradeStatus] INT,[RoMode] INT,[Schedule] NVARCHAR(MAX),[TradeMode] INT,[DerivativeMode] INT,[OptionsMode] INT,[OptionsCP] INT,[OptionsExpiry] BIGINT,[OptionsStrike] FLOAT,[OptionsPricing] NVARCHAR(MAX),[OptionsPeriod] NVARCHAR(MAX),[OptionsTax] FLOAT,[OptionsPremiumPerTradeMin] FLOAT,[OptionsPremiumPerTradeMax] FLOAT,[LimitLotPerTrade] FLOAT,[LimitLotPosition] FLOAT,[CurrentOpen] FLOAT,[CurrentHigh] FLOAT,[CurrentLow] FLOAT,[PrevClose] FLOAT,[PrevClosedat] BIGINT,[CurrentOpenat] BIGINT,[ExtBiz] BIGINT,[RefExternal] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[ItrnInss] NVARCHAR(MAX),[ItrnInssMode] INT,[FlushType] INT,[CurTrigger] INT,[RobotType] INT,[ExtLong] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[ExtShort] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[ExtPrice] FLOAT,[SaveM1] BIT,[HistSavedat] BIGINT,[SaveD1] BIT,[SlPips] FLOAT,[TpPips] FLOAT,[PendingLimitPips] FLOAT,[PendingStopPips] FLOAT,[LastDirection] INT,[LiqMode] INT,[LiqPeriodSince] BIGINT,[LiqPeriodTill] BIGINT,[LiqPeriod] INT,[LiqTime] FLOAT,[ConvertRatio] FLOAT,[RoBuyMode] INT,[RoBuy] FLOAT,[RoSellMode] INT,[RoSell] FLOAT,[PosLimitBuy] FLOAT,[PosLimitSell] FLOAT,[RoCur] BIGINT,[RoCurCode] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[AdjBias] FLOAT,[TaxBuy] FLOAT,[TaxSell] FLOAT,[Misc] NVARCHAR(MAX),[RefLastPriceChange] BIGINT,[HedgeExternal] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[OfferingPrice] FLOAT,[IssuanceAmount] BIGINT,[ListingStatus] INT,[Turnover] FLOAT,[PriceOpened] BIGINT, CONSTRAINT [PK_Ex_Instrument] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Desc')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Hidden')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Hidden] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Hidden] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='EnableQuote')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [EnableQuote] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [EnableQuote] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Code')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Code] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Code] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Caption')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Long')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Long] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Long] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='AssetName')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [AssetName] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [AssetName] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Short')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Short] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Short] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Convertor')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Convertor] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Convertor] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='m')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [m] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [m] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='mu')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [mu] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [mu] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='eta')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [eta] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [eta] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='psi')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [psi] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [psi] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='MarginCalc')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [MarginCalc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [MarginCalc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='MarginRateInit')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [MarginRateInit] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [MarginRateInit] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='MarginRateMntn')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [MarginRateMntn] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [MarginRateMntn] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='MarginMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [MarginMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [MarginMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Dec')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Dec] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Dec] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Formatter')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Formatter] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Formatter] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Path')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Path] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Path] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Ask')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Ask] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Ask] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Bid')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Bid] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Bid] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Middle')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Middle] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Middle] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='FixedSpread')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [FixedSpread] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [FixedSpread] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PercentageSpread')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [PercentageSpread] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [PercentageSpread] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxOpenMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TaxOpenMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TaxOpenMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxOpen')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TaxOpen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TaxOpen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxCloseMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TaxCloseMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TaxCloseMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxClose')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TaxClose] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TaxClose] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Tax')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Tax] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Tax] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxCur')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TaxCur] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TaxCur] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxCurCode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TaxCurCode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TaxCurCode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LastPrice')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LastPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LastPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LastUpdatedat')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LastUpdatedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LastUpdatedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LastPriceChange')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LastPriceChange] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LastPriceChange] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TradeStatus')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TradeStatus] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TradeStatus] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RoMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RoMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Schedule')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Schedule] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Schedule] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TradeMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TradeMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TradeMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='DerivativeMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [DerivativeMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [DerivativeMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsCP')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsCP] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsCP] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsExpiry')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsExpiry] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsExpiry] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsStrike')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsStrike] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsStrike] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsPricing')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsPricing] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsPricing] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsPeriod')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsPeriod] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsPeriod] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsTax')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsTax] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsTax] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsPremiumPerTradeMin')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsPremiumPerTradeMin] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsPremiumPerTradeMin] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsPremiumPerTradeMax')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsPremiumPerTradeMax] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OptionsPremiumPerTradeMax] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LimitLotPerTrade')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LimitLotPerTrade] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LimitLotPerTrade] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LimitLotPosition')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LimitLotPosition] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LimitLotPosition] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurrentOpen')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [CurrentOpen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [CurrentOpen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurrentHigh')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [CurrentHigh] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [CurrentHigh] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurrentLow')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [CurrentLow] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [CurrentLow] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PrevClose')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [PrevClose] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [PrevClose] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PrevClosedat')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [PrevClosedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [PrevClosedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurrentOpenat')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [CurrentOpenat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [CurrentOpenat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ExtBiz')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [ExtBiz] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [ExtBiz] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RefExternal')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RefExternal] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RefExternal] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ItrnInss')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [ItrnInss] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [ItrnInss] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ItrnInssMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [ItrnInssMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [ItrnInssMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='FlushType')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [FlushType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [FlushType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurTrigger')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [CurTrigger] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [CurTrigger] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RobotType')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RobotType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RobotType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ExtLong')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [ExtLong] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [ExtLong] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ExtShort')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [ExtShort] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [ExtShort] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ExtPrice')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [ExtPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [ExtPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='SaveM1')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [SaveM1] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [SaveM1] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='HistSavedat')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [HistSavedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [HistSavedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='SaveD1')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [SaveD1] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [SaveD1] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='SlPips')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [SlPips] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [SlPips] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TpPips')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TpPips] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TpPips] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PendingLimitPips')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [PendingLimitPips] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [PendingLimitPips] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PendingStopPips')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [PendingStopPips] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [PendingStopPips] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LastDirection')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LastDirection] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LastDirection] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LiqMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LiqMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqPeriodSince')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LiqPeriodSince] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LiqPeriodSince] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqPeriodTill')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LiqPeriodTill] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LiqPeriodTill] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqPeriod')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LiqPeriod] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LiqPeriod] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqTime')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [LiqTime] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [LiqTime] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ConvertRatio')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [ConvertRatio] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [ConvertRatio] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoBuyMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RoBuyMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RoBuyMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoBuy')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RoBuy] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RoBuy] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoSellMode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RoSellMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RoSellMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoSell')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RoSell] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RoSell] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PosLimitBuy')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [PosLimitBuy] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [PosLimitBuy] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PosLimitSell')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [PosLimitSell] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [PosLimitSell] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoCur')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RoCur] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RoCur] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoCurCode')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RoCurCode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RoCurCode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='AdjBias')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [AdjBias] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [AdjBias] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxBuy')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TaxBuy] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TaxBuy] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxSell')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [TaxSell] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [TaxSell] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Misc')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Misc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Misc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RefLastPriceChange')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [RefLastPriceChange] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [RefLastPriceChange] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='HedgeExternal')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [HedgeExternal] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [HedgeExternal] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OfferingPrice')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [OfferingPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [OfferingPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='IssuanceAmount')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [IssuanceAmount] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [IssuanceAmount] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ListingStatus')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [ListingStatus] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [ListingStatus] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Turnover')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [Turnover] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [Turnover] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Instrument]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PriceOpened')
+BEGIN
+ ALTER TABLE Ex_Instrument ALTER COLUMN [PriceOpened] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Instrument ADD [PriceOpened] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ex_Ticket' AND xtype='U')
+BEGIN
+    CREATE TABLE Ex_Ticket ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[EndUser] BIGINT,[TradeAcct] BIGINT,[Ins] BIGINT,[Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[TradeMode] INT,[Lot] BIGINT,[PriceOpened] BIGINT,[PriceOpen] BIGINT,[PriceSL] BIGINT,[PriceTP] BIGINT,[PriceClose] BIGINT,[Status] INT,[CP] BIGINT,[CptAcct] BIGINT,[Ref] BIGINT,[OpenRef] BIGINT,[CloseRef] BIGINT,[Origin] BIGINT,[PnL] FLOAT,[PnLSpread] FLOAT,[Margin] FLOAT,[RO] FLOAT,[Tax] FLOAT,[CloseType] INT,[CommitType] INT,[Cmt] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Opendat] BIGINT,[Closedat] BIGINT,[CaStrategyAmt] FLOAT,[CaRo] BIT,[CaAsa] BIT,[CaCmphsvCharge] FLOAT,[RoCheckedat] BIGINT,[Expiry] BIGINT,[HedgetCP] BIGINT,[PendingPrice] BIGINT,[ClosedLot] BIGINT,[ClosedAmt] FLOAT,[PendingAmt] FLOAT,[DrvPreminum] FLOAT,[DrvExpiry] BIGINT,[DrvPeriod] BIGINT,[DrvDirection] INT,[DrvPrice] FLOAT,[DoubleCp] BIGINT,[ClearStatus] INT,[FollowTicket] BIGINT,[Config] NVARCHAR(MAX),[OptionStatus] INT,[NotionalPrincipal] FLOAT,[ExercisedPrincipal] FLOAT,[ExerciseMode] FLOAT,[ExercisePrice] FLOAT,[ExternalTicketOpen] BIGINT,[ExternalTicketClose] BIGINT,[ExternalTicketPending] BIGINT,[ExternalTicketCancel] BIGINT,[Desc] NVARCHAR(MAX), CONSTRAINT [PK_Ex_Ticket] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='EndUser')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='TradeAcct')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [TradeAcct] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [TradeAcct] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Ins')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Ins] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Ins] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Code')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Code] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Code] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Caption')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='TradeMode')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [TradeMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [TradeMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Lot')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Lot] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Lot] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceOpened')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PriceOpened] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PriceOpened] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceOpen')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PriceOpen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PriceOpen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceSL')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PriceSL] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PriceSL] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceTP')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PriceTP] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PriceTP] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceClose')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PriceClose] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PriceClose] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Status')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Status] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Status] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CP')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CP] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CP] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CptAcct')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CptAcct] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CptAcct] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Ref')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Ref] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Ref] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='OpenRef')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [OpenRef] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [OpenRef] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CloseRef')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CloseRef] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CloseRef] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Origin')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Origin] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Origin] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PnL')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PnL] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PnL] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PnLSpread')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PnLSpread] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PnLSpread] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Margin')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Margin] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Margin] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='RO')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [RO] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [RO] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Tax')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Tax] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Tax] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CloseType')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CloseType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CloseType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CommitType')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CommitType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CommitType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Cmt')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Cmt] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Cmt] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Opendat')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Opendat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Opendat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Closedat')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Closedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Closedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CaStrategyAmt')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CaStrategyAmt] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CaStrategyAmt] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CaRo')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CaRo] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CaRo] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CaAsa')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CaAsa] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CaAsa] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CaCmphsvCharge')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [CaCmphsvCharge] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [CaCmphsvCharge] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='RoCheckedat')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [RoCheckedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [RoCheckedat] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Expiry')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Expiry] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Expiry] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='HedgetCP')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [HedgetCP] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [HedgetCP] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PendingPrice')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PendingPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PendingPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ClosedLot')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ClosedLot] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ClosedLot] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ClosedAmt')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ClosedAmt] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ClosedAmt] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PendingAmt')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [PendingAmt] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [PendingAmt] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvPreminum')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [DrvPreminum] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [DrvPreminum] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvExpiry')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [DrvExpiry] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [DrvExpiry] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvPeriod')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [DrvPeriod] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [DrvPeriod] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvDirection')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [DrvDirection] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [DrvDirection] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvPrice')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [DrvPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [DrvPrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DoubleCp')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [DoubleCp] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [DoubleCp] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ClearStatus')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ClearStatus] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ClearStatus] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='FollowTicket')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [FollowTicket] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [FollowTicket] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Config')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Config] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Config] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='OptionStatus')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [OptionStatus] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [OptionStatus] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='NotionalPrincipal')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [NotionalPrincipal] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [NotionalPrincipal] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExercisedPrincipal')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ExercisedPrincipal] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ExercisedPrincipal] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExerciseMode')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ExerciseMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ExerciseMode] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExercisePrice')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ExercisePrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ExercisePrice] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExternalTicketOpen')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ExternalTicketOpen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ExternalTicketOpen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExternalTicketClose')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ExternalTicketClose] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ExternalTicketClose] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExternalTicketPending')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ExternalTicketPending] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ExternalTicketPending] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExternalTicketCancel')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [ExternalTicketCancel] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [ExternalTicketCancel] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Ex_Ticket]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Desc')
+BEGIN
+ ALTER TABLE Ex_Ticket ALTER COLUMN [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Ex_Ticket ADD [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Market_TradeAcct' AND xtype='U')
+BEGIN
+    CREATE TABLE Market_TradeAcct ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[SAC] BIGINT,[State] INT,[TradeType] INT,[RealDemo] INT,[PnL] FLOAT,[Frozen] FLOAT,[Leverage] FLOAT,[Margin] FLOAT,[MarginCallRateWarning] FLOAT,[MarginCallRateWarningII] FLOAT,[MarginCallRateLiq] FLOAT,[PwdTrade] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[PwdReadonly] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Desc] NVARCHAR(MAX), CONSTRAINT [PK_Market_TradeAcct] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='SAC')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [SAC] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [SAC] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='State')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [State] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [State] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='TradeType')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [TradeType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [TradeType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='RealDemo')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [RealDemo] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [RealDemo] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='PnL')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [PnL] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [PnL] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='Frozen')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [Frozen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [Frozen] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='Leverage')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [Leverage] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [Leverage] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='Margin')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [Margin] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [Margin] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='MarginCallRateWarning')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [MarginCallRateWarning] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [MarginCallRateWarning] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='MarginCallRateWarningII')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [MarginCallRateWarningII] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [MarginCallRateWarningII] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='MarginCallRateLiq')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [MarginCallRateLiq] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [MarginCallRateLiq] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='PwdTrade')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [PwdTrade] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [PwdTrade] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='PwdReadonly')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [PwdReadonly] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [PwdReadonly] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Market_TradeAcct]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND name='Desc')
+BEGIN
+ ALTER TABLE Market_TradeAcct ALTER COLUMN [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Market_TradeAcct ADD [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Bookmark' AND xtype='U')
 BEGIN
     CREATE TABLE Social_Bookmark ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Agent] BIGINT,[EndUser] BIGINT,[Bind] BIGINT,[BindType] INT,[BookmarkList] BIGINT,[Notes] NVARCHAR(MAX),[Path] NVARCHAR(MAX),[Group] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Type] BIGINT, CONSTRAINT [PK_Social_Bookmark] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
@@ -1786,6 +3358,38 @@ END
 ELSE
 BEGIN
  ALTER TABLE Social_BookmarkList ADD [Type] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Follow' AND xtype='U')
+BEGIN
+    CREATE TABLE Social_Follow ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[EndUser] BIGINT,[Followee] BIGINT,[FollowType] INT, CONSTRAINT [PK_Social_Follow] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Social_Follow]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Follow') AND name='EndUser')
+BEGIN
+ ALTER TABLE Social_Follow ALTER COLUMN [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Follow ADD [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Follow]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Follow') AND name='Followee')
+BEGIN
+ ALTER TABLE Social_Follow ALTER COLUMN [Followee] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Follow ADD [Followee] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Follow]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Follow') AND name='FollowType')
+BEGIN
+ ALTER TABLE Social_Follow ALTER COLUMN [FollowType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Follow ADD [FollowType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END
 
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Moment' AND xtype='U')
@@ -2007,4 +3611,136 @@ END
 ELSE
 BEGIN
  ALTER TABLE Social_Moment ADD [AudioUrl] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Fund' AND xtype='U')
+BEGIN
+    CREATE TABLE Trade_Fund ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Desc] NVARCHAR(MAX),[Bind] BIGINT,[BindType] INT, CONSTRAINT [PK_Trade_Fund] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Trade_Fund]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Fund') AND name='Caption')
+BEGIN
+ ALTER TABLE Trade_Fund ALTER COLUMN [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Fund ADD [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Fund]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Fund') AND name='Desc')
+BEGIN
+ ALTER TABLE Trade_Fund ALTER COLUMN [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Fund ADD [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Fund]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Fund') AND name='Bind')
+BEGIN
+ ALTER TABLE Trade_Fund ALTER COLUMN [Bind] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Fund ADD [Bind] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Fund]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Fund') AND name='BindType')
+BEGIN
+ ALTER TABLE Trade_Fund ALTER COLUMN [BindType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Fund ADD [BindType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Porfolio' AND xtype='U')
+BEGIN
+    CREATE TABLE Trade_Porfolio ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Desc] NVARCHAR(MAX),[Fund] BIGINT,[Bind] BIGINT,[BindType] INT, CONSTRAINT [PK_Trade_Porfolio] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Trade_Porfolio]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Porfolio') AND name='Caption')
+BEGIN
+ ALTER TABLE Trade_Porfolio ALTER COLUMN [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Porfolio ADD [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Porfolio]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Porfolio') AND name='Desc')
+BEGIN
+ ALTER TABLE Trade_Porfolio ALTER COLUMN [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Porfolio ADD [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Porfolio]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Porfolio') AND name='Fund')
+BEGIN
+ ALTER TABLE Trade_Porfolio ALTER COLUMN [Fund] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Porfolio ADD [Fund] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Porfolio]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Porfolio') AND name='Bind')
+BEGIN
+ ALTER TABLE Trade_Porfolio ALTER COLUMN [Bind] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Porfolio ADD [Bind] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Porfolio]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Porfolio') AND name='BindType')
+BEGIN
+ ALTER TABLE Trade_Porfolio ALTER COLUMN [BindType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Porfolio ADD [BindType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Trader' AND xtype='U')
+BEGIN
+    CREATE TABLE Trade_Trader ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Desc] NVARCHAR(MAX),[Fund] BIGINT,[EndUser] BIGINT, CONSTRAINT [PK_Trade_Trader] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Trade_Trader]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Caption')
+BEGIN
+ ALTER TABLE Trade_Trader ALTER COLUMN [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Trader ADD [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Trader]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Desc')
+BEGIN
+ ALTER TABLE Trade_Trader ALTER COLUMN [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Trader ADD [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Trader]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Fund')
+BEGIN
+ ALTER TABLE Trade_Trader ALTER COLUMN [Fund] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Trader ADD [Fund] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Trade_Trader]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='EndUser')
+BEGIN
+ ALTER TABLE Trade_Trader ALTER COLUMN [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Trade_Trader ADD [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END

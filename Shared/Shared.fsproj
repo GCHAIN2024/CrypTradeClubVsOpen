@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Design-Market.json" />
+    <Content Include="Design-Trade.json" />
     <Content Include="Design.json" />
     <Content Include="Design-Ca.json" />
     <Content Include="Design-Social.json" />
