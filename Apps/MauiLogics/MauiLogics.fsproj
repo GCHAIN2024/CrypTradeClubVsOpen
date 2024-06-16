@@ -23,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\UtilMaui\UtilMaui.fsproj" />
+    <ProjectReference Include="..\..\..\..\Common\Util\Util.fsproj" />
+    <ProjectReference Include="..\..\Shared\Shared.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

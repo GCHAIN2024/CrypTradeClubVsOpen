@@ -190,7 +190,6 @@ let reloadAlbum (children:IList<IView>) =
                 |> Array.map(fun s -> 
                     let p = pMOMENT_empty()
                     p.PreviewImgUrl <- "https://ipfs.gnews.org/ipfs/QmXpDTFLYVQP4nHMPaLTXyMUzggmou6HJWa92NcFnvNWEY?filename=Component_808.png"
-                    p.Fulltext <- s
                     p.AudioUrl <- s
                     p)
             album.Caption <- found.sbl.p.Caption

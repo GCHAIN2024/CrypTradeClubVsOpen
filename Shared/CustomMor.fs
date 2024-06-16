@@ -182,48 +182,129 @@ let json__Albumo (json:Json):Album option =
     else
         None
 
-// [Error] Structure
+// [FactMediaPlayer] Structure
 
-let Error__bin (bb:BytesBuilder) (v:Error) =
+let FactMediaPlayer__bin (bb:BytesBuilder) (v:FactMediaPlayer) =
+
+    MOMENT__bin bb v.moment
+    
+    array__bin (int64__bin) bb v.albumIDs
+    DateTime__bin bb v.serverTimestamp
+
+let bin__FactMediaPlayer (bi:BinIndexed):FactMediaPlayer =
+    let bin,index = bi
+
+    {
+        moment =
+            bi
+            |> bin__MOMENT
+        albumIDs =
+            bi
+            |> bin__array (bin__int64)
+        serverTimestamp =
+            bi
+            |> bin__DateTime
+    }
+
+let FactMediaPlayer__json (v:FactMediaPlayer) =
+
+    [|  ("moment",MOMENT__json v.moment)
+        ("albumIDs",
+        array__json (int64__json) v.albumIDs)
+        ("serverTimestamp",DateTime__json v.serverTimestamp)
+         |]
+    |> Json.Braket
+
+let FactMediaPlayer__jsonTbw (w:TextBlockWriter) (v:FactMediaPlayer) =
+    json__str w (FactMediaPlayer__json v)
+
+let FactMediaPlayer__jsonStr (v:FactMediaPlayer) =
+    (FactMediaPlayer__json v) |> json__strFinal
+
+
+let json__FactMediaPlayero (json:Json):FactMediaPlayer option =
+    let fields = json |> json__items
+
+    let mutable passOptions = true
+
+    let momento =
+        match json__tryFindByName json "moment" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__MOMENTo with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    let albumIDso =
+        match json__tryFindByName json "albumIDs" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__arrayo (json__int64o) with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    let serverTimestampo =
+        match json__tryFindByName json "serverTimestamp" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__DateTimeo with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    if passOptions then
+        {
+            moment = momento.Value
+            albumIDs = albumIDso.Value
+            serverTimestamp = serverTimestampo.Value} |> Some
+    else
+        None
+
+// [FactBroadcast] Structure
+
+let FactBroadcast__bin (bb:BytesBuilder) (v:FactBroadcast) =
 
     match v with
-    | Error.ApiNotExists ->
+    | FactBroadcast.MediaPlayer v ->
         int32__bin bb 0
-    | Error.InvalideParameter ->
-        int32__bin bb 1
-    | Error.Internal ->
-        int32__bin bb 2
+        FactMediaPlayer__bin bb v
 
-let bin__Error (bi:BinIndexed):Error =
+let bin__FactBroadcast (bi:BinIndexed):FactBroadcast =
     let bin,index = bi
 
     match bin__int32 bi with
-    | 2 -> Error.Internal
-    | 1 -> Error.InvalideParameter
-    | _ -> Error.ApiNotExists
+    | _ -> bin__FactMediaPlayer bi |> FactBroadcast.MediaPlayer
 
-let Error__json (v:Error) =
+let FactBroadcast__json (v:FactBroadcast) =
 
     let items = new List<string * Json>()
 
     match v with
-    | Error.ApiNotExists ->
+    | FactBroadcast.MediaPlayer v ->
         ("enum",int32__json 0) |> items.Add
-    | Error.InvalideParameter ->
-        ("enum",int32__json 1) |> items.Add
-    | Error.Internal ->
-        ("enum",int32__json 2) |> items.Add
+        ("MediaPlayer",FactMediaPlayer__json v) |> items.Add
 
     items.ToArray() |> Json.Braket
 
-let Error__jsonTbw (w:TextBlockWriter) (v:Error) =
-    json__str w (Error__json v)
+let FactBroadcast__jsonTbw (w:TextBlockWriter) (v:FactBroadcast) =
+    json__str w (FactBroadcast__json v)
 
-let Error__jsonStr (v:Error) =
-    (Error__json v) |> json__strFinal
+let FactBroadcast__jsonStr (v:FactBroadcast) =
+    (FactBroadcast__json v) |> json__strFinal
 
 
-let json__Erroro (json:Json):Error option =
+let json__FactBroadcasto (json:Json):FactBroadcast option =
     let fields = json |> json__items
 
     match json__tryFindByName json "enum" with
@@ -231,9 +312,10 @@ let json__Erroro (json:Json):Error option =
         match json__int32o json with
         | Some i ->
             match i with
-            | 0 -> Error.ApiNotExists |> Some
-            | 1 -> Error.InvalideParameter |> Some
-            | 2 -> Error.Internal |> Some
+            | 0 -> 
+                match json__FactMediaPlayero json with
+                | Some v -> v |> FactBroadcast.MediaPlayer |> Some
+                | None -> None
             | _ -> None
         | None -> None
     | None -> None
@@ -373,6 +455,62 @@ let json__Msgo (json:Json):Msg option =
                 match json__arrayo (json__Facto) json with
                 | Some v -> v |> Msg.MultiFact |> Some
                 | None -> None
+            | _ -> None
+        | None -> None
+    | None -> None
+
+// [Error] Structure
+
+let Error__bin (bb:BytesBuilder) (v:Error) =
+
+    match v with
+    | Error.ApiNotExists ->
+        int32__bin bb 0
+    | Error.InvalideParameter ->
+        int32__bin bb 1
+    | Error.Internal ->
+        int32__bin bb 2
+
+let bin__Error (bi:BinIndexed):Error =
+    let bin,index = bi
+
+    match bin__int32 bi with
+    | 2 -> Error.Internal
+    | 1 -> Error.InvalideParameter
+    | _ -> Error.ApiNotExists
+
+let Error__json (v:Error) =
+
+    let items = new List<string * Json>()
+
+    match v with
+    | Error.ApiNotExists ->
+        ("enum",int32__json 0) |> items.Add
+    | Error.InvalideParameter ->
+        ("enum",int32__json 1) |> items.Add
+    | Error.Internal ->
+        ("enum",int32__json 2) |> items.Add
+
+    items.ToArray() |> Json.Braket
+
+let Error__jsonTbw (w:TextBlockWriter) (v:Error) =
+    json__str w (Error__json v)
+
+let Error__jsonStr (v:Error) =
+    (Error__json v) |> json__strFinal
+
+
+let json__Erroro (json:Json):Error option =
+    let fields = json |> json__items
+
+    match json__tryFindByName json "enum" with
+    | Some json ->
+        match json__int32o json with
+        | Some i ->
+            match i with
+            | 0 -> Error.ApiNotExists |> Some
+            | 1 -> Error.InvalideParameter |> Some
+            | 2 -> Error.Internal |> Some
             | _ -> None
         | None -> None
     | None -> None

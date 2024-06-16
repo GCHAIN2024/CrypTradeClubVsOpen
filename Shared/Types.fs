@@ -1,5 +1,6 @@
 ﻿module Shared.Types
 
+open System
 open System.Collections.Generic
 
 open Util.Text
@@ -18,10 +19,14 @@ type Album = {
 sbl: SBL
 items: List<MOMENT> }
 
-type Error = 
-| ApiNotExists
-| InvalideParameter
-| Internal
+type FactMediaPlayer = {
+moment: MOMENT
+albumIDs: int64[]
+serverTimestamp: DateTime }
+
+type FactBroadcast =
+| MediaPlayer of FactMediaPlayer
+
 
 type Fact =
 | Moment of MOMENT
@@ -33,6 +38,10 @@ type Msg =
 | SingleFact of Fact
 | MultiFact of Fact[]
 
+type Error = 
+| ApiNotExists
+| InvalideParameter
+| Internal
 
 //}
 
