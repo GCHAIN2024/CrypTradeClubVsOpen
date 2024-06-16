@@ -16,3 +16,6 @@
 /Apps/Maui/obj
 /Apps/MauiLogics/bin/Debug/net8.0
 /Apps/MauiLogics/obj
+/Server/obj/project.assets.json
+/Server/obj/project.nuget.cache
+/Server/obj/Server.fsproj.nuget.dgspec.json
