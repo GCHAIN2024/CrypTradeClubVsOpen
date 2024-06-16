@@ -30,3 +30,14 @@ Initial setup
 - Manually run automatically generated SQL
 
 
+### Tasks
+
+1. Design and implement a foundational data architecture reflecting typical hedge fund structures.
+2. Deploy initial web crawlers for daily news aggregation and updates.
+3. Launch preliminary versions of vehicle-integrated radio applications.
+4. Generate initial web traffic through targeted promotion of developed applications.
+5. Develop and introduce core trading instruments.
+6. Implement real-time market data acquisition systems for comprehensive market insights.
+7. Facilitate position management tools for traders and portfolio managers.
+8. Create interactive visualization tools for portfolio and fund exposure analysis.
+9. Cultivate an engaged social trading community platform.

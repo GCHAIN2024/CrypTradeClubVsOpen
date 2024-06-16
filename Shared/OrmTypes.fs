@@ -3820,11 +3820,44 @@ let MOMENT_id = ref 0L
 let MOMENT_count = ref 0
 let MOMENT_table = "Social_Moment"
 
+// [Sys_Log] (LOG)
+
+type pLOG = {
+mutable Location: Text
+mutable Content: Text
+mutable Sql: Text}
+
+
+type LOG = Rcd<pLOG>
+
+let LOG_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Location],[Content],[Sql]"
+
+let pLOG_fieldordersArray = [|
+    "Location"
+    "Content"
+    "Sql" |]
+
+let LOG_sql_update = "[Updatedat]=@Updatedat,[Location]=@Location,[Content]=@Content,[Sql]=@Sql"
+
+let pLOG_fields = [|
+    Text("Location")
+    Text("Content")
+    Text("Sql") |]
+
+let pLOG_empty(): pLOG = {
+    Location = ""
+    Content = ""
+    Sql = "" }
+
+let LOG_id = ref 0L
+let LOG_count = ref 0
+let LOG_table = "Sys_Log"
+
 // [Trade_Fund] (FUND)
 
 type fundBindTypeEnum = 
-| EndUser = 0 // �û�
-| Biz = 1 // ����
+| EndUser = 0 // 用户
+| Biz = 1 // 机构
 
 let fundBindTypeEnums = [| fundBindTypeEnum.EndUser; fundBindTypeEnum.Biz |]
 let fundBindTypeEnumstrs = [| "fundBindTypeEnum"; "fundBindTypeEnum" |]
@@ -3844,8 +3877,8 @@ let str__fundBindTypeEnum s =
 
 let fundBindTypeEnum__caption e =
     match e with
-    | fundBindTypeEnum.EndUser -> "�û�"
-    | fundBindTypeEnum.Biz -> "����"
+    | fundBindTypeEnum.EndUser -> "用户"
+    | fundBindTypeEnum.Biz -> "机构"
     | _ -> ""
 
 type pFUND = {
@@ -3871,7 +3904,7 @@ let pFUND_fields = [|
     Chars("Caption", 64)
     Text("Desc")
     Integer("Bind")
-    SelectLines("BindType", [| ("EndUser","�û�");("Biz","����") |]) |]
+    SelectLines("BindType", [| ("EndUser","用户");("Biz","机构") |]) |]
 
 let pFUND_empty(): pFUND = {
     Caption = ""
@@ -3886,8 +3919,8 @@ let FUND_table = "Trade_Fund"
 // [Trade_Porfolio] (PORTFOLIO)
 
 type portfolioBindTypeEnum = 
-| EndUser = 0 // �û�
-| Biz = 1 // ����
+| EndUser = 0 // 用户
+| Biz = 1 // 机构
 
 let portfolioBindTypeEnums = [| portfolioBindTypeEnum.EndUser; portfolioBindTypeEnum.Biz |]
 let portfolioBindTypeEnumstrs = [| "portfolioBindTypeEnum"; "portfolioBindTypeEnum" |]
@@ -3907,8 +3940,8 @@ let str__portfolioBindTypeEnum s =
 
 let portfolioBindTypeEnum__caption e =
     match e with
-    | portfolioBindTypeEnum.EndUser -> "�û�"
-    | portfolioBindTypeEnum.Biz -> "����"
+    | portfolioBindTypeEnum.EndUser -> "用户"
+    | portfolioBindTypeEnum.Biz -> "机构"
     | _ -> ""
 
 type pPORTFOLIO = {
@@ -3937,7 +3970,7 @@ let pPORTFOLIO_fields = [|
     Text("Desc")
     FK("Fund")
     Integer("Bind")
-    SelectLines("BindType", [| ("EndUser","�û�");("Biz","����") |]) |]
+    SelectLines("BindType", [| ("EndUser","用户");("Biz","机构") |]) |]
 
 let pPORTFOLIO_empty(): pPORTFOLIO = {
     Caption = ""

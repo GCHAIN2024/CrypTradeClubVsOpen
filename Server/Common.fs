@@ -4,11 +4,21 @@ open System
 open System.Text
 open System.IO
 open System.Diagnostics
+open System.Threading
 
-
+open Util.Db
+open Util.DbTx
+open Util.Orm
 open Util.Zmq
 
+open UtilWebServer.DbLogger
+open UtilWebServer.Common
+
+open Shared.OrmTypes
+open Shared.OrmMor
+
 type Host = {
+conn: string
 defaultHtml: string
 fsDir: string }
 
@@ -17,39 +27,39 @@ host: Host
 zweb: ZmqWeb
 output: string -> unit }
 
-let since = DateTime.UtcNow
-
-let output:string -> unit = 
-
-    let assbly = System.Reflection.Assembly.GetCallingAssembly()
-    let dir = Directory.GetCurrentDirectory()
-    if dir.EndsWith "WebService" then
-        Debug.WriteLine
-    else if dir.EndsWith "WebApp" then
-        fun s ->
-            let elapse = DateTime.UtcNow.Subtract since
-            [|
-                elapse.Days.ToString("000") + "."
-                elapse.Hours.ToString("00") + ":"
-                elapse.Minutes.ToString("00") + ":"
-                elapse.Seconds.ToString("00") + "."
-                elapse.Milliseconds.ToString("000") + "> "
-                s |]
-            |> String.Concat
-            |> Debug.WriteLine
-    else
-        Console.OutputEncoding <- Encoding.Unicode
-        Console.WriteLine
-
-
-let port = 12077
-
-let zweb = create__ZWeb 2 port LogLevel.All false [||]
-
-
 let runtime = {
     host = {
+        conn = "server=127.0.0.1; user=sa; database=CTC"
         defaultHtml = "index.html"
         fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
     zweb = zweb
     output = output }
+
+let init() = 
+
+    conn <- runtime.host.conn
+
+    dbLoggero <- (fun log -> 
+    
+        let p = pLOG_empty()
+
+        p.Content <- log.content
+        p.Location <- log.location
+        p.Sql <- log.sql
+
+        let pretx = None |> opctx__pretx
+
+        let tid = Interlocked.Increment LOG_metadata.id
+
+        let rcd = 
+            ((tid,pretx.dt,pretx.dt,tid),p)
+            |> LOG_metadata.wrapper
+
+        (tid,pretx.dt,pretx.dt,tid,p)
+        |> build_create_sql LOG_metadata
+        |> pretx.sqls.Add
+
+        pretx
+        |> pipeline conn
+        |> ignore)
+        |> Some

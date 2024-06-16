@@ -6627,6 +6627,139 @@ let json__MOMENTo (json:Json):MOMENT option =
         p = p } |> Some
     
 
+// [LOG] Structure
+
+let pLOG__bin (bb:BytesBuilder) (p:pLOG) =
+
+    
+    let binLocation = p.Location |> Encoding.UTF8.GetBytes
+    binLocation.Length |> BitConverter.GetBytes |> bb.append
+    binLocation |> bb.append
+    
+    let binContent = p.Content |> Encoding.UTF8.GetBytes
+    binContent.Length |> BitConverter.GetBytes |> bb.append
+    binContent |> bb.append
+    
+    let binSql = p.Sql |> Encoding.UTF8.GetBytes
+    binSql.Length |> BitConverter.GetBytes |> bb.append
+    binSql |> bb.append
+
+let LOG__bin (bb:BytesBuilder) (v:LOG) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pLOG__bin bb v.p
+
+let bin__pLOG (bi:BinIndexed):pLOG =
+    let bin,index = bi
+
+    let p = pLOG_empty()
+    
+    let count_Location = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Location <- Encoding.UTF8.GetString(bin,index.Value,count_Location)
+    index.Value <- index.Value + count_Location
+    
+    let count_Content = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Content <- Encoding.UTF8.GetString(bin,index.Value,count_Content)
+    index.Value <- index.Value + count_Content
+    
+    let count_Sql = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Sql <- Encoding.UTF8.GetString(bin,index.Value,count_Sql)
+    index.Value <- index.Value + count_Sql
+    
+    p
+
+let bin__LOG (bi:BinIndexed):LOG =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pLOG bi }
+
+let pLOG__json (p:pLOG) =
+
+    [|
+        ("Location",p.Location |> Json.Str)
+        ("Content",p.Content |> Json.Str)
+        ("Sql",p.Sql |> Json.Str) |]
+    |> Json.Braket
+
+let LOG__json (v:LOG) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Location",p.Location |> Json.Str)
+        ("Content",p.Content |> Json.Str)
+        ("Sql",p.Sql |> Json.Str) |]
+    |> Json.Braket
+
+let LOG__jsonTbw (w:TextBlockWriter) (v:LOG) =
+    json__str w (LOG__json v)
+
+let LOG__jsonStr (v:LOG) =
+    (LOG__json v) |> json__strFinal
+
+
+let json__pLOGo (json:Json):pLOG option =
+    let fields = json |> json__items
+
+    let p = pLOG_empty()
+    
+    p.Location <- checkfield fields "Location"
+    
+    p.Content <- checkfield fields "Content"
+    
+    p.Sql <- checkfield fields "Sql"
+    
+    p |> Some
+    
+
+let json__LOGo (json:Json):LOG option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pLOG_empty()
+    
+    p.Location <- checkfield fields "Location"
+    
+    p.Content <- checkfield fields "Content"
+    
+    p.Sql <- checkfield fields "Sql"
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
 // [FUND] Structure
 
 let pFUND__bin (bb:BytesBuilder) (p:pFUND) =
@@ -10258,6 +10391,96 @@ let MOMENTTxSqlServer =
     """
 
 
+let db__pLOG(line:Object[]): pLOG =
+    let p = pLOG_empty()
+
+    p.Location <- string(line.[4]).TrimEnd()
+    p.Content <- string(line.[5]).TrimEnd()
+    p.Sql <- string(line.[6]).TrimEnd()
+
+    p
+
+let pLOG__sps (p:pLOG) = [|
+    new SqlParameter("Location", p.Location)
+    new SqlParameter("Content", p.Content)
+    new SqlParameter("Sql", p.Sql) |]
+
+let db__LOG = db__Rcd db__pLOG
+
+let LOG_wrapper item: LOG =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pLOG_clone (p:pLOG): pLOG = {
+    Location = p.Location
+    Content = p.Content
+    Sql = p.Sql }
+
+let LOG_update_transaction output (updater,suc,fail) (rcd:LOG) =
+    let rollback_p = rcd.p |> pLOG_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,LOG_table,LOG_sql_update,pLOG__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let LOG_update output (rcd:LOG) =
+    rcd
+    |> LOG_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let LOG_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment LOG_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,LOG_table,pLOG__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> LOG_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let LOG_create output p =
+    LOG_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__LOGo id: LOG option = id__rcd(conn,LOG_fieldorders,LOG_table,db__LOG) id
+
+let LOG_metadata = {
+    fieldorders = LOG_fieldorders
+    db__rcd = db__LOG 
+    wrapper = LOG_wrapper
+    sps = pLOG__sps
+    id = LOG_id
+    id__rcdo = id__LOGo
+    clone = pLOG_clone
+    empty__p = pLOG_empty
+    rcd__bin = LOG__bin
+    bin__rcd = bin__LOG
+    sql_update = LOG_sql_update
+    rcd_update = LOG_update
+    table = LOG_table
+    shorthand = "log" }
+
+let LOGTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Sys_Log' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Sys_Log ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[Location]
+    ,[Content]
+    ,[Sql])
+    END
+    """
+
+
 let db__pFUND(line:Object[]): pFUND =
     let p = pFUND_empty()
 
@@ -10566,9 +10789,10 @@ type MetadataEnum =
 | SBL = 18
 | FOLLOW = 19
 | MOMENT = 20
-| FUND = 21
-| PORTFOLIO = 22
-| TRADER = 23
+| LOG = 21
+| FUND = 22
+| PORTFOLIO = 23
+| TRADER = 24
 
 let tablenames = [|
     ADDRESS_metadata.table
@@ -10592,6 +10816,7 @@ let tablenames = [|
     SBL_metadata.table
     FOLLOW_metadata.table
     MOMENT_metadata.table
+    LOG_metadata.table
     FUND_metadata.table
     PORTFOLIO_metadata.table
     TRADER_metadata.table |]
@@ -10827,6 +11052,17 @@ let init() =
 
     match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Social_Moment]") with
     | Some v -> MOMENT_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Sys_Log]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > LOG_id.Value then
+            LOG_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Sys_Log]") with
+    | Some v -> LOG_count.Value <- v :?> int32
     | None -> ()
 
     match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Trade_Fund]") with

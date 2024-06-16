@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Sys_Log",
+    "shorthand": "log",
+    "fields": [
+      {
+        "enum": "Text",
+        "name": "Location"
+      },
+      {
+        "enum": "Text",
+        "name": "Content"
+      },
+      {
+        "enum": "Text",
+        "name": "Sql"
+      }
+    ]
+  }
+]
