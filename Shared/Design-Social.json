@@ -22,14 +22,20 @@
         "enum": "FK",
         "name": "Lang"
       },
+
       {
         "enum": "Text",
-        "name": "ShortText"
+        "name": "Title"
       },
       {
         "enum": "Text",
-        "name": "MediaUrls"
+        "name": "Summary"
       },
+      {
+        "enum": "Text",
+        "name": "FullText"
+      },
+
       {
         "enum": "Text",
         "name": "PreviewImgUrl"

@@ -6256,13 +6256,17 @@ let pMOMENT__bin (bb:BytesBuilder) (p:pMOMENT) =
     
     p.Lang |> BitConverter.GetBytes |> bb.append
     
-    let binShortText = p.ShortText |> Encoding.UTF8.GetBytes
-    binShortText.Length |> BitConverter.GetBytes |> bb.append
-    binShortText |> bb.append
+    let binTitle = p.Title |> Encoding.UTF8.GetBytes
+    binTitle.Length |> BitConverter.GetBytes |> bb.append
+    binTitle |> bb.append
     
-    let binMediaUrls = p.MediaUrls |> Encoding.UTF8.GetBytes
-    binMediaUrls.Length |> BitConverter.GetBytes |> bb.append
-    binMediaUrls |> bb.append
+    let binSummary = p.Summary |> Encoding.UTF8.GetBytes
+    binSummary.Length |> BitConverter.GetBytes |> bb.append
+    binSummary |> bb.append
+    
+    let binFullText = p.FullText |> Encoding.UTF8.GetBytes
+    binFullText.Length |> BitConverter.GetBytes |> bb.append
+    binFullText |> bb.append
     
     let binPreviewImgUrl = p.PreviewImgUrl |> Encoding.UTF8.GetBytes
     binPreviewImgUrl.Length |> BitConverter.GetBytes |> bb.append
@@ -6337,15 +6341,20 @@ let bin__pMOMENT (bi:BinIndexed):pMOMENT =
     p.Lang <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
-    let count_ShortText = BitConverter.ToInt32(bin,index.Value)
+    let count_Title = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.ShortText <- Encoding.UTF8.GetString(bin,index.Value,count_ShortText)
-    index.Value <- index.Value + count_ShortText
+    p.Title <- Encoding.UTF8.GetString(bin,index.Value,count_Title)
+    index.Value <- index.Value + count_Title
     
-    let count_MediaUrls = BitConverter.ToInt32(bin,index.Value)
+    let count_Summary = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.MediaUrls <- Encoding.UTF8.GetString(bin,index.Value,count_MediaUrls)
-    index.Value <- index.Value + count_MediaUrls
+    p.Summary <- Encoding.UTF8.GetString(bin,index.Value,count_Summary)
+    index.Value <- index.Value + count_Summary
+    
+    let count_FullText = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.FullText <- Encoding.UTF8.GetString(bin,index.Value,count_FullText)
+    index.Value <- index.Value + count_FullText
     
     let count_PreviewImgUrl = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
@@ -6442,8 +6451,9 @@ let pMOMENT__json (p:pMOMENT) =
         ("Bind",p.Bind.ToString() |> Json.Num)
         ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
         ("Lang",p.Lang.ToString() |> Json.Num)
-        ("ShortText",p.ShortText |> Json.Str)
-        ("MediaUrls",p.MediaUrls |> Json.Str)
+        ("Title",p.Title |> Json.Str)
+        ("Summary",p.Summary |> Json.Str)
+        ("FullText",p.FullText |> Json.Str)
         ("PreviewImgUrl",p.PreviewImgUrl |> Json.Str)
         ("Link",p.Link |> Json.Str)
         ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
@@ -6476,8 +6486,9 @@ let MOMENT__json (v:MOMENT) =
         ("Bind",p.Bind.ToString() |> Json.Num)
         ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
         ("Lang",p.Lang.ToString() |> Json.Num)
-        ("ShortText",p.ShortText |> Json.Str)
-        ("MediaUrls",p.MediaUrls |> Json.Str)
+        ("Title",p.Title |> Json.Str)
+        ("Summary",p.Summary |> Json.Str)
+        ("FullText",p.FullText |> Json.Str)
         ("PreviewImgUrl",p.PreviewImgUrl |> Json.Str)
         ("Link",p.Link |> Json.Str)
         ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
@@ -6518,9 +6529,11 @@ let json__pMOMENTo (json:Json):pMOMENT option =
     
     p.Lang <- checkfield fields "Lang" |> parse_int64
     
-    p.ShortText <- checkfield fields "ShortText"
+    p.Title <- checkfield fields "Title"
     
-    p.MediaUrls <- checkfield fields "MediaUrls"
+    p.Summary <- checkfield fields "Summary"
+    
+    p.FullText <- checkfield fields "FullText"
     
     p.PreviewImgUrl <- checkfield fields "PreviewImgUrl"
     
@@ -6579,9 +6592,11 @@ let json__MOMENTo (json:Json):MOMENT option =
     
     p.Lang <- checkfield fields "Lang" |> parse_int64
     
-    p.ShortText <- checkfield fields "ShortText"
+    p.Title <- checkfield fields "Title"
     
-    p.MediaUrls <- checkfield fields "MediaUrls"
+    p.Summary <- checkfield fields "Summary"
+    
+    p.FullText <- checkfield fields "FullText"
     
     p.PreviewImgUrl <- checkfield fields "PreviewImgUrl"
     
@@ -10224,26 +10239,27 @@ let db__pMOMENT(line:Object[]): pMOMENT =
     p.Bind <- if Convert.IsDBNull(line.[5]) then 0L else line.[5] :?> int64
     p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
     p.Lang <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
-    p.ShortText <- string(line.[8]).TrimEnd()
-    p.MediaUrls <- string(line.[9]).TrimEnd()
-    p.PreviewImgUrl <- string(line.[10]).TrimEnd()
-    p.Link <- string(line.[11]).TrimEnd()
-    p.Type <- EnumOfValue(if Convert.IsDBNull(line.[12]) then 0 else line.[12] :?> int)
-    p.Question <- if Convert.IsDBNull(line.[13]) then 0L else line.[13] :?> int64
-    p.State <- EnumOfValue(if Convert.IsDBNull(line.[14]) then 0 else line.[14] :?> int)
-    p.Group <- if Convert.IsDBNull(line.[15]) then 0L else line.[15] :?> int64
-    p.AutoTranslate <- if Convert.IsDBNull(line.[16]) then 0L else line.[16] :?> int64
-    p.OriginalMoment <- if Convert.IsDBNull(line.[17]) then 0L else line.[17] :?> int64
-    p.Postedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[18]) then DateTime.MinValue.Ticks else line.[18] :?> int64)
-    p.ContentBind <- if Convert.IsDBNull(line.[19]) then 0L else line.[19] :?> int64
-    p.Keywords <- string(line.[20]).TrimEnd()
-    p.Sticky <- if Convert.IsDBNull(line.[21]) then 0L else line.[21] :?> int64
-    p.Protection <- EnumOfValue(if Convert.IsDBNull(line.[22]) then 0 else line.[22] :?> int)
-    p.MediaType <- EnumOfValue(if Convert.IsDBNull(line.[23]) then 0 else line.[23] :?> int)
-    p.UrlOriginal <- string(line.[24]).TrimEnd()
-    p.OID <- string(line.[25]).TrimEnd()
-    p.PostType <- EnumOfValue(if Convert.IsDBNull(line.[26]) then 0 else line.[26] :?> int)
-    p.AudioUrl <- string(line.[27]).TrimEnd()
+    p.Title <- string(line.[8]).TrimEnd()
+    p.Summary <- string(line.[9]).TrimEnd()
+    p.FullText <- string(line.[10]).TrimEnd()
+    p.PreviewImgUrl <- string(line.[11]).TrimEnd()
+    p.Link <- string(line.[12]).TrimEnd()
+    p.Type <- EnumOfValue(if Convert.IsDBNull(line.[13]) then 0 else line.[13] :?> int)
+    p.Question <- if Convert.IsDBNull(line.[14]) then 0L else line.[14] :?> int64
+    p.State <- EnumOfValue(if Convert.IsDBNull(line.[15]) then 0 else line.[15] :?> int)
+    p.Group <- if Convert.IsDBNull(line.[16]) then 0L else line.[16] :?> int64
+    p.AutoTranslate <- if Convert.IsDBNull(line.[17]) then 0L else line.[17] :?> int64
+    p.OriginalMoment <- if Convert.IsDBNull(line.[18]) then 0L else line.[18] :?> int64
+    p.Postedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[19]) then DateTime.MinValue.Ticks else line.[19] :?> int64)
+    p.ContentBind <- if Convert.IsDBNull(line.[20]) then 0L else line.[20] :?> int64
+    p.Keywords <- string(line.[21]).TrimEnd()
+    p.Sticky <- if Convert.IsDBNull(line.[22]) then 0L else line.[22] :?> int64
+    p.Protection <- EnumOfValue(if Convert.IsDBNull(line.[23]) then 0 else line.[23] :?> int)
+    p.MediaType <- EnumOfValue(if Convert.IsDBNull(line.[24]) then 0 else line.[24] :?> int)
+    p.UrlOriginal <- string(line.[25]).TrimEnd()
+    p.OID <- string(line.[26]).TrimEnd()
+    p.PostType <- EnumOfValue(if Convert.IsDBNull(line.[27]) then 0 else line.[27] :?> int)
+    p.AudioUrl <- string(line.[28]).TrimEnd()
 
     p
 
@@ -10252,8 +10268,9 @@ let pMOMENT__sps (p:pMOMENT) = [|
     new SqlParameter("Bind", p.Bind)
     new SqlParameter("BindType", p.BindType)
     new SqlParameter("Lang", p.Lang)
-    new SqlParameter("ShortText", p.ShortText)
-    new SqlParameter("MediaUrls", p.MediaUrls)
+    new SqlParameter("Title", p.Title)
+    new SqlParameter("Summary", p.Summary)
+    new SqlParameter("FullText", p.FullText)
     new SqlParameter("PreviewImgUrl", p.PreviewImgUrl)
     new SqlParameter("Link", p.Link)
     new SqlParameter("Type", p.Type)
@@ -10284,8 +10301,9 @@ let pMOMENT_clone (p:pMOMENT): pMOMENT = {
     Bind = p.Bind
     BindType = p.BindType
     Lang = p.Lang
-    ShortText = p.ShortText
-    MediaUrls = p.MediaUrls
+    Title = p.Title
+    Summary = p.Summary
+    FullText = p.FullText
     PreviewImgUrl = p.PreviewImgUrl
     Link = p.Link
     Type = p.Type
@@ -10367,8 +10385,9 @@ let MOMENTTxSqlServer =
     ,[Bind]
     ,[BindType]
     ,[Lang]
-    ,[ShortText]
-    ,[MediaUrls]
+    ,[Title]
+    ,[Summary]
+    ,[FullText]
     ,[PreviewImgUrl]
     ,[Link]
     ,[Type]

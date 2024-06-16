@@ -31,7 +31,7 @@ let init() =
 
                 [|  f.moment.p.AudioUrl 
                     " --- "
-                    f.moment.p.ShortText |]
+                    f.moment.p.Summary |]
                 |> String.Concat
                 |> output
 

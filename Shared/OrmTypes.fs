@@ -3710,8 +3710,9 @@ mutable Agent: FK
 mutable Bind: Integer
 mutable BindType: momentBindTypeEnum
 mutable Lang: FK
-mutable ShortText: Text
-mutable MediaUrls: Text
+mutable Title: Text
+mutable Summary: Text
+mutable FullText: Text
 mutable PreviewImgUrl: Text
 mutable Link: Text
 mutable Type: momentTypeEnum
@@ -3734,15 +3735,16 @@ mutable AudioUrl: Text}
 
 type MOMENT = Rcd<pMOMENT>
 
-let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[Lang],[ShortText],[MediaUrls],[PreviewImgUrl],[Link],[Type],[Question],[State],[Group],[AutoTranslate],[OriginalMoment],[Postedat],[ContentBind],[Keywords],[Sticky],[Protection],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
+let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[Lang],[Title],[Summary],[FullText],[PreviewImgUrl],[Link],[Type],[Question],[State],[Group],[AutoTranslate],[OriginalMoment],[Postedat],[ContentBind],[Keywords],[Sticky],[Protection],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
 
 let pMOMENT_fieldordersArray = [|
     "Agent"
     "Bind"
     "BindType"
     "Lang"
-    "ShortText"
-    "MediaUrls"
+    "Title"
+    "Summary"
+    "FullText"
     "PreviewImgUrl"
     "Link"
     "Type"
@@ -3762,15 +3764,16 @@ let pMOMENT_fieldordersArray = [|
     "PostType"
     "AudioUrl" |]
 
-let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[Lang]=@Lang,[ShortText]=@ShortText,[MediaUrls]=@MediaUrls,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[Group]=@Group,[AutoTranslate]=@AutoTranslate,[OriginalMoment]=@OriginalMoment,[Postedat]=@Postedat,[ContentBind]=@ContentBind,[Keywords]=@Keywords,[Sticky]=@Sticky,[Protection]=@Protection,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
+let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[Lang]=@Lang,[Title]=@Title,[Summary]=@Summary,[FullText]=@FullText,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[Group]=@Group,[AutoTranslate]=@AutoTranslate,[OriginalMoment]=@OriginalMoment,[Postedat]=@Postedat,[ContentBind]=@ContentBind,[Keywords]=@Keywords,[Sticky]=@Sticky,[Protection]=@Protection,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
 
 let pMOMENT_fields = [|
     FK("Agent")
     Integer("Bind")
     SelectLines("BindType", [| ("EndUser","用户");("Biz","机构") |])
     FK("Lang")
-    Text("ShortText")
-    Text("MediaUrls")
+    Text("Title")
+    Text("Summary")
+    Text("FullText")
     Text("PreviewImgUrl")
     Text("Link")
     SelectLines("Type", [| ("Original","原创图文视频");("Repost","转发");("Thread","文章");("Forum","论坛");("Question","问题");("Answer","回答");("BookmarkList","收藏夹");("Poll","投票");("Miles","文贵直播文字版");("Dict","辞典");("WebPage","页面");("MediaFile","媒体文件") |])
@@ -3795,8 +3798,9 @@ let pMOMENT_empty(): pMOMENT = {
     Bind = 0L
     BindType = EnumOfValue 0
     Lang = 0L
-    ShortText = ""
-    MediaUrls = ""
+    Title = ""
+    Summary = ""
+    FullText = ""
     PreviewImgUrl = ""
     Link = ""
     Type = EnumOfValue 0

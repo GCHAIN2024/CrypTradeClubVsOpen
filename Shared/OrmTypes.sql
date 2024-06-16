@@ -3394,7 +3394,7 @@ END
 
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Moment' AND xtype='U')
 BEGIN
-    CREATE TABLE Social_Moment ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Agent] BIGINT,[Bind] BIGINT,[BindType] INT,[Lang] BIGINT,[ShortText] NVARCHAR(MAX),[MediaUrls] NVARCHAR(MAX),[PreviewImgUrl] NVARCHAR(MAX),[Link] NVARCHAR(MAX),[Type] INT,[Question] BIGINT,[State] INT,[Group] BIGINT,[AutoTranslate] BIGINT,[OriginalMoment] BIGINT,[Postedat] BIGINT,[ContentBind] BIGINT,[Keywords] NVARCHAR(MAX),[Sticky] BIGINT,[Protection] INT,[MediaType] INT,[UrlOriginal] NVARCHAR(MAX),[OID] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS,[PostType] INT,[AudioUrl] NVARCHAR(MAX), CONSTRAINT [PK_Social_Moment] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+    CREATE TABLE Social_Moment ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Agent] BIGINT,[Bind] BIGINT,[BindType] INT,[Lang] BIGINT,[Title] NVARCHAR(MAX),[Summary] NVARCHAR(MAX),[FullText] NVARCHAR(MAX),[PreviewImgUrl] NVARCHAR(MAX),[Link] NVARCHAR(MAX),[Type] INT,[Question] BIGINT,[State] INT,[Group] BIGINT,[AutoTranslate] BIGINT,[OriginalMoment] BIGINT,[Postedat] BIGINT,[ContentBind] BIGINT,[Keywords] NVARCHAR(MAX),[Sticky] BIGINT,[Protection] INT,[MediaType] INT,[UrlOriginal] NVARCHAR(MAX),[OID] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS,[PostType] INT,[AudioUrl] NVARCHAR(MAX), CONSTRAINT [PK_Social_Moment] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
 --[Social_Moment]--------------------
 IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND name='Agent')
@@ -3433,22 +3433,31 @@ BEGIN
  ALTER TABLE Social_Moment ADD [Lang] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END
 --[Social_Moment]--------------------
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND name='ShortText')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND name='Title')
 BEGIN
- ALTER TABLE Social_Moment ALTER COLUMN [ShortText] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+ ALTER TABLE Social_Moment ALTER COLUMN [Title] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END
 ELSE
 BEGIN
- ALTER TABLE Social_Moment ADD [ShortText] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+ ALTER TABLE Social_Moment ADD [Title] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END
 --[Social_Moment]--------------------
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND name='MediaUrls')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND name='Summary')
 BEGIN
- ALTER TABLE Social_Moment ALTER COLUMN [MediaUrls] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+ ALTER TABLE Social_Moment ALTER COLUMN [Summary] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END
 ELSE
 BEGIN
- ALTER TABLE Social_Moment ADD [MediaUrls] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+ ALTER TABLE Social_Moment ADD [Summary] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Moment]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND name='FullText')
+BEGIN
+ ALTER TABLE Social_Moment ALTER COLUMN [FullText] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Moment ADD [FullText] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END
 --[Social_Moment]--------------------
 IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND name='PreviewImgUrl')

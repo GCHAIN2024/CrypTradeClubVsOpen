@@ -29,6 +29,8 @@ let main argv =
         wsHandler 
         zweb
 
+    BizLogics.Crawler.test output
+
     Util.Runtime.halt output "" ""
 
     0
