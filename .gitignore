@@ -12,3 +12,7 @@
 /Apps/WebCrawler/obj
 /Server/bin/Debug/net8.0
 /Server/obj/Debug/net8.0
+/Apps/Maui/bin/Debug
+/Apps/Maui/obj
+/Apps/MauiLogics/bin/Debug/net8.0
+/Apps/MauiLogics/obj
