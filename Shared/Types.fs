@@ -1,5 +1,7 @@
 ﻿module Shared.Types
 
+open System.Collections.Generic
+
 open Util.Text
 open Util.Json
 
@@ -12,6 +14,9 @@ p: pMOMENT
 mutable MarkdownA: string
 mutable MarkdownB: string }
 
+type Album = {
+sbl: SBL
+items: List<MOMENT> }
 
 type Error = 
 | ApiNotExists

@@ -24,6 +24,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{88C20F
 		Deploy\index.html = Deploy\index.html
 	EndProjectSection
 EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "UtilMaui", "..\..\Common\UtilMaui\UtilMaui.fsproj", "{3AB00064-F8A3-4777-A4BF-C214F2CC5A1D}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MauiLogics", "Apps\MauiLogics\MauiLogics.fsproj", "{6CEC0173-9D3E-4B25-AA85-86F362C9114F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui", "Apps\Maui\Maui.csproj", "{43928C36-65D4-44C6-982F-6E0B192FB57B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,12 +52,28 @@ Global
 		{DDACC469-4811-4F66-BFDC-258305160FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDACC469-4811-4F66-BFDC-258305160FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDACC469-4811-4F66-BFDC-258305160FFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB00064-F8A3-4777-A4BF-C214F2CC5A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB00064-F8A3-4777-A4BF-C214F2CC5A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB00064-F8A3-4777-A4BF-C214F2CC5A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB00064-F8A3-4777-A4BF-C214F2CC5A1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CEC0173-9D3E-4B25-AA85-86F362C9114F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CEC0173-9D3E-4B25-AA85-86F362C9114F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CEC0173-9D3E-4B25-AA85-86F362C9114F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CEC0173-9D3E-4B25-AA85-86F362C9114F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43928C36-65D4-44C6-982F-6E0B192FB57B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43928C36-65D4-44C6-982F-6E0B192FB57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43928C36-65D4-44C6-982F-6E0B192FB57B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{43928C36-65D4-44C6-982F-6E0B192FB57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43928C36-65D4-44C6-982F-6E0B192FB57B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43928C36-65D4-44C6-982F-6E0B192FB57B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{05EA2F55-40BC-498E-8DDE-0587240C4DCA} = {28C31853-DECB-4E65-8924-F0B923E02C32}
+		{6CEC0173-9D3E-4B25-AA85-86F362C9114F} = {28C31853-DECB-4E65-8924-F0B923E02C32}
+		{43928C36-65D4-44C6-982F-6E0B192FB57B} = {28C31853-DECB-4E65-8924-F0B923E02C32}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D6FBBFE-FF28-4250-BBFB-AC6B8661ACA6}

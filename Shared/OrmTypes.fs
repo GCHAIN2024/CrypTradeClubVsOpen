@@ -1497,6 +1497,214 @@ let CWC_id = ref 0L
 let CWC_count = ref 0
 let CWC_table = "Ca_WebCredential"
 
+// [Social_Bookmark] (BOOKMARK)
+
+type bookmarkBindTypeEnum = 
+| Undefined = 0 // 未定义
+| Moment = 1 // 动态
+| File = 2 // 文件
+| EndUser = 3 // 用户
+| Biz = 4 // 机构
+| Group = 5 // 用户群
+
+let bookmarkBindTypeEnums = [| bookmarkBindTypeEnum.Undefined; bookmarkBindTypeEnum.Moment; bookmarkBindTypeEnum.File; bookmarkBindTypeEnum.EndUser; bookmarkBindTypeEnum.Biz; bookmarkBindTypeEnum.Group |]
+let bookmarkBindTypeEnumstrs = [| "bookmarkBindTypeEnum"; "bookmarkBindTypeEnum"; "bookmarkBindTypeEnum"; "bookmarkBindTypeEnum"; "bookmarkBindTypeEnum"; "bookmarkBindTypeEnum" |]
+let bookmarkBindTypeNum = 6
+
+let int__bookmarkBindTypeEnum v =
+    match v with
+    | 0 -> Some bookmarkBindTypeEnum.Undefined
+    | 1 -> Some bookmarkBindTypeEnum.Moment
+    | 2 -> Some bookmarkBindTypeEnum.File
+    | 3 -> Some bookmarkBindTypeEnum.EndUser
+    | 4 -> Some bookmarkBindTypeEnum.Biz
+    | 5 -> Some bookmarkBindTypeEnum.Group
+    | _ -> None
+
+let str__bookmarkBindTypeEnum s =
+    match s with
+    | "Undefined" -> Some bookmarkBindTypeEnum.Undefined
+    | "Moment" -> Some bookmarkBindTypeEnum.Moment
+    | "File" -> Some bookmarkBindTypeEnum.File
+    | "EndUser" -> Some bookmarkBindTypeEnum.EndUser
+    | "Biz" -> Some bookmarkBindTypeEnum.Biz
+    | "Group" -> Some bookmarkBindTypeEnum.Group
+    | _ -> None
+
+let bookmarkBindTypeEnum__caption e =
+    match e with
+    | bookmarkBindTypeEnum.Undefined -> "未定义"
+    | bookmarkBindTypeEnum.Moment -> "动态"
+    | bookmarkBindTypeEnum.File -> "文件"
+    | bookmarkBindTypeEnum.EndUser -> "用户"
+    | bookmarkBindTypeEnum.Biz -> "机构"
+    | bookmarkBindTypeEnum.Group -> "用户群"
+    | _ -> ""
+
+type pBOOKMARK = {
+mutable Agent: FK
+mutable EndUser: FK
+mutable Bind: Integer
+mutable BindType: bookmarkBindTypeEnum
+mutable BookmarkList: FK
+mutable Notes: Text
+mutable Path: Text
+mutable Group: Caption
+mutable Type: Integer}
+
+
+type BOOKMARK = Rcd<pBOOKMARK>
+
+let BOOKMARK_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[EndUser],[Bind],[BindType],[BookmarkList],[Notes],[Path],[Group],[Type]"
+
+let pBOOKMARK_fieldordersArray = [|
+    "Agent"
+    "EndUser"
+    "Bind"
+    "BindType"
+    "BookmarkList"
+    "Notes"
+    "Path"
+    "Group"
+    "Type" |]
+
+let BOOKMARK_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[EndUser]=@EndUser,[Bind]=@Bind,[BindType]=@BindType,[BookmarkList]=@BookmarkList,[Notes]=@Notes,[Path]=@Path,[Group]=@Group,[Type]=@Type"
+
+let pBOOKMARK_fields = [|
+    FK("Agent")
+    FK("EndUser")
+    Integer("Bind")
+    SelectLines("BindType", [| ("Undefined","未定义");("Moment","动态");("File","文件");("EndUser","用户");("Biz","机构");("Group","用户群") |])
+    FK("BookmarkList")
+    Text("Notes")
+    Text("Path")
+    Caption("Group", 64)
+    Integer("Type") |]
+
+let pBOOKMARK_empty(): pBOOKMARK = {
+    Agent = 0L
+    EndUser = 0L
+    Bind = 0L
+    BindType = EnumOfValue 0
+    BookmarkList = 0L
+    Notes = ""
+    Path = ""
+    Group = ""
+    Type = 0L }
+
+let BOOKMARK_id = ref 0L
+let BOOKMARK_count = ref 0
+let BOOKMARK_table = "Social_Bookmark"
+
+// [Social_BookmarkList] (SBL)
+
+type sblPrivacyEnum = 
+| Private = 0 // 私有
+| Public = 1 // 公开
+
+let sblPrivacyEnums = [| sblPrivacyEnum.Private; sblPrivacyEnum.Public |]
+let sblPrivacyEnumstrs = [| "sblPrivacyEnum"; "sblPrivacyEnum" |]
+let sblPrivacyNum = 2
+
+let int__sblPrivacyEnum v =
+    match v with
+    | 0 -> Some sblPrivacyEnum.Private
+    | 1 -> Some sblPrivacyEnum.Public
+    | _ -> None
+
+let str__sblPrivacyEnum s =
+    match s with
+    | "Private" -> Some sblPrivacyEnum.Private
+    | "Public" -> Some sblPrivacyEnum.Public
+    | _ -> None
+
+let sblPrivacyEnum__caption e =
+    match e with
+    | sblPrivacyEnum.Private -> "私有"
+    | sblPrivacyEnum.Public -> "公开"
+    | _ -> ""
+
+type sblTypeEnum = 
+| Default = 0 // 默认
+| PlayList = 1 // 播放列表
+| PlayChanel = 2 // 播放频道
+
+let sblTypeEnums = [| sblTypeEnum.Default; sblTypeEnum.PlayList; sblTypeEnum.PlayChanel |]
+let sblTypeEnumstrs = [| "sblTypeEnum"; "sblTypeEnum"; "sblTypeEnum" |]
+let sblTypeNum = 3
+
+let int__sblTypeEnum v =
+    match v with
+    | 0 -> Some sblTypeEnum.Default
+    | 1 -> Some sblTypeEnum.PlayList
+    | 2 -> Some sblTypeEnum.PlayChanel
+    | _ -> None
+
+let str__sblTypeEnum s =
+    match s with
+    | "Default" -> Some sblTypeEnum.Default
+    | "PlayList" -> Some sblTypeEnum.PlayList
+    | "PlayChanel" -> Some sblTypeEnum.PlayChanel
+    | _ -> None
+
+let sblTypeEnum__caption e =
+    match e with
+    | sblTypeEnum.Default -> "默认"
+    | sblTypeEnum.PlayList -> "播放列表"
+    | sblTypeEnum.PlayChanel -> "播放频道"
+    | _ -> ""
+
+type pSBL = {
+mutable EndUser: FK
+mutable Caption: Caption
+mutable Icon: Link
+mutable Background: Link
+mutable Desc: Text
+mutable Privacy: sblPrivacyEnum
+mutable Moment: FK
+mutable Type: sblTypeEnum}
+
+
+type SBL = Rcd<pSBL>
+
+let SBL_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[EndUser],[Caption],[Icon],[Background],[Desc],[Privacy],[Moment],[Type]"
+
+let pSBL_fieldordersArray = [|
+    "EndUser"
+    "Caption"
+    "Icon"
+    "Background"
+    "Desc"
+    "Privacy"
+    "Moment"
+    "Type" |]
+
+let SBL_sql_update = "[Updatedat]=@Updatedat,[EndUser]=@EndUser,[Caption]=@Caption,[Icon]=@Icon,[Background]=@Background,[Desc]=@Desc,[Privacy]=@Privacy,[Moment]=@Moment,[Type]=@Type"
+
+let pSBL_fields = [|
+    FK("EndUser")
+    Caption("Caption", 256)
+    Link("Icon", 256)
+    Link("Background", 256)
+    Text("Desc")
+    SelectLines("Privacy", [| ("Private","私有");("Public","公开") |])
+    FK("Moment")
+    SelectLines("Type", [| ("Default","默认");("PlayList","播放列表");("PlayChanel","播放频道") |]) |]
+
+let pSBL_empty(): pSBL = {
+    EndUser = 0L
+    Caption = ""
+    Icon = ""
+    Background = ""
+    Desc = ""
+    Privacy = EnumOfValue 0
+    Moment = 0L
+    Type = EnumOfValue 0 }
+
+let SBL_id = ref 0L
+let SBL_count = ref 0
+let SBL_table = "Social_BookmarkList"
+
 // [Social_Moment] (MOMENT)
 
 type momentBindTypeEnum = 

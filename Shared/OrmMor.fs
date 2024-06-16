@@ -3464,6 +3464,397 @@ let json__CWCo (json:Json):CWC option =
         p = p } |> Some
     
 
+// [BOOKMARK] Structure
+
+let pBOOKMARK__bin (bb:BytesBuilder) (p:pBOOKMARK) =
+
+    
+    p.Agent |> BitConverter.GetBytes |> bb.append
+    
+    p.EndUser |> BitConverter.GetBytes |> bb.append
+    
+    p.Bind |> BitConverter.GetBytes |> bb.append
+    
+    p.BindType |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.BookmarkList |> BitConverter.GetBytes |> bb.append
+    
+    let binNotes = p.Notes |> Encoding.UTF8.GetBytes
+    binNotes.Length |> BitConverter.GetBytes |> bb.append
+    binNotes |> bb.append
+    
+    let binPath = p.Path |> Encoding.UTF8.GetBytes
+    binPath.Length |> BitConverter.GetBytes |> bb.append
+    binPath |> bb.append
+    
+    let binGroup = p.Group |> Encoding.UTF8.GetBytes
+    binGroup.Length |> BitConverter.GetBytes |> bb.append
+    binGroup |> bb.append
+    
+    p.Type |> BitConverter.GetBytes |> bb.append
+
+let BOOKMARK__bin (bb:BytesBuilder) (v:BOOKMARK) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pBOOKMARK__bin bb v.p
+
+let bin__pBOOKMARK (bi:BinIndexed):pBOOKMARK =
+    let bin,index = bi
+
+    let p = pBOOKMARK_empty()
+    
+    p.Agent <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.EndUser <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Bind <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.BindType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.BookmarkList <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_Notes = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Notes <- Encoding.UTF8.GetString(bin,index.Value,count_Notes)
+    index.Value <- index.Value + count_Notes
+    
+    let count_Path = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Path <- Encoding.UTF8.GetString(bin,index.Value,count_Path)
+    index.Value <- index.Value + count_Path
+    
+    let count_Group = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Group <- Encoding.UTF8.GetString(bin,index.Value,count_Group)
+    index.Value <- index.Value + count_Group
+    
+    p.Type <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p
+
+let bin__BOOKMARK (bi:BinIndexed):BOOKMARK =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pBOOKMARK bi }
+
+let pBOOKMARK__json (p:pBOOKMARK) =
+
+    [|
+        ("Agent",p.Agent.ToString() |> Json.Num)
+        ("EndUser",p.EndUser.ToString() |> Json.Num)
+        ("Bind",p.Bind.ToString() |> Json.Num)
+        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
+        ("BookmarkList",p.BookmarkList.ToString() |> Json.Num)
+        ("Notes",p.Notes |> Json.Str)
+        ("Path",p.Path |> Json.Str)
+        ("Group",p.Group |> Json.Str)
+        ("Type",p.Type.ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let BOOKMARK__json (v:BOOKMARK) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("Agent",p.Agent.ToString() |> Json.Num)
+        ("EndUser",p.EndUser.ToString() |> Json.Num)
+        ("Bind",p.Bind.ToString() |> Json.Num)
+        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
+        ("BookmarkList",p.BookmarkList.ToString() |> Json.Num)
+        ("Notes",p.Notes |> Json.Str)
+        ("Path",p.Path |> Json.Str)
+        ("Group",p.Group |> Json.Str)
+        ("Type",p.Type.ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let BOOKMARK__jsonTbw (w:TextBlockWriter) (v:BOOKMARK) =
+    json__str w (BOOKMARK__json v)
+
+let BOOKMARK__jsonStr (v:BOOKMARK) =
+    (BOOKMARK__json v) |> json__strFinal
+
+
+let json__pBOOKMARKo (json:Json):pBOOKMARK option =
+    let fields = json |> json__items
+
+    let p = pBOOKMARK_empty()
+    
+    p.Agent <- checkfield fields "Agent" |> parse_int64
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p.Bind <- checkfield fields "Bind" |> parse_int64
+    
+    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    p.BookmarkList <- checkfield fields "BookmarkList" |> parse_int64
+    
+    p.Notes <- checkfield fields "Notes"
+    
+    p.Path <- checkfield fields "Path"
+    
+    p.Group <- checkfieldz fields "Group" 64
+    
+    p.Type <- checkfield fields "Type" |> parse_int64
+    
+    p |> Some
+    
+
+let json__BOOKMARKo (json:Json):BOOKMARK option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pBOOKMARK_empty()
+    
+    p.Agent <- checkfield fields "Agent" |> parse_int64
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p.Bind <- checkfield fields "Bind" |> parse_int64
+    
+    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    p.BookmarkList <- checkfield fields "BookmarkList" |> parse_int64
+    
+    p.Notes <- checkfield fields "Notes"
+    
+    p.Path <- checkfield fields "Path"
+    
+    p.Group <- checkfieldz fields "Group" 64
+    
+    p.Type <- checkfield fields "Type" |> parse_int64
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
+// [SBL] Structure
+
+let pSBL__bin (bb:BytesBuilder) (p:pSBL) =
+
+    
+    p.EndUser |> BitConverter.GetBytes |> bb.append
+    
+    let binCaption = p.Caption |> Encoding.UTF8.GetBytes
+    binCaption.Length |> BitConverter.GetBytes |> bb.append
+    binCaption |> bb.append
+    
+    let binIcon = p.Icon |> Encoding.UTF8.GetBytes
+    binIcon.Length |> BitConverter.GetBytes |> bb.append
+    binIcon |> bb.append
+    
+    let binBackground = p.Background |> Encoding.UTF8.GetBytes
+    binBackground.Length |> BitConverter.GetBytes |> bb.append
+    binBackground |> bb.append
+    
+    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
+    binDesc.Length |> BitConverter.GetBytes |> bb.append
+    binDesc |> bb.append
+    
+    p.Privacy |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    
+    p.Moment |> BitConverter.GetBytes |> bb.append
+    
+    p.Type |> EnumToValue |> BitConverter.GetBytes |> bb.append
+
+let SBL__bin (bb:BytesBuilder) (v:SBL) =
+    v.ID |> BitConverter.GetBytes |> bb.append
+    v.Sort |> BitConverter.GetBytes |> bb.append
+    DateTime__bin bb v.Createdat
+    DateTime__bin bb v.Updatedat
+    
+    pSBL__bin bb v.p
+
+let bin__pSBL (bi:BinIndexed):pSBL =
+    let bin,index = bi
+
+    let p = pSBL_empty()
+    
+    p.EndUser <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let count_Caption = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
+    index.Value <- index.Value + count_Caption
+    
+    let count_Icon = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Icon <- Encoding.UTF8.GetString(bin,index.Value,count_Icon)
+    index.Value <- index.Value + count_Icon
+    
+    let count_Background = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Background <- Encoding.UTF8.GetString(bin,index.Value,count_Background)
+    index.Value <- index.Value + count_Background
+    
+    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
+    index.Value <- index.Value + count_Desc
+    
+    p.Privacy <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p.Moment <- BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    p.Type <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    index.Value <- index.Value + 4
+    
+    p
+
+let bin__SBL (bi:BinIndexed):SBL =
+    let bin,index = bi
+
+    let ID = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Sort = BitConverter.ToInt64(bin,index.Value)
+    index.Value <- index.Value + 8
+    
+    let Createdat = bin__DateTime bi
+    
+    let Updatedat = bin__DateTime bi
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = bin__pSBL bi }
+
+let pSBL__json (p:pSBL) =
+
+    [|
+        ("EndUser",p.EndUser.ToString() |> Json.Num)
+        ("Caption",p.Caption |> Json.Str)
+        ("Icon",p.Icon |> Json.Str)
+        ("Background",p.Background |> Json.Str)
+        ("Desc",p.Desc |> Json.Str)
+        ("Privacy",(p.Privacy |> EnumToValue).ToString() |> Json.Num)
+        ("Moment",p.Moment.ToString() |> Json.Num)
+        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let SBL__json (v:SBL) =
+
+    let p = v.p
+    
+    [|  ("id",v.ID.ToString() |> Json.Num)
+        ("sort",v.Sort.ToString() |> Json.Num)
+        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
+        ("EndUser",p.EndUser.ToString() |> Json.Num)
+        ("Caption",p.Caption |> Json.Str)
+        ("Icon",p.Icon |> Json.Str)
+        ("Background",p.Background |> Json.Str)
+        ("Desc",p.Desc |> Json.Str)
+        ("Privacy",(p.Privacy |> EnumToValue).ToString() |> Json.Num)
+        ("Moment",p.Moment.ToString() |> Json.Num)
+        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num) |]
+    |> Json.Braket
+
+let SBL__jsonTbw (w:TextBlockWriter) (v:SBL) =
+    json__str w (SBL__json v)
+
+let SBL__jsonStr (v:SBL) =
+    (SBL__json v) |> json__strFinal
+
+
+let json__pSBLo (json:Json):pSBL option =
+    let fields = json |> json__items
+
+    let p = pSBL_empty()
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p.Caption <- checkfieldz fields "Caption" 256
+    
+    p.Icon <- checkfieldz fields "Icon" 256
+    
+    p.Background <- checkfieldz fields "Background" 256
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Privacy <- checkfield fields "Privacy" |> parse_int32 |> EnumOfValue
+    
+    p.Moment <- checkfield fields "Moment" |> parse_int64
+    
+    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+    
+    p |> Some
+    
+
+let json__SBLo (json:Json):SBL option =
+    let fields = json |> json__items
+
+    let ID = checkfield fields "id" |> parse_int64
+    let Sort = checkfield fields "sort" |> parse_int64
+    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
+    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
+    
+    let p = pSBL_empty()
+    
+    p.EndUser <- checkfield fields "EndUser" |> parse_int64
+    
+    p.Caption <- checkfieldz fields "Caption" 256
+    
+    p.Icon <- checkfieldz fields "Icon" 256
+    
+    p.Background <- checkfieldz fields "Background" 256
+    
+    p.Desc <- checkfield fields "Desc"
+    
+    p.Privacy <- checkfield fields "Privacy" |> parse_int32 |> EnumOfValue
+    
+    p.Moment <- checkfield fields "Moment" |> parse_int64
+    
+    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+    
+    {
+        ID = ID
+        Sort = Sort
+        Createdat = Createdat
+        Updatedat = Updatedat
+        p = p } |> Some
+    
+
 // [MOMENT] Structure
 
 let pMOMENT__bin (bb:BytesBuilder) (p:pMOMENT) =
@@ -5634,6 +6025,230 @@ let CWCTxSqlServer =
     """
 
 
+let db__pBOOKMARK(line:Object[]): pBOOKMARK =
+    let p = pBOOKMARK_empty()
+
+    p.Agent <- if Convert.IsDBNull(line.[4]) then 0L else line.[4] :?> int64
+    p.EndUser <- if Convert.IsDBNull(line.[5]) then 0L else line.[5] :?> int64
+    p.Bind <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
+    p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[7]) then 0 else line.[7] :?> int)
+    p.BookmarkList <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
+    p.Notes <- string(line.[9]).TrimEnd()
+    p.Path <- string(line.[10]).TrimEnd()
+    p.Group <- string(line.[11]).TrimEnd()
+    p.Type <- if Convert.IsDBNull(line.[12]) then 0L else line.[12] :?> int64
+
+    p
+
+let pBOOKMARK__sps (p:pBOOKMARK) = [|
+    new SqlParameter("Agent", p.Agent)
+    new SqlParameter("EndUser", p.EndUser)
+    new SqlParameter("Bind", p.Bind)
+    new SqlParameter("BindType", p.BindType)
+    new SqlParameter("BookmarkList", p.BookmarkList)
+    new SqlParameter("Notes", p.Notes)
+    new SqlParameter("Path", p.Path)
+    new SqlParameter("Group", p.Group)
+    new SqlParameter("Type", p.Type) |]
+
+let db__BOOKMARK = db__Rcd db__pBOOKMARK
+
+let BOOKMARK_wrapper item: BOOKMARK =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pBOOKMARK_clone (p:pBOOKMARK): pBOOKMARK = {
+    Agent = p.Agent
+    EndUser = p.EndUser
+    Bind = p.Bind
+    BindType = p.BindType
+    BookmarkList = p.BookmarkList
+    Notes = p.Notes
+    Path = p.Path
+    Group = p.Group
+    Type = p.Type }
+
+let BOOKMARK_update_transaction output (updater,suc,fail) (rcd:BOOKMARK) =
+    let rollback_p = rcd.p |> pBOOKMARK_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,BOOKMARK_table,BOOKMARK_sql_update,pBOOKMARK__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let BOOKMARK_update output (rcd:BOOKMARK) =
+    rcd
+    |> BOOKMARK_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let BOOKMARK_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment BOOKMARK_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,BOOKMARK_table,pBOOKMARK__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> BOOKMARK_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let BOOKMARK_create output p =
+    BOOKMARK_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__BOOKMARKo id: BOOKMARK option = id__rcd(conn,BOOKMARK_fieldorders,BOOKMARK_table,db__BOOKMARK) id
+
+let BOOKMARK_metadata = {
+    fieldorders = BOOKMARK_fieldorders
+    db__rcd = db__BOOKMARK 
+    wrapper = BOOKMARK_wrapper
+    sps = pBOOKMARK__sps
+    id = BOOKMARK_id
+    id__rcdo = id__BOOKMARKo
+    clone = pBOOKMARK_clone
+    empty__p = pBOOKMARK_empty
+    rcd__bin = BOOKMARK__bin
+    bin__rcd = bin__BOOKMARK
+    sql_update = BOOKMARK_sql_update
+    rcd_update = BOOKMARK_update
+    table = BOOKMARK_table
+    shorthand = "bookmark" }
+
+let BOOKMARKTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Bookmark' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Social_Bookmark ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[Agent]
+    ,[EndUser]
+    ,[Bind]
+    ,[BindType]
+    ,[BookmarkList]
+    ,[Notes]
+    ,[Path]
+    ,[Group]
+    ,[Type])
+    END
+    """
+
+
+let db__pSBL(line:Object[]): pSBL =
+    let p = pSBL_empty()
+
+    p.EndUser <- if Convert.IsDBNull(line.[4]) then 0L else line.[4] :?> int64
+    p.Caption <- string(line.[5]).TrimEnd()
+    p.Icon <- string(line.[6]).TrimEnd()
+    p.Background <- string(line.[7]).TrimEnd()
+    p.Desc <- string(line.[8]).TrimEnd()
+    p.Privacy <- EnumOfValue(if Convert.IsDBNull(line.[9]) then 0 else line.[9] :?> int)
+    p.Moment <- if Convert.IsDBNull(line.[10]) then 0L else line.[10] :?> int64
+    p.Type <- EnumOfValue(if Convert.IsDBNull(line.[11]) then 0 else line.[11] :?> int)
+
+    p
+
+let pSBL__sps (p:pSBL) = [|
+    new SqlParameter("EndUser", p.EndUser)
+    new SqlParameter("Caption", p.Caption)
+    new SqlParameter("Icon", p.Icon)
+    new SqlParameter("Background", p.Background)
+    new SqlParameter("Desc", p.Desc)
+    new SqlParameter("Privacy", p.Privacy)
+    new SqlParameter("Moment", p.Moment)
+    new SqlParameter("Type", p.Type) |]
+
+let db__SBL = db__Rcd db__pSBL
+
+let SBL_wrapper item: SBL =
+    let (i,c,u,s),p = item
+    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
+
+let pSBL_clone (p:pSBL): pSBL = {
+    EndUser = p.EndUser
+    Caption = p.Caption
+    Icon = p.Icon
+    Background = p.Background
+    Desc = p.Desc
+    Privacy = p.Privacy
+    Moment = p.Moment
+    Type = p.Type }
+
+let SBL_update_transaction output (updater,suc,fail) (rcd:SBL) =
+    let rollback_p = rcd.p |> pSBL_clone
+    let rollback_updatedat = rcd.Updatedat
+    updater rcd.p
+    let ctime,res =
+        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
+        |> update (conn,output,SBL_table,SBL_sql_update,pSBL__sps,suc,fail)
+    match res with
+    | Suc ctx ->
+        rcd.Updatedat <- ctime
+        suc(ctime,ctx)
+    | Fail(eso,ctx) ->
+        rcd.p <- rollback_p
+        rcd.Updatedat <- rollback_updatedat
+        fail eso
+
+let SBL_update output (rcd:SBL) =
+    rcd
+    |> SBL_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
+
+let SBL_create_incremental_transaction output (suc,fail) p =
+    let cid = Interlocked.Increment SBL_id
+    let ctime = DateTime.UtcNow
+    match create (conn,output,SBL_table,pSBL__sps) (cid,ctime,p) with
+    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> SBL_wrapper |> suc
+    | Fail(eso,ctx) -> fail(eso,ctx)
+
+let SBL_create output p =
+    SBL_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
+    
+
+let id__SBLo id: SBL option = id__rcd(conn,SBL_fieldorders,SBL_table,db__SBL) id
+
+let SBL_metadata = {
+    fieldorders = SBL_fieldorders
+    db__rcd = db__SBL 
+    wrapper = SBL_wrapper
+    sps = pSBL__sps
+    id = SBL_id
+    id__rcdo = id__SBLo
+    clone = pSBL_clone
+    empty__p = pSBL_empty
+    rcd__bin = SBL__bin
+    bin__rcd = bin__SBL
+    sql_update = SBL_sql_update
+    rcd_update = SBL_update
+    table = SBL_table
+    shorthand = "sbl" }
+
+let SBLTxSqlServer =
+    """
+    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_BookmarkList' AND xtype='U')
+    BEGIN
+
+        CREATE TABLE Social_BookmarkList ([ID] BIGINT NOT NULL
+    ,[Createdat] BIGINT NOT NULL
+    ,[Updatedat] BIGINT NOT NULL
+    ,[Sort] BIGINT NOT NULL,
+    ,[EndUser]
+    ,[Caption]
+    ,[Icon]
+    ,[Background]
+    ,[Desc]
+    ,[Privacy]
+    ,[Moment]
+    ,[Type])
+    END
+    """
+
+
 let db__pMOMENT(line:Object[]): pMOMENT =
     let p = pMOMENT_empty()
 
@@ -5823,7 +6438,9 @@ type MetadataEnum =
 | LOCALE = 11
 | CSI = 12
 | CWC = 13
-| MOMENT = 14
+| BOOKMARK = 14
+| SBL = 15
+| MOMENT = 16
 
 let tablenames = [|
     ADDRESS_metadata.table
@@ -5840,6 +6457,8 @@ let tablenames = [|
     LOCALE_metadata.table
     CSI_metadata.table
     CWC_metadata.table
+    BOOKMARK_metadata.table
+    SBL_metadata.table
     MOMENT_metadata.table |]
 
 let init() =
@@ -5996,6 +6615,28 @@ let init() =
 
     match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Ca_WebCredential]") with
     | Some v -> CWC_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Social_Bookmark]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > BOOKMARK_id.Value then
+            BOOKMARK_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Social_Bookmark]") with
+    | Some v -> BOOKMARK_count.Value <- v :?> int32
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Social_BookmarkList]") with
+    | Some v ->
+        let max = v :?> int64
+        if max > SBL_id.Value then
+            SBL_id.Value <- max
+    | None -> ()
+
+    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Social_BookmarkList]") with
+    | Some v -> SBL_count.Value <- v :?> int32
     | None -> ()
 
     match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Social_Moment]") with

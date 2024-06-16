@@ -1625,6 +1625,169 @@ BEGIN
  ALTER TABLE Ca_WebCredential ADD [Json] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
 END
 
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Bookmark' AND xtype='U')
+BEGIN
+    CREATE TABLE Social_Bookmark ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Agent] BIGINT,[EndUser] BIGINT,[Bind] BIGINT,[BindType] INT,[BookmarkList] BIGINT,[Notes] NVARCHAR(MAX),[Path] NVARCHAR(MAX),[Group] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS,[Type] BIGINT, CONSTRAINT [PK_Social_Bookmark] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='Agent')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [Agent] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [Agent] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='EndUser')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='Bind')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [Bind] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [Bind] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='BindType')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [BindType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [BindType] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='BookmarkList')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [BookmarkList] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [BookmarkList] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='Notes')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [Notes] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [Notes] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='Path')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [Path] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [Path] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='Group')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [Group] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [Group] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_Bookmark]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND name='Type')
+BEGIN
+ ALTER TABLE Social_Bookmark ALTER COLUMN [Type] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_Bookmark ADD [Type] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_BookmarkList' AND xtype='U')
+BEGIN
+    CREATE TABLE Social_BookmarkList ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[EndUser] BIGINT,[Caption] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS,[Icon] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS,[Background] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS,[Desc] NVARCHAR(MAX),[Privacy] INT,[Moment] BIGINT,[Type] INT, CONSTRAINT [PK_Social_BookmarkList] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+--[Social_BookmarkList]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND name='EndUser')
+BEGIN
+ ALTER TABLE Social_BookmarkList ALTER COLUMN [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_BookmarkList ADD [EndUser] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_BookmarkList]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND name='Caption')
+BEGIN
+ ALTER TABLE Social_BookmarkList ALTER COLUMN [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_BookmarkList ADD [Caption] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_BookmarkList]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND name='Icon')
+BEGIN
+ ALTER TABLE Social_BookmarkList ALTER COLUMN [Icon] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_BookmarkList ADD [Icon] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_BookmarkList]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND name='Background')
+BEGIN
+ ALTER TABLE Social_BookmarkList ALTER COLUMN [Background] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_BookmarkList ADD [Background] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_BookmarkList]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND name='Desc')
+BEGIN
+ ALTER TABLE Social_BookmarkList ALTER COLUMN [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_BookmarkList ADD [Desc] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_BookmarkList]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND name='Privacy')
+BEGIN
+ ALTER TABLE Social_BookmarkList ALTER COLUMN [Privacy] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_BookmarkList ADD [Privacy] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_BookmarkList]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND name='Moment')
+BEGIN
+ ALTER TABLE Social_BookmarkList ALTER COLUMN [Moment] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_BookmarkList ADD [Moment] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+--[Social_BookmarkList]--------------------
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND name='Type')
+BEGIN
+ ALTER TABLE Social_BookmarkList ALTER COLUMN [Type] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+ELSE
+BEGIN
+ ALTER TABLE Social_BookmarkList ADD [Type] NCHAR(64) COLLATE Chinese_PRC_CI_AS 
+END
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Moment' AND xtype='U')
 BEGIN
     CREATE TABLE Social_Moment ([ID] BIGINT NOT NULL,[Createdat] BIGINT NOT NULL,[Updatedat] BIGINT NOT NULL,[Sort] BIGINT NOT NULL,[Agent] BIGINT,[Bind] BIGINT,[BindType] INT,[Lang] BIGINT,[ShortText] NVARCHAR(MAX),[MediaUrls] NVARCHAR(MAX),[PreviewImgUrl] NVARCHAR(MAX),[Link] NVARCHAR(MAX),[Type] INT,[Question] BIGINT,[State] INT,[Group] BIGINT,[AutoTranslate] BIGINT,[OriginalMoment] BIGINT,[Postedat] BIGINT,[ContentBind] BIGINT,[Keywords] NVARCHAR(MAX),[Sticky] BIGINT,[Protection] INT,[MediaType] INT,[UrlOriginal] NVARCHAR(MAX),[OID] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS,[PostType] INT,[AudioUrl] NVARCHAR(MAX), CONSTRAINT [PK_Social_Moment] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]

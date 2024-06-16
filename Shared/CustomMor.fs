@@ -24,32 +24,195 @@ open Shared.OrmTypes
 open Shared.Types
 open Shared.OrmMor
 
+// [pMomentExt] Structure
+
+let pMomentExt__bin (bb:BytesBuilder) (v:pMomentExt) =
+
+    pMOMENT__bin bb v.p
+    str__bin bb v.MarkdownA
+    str__bin bb v.MarkdownB
+
+let bin__pMomentExt (bi:BinIndexed):pMomentExt =
+    let bin,index = bi
+
+    {
+        p =
+            bi
+            |> bin__pMOMENT
+        MarkdownA =
+            bi
+            |> bin__str
+        MarkdownB =
+            bi
+            |> bin__str
+    }
+
+let pMomentExt__json (v:pMomentExt) =
+
+    [|  ("p",pMOMENT__json v.p)
+        ("MarkdownA",str__json v.MarkdownA)
+        ("MarkdownB",str__json v.MarkdownB)
+         |]
+    |> Json.Braket
+
+let pMomentExt__jsonTbw (w:TextBlockWriter) (v:pMomentExt) =
+    json__str w (pMomentExt__json v)
+
+let pMomentExt__jsonStr (v:pMomentExt) =
+    (pMomentExt__json v) |> json__strFinal
+
+
+let json__pMomentExto (json:Json):pMomentExt option =
+    let fields = json |> json__items
+
+    let mutable passOptions = true
+
+    let po =
+        match json__tryFindByName json "p" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__pMOMENTo with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    let MarkdownAo =
+        match json__tryFindByName json "MarkdownA" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__stro with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    let MarkdownBo =
+        match json__tryFindByName json "MarkdownB" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__stro with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    if passOptions then
+        {
+            p = po.Value
+            MarkdownA = MarkdownAo.Value
+            MarkdownB = MarkdownBo.Value} |> Some
+    else
+        None
+
+// [Album] Structure
+
+let Album__bin (bb:BytesBuilder) (v:Album) =
+
+    SBL__bin bb v.sbl
+    
+    List__bin (MOMENT__bin) bb v.items
+
+let bin__Album (bi:BinIndexed):Album =
+    let bin,index = bi
+
+    {
+        sbl =
+            bi
+            |> bin__SBL
+        items =
+            bi
+            |> bin__List (bin__MOMENT)
+    }
+
+let Album__json (v:Album) =
+
+    [|  ("sbl",SBL__json v.sbl)
+        ("items",
+        List__json (MOMENT__json) v.items)
+         |]
+    |> Json.Braket
+
+let Album__jsonTbw (w:TextBlockWriter) (v:Album) =
+    json__str w (Album__json v)
+
+let Album__jsonStr (v:Album) =
+    (Album__json v) |> json__strFinal
+
+
+let json__Albumo (json:Json):Album option =
+    let fields = json |> json__items
+
+    let mutable passOptions = true
+
+    let sblo =
+        match json__tryFindByName json "sbl" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__SBLo with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    let itemso =
+        match json__tryFindByName json "items" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__Listo (json__MOMENTo) with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    if passOptions then
+        {
+            sbl = sblo.Value
+            items = itemso.Value} |> Some
+    else
+        None
+
 // [Error] Structure
 
 let Error__bin (bb:BytesBuilder) (v:Error) =
 
     match v with
-    | Error.InvalideParameter ->
+    | Error.ApiNotExists ->
         int32__bin bb 0
-    | Error.Internal ->
+    | Error.InvalideParameter ->
         int32__bin bb 1
+    | Error.Internal ->
+        int32__bin bb 2
 
 let bin__Error (bi:BinIndexed):Error =
     let bin,index = bi
 
     match bin__int32 bi with
-    | 1 -> Error.Internal
-    | _ -> Error.InvalideParameter
+    | 2 -> Error.Internal
+    | 1 -> Error.InvalideParameter
+    | _ -> Error.ApiNotExists
 
 let Error__json (v:Error) =
 
     let items = new List<string * Json>()
 
     match v with
-    | Error.InvalideParameter ->
+    | Error.ApiNotExists ->
         ("enum",int32__json 0) |> items.Add
-    | Error.Internal ->
+    | Error.InvalideParameter ->
         ("enum",int32__json 1) |> items.Add
+    | Error.Internal ->
+        ("enum",int32__json 2) |> items.Add
 
     items.ToArray() |> Json.Braket
 
@@ -68,8 +231,9 @@ let json__Erroro (json:Json):Error option =
         match json__int32o json with
         | Some i ->
             match i with
-            | 0 -> Error.InvalideParameter |> Some
-            | 1 -> Error.Internal |> Some
+            | 0 -> Error.ApiNotExists |> Some
+            | 1 -> Error.InvalideParameter |> Some
+            | 2 -> Error.Internal |> Some
             | _ -> None
         | None -> None
     | None -> None

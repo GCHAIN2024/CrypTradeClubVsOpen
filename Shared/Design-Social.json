@@ -113,6 +113,98 @@
         "name": "AudioUrl"
       }
     ]
+  },
+
+  {
+    "name": "Social_Bookmark",
+    "shorthand": "bookmark",
+    "fields": [
+      {
+        "enum": "FK",
+        "ref": "Ca_EndUser",
+        "name": "Agent"
+      },
+      {
+        "enum": "FK",
+        "name": "EndUser"
+      },
+      {
+        "enum": "Integer",
+        "name": "Bind"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Undefined//未定义///Moment//动态///File//文件///EndUser//用户///Biz//机构///Group//用户群",
+        "name": "BindType"
+      },
+      {
+        "enum": "FK",
+        "ref": "Social_BookmarkList",
+        "name": "BookmarkList"
+      },
+      {
+        "enum": "Text",
+        "name": "Notes"
+      },
+      {
+        "enum": "Text",
+        "name": "Path"
+      },
+      {
+        "enum": "Caption",
+        "length": 64,
+        "name": "Group"
+      },
+      {
+        "enum": "Integer",
+        "name": "Type"
+      }
+    ]
+  },
+
+  {
+    "name": "Social_BookmarkList",
+    "fields": [
+      {
+        "enum": "FK",
+        "name": "EndUser"
+      },
+      {
+        "enum": "Caption",
+        "length": 256,
+        "name": "Caption"
+      },
+      {
+        "enum": "Link",
+        "length": 256,
+        "name": "Icon"
+      },
+      {
+        "enum": "Link",
+        "length": 256,
+        "name": "Background"
+      },
+      {
+        "enum": "Text",
+        "name": "Desc"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Private//私有///Public//公开",
+        "name": "Privacy"
+      },
+      {
+        "enum": "FK",
+        "name": "Moment"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "Default//默认///PlayList//播放列表///PlayChanel//播放频道",
+        "name": "Type"
+      }
+
+    ]
   }
+
 
 ]
