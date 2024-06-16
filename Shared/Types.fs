@@ -7,6 +7,12 @@ open Shared.OrmTypes
 
 //[TypeManaged]{
 
+type pMomentExt = { 
+p: pMOMENT
+mutable MarkdownA: string
+mutable MarkdownB: string }
+
+
 type Error = 
 | ApiNotExists
 | InvalideParameter

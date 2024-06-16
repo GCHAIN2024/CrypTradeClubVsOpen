@@ -15,6 +15,7 @@ Proprietary:
 - Shared: Logical data design. Automatically generated code. Serialization and deserialization of the share types.
 - Server: The main entrance of the back-end.
 - Apps/WebCrawler: Web crawlers that are deployed in a distributed manner to crawl market data and market news.
+- Deploy: Static files for front end use
 
 ### Logical data structure
 
