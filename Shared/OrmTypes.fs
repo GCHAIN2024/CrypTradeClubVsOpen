@@ -22,9 +22,9 @@ open PreOrm
 // [Ca_Address] (ADDRESS)
 
 type addressTypeEnum = 
-| Default = 0 // Ĭ��
-| Biz = 1 // ����
-| EndUser = 2 // �û�
+| Default = 0 // 默认
+| Biz = 1 // 机构
+| EndUser = 2 // 用户
 
 let addressTypeEnums = [| addressTypeEnum.Default; addressTypeEnum.Biz; addressTypeEnum.EndUser |]
 let addressTypeEnumstrs = [| "addressTypeEnum"; "addressTypeEnum"; "addressTypeEnum" |]
@@ -46,9 +46,9 @@ let str__addressTypeEnum s =
 
 let addressTypeEnum__caption e =
     match e with
-    | addressTypeEnum.Default -> "Ĭ��"
-    | addressTypeEnum.Biz -> "����"
-    | addressTypeEnum.EndUser -> "�û�"
+    | addressTypeEnum.Default -> "默认"
+    | addressTypeEnum.Biz -> "机构"
+    | addressTypeEnum.EndUser -> "用户"
     | _ -> ""
 
 type pADDRESS = {
@@ -95,7 +95,7 @@ let ADDRESS_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Bind]=@Bind
 let pADDRESS_fields = [|
     Caption("Caption", 256)
     Integer("Bind")
-    SelectLines("Type", [| ("Default","Ĭ��");("Biz","����");("EndUser","�û�") |])
+    SelectLines("Type", [| ("Default","默认");("Biz","机构");("EndUser","用户") |])
     Chars("Line1", 300)
     Chars("Line2", 300)
     Chars("State", 16)
@@ -311,9 +311,9 @@ let BIZ_table = "Ca_Biz"
 // [Ca_Cat] (CAT)
 
 type catStateEnum = 
-| Normal = 0 // ����
-| Hidden = 1 // ����
-| Obsolete = 2 // ��ʱ
+| Normal = 0 // 正常
+| Hidden = 1 // 隐藏
+| Obsolete = 2 // 过时
 
 let catStateEnums = [| catStateEnum.Normal; catStateEnum.Hidden; catStateEnum.Obsolete |]
 let catStateEnumstrs = [| "catStateEnum"; "catStateEnum"; "catStateEnum" |]
@@ -335,9 +335,9 @@ let str__catStateEnum s =
 
 let catStateEnum__caption e =
     match e with
-    | catStateEnum.Normal -> "����"
-    | catStateEnum.Hidden -> "����"
-    | catStateEnum.Obsolete -> "��ʱ"
+    | catStateEnum.Normal -> "正常"
+    | catStateEnum.Hidden -> "隐藏"
+    | catStateEnum.Obsolete -> "过时"
     | _ -> ""
 
 type pCAT = {
@@ -366,7 +366,7 @@ let pCAT_fields = [|
     FK("Lang")
     FK("Zh")
     FK("Parent")
-    SelectLines("State", [| ("Normal","����");("Hidden","����");("Obsolete","��ʱ") |]) |]
+    SelectLines("State", [| ("Normal","正常");("Hidden","隐藏");("Obsolete","过时") |]) |]
 
 let pCAT_empty(): pCAT = {
     Caption = ""
@@ -488,8 +488,8 @@ let CRY_table = "Ca_Country"
 // [Ca_Cur] (CUR)
 
 type curCurTypeEnum = 
-| Legal = 0 // ����
-| Crypto = 1 // ���ֱ�
+| Legal = 0 // 法币
+| Crypto = 1 // 数字币
 
 let curCurTypeEnums = [| curCurTypeEnum.Legal; curCurTypeEnum.Crypto |]
 let curCurTypeEnumstrs = [| "curCurTypeEnum"; "curCurTypeEnum" |]
@@ -509,8 +509,8 @@ let str__curCurTypeEnum s =
 
 let curCurTypeEnum__caption e =
     match e with
-    | curCurTypeEnum.Legal -> "����"
-    | curCurTypeEnum.Crypto -> "���ֱ�"
+    | curCurTypeEnum.Legal -> "法币"
+    | curCurTypeEnum.Crypto -> "数字币"
     | _ -> ""
 
 type pCUR = {
@@ -572,7 +572,7 @@ let pCUR_fields = [|
     Boolean("EnableReward")
     Boolean("EnableOTC")
     Link("Icon", 512)
-    SelectLines("CurType", [| ("Legal","����");("Crypto","���ֱ�") |])
+    SelectLines("CurType", [| ("Legal","法币");("Crypto","数字币") |])
     Integer("Dec")
     Float("AnchorRate")
     Boolean("Freezable")
@@ -611,9 +611,9 @@ let CUR_table = "Ca_Cur"
 // [Ca_EndUser] (EU)
 
 type euGenderEnum = 
-| Unknown = 0 // δ֪
-| Male = 1 // ��
-| Female = 2 // Ů
+| Unknown = 0 // 未知
+| Male = 1 // 男
+| Female = 2 // 女
 
 let euGenderEnums = [| euGenderEnum.Unknown; euGenderEnum.Male; euGenderEnum.Female |]
 let euGenderEnumstrs = [| "euGenderEnum"; "euGenderEnum"; "euGenderEnum" |]
@@ -635,15 +635,15 @@ let str__euGenderEnum s =
 
 let euGenderEnum__caption e =
     match e with
-    | euGenderEnum.Unknown -> "δ֪"
-    | euGenderEnum.Male -> "��"
-    | euGenderEnum.Female -> "Ů"
+    | euGenderEnum.Unknown -> "未知"
+    | euGenderEnum.Male -> "男"
+    | euGenderEnum.Female -> "女"
     | _ -> ""
 
 type euStatusEnum = 
-| Normal = 0 // ����
-| Frozen = 1 // ����
-| Terminated = 2 // ע��
+| Normal = 0 // 正常
+| Frozen = 1 // 冻结
+| Terminated = 2 // 注销
 
 let euStatusEnums = [| euStatusEnum.Normal; euStatusEnum.Frozen; euStatusEnum.Terminated |]
 let euStatusEnumstrs = [| "euStatusEnum"; "euStatusEnum"; "euStatusEnum" |]
@@ -665,14 +665,14 @@ let str__euStatusEnum s =
 
 let euStatusEnum__caption e =
     match e with
-    | euStatusEnum.Normal -> "����"
-    | euStatusEnum.Frozen -> "����"
-    | euStatusEnum.Terminated -> "ע��"
+    | euStatusEnum.Normal -> "正常"
+    | euStatusEnum.Frozen -> "冻结"
+    | euStatusEnum.Terminated -> "注销"
     | _ -> ""
 
 type euAdminEnum = 
-| None = 0 // ��
-| Admin = 1 // ����Ա
+| None = 0 // 无
+| Admin = 1 // 管理员
 
 let euAdminEnums = [| euAdminEnum.None; euAdminEnum.Admin |]
 let euAdminEnumstrs = [| "euAdminEnum"; "euAdminEnum" |]
@@ -692,13 +692,13 @@ let str__euAdminEnum s =
 
 let euAdminEnum__caption e =
     match e with
-    | euAdminEnum.None -> "��"
-    | euAdminEnum.Admin -> "����Ա"
+    | euAdminEnum.None -> "无"
+    | euAdminEnum.Admin -> "管理员"
     | _ -> ""
 
 type euVerifyEnum = 
-| Normal = 0 // ����
-| Verified = 1 // ��֤
+| Normal = 0 // 常规
+| Verified = 1 // 认证
 
 let euVerifyEnums = [| euVerifyEnum.Normal; euVerifyEnum.Verified |]
 let euVerifyEnumstrs = [| "euVerifyEnum"; "euVerifyEnum" |]
@@ -718,13 +718,13 @@ let str__euVerifyEnum s =
 
 let euVerifyEnum__caption e =
     match e with
-    | euVerifyEnum.Normal -> "����"
-    | euVerifyEnum.Verified -> "��֤"
+    | euVerifyEnum.Normal -> "常规"
+    | euVerifyEnum.Verified -> "认证"
     | _ -> ""
 
 type euAgentableEnum = 
-| No = 0 // ��
-| Yes = 1 // ��
+| No = 0 // 否
+| Yes = 1 // 可
 
 let euAgentableEnums = [| euAgentableEnum.No; euAgentableEnum.Yes |]
 let euAgentableEnumstrs = [| "euAgentableEnum"; "euAgentableEnum" |]
@@ -744,8 +744,8 @@ let str__euAgentableEnum s =
 
 let euAgentableEnum__caption e =
     match e with
-    | euAgentableEnum.No -> "��"
-    | euAgentableEnum.Yes -> "��"
+    | euAgentableEnum.No -> "否"
+    | euAgentableEnum.Yes -> "可"
     | _ -> ""
 
 type pEU = {
@@ -857,11 +857,11 @@ let pEU_fields = [|
     Chars("Email", 256)
     Chars("Tel", 32)
     FK("Domainname")
-    SelectLines("Gender", [| ("Unknown","δ֪");("Male","��");("Female","Ů") |])
-    SelectLines("Status", [| ("Normal","����");("Frozen","����");("Terminated","ע��") |])
-    SelectLines("Admin", [| ("None","��");("Admin","����Ա") |])
+    SelectLines("Gender", [| ("Unknown","未知");("Male","男");("Female","女") |])
+    SelectLines("Status", [| ("Normal","正常");("Frozen","冻结");("Terminated","注销") |])
+    SelectLines("Admin", [| ("None","无");("Admin","管理员") |])
     Integer("Privilege")
-    SelectLines("Verify", [| ("Normal","����");("Verified","��֤") |])
+    SelectLines("Verify", [| ("Normal","常规");("Verified","认证") |])
     Chars("Pwd", 16)
     Boolean("Online")
     Link("Icon", 256)
@@ -894,7 +894,7 @@ let pEU_fields = [|
     Text("About")
     Integer("PublicPoints")
     Text("Json")
-    SelectLines("Agentable", [| ("No","��");("Yes","��") |]) |]
+    SelectLines("Agentable", [| ("No","否");("Yes","可") |]) |]
 
 let pEU_empty(): pEU = {
     Caption = ""
@@ -950,9 +950,9 @@ let EU_table = "Ca_EndUser"
 // [Ca_File] (FILE)
 
 type fileEncryptEnum = 
-| None = 0 // δ����
-| Sys = 1 // ϵͳ����
-| Usr = 2 // �û�����
+| None = 0 // 未加密
+| Sys = 1 // 系统加密
+| Usr = 2 // 用户加密
 
 let fileEncryptEnums = [| fileEncryptEnum.None; fileEncryptEnum.Sys; fileEncryptEnum.Usr |]
 let fileEncryptEnumstrs = [| "fileEncryptEnum"; "fileEncryptEnum"; "fileEncryptEnum" |]
@@ -974,16 +974,16 @@ let str__fileEncryptEnum s =
 
 let fileEncryptEnum__caption e =
     match e with
-    | fileEncryptEnum.None -> "δ����"
-    | fileEncryptEnum.Sys -> "ϵͳ����"
-    | fileEncryptEnum.Usr -> "�û�����"
+    | fileEncryptEnum.None -> "未加密"
+    | fileEncryptEnum.Sys -> "系统加密"
+    | fileEncryptEnum.Usr -> "用户加密"
     | _ -> ""
 
 type fileBindTypeEnum = 
-| Sys = 0 // ϵͳ
-| EndUser = 1 // �û�
-| Biz = 2 // ����
-| Group = 3 // Ⱥ
+| Sys = 0 // 系统
+| EndUser = 1 // 用户
+| Biz = 2 // 机构
+| Group = 3 // 群
 
 let fileBindTypeEnums = [| fileBindTypeEnum.Sys; fileBindTypeEnum.EndUser; fileBindTypeEnum.Biz; fileBindTypeEnum.Group |]
 let fileBindTypeEnumstrs = [| "fileBindTypeEnum"; "fileBindTypeEnum"; "fileBindTypeEnum"; "fileBindTypeEnum" |]
@@ -1007,19 +1007,19 @@ let str__fileBindTypeEnum s =
 
 let fileBindTypeEnum__caption e =
     match e with
-    | fileBindTypeEnum.Sys -> "ϵͳ"
-    | fileBindTypeEnum.EndUser -> "�û�"
-    | fileBindTypeEnum.Biz -> "����"
-    | fileBindTypeEnum.Group -> "Ⱥ"
+    | fileBindTypeEnum.Sys -> "系统"
+    | fileBindTypeEnum.EndUser -> "用户"
+    | fileBindTypeEnum.Biz -> "机构"
+    | fileBindTypeEnum.Group -> "群"
     | _ -> ""
 
 type fileStateEnum = 
-| Normal = 0 // ����
-| Canceled = 1 // ��ȡ��
-| Uploading = 2 // �ϴ���
-| PendingTranscode = 3 // ��ý��ת��
-| PendingBlockchain = 4 // ��������ͬ��
-| Deleted = 5 // ��ɾ��
+| Normal = 0 // 正常
+| Canceled = 1 // 已取消
+| Uploading = 2 // 上传中
+| PendingTranscode = 3 // 待媒体转码
+| PendingBlockchain = 4 // 待区块链同步
+| Deleted = 5 // 已删除
 
 let fileStateEnums = [| fileStateEnum.Normal; fileStateEnum.Canceled; fileStateEnum.Uploading; fileStateEnum.PendingTranscode; fileStateEnum.PendingBlockchain; fileStateEnum.Deleted |]
 let fileStateEnumstrs = [| "fileStateEnum"; "fileStateEnum"; "fileStateEnum"; "fileStateEnum"; "fileStateEnum"; "fileStateEnum" |]
@@ -1047,20 +1047,20 @@ let str__fileStateEnum s =
 
 let fileStateEnum__caption e =
     match e with
-    | fileStateEnum.Normal -> "����"
-    | fileStateEnum.Canceled -> "��ȡ��"
-    | fileStateEnum.Uploading -> "�ϴ���"
-    | fileStateEnum.PendingTranscode -> "��ý��ת��"
-    | fileStateEnum.PendingBlockchain -> "��������ͬ��"
-    | fileStateEnum.Deleted -> "��ɾ��"
+    | fileStateEnum.Normal -> "正常"
+    | fileStateEnum.Canceled -> "已取消"
+    | fileStateEnum.Uploading -> "上传中"
+    | fileStateEnum.PendingTranscode -> "待媒体转码"
+    | fileStateEnum.PendingBlockchain -> "待区块链同步"
+    | fileStateEnum.Deleted -> "已删除"
     | _ -> ""
 
 type fileFileTypeEnum = 
-| Default = 0 // Ĭ��
-| Text = 1 // �ı�
-| Bin = 2 // ������
-| Img = 3 // ͼƬ
-| Video = 4 // ��Ƶ
+| Default = 0 // 默认
+| Text = 1 // 文本
+| Bin = 2 // 二进制
+| Img = 3 // 图片
+| Video = 4 // 视频
 
 let fileFileTypeEnums = [| fileFileTypeEnum.Default; fileFileTypeEnum.Text; fileFileTypeEnum.Bin; fileFileTypeEnum.Img; fileFileTypeEnum.Video |]
 let fileFileTypeEnumstrs = [| "fileFileTypeEnum"; "fileFileTypeEnum"; "fileFileTypeEnum"; "fileFileTypeEnum"; "fileFileTypeEnum" |]
@@ -1086,16 +1086,16 @@ let str__fileFileTypeEnum s =
 
 let fileFileTypeEnum__caption e =
     match e with
-    | fileFileTypeEnum.Default -> "Ĭ��"
-    | fileFileTypeEnum.Text -> "�ı�"
-    | fileFileTypeEnum.Bin -> "������"
-    | fileFileTypeEnum.Img -> "ͼƬ"
-    | fileFileTypeEnum.Video -> "��Ƶ"
+    | fileFileTypeEnum.Default -> "默认"
+    | fileFileTypeEnum.Text -> "文本"
+    | fileFileTypeEnum.Bin -> "二进制"
+    | fileFileTypeEnum.Img -> "图片"
+    | fileFileTypeEnum.Video -> "视频"
     | _ -> ""
 
 type pFILE = {
 mutable Caption: Caption
-mutable Ipfs: Text
+mutable Content: Bin
 mutable Encrypt: fileEncryptEnum
 mutable SHA256: Text
 mutable Size: Integer
@@ -1109,11 +1109,11 @@ mutable JSON: Text}
 
 type FILE = Rcd<pFILE>
 
-let FILE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Ipfs],[Encrypt],[SHA256],[Size],[Bind],[BindType],[State],[Folder],[FileType],[JSON]"
+let FILE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Content],[Encrypt],[SHA256],[Size],[Bind],[BindType],[State],[Folder],[FileType],[JSON]"
 
 let pFILE_fieldordersArray = [|
     "Caption"
-    "Ipfs"
+    "Content"
     "Encrypt"
     "SHA256"
     "Size"
@@ -1124,24 +1124,24 @@ let pFILE_fieldordersArray = [|
     "FileType"
     "JSON" |]
 
-let FILE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Ipfs]=@Ipfs,[Encrypt]=@Encrypt,[SHA256]=@SHA256,[Size]=@Size,[Bind]=@Bind,[BindType]=@BindType,[State]=@State,[Folder]=@Folder,[FileType]=@FileType,[JSON]=@JSON"
+let FILE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Content]=@Content,[Encrypt]=@Encrypt,[SHA256]=@SHA256,[Size]=@Size,[Bind]=@Bind,[BindType]=@BindType,[State]=@State,[Folder]=@Folder,[FileType]=@FileType,[JSON]=@JSON"
 
 let pFILE_fields = [|
     Caption("Caption", 256)
-    Text("Ipfs")
-    SelectLines("Encrypt", [| ("None","δ����");("Sys","ϵͳ����");("Usr","�û�����") |])
+    Bin("Content")
+    SelectLines("Encrypt", [| ("None","未加密");("Sys","系统加密");("Usr","用户加密") |])
     Text("SHA256")
     Integer("Size")
     Integer("Bind")
-    SelectLines("BindType", [| ("Sys","ϵͳ");("EndUser","�û�");("Biz","����");("Group","Ⱥ") |])
-    SelectLines("State", [| ("Normal","����");("Canceled","��ȡ��");("Uploading","�ϴ���");("PendingTranscode","��ý��ת��");("PendingBlockchain","��������ͬ��");("Deleted","��ɾ��") |])
+    SelectLines("BindType", [| ("Sys","系统");("EndUser","用户");("Biz","机构");("Group","群") |])
+    SelectLines("State", [| ("Normal","正常");("Canceled","已取消");("Uploading","上传中");("PendingTranscode","待媒体转码");("PendingBlockchain","待区块链同步");("Deleted","已删除") |])
     FK("Folder")
-    SelectLines("FileType", [| ("Default","Ĭ��");("Text","�ı�");("Bin","������");("Img","ͼƬ");("Video","��Ƶ") |])
+    SelectLines("FileType", [| ("Default","默认");("Text","文本");("Bin","二进制");("Img","图片");("Video","视频") |])
     Text("JSON") |]
 
 let pFILE_empty(): pFILE = {
     Caption = ""
-    Ipfs = ""
+    Content = [||]
     Encrypt = EnumOfValue 0
     SHA256 = ""
     Size = 0L
@@ -1159,9 +1159,9 @@ let FILE_table = "Ca_File"
 // [Ca_Folder] (FOLDER)
 
 type folderEncryptEnum = 
-| None = 0 // δ����
-| Sys = 1 // ϵͳ����
-| Usr = 2 // �û�����
+| None = 0 // 未加密
+| Sys = 1 // 系统加密
+| Usr = 2 // 用户加密
 
 let folderEncryptEnums = [| folderEncryptEnum.None; folderEncryptEnum.Sys; folderEncryptEnum.Usr |]
 let folderEncryptEnumstrs = [| "folderEncryptEnum"; "folderEncryptEnum"; "folderEncryptEnum" |]
@@ -1183,16 +1183,16 @@ let str__folderEncryptEnum s =
 
 let folderEncryptEnum__caption e =
     match e with
-    | folderEncryptEnum.None -> "δ����"
-    | folderEncryptEnum.Sys -> "ϵͳ����"
-    | folderEncryptEnum.Usr -> "�û�����"
+    | folderEncryptEnum.None -> "未加密"
+    | folderEncryptEnum.Sys -> "系统加密"
+    | folderEncryptEnum.Usr -> "用户加密"
     | _ -> ""
 
 type folderBindTypeEnum = 
-| Sys = 0 // ϵͳ
-| EndUser = 1 // �û�
-| Biz = 2 // ����
-| Group = 3 // Ⱥ
+| Sys = 0 // 系统
+| EndUser = 1 // 用户
+| Biz = 2 // 机构
+| Group = 3 // 群
 
 let folderBindTypeEnums = [| folderBindTypeEnum.Sys; folderBindTypeEnum.EndUser; folderBindTypeEnum.Biz; folderBindTypeEnum.Group |]
 let folderBindTypeEnumstrs = [| "folderBindTypeEnum"; "folderBindTypeEnum"; "folderBindTypeEnum"; "folderBindTypeEnum" |]
@@ -1216,10 +1216,10 @@ let str__folderBindTypeEnum s =
 
 let folderBindTypeEnum__caption e =
     match e with
-    | folderBindTypeEnum.Sys -> "ϵͳ"
-    | folderBindTypeEnum.EndUser -> "�û�"
-    | folderBindTypeEnum.Biz -> "����"
-    | folderBindTypeEnum.Group -> "Ⱥ"
+    | folderBindTypeEnum.Sys -> "系统"
+    | folderBindTypeEnum.EndUser -> "用户"
+    | folderBindTypeEnum.Biz -> "机构"
+    | folderBindTypeEnum.Group -> "群"
     | _ -> ""
 
 type pFOLDER = {
@@ -1245,9 +1245,9 @@ let FOLDER_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Encrypt]=@En
 
 let pFOLDER_fields = [|
     Caption("Caption", 256)
-    SelectLines("Encrypt", [| ("None","δ����");("Sys","ϵͳ����");("Usr","�û�����") |])
+    SelectLines("Encrypt", [| ("None","未加密");("Sys","系统加密");("Usr","用户加密") |])
     Integer("Bind")
-    SelectLines("BindType", [| ("Sys","ϵͳ");("EndUser","�û�");("Biz","����");("Group","Ⱥ") |])
+    SelectLines("BindType", [| ("Sys","系统");("EndUser","用户");("Biz","机构");("Group","群") |])
     FK("Parent") |]
 
 let pFOLDER_empty(): pFOLDER = {
@@ -1264,8 +1264,8 @@ let FOLDER_table = "Ca_Folder"
 // [Ca_Lang] (LANG)
 
 type langTextDirectionEnum = 
-| Default = 0 // Ĭ��
-| RightToLeft = 1 // ����������
+| Default = 0 // 默认
+| RightToLeft = 1 // 从右往左排
 
 let langTextDirectionEnums = [| langTextDirectionEnum.Default; langTextDirectionEnum.RightToLeft |]
 let langTextDirectionEnumstrs = [| "langTextDirectionEnum"; "langTextDirectionEnum" |]
@@ -1285,8 +1285,8 @@ let str__langTextDirectionEnum s =
 
 let langTextDirectionEnum__caption e =
     match e with
-    | langTextDirectionEnum.Default -> "Ĭ��"
-    | langTextDirectionEnum.RightToLeft -> "����������"
+    | langTextDirectionEnum.Default -> "默认"
+    | langTextDirectionEnum.RightToLeft -> "从右往左排"
     | _ -> ""
 
 type pLANG = {
@@ -1330,7 +1330,7 @@ let pLANG_fields = [|
     Boolean("IsContent")
     Boolean("IsAutoTranslate")
     Boolean("IsMiles")
-    SelectLines("TextDirection", [| ("Default","Ĭ��");("RightToLeft","����������") |]) |]
+    SelectLines("TextDirection", [| ("Default","默认");("RightToLeft","从右往左排") |]) |]
 
 let pLANG_empty(): pLANG = {
     Code2 = ""
@@ -1388,10 +1388,10 @@ let LOCALE_table = "Ca_Locale"
 // [Ca_SpecialItem] (CSI)
 
 type csiTypeEnum = 
-| Normal = 0 // ����
-| ToplinesGlobalNews = 1 // ȫվ�����ö�
-| ToplinesGlobalPerson = 2 // ȫվ�����ö�
-| ToplinesGlobalEvent = 3 // ȫվ�¼��ö�
+| Normal = 0 // 常规
+| ToplinesGlobalNews = 1 // 全站新闻置顶
+| ToplinesGlobalPerson = 2 // 全站人物置顶
+| ToplinesGlobalEvent = 3 // 全站事件置顶
 
 let csiTypeEnums = [| csiTypeEnum.Normal; csiTypeEnum.ToplinesGlobalNews; csiTypeEnum.ToplinesGlobalPerson; csiTypeEnum.ToplinesGlobalEvent |]
 let csiTypeEnumstrs = [| "csiTypeEnum"; "csiTypeEnum"; "csiTypeEnum"; "csiTypeEnum" |]
@@ -1415,10 +1415,10 @@ let str__csiTypeEnum s =
 
 let csiTypeEnum__caption e =
     match e with
-    | csiTypeEnum.Normal -> "����"
-    | csiTypeEnum.ToplinesGlobalNews -> "ȫվ�����ö�"
-    | csiTypeEnum.ToplinesGlobalPerson -> "ȫվ�����ö�"
-    | csiTypeEnum.ToplinesGlobalEvent -> "ȫվ�¼��ö�"
+    | csiTypeEnum.Normal -> "常规"
+    | csiTypeEnum.ToplinesGlobalNews -> "全站新闻置顶"
+    | csiTypeEnum.ToplinesGlobalPerson -> "全站人物置顶"
+    | csiTypeEnum.ToplinesGlobalEvent -> "全站事件置顶"
     | _ -> ""
 
 type pCSI = {
@@ -1439,7 +1439,7 @@ let pCSI_fieldordersArray = [|
 let CSI_sql_update = "[Updatedat]=@Updatedat,[Type]=@Type,[Lang]=@Lang,[Bind]=@Bind"
 
 let pCSI_fields = [|
-    SelectLines("Type", [| ("Normal","����");("ToplinesGlobalNews","ȫվ�����ö�");("ToplinesGlobalPerson","ȫվ�����ö�");("ToplinesGlobalEvent","ȫվ�¼��ö�") |])
+    SelectLines("Type", [| ("Normal","常规");("ToplinesGlobalNews","全站新闻置顶");("ToplinesGlobalPerson","全站人物置顶");("ToplinesGlobalEvent","全站事件置顶") |])
     FK("Lang")
     Integer("Bind") |]
 

@@ -7,7 +7,7 @@
       {
         "enum": "Chars",
         "length": 2,
-        "cmt": "ISO 639-1��׼2λ����",
+        "cmt": "ISO 639-1标准2位代码",
         "name": "Code2"
       },
       {
@@ -27,32 +27,32 @@
       },
       {
         "enum": "Boolean",
-        "cmt": "�ո�ִ�",
+        "cmt": "空格分词",
         "name": "IsBlank"
       },
       {
         "enum": "Boolean",
-        "cmt": "��������",
+        "cmt": "界面语言",
         "name": "IsLocale"
       },
       {
         "enum": "Boolean",
-        "cmt": "��������",
+        "cmt": "内容语言",
         "name": "IsContent"
       },
       {
         "enum": "Boolean",
-        "cmt": "֧���Զ�����",
+        "cmt": "支持自动翻译",
         "name": "IsAutoTranslate"
       },
       {
         "enum": "Boolean",
-        "cmt": "������ֱ��֧������",
+        "cmt": "郭先生直播支持语言",
         "name": "IsMiles"
       },
       {
         "enum": "SelectLines",
-        "lines": "Default//Ĭ��///RightToLeft//����������",
+        "lines": "Default//默认///RightToLeft//从右往左排",
         "name": "TextDirection"
       }
     ],
@@ -215,7 +215,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Normal//����///Hidden//����///Obsolete//��ʱ",
+        "lines": "Normal//正常///Hidden//隐藏///Obsolete//过时",
         "name": "State"
       }
     ],
@@ -226,7 +226,7 @@
     "fields": [
       {
         "enum": "SelectLines",
-        "lines": "Normal//����///ToplinesGlobalNews//ȫվ�����ö�///ToplinesGlobalPerson//ȫվ�����ö�///ToplinesGlobalEvent//ȫվ�¼��ö�",
+        "lines": "Normal//常规///ToplinesGlobalNews//全站新闻置顶///ToplinesGlobalPerson//全站人物置顶///ToplinesGlobalEvent//全站事件置顶",
         "name": "Type"
       },
       {
@@ -260,27 +260,27 @@
       },
       {
         "enum": "Boolean",
-        "cmt": "֧�ִ������˻�",
+        "cmt": "支持创建子账户",
         "name": "IsSac"
       },
       {
         "enum": "Boolean",
-        "cmt": "֧��ת��",
+        "cmt": "支持转账",
         "name": "IsTransfer"
       },
       {
         "enum": "Boolean",
-        "cmt": "֧��������",
+        "cmt": "支持入金出金",
         "name": "IsCash"
       },
       {
         "enum": "Boolean",
-        "cmt": "֧�ִ���",
+        "cmt": "支持打赏",
         "name": "EnableReward"
       },
       {
         "enum": "Boolean",
-        "cmt": "֧��OTC",
+        "cmt": "支持OTC",
         "name": "EnableOTC"
       },
       {
@@ -290,27 +290,27 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Legal//����///Crypto//���ֱ�",
+        "lines": "Legal//法币///Crypto//数字币",
         "name": "CurType"
       },
       {
         "enum": "Integer",
-        "cmt": "��ʾС��λ��",
+        "cmt": "显示小数位数",
         "name": "Dec"
       },
       {
         "enum": "Float",
-        "cmt": "��ê�����һ��ʣ�һ����USD/XXX",
+        "cmt": "对锚定货币汇率，一律用USD/XXX",
         "name": "AnchorRate"
       },
       {
         "enum": "Boolean",
-        "cmt": "֧������",
+        "cmt": "支持锁币",
         "name": "Freezable"
       },
       {
         "enum": "Boolean",
-        "cmt": "֧�ֿۿ�",
+        "cmt": "支持扣款",
         "name": "Authorizable"
       },
       {
@@ -342,7 +342,7 @@
         "wrap": "FloatWithMeasure<b/base_cur>",
         "unwrap": "float",
         "enum": "Float",
-        "cmt": "A FX rate that converts <base_cur>-denoted asset to <b>-denoted asset  <b/base_cur>, ���ձ��Ҽ�����ʲ���ת��Ϊ����Ʒ�ֵ�b�����ʲ���ת����",
+        "cmt": "A FX rate that converts <base_cur>-denoted asset to <b>-denoted asset  <b/base_cur>, 按照本币计算的资产，转换为按照品种的b计算资产的转换率",
         "name": "BaseRate"
       }
     ],
@@ -409,7 +409,7 @@
       },
       {
         "enum": "Boolean",
-        "cmt": "�Ƿ�Ϊ֧����������֧����ʽ���",
+        "cmt": "是否为支付渠道：与支付方式相关",
         "name": "IsPay"
       },
       {
@@ -455,7 +455,7 @@
       },
       {
         "enum": "Text",
-        "cmt": "ƽ̨��ע",
+        "cmt": "平台备注",
         "name": "RemarksCentral"
       },
       {
@@ -465,12 +465,12 @@
       },
       {
         "enum": "Text",
-        "cmt": "Դ���ݷ�����Ϣ",
+        "cmt": "源内容分类信息",
         "name": "SiteCats"
       },
       {
         "enum": "Text",
-        "cmt": "���·�������",
+        "cmt": "文章分类配置",
         "name": "ConfiguredCats"
       }
     ],
@@ -518,17 +518,17 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Unknown//δ֪///Male//��///Female//Ů",
+        "lines": "Unknown//未知///Male//男///Female//女",
         "name": "Gender"
       },
       {
         "enum": "SelectLines",
-        "lines": "Normal//����///Frozen//����///Terminated//ע��",
+        "lines": "Normal//正常///Frozen//冻结///Terminated//注销",
         "name": "Status"
       },
       {
         "enum": "SelectLines",
-        "lines": "None//��///Admin//����Ա",
+        "lines": "None//无///Admin//管理员",
         "name": "Admin"
       },
       {
@@ -537,7 +537,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Normal//����///Verified//��֤",
+        "lines": "Normal//常规///Verified//认证",
         "name": "Verify"
       },
       {
@@ -683,7 +683,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "No//��///Yes//��",
+        "lines": "No//否///Yes//可",
         "name": "Agentable"
       }
     ],
@@ -760,7 +760,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "None//δ����///Sys//ϵͳ����///Usr//�û�����",
+        "lines": "None//未加密///Sys//系统加密///Usr//用户加密",
         "name": "Encrypt"
       },
       {
@@ -769,7 +769,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Sys//ϵͳ///EndUser//�û�///Biz//����///Group//Ⱥ",
+        "lines": "Sys//系统///EndUser//用户///Biz//机构///Group//群",
         "name": "BindType"
       },
       {
@@ -790,12 +790,12 @@
         "name": "Caption"
       },
       {
-        "enum": "Text",
-        "name": "Ipfs"
+        "enum": "Bin",
+        "name": "Content"
       },
       {
         "enum": "SelectLines",
-        "lines": "None//δ����///Sys//ϵͳ����///Usr//�û�����",
+        "lines": "None//未加密///Sys//系统加密///Usr//用户加密",
         "name": "Encrypt"
       },
       {
@@ -813,12 +813,12 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Sys//ϵͳ///EndUser//�û�///Biz//����///Group//Ⱥ",
+        "lines": "Sys//系统///EndUser//用户///Biz//机构///Group//群",
         "name": "BindType"
       },
       {
         "enum": "SelectLines",
-        "lines": "Normal//����///Canceled//��ȡ��///Uploading//�ϴ���///PendingTranscode//��ý��ת��///PendingBlockchain//��������ͬ��///Deleted//��ɾ��",
+        "lines": "Normal//正常///Canceled//已取消///Uploading//上传中///PendingTranscode//待媒体转码///PendingBlockchain//待区块链同步///Deleted//已删除",
         "name": "State"
       },
       {
@@ -827,7 +827,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Default//Ĭ��///Text//�ı�///Bin//������///Img//ͼƬ///Video//��Ƶ",
+        "lines": "Default//默认///Text//文本///Bin//二进制///Img//图片///Video//视频",
         "name": "FileType"
       },
       {
@@ -852,7 +852,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Default//Ĭ��///Biz//����///EndUser//�û�",
+        "lines": "Default//默认///Biz//机构///EndUser//用户",
         "name": "Type"
       },
 

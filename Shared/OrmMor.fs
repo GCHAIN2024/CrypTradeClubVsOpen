@@ -2456,9 +2456,8 @@ let pFILE__bin (bb:BytesBuilder) (p:pFILE) =
     binCaption.Length |> BitConverter.GetBytes |> bb.append
     binCaption |> bb.append
     
-    let binIpfs = p.Ipfs |> Encoding.UTF8.GetBytes
-    binIpfs.Length |> BitConverter.GetBytes |> bb.append
-    binIpfs |> bb.append
+    p.Content.Length |> BitConverter.GetBytes |> bb.append
+    p.Content |> bb.append
     
     p.Encrypt |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
@@ -2500,10 +2499,10 @@ let bin__pFILE (bi:BinIndexed):pFILE =
     p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
     index.Value <- index.Value + count_Caption
     
-    let count_Ipfs = BitConverter.ToInt32(bin,index.Value)
+    let length_Content = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Ipfs <- Encoding.UTF8.GetString(bin,index.Value,count_Ipfs)
-    index.Value <- index.Value + count_Ipfs
+    p.Content <- Array.sub bin index.Value length_Content
+    index.Value <- index.Value + length_Content
     
     p.Encrypt <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
@@ -2562,7 +2561,7 @@ let pFILE__json (p:pFILE) =
 
     [|
         ("Caption",p.Caption |> Json.Str)
-        ("Ipfs",p.Ipfs |> Json.Str)
+        ("Content",p.Content |> Convert.ToBase64String |> Json.Str)
         ("Encrypt",(p.Encrypt |> EnumToValue).ToString() |> Json.Num)
         ("SHA256",p.SHA256 |> Json.Str)
         ("Size",p.Size.ToString() |> Json.Num)
@@ -2583,7 +2582,7 @@ let FILE__json (v:FILE) =
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("Caption",p.Caption |> Json.Str)
-        ("Ipfs",p.Ipfs |> Json.Str)
+        ("Content",p.Content |> Convert.ToBase64String |> Json.Str)
         ("Encrypt",(p.Encrypt |> EnumToValue).ToString() |> Json.Num)
         ("SHA256",p.SHA256 |> Json.Str)
         ("Size",p.Size.ToString() |> Json.Num)
@@ -2608,8 +2607,6 @@ let json__pFILEo (json:Json):pFILE option =
     let p = pFILE_empty()
     
     p.Caption <- checkfieldz fields "Caption" 256
-    
-    p.Ipfs <- checkfield fields "Ipfs"
     
     p.Encrypt <- checkfield fields "Encrypt" |> parse_int32 |> EnumOfValue
     
@@ -2643,8 +2640,6 @@ let json__FILEo (json:Json):FILE option =
     let p = pFILE_empty()
     
     p.Caption <- checkfieldz fields "Caption" 256
-    
-    p.Ipfs <- checkfield fields "Ipfs"
     
     p.Encrypt <- checkfield fields "Encrypt" |> parse_int32 |> EnumOfValue
     
@@ -8372,7 +8367,7 @@ let db__pFILE(line:Object[]): pFILE =
     let p = pFILE_empty()
 
     p.Caption <- string(line.[4]).TrimEnd()
-    p.Ipfs <- string(line.[5]).TrimEnd()
+    p.Content <- line.[5] :?> byte[]
     p.Encrypt <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
     p.SHA256 <- string(line.[7]).TrimEnd()
     p.Size <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
@@ -8387,7 +8382,7 @@ let db__pFILE(line:Object[]): pFILE =
 
 let pFILE__sps (p:pFILE) = [|
     new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Ipfs", p.Ipfs)
+    new SqlParameter("Content", p.Content)
     new SqlParameter("Encrypt", p.Encrypt)
     new SqlParameter("SHA256", p.SHA256)
     new SqlParameter("Size", p.Size)
@@ -8406,7 +8401,7 @@ let FILE_wrapper item: FILE =
 
 let pFILE_clone (p:pFILE): pFILE = {
     Caption = p.Caption
-    Ipfs = p.Ipfs
+    Content = p.Content
     Encrypt = p.Encrypt
     SHA256 = p.SHA256
     Size = p.Size
@@ -8476,7 +8471,7 @@ let FILETxSqlServer =
     ,[Updatedat] BIGINT NOT NULL
     ,[Sort] BIGINT NOT NULL,
     ,[Caption]
-    ,[Ipfs]
+    ,[Content]
     ,[Encrypt]
     ,[SHA256]
     ,[Size]
