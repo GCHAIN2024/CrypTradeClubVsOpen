@@ -21,6 +21,9 @@ conn: string
 defaultHtml: string
 fsDir: string }
 
+type EuComplex = {
+eu: EU }
+
 type BizComplex = {
 biz: BIZ
 moments: Dictionary<int64,MOMENT> }
@@ -29,9 +32,32 @@ moments: Dictionary<int64,MOMENT> }
 type Runtime = {
 host: Host
 mutable facts: Fact list
+ecs: ConcurrentDictionary<int64,EuComplex>
 bcs: ConcurrentDictionary<string,BizComplex>
 zweb: ZmqWeb
 output: string -> unit }
+
+type HostEnum = 
+| Prod
+| RevengeDev
+
+let hostEnum = 
+    match Environment.MachineName with
+    | _ -> RevengeDev
+
+let host e = 
+
+    match e with
+    | Prod -> 
+        {
+            conn = "server=127.0.0.1; user=sa; database=CTC"
+            defaultHtml = "index.html"
+            fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
+    | _ -> 
+        {
+            conn = "server=127.0.0.1; user=sa; database=CTC"
+            defaultHtml = "index.html"
+            fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
 
 let runtime = {
     host = {
@@ -39,6 +65,7 @@ let runtime = {
         defaultHtml = "index.html"
         fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
     facts = []       
+    ecs = new ConcurrentDictionary<int64,EuComplex>()
     bcs = new ConcurrentDictionary<string,BizComplex>()
     zweb = zweb
     output = output }

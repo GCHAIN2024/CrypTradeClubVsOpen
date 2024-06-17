@@ -12,27 +12,13 @@ open Util.Orm
 open Util.Zmq
 
 open UtilWebServer.DbLogger
+open UtilWebServer.Init
 
 open Shared.OrmTypes
 open Shared.OrmMor
 open Shared.Types
 
 open BizLogics.Common
-
-let loadBcs runtime = 
-    match 
-        ""
-        |> Util.Orm.loadall conn
-            (BIZ_metadata.table,BIZ_metadata.fieldorders,BIZ_metadata.db__rcd) with
-    | None -> 
-        halt runtime.output "BizLogics.Init.loadBcs" ""
-        
-    | Some items ->
-        items
-        |> Array.iter(fun i -> 
-            runtime.bcs[i.p.Code] <- {
-                biz = i
-                moments = new Dictionary<int64,MOMENT>() })
 
 let init runtime = 
 
@@ -59,8 +45,19 @@ let init runtime =
         |> ignore)
         |> Some
 
-    loadBcs runtime
+    (fun (i:EU) -> 
+        runtime.ecs[i.ID] <- 
+            {
+                eu = i })
+    |> loadAll runtime.output conn EU_metadata
+
+    (fun (i:BIZ) -> 
+        runtime.bcs[i.p.Code] <- {
+            biz = i
+            moments = new Dictionary<int64,MOMENT>() })
+    |> loadAll runtime.output conn BIZ_metadata
         
+
 
 
 
