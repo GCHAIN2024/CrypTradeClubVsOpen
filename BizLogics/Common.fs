@@ -43,27 +43,25 @@ type HostEnum =
 
 let hostEnum = 
     match Environment.MachineName with
-    | _ -> RevengeDev
+    | "MAIN" -> RevengeDev
+    | _ -> Prod
 
 let host e = 
 
     match e with
     | Prod -> 
         {
-            conn = "server=127.0.0.1; user=sa; database=CTC"
+            conn = "server=.; database=CTC; Trusted_Connection=True;"
             defaultHtml = "index.html"
             fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
     | _ -> 
         {
-            conn = "server=127.0.0.1; user=sa; database=CTC"
+            conn = "server=.; user=sa; database=CTC; Trusted_Connection=True;"
             defaultHtml = "index.html"
             fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
 
 let runtime = {
-    host = {
-        conn = "server=127.0.0.1; user=sa; database=CTC"
-        defaultHtml = "index.html"
-        fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
+    host = host hostEnum
     facts = []       
     ecs = new ConcurrentDictionary<int64,EuComplex>()
     bcs = new ConcurrentDictionary<string,BizComplex>()
