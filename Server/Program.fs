@@ -24,14 +24,20 @@ let main argv =
 
     init runtime
 
-    zweb.disconnector.Add(fun bin -> ())
+    let httpHandler = 
+        httpEcho 
+            (Some plugin) 
+            runtime.host.fsDir 
+            runtime.host.defaultHtml 
+            runtime 
+            echoHandler
+        |> reqhandler__httpHandler
+
     lauchWebServer 
         output 
-        (httpHandler (httpEcho runtime.host.fsDir runtime.host.defaultHtml runtime echoHandler))
+        httpHandler
         wsHandler 
         zweb
-
-    BizLogics.Crawler.test output
 
     Util.Runtime.halt output "" ""
 

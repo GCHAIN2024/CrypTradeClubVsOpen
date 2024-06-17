@@ -17,6 +17,11 @@ open Shared.CustomMor
 
 open UtilWebServer.Common
 
+let plugin req = 
+
+    [| |]
+    |> Some
+
 let echoHandler x =
     match x.service with
     | "public" -> 
