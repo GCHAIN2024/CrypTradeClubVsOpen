@@ -33,7 +33,7 @@ type Msg =
 | SingleFact of Fact
 | MultiFact of Fact[]
 
-type Error = 
+type Er = 
 | ApiNotExists
 | InvalideParameter
 | Internal
