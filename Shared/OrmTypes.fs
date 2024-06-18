@@ -1095,7 +1095,6 @@ let fileFileTypeEnum__caption e =
 
 type pFILE = {
 mutable Caption: Caption
-mutable Content: Bin
 mutable Encrypt: fileEncryptEnum
 mutable SHA256: Text
 mutable Size: Integer
@@ -1109,11 +1108,10 @@ mutable JSON: Text}
 
 type FILE = Rcd<pFILE>
 
-let FILE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Content],[Encrypt],[SHA256],[Size],[Bind],[BindType],[State],[Folder],[FileType],[JSON]"
+let FILE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Encrypt],[SHA256],[Size],[Bind],[BindType],[State],[Folder],[FileType],[JSON]"
 
 let pFILE_fieldordersArray = [|
     "Caption"
-    "Content"
     "Encrypt"
     "SHA256"
     "Size"
@@ -1124,11 +1122,10 @@ let pFILE_fieldordersArray = [|
     "FileType"
     "JSON" |]
 
-let FILE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Content]=@Content,[Encrypt]=@Encrypt,[SHA256]=@SHA256,[Size]=@Size,[Bind]=@Bind,[BindType]=@BindType,[State]=@State,[Folder]=@Folder,[FileType]=@FileType,[JSON]=@JSON"
+let FILE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Encrypt]=@Encrypt,[SHA256]=@SHA256,[Size]=@Size,[Bind]=@Bind,[BindType]=@BindType,[State]=@State,[Folder]=@Folder,[FileType]=@FileType,[JSON]=@JSON"
 
 let pFILE_fields = [|
     Caption("Caption", 256)
-    Bin("Content")
     SelectLines("Encrypt", [| ("None","未加密");("Sys","系统加密");("Usr","用户加密") |])
     Text("SHA256")
     Integer("Size")
@@ -1141,7 +1138,6 @@ let pFILE_fields = [|
 
 let pFILE_empty(): pFILE = {
     Caption = ""
-    Content = [||]
     Encrypt = EnumOfValue 0
     SHA256 = ""
     Size = 0L

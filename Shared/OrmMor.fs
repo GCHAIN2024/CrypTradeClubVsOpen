@@ -2456,9 +2456,6 @@ let pFILE__bin (bb:BytesBuilder) (p:pFILE) =
     binCaption.Length |> BitConverter.GetBytes |> bb.append
     binCaption |> bb.append
     
-    p.Content.Length |> BitConverter.GetBytes |> bb.append
-    p.Content |> bb.append
-    
     p.Encrypt |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
     let binSHA256 = p.SHA256 |> Encoding.UTF8.GetBytes
@@ -2498,11 +2495,6 @@ let bin__pFILE (bi:BinIndexed):pFILE =
     index.Value <- index.Value + 4
     p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
     index.Value <- index.Value + count_Caption
-    
-    let length_Content = BitConverter.ToInt32(bin,index.Value)
-    index.Value <- index.Value + 4
-    p.Content <- Array.sub bin index.Value length_Content
-    index.Value <- index.Value + length_Content
     
     p.Encrypt <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
@@ -2561,7 +2553,6 @@ let pFILE__json (p:pFILE) =
 
     [|
         ("Caption",p.Caption |> Json.Str)
-        ("Content",p.Content |> Convert.ToBase64String |> Json.Str)
         ("Encrypt",(p.Encrypt |> EnumToValue).ToString() |> Json.Num)
         ("SHA256",p.SHA256 |> Json.Str)
         ("Size",p.Size.ToString() |> Json.Num)
@@ -2582,7 +2573,6 @@ let FILE__json (v:FILE) =
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("Caption",p.Caption |> Json.Str)
-        ("Content",p.Content |> Convert.ToBase64String |> Json.Str)
         ("Encrypt",(p.Encrypt |> EnumToValue).ToString() |> Json.Num)
         ("SHA256",p.SHA256 |> Json.Str)
         ("Size",p.Size.ToString() |> Json.Num)
@@ -8367,22 +8357,20 @@ let db__pFILE(line:Object[]): pFILE =
     let p = pFILE_empty()
 
     p.Caption <- string(line.[4]).TrimEnd()
-    p.Content <- line.[5] :?> byte[]
-    p.Encrypt <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
-    p.SHA256 <- string(line.[7]).TrimEnd()
-    p.Size <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
-    p.Bind <- if Convert.IsDBNull(line.[9]) then 0L else line.[9] :?> int64
-    p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[10]) then 0 else line.[10] :?> int)
-    p.State <- EnumOfValue(if Convert.IsDBNull(line.[11]) then 0 else line.[11] :?> int)
-    p.Folder <- if Convert.IsDBNull(line.[12]) then 0L else line.[12] :?> int64
-    p.FileType <- EnumOfValue(if Convert.IsDBNull(line.[13]) then 0 else line.[13] :?> int)
-    p.JSON <- string(line.[14]).TrimEnd()
+    p.Encrypt <- EnumOfValue(if Convert.IsDBNull(line.[5]) then 0 else line.[5] :?> int)
+    p.SHA256 <- string(line.[6]).TrimEnd()
+    p.Size <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
+    p.Bind <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
+    p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[9]) then 0 else line.[9] :?> int)
+    p.State <- EnumOfValue(if Convert.IsDBNull(line.[10]) then 0 else line.[10] :?> int)
+    p.Folder <- if Convert.IsDBNull(line.[11]) then 0L else line.[11] :?> int64
+    p.FileType <- EnumOfValue(if Convert.IsDBNull(line.[12]) then 0 else line.[12] :?> int)
+    p.JSON <- string(line.[13]).TrimEnd()
 
     p
 
 let pFILE__sps (p:pFILE) = [|
     new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Content", p.Content)
     new SqlParameter("Encrypt", p.Encrypt)
     new SqlParameter("SHA256", p.SHA256)
     new SqlParameter("Size", p.Size)
@@ -8401,7 +8389,6 @@ let FILE_wrapper item: FILE =
 
 let pFILE_clone (p:pFILE): pFILE = {
     Caption = p.Caption
-    Content = p.Content
     Encrypt = p.Encrypt
     SHA256 = p.SHA256
     Size = p.Size
@@ -8471,7 +8458,6 @@ let FILETxSqlServer =
     ,[Updatedat] BIGINT NOT NULL
     ,[Sort] BIGINT NOT NULL,
     ,[Caption]
-    ,[Content]
     ,[Encrypt]
     ,[SHA256]
     ,[Size]
