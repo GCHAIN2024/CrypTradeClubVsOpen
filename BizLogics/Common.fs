@@ -17,6 +17,7 @@ open Shared.OrmMor
 open Shared.Types
 
 type Host = {
+port: int
 conn: string
 defaultHtml: string
 fsDir: string }
@@ -51,22 +52,27 @@ let host e =
     match e with
     | Prod -> 
         {
+            port = 80
             conn = "server=.; database=CTC; Trusted_Connection=True;"
             defaultHtml = "index.html"
             fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
     | _ -> 
         {
+            port = 80
             conn = "server=.; user=sa; database=CTC; Trusted_Connection=True;"
             defaultHtml = "index.html"
             fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
 
-let runtime = {
-    host = host hostEnum
-    facts = []       
-    ecs = new ConcurrentDictionary<int64,EuComplex>()
-    bcs = new ConcurrentDictionary<string,BizComplex>()
-    zweb = zweb
-    output = output }
+let runtime = 
+    let host = host hostEnum
+
+    {
+        host = host
+        facts = []       
+        ecs = new ConcurrentDictionary<int64,EuComplex>()
+        bcs = new ConcurrentDictionary<string,BizComplex>()
+        zweb = port__zweb host.port
+        output = output }
 
 
 let appendFact runtime fact = 
