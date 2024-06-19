@@ -16,11 +16,13 @@ open Shared.OrmTypes
 open Shared.OrmMor
 open Shared.Types
 
-type Host = {
-port: int
-conn: string
-defaultHtml: string
-fsDir: string }
+
+let defaultHost() = {
+    zmq = true
+    port = 80
+    conn = "server=.; database=CTC; Trusted_Connection=True;"
+    defaultHtml = "index.html"
+    fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
 
 type EuComplex = {
 eu: EU }
@@ -35,7 +37,6 @@ host: Host
 mutable facts: Fact list
 ecs: ConcurrentDictionary<int64,EuComplex>
 bcs: ConcurrentDictionary<string,BizComplex>
-zweb: ZmqWeb
 output: string -> unit }
 
 type HostEnum = 
@@ -49,19 +50,15 @@ let hostEnum =
 
 let host e = 
 
+    let h = defaultHost()
+
     match e with
     | Prod -> 
-        {
-            port = 80
-            conn = "server=.; database=CTC; Trusted_Connection=True;"
-            defaultHtml = "index.html"
-            fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
-    | _ -> 
-        {
-            port = 80
-            conn = "server=.; user=sa; database=CTC; Trusted_Connection=True;"
-            defaultHtml = "index.html"
-            fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
+        h.zmq <- true
+    | RevengeDev -> 
+        h.zmq <- true
+
+    h
 
 let runtime = 
     let host = host hostEnum
@@ -71,7 +68,6 @@ let runtime =
         facts = []       
         ecs = new ConcurrentDictionary<int64,EuComplex>()
         bcs = new ConcurrentDictionary<string,BizComplex>()
-        zweb = port__zweb host.port
         output = output }
 
 

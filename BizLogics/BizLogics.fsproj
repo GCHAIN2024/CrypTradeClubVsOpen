@@ -9,6 +9,7 @@
     <Compile Include="Common.fs" />
     <Compile Include="Init.fs" />
     <Compile Include="Crawler.fs" />
+    <Compile Include="Api.fs" />
   </ItemGroup>
 
   <ItemGroup>

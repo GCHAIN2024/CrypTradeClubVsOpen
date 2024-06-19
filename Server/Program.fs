@@ -9,6 +9,9 @@ open System.Diagnostics
 open Util.Cat
 open Util.Perf
 open Util.Zmq
+open Util.WebServer
+
+open Shared.Types
 
 open BizLogics.Common
 open BizLogics.Init
@@ -24,20 +27,33 @@ let main argv =
 
     init runtime
 
-    let httpHandler = 
-        httpEcho 
-            (Some plugin) 
-            runtime.host.fsDir 
-            runtime.host.defaultHtml 
-            runtime 
-            echoHandler
-        |> reqhandler__httpHandler
+    if runtime.host.zmq then
 
-    lauchWebServer 
-        output 
-        httpHandler
-        wsHandler 
-        runtime.zweb
+        let httpHandler = 
+            httpEcho 
+                (Some plugin) 
+                runtime.host.fsDir 
+                runtime.host.defaultHtml 
+                runtime 
+                (fun x -> Fail(Er.ApiNotExists, x))
+            |> reqhandler__httpHandler
+
+        lauchWebServer 
+            output 
+            httpHandler
+            wsHandlerZweb 
+            (runtime.host.port |> port__zweb)
+
+    else
+        prepEngine 
+            output
+            (Some plugin)
+            runtime.host.fsDir
+            runtime.host.defaultHtml
+            runtime
+            wsHandler
+            runtime.host.port
+        |> startEngine
 
     Util.Runtime.halt output "" ""
 
