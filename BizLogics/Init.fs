@@ -11,6 +11,7 @@ open Util.DbTx
 open Util.Orm
 open Util.Zmq
 
+open UtilWebServer.Constants
 open UtilWebServer.DbLogger
 open UtilWebServer.Init
 
@@ -19,30 +20,23 @@ open Shared.OrmMor
 open Shared.Types
 
 open BizLogics.Common
+open BizLogics.Ca
 
 let init runtime = 
 
+    "Init ..."
+    |> runtime.output
+
     conn <- runtime.host.conn
 
-    dbLoggero <- (fun log -> 
-    
-        let p = pLOG_empty()
-
-        p.Content <- log.content
-        p.Location <- log.location
-        p.Sql <- log.sql
-
-        let pretx = None |> opctx__pretx
-
-        let tid = Interlocked.Increment LOG_metadata.id
-
-        (tid,pretx.dt,pretx.dt,tid,p)
-        |> build_create_sql LOG_metadata
-        |> pretx.sqls.Add
-
-        pretx
-        |> pipeline conn
-        |> ignore)
+    dbLoggero <- 
+        (fun log -> 
+            let p = pLOG_empty()
+            p.Content <- log.content
+            p.Location <- log.location
+            p.Sql <- log.sql
+            p)
+        |> createDbLogger LOG_metadata conn
         |> Some
 
     (fun (i:EU) -> 
@@ -56,6 +50,20 @@ let init runtime =
             biz = i
             moments = new Dictionary<int64,MOMENT>() })
     |> loadAll runtime.output conn BIZ_metadata
+
+    freqBizCodes
+    |> Array.iter(fun code ->
+        if runtime.bcs.ContainsKey code = false then
+            match createBiz code with
+            | Some biz -> 
+                runtime.bcs[code] <- 
+                    {   
+                        biz = biz
+                        moments = new Dictionary<int64,MOMENT>() }
+            | None ->
+                halt runtime.output ("BizLogics.Init.createBiz [" + code + "]") ""
+        ())
+
         
 
 
