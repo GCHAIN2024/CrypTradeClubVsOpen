@@ -28,7 +28,8 @@ let plugin req =
 
 let req__rep json = 
     let bb = new BytesBuilder()
-    apiHandler branch json (tryFindStrByAtt "api" json)
+    json
+    |> apiHandler branch
     |> Msg.ApiResponse
     |> Msg__bin bb
     bb.bytes()

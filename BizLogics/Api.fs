@@ -13,9 +13,7 @@ open Shared.Types
 
 open UtilWebServer.Api
 
-let branch api json (ero: ref<Er option>) = 
+let branch api json = 
 
     match api with
-    | _ -> 
-        ero.Value <- Some Er.ApiNotExists
-        [||]
+    | _ -> [|  er Er.ApiNotExists   |]
