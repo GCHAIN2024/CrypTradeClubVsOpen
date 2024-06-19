@@ -8,8 +8,9 @@
   <ItemGroup>
     <Compile Include="Common.fs" />
     <Compile Include="Ca.fs" />
-    <Compile Include="Init.fs" />
+    <Compile Include="Social.fs" />
     <Compile Include="Crawler.fs" />
+    <Compile Include="Init.fs" />
     <Compile Include="Api.fs" />
   </ItemGroup>
 

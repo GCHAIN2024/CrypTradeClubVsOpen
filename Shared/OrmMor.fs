@@ -6269,21 +6269,11 @@ let pMOMENT__bin (bb:BytesBuilder) (p:pMOMENT) =
     
     p.Group |> BitConverter.GetBytes |> bb.append
     
-    p.AutoTranslate |> BitConverter.GetBytes |> bb.append
-    
-    p.OriginalMoment |> BitConverter.GetBytes |> bb.append
-    
     p.Postedat.Ticks |> BitConverter.GetBytes |> bb.append
-    
-    p.ContentBind |> BitConverter.GetBytes |> bb.append
     
     let binKeywords = p.Keywords |> Encoding.UTF8.GetBytes
     binKeywords.Length |> BitConverter.GetBytes |> bb.append
     binKeywords |> bb.append
-    
-    p.Sticky |> BitConverter.GetBytes |> bb.append
-    
-    p.Protection |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
     p.MediaType |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
@@ -6363,28 +6353,13 @@ let bin__pMOMENT (bi:BinIndexed):pMOMENT =
     p.Group <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
-    p.AutoTranslate <- BitConverter.ToInt64(bin,index.Value)
-    index.Value <- index.Value + 8
-    
-    p.OriginalMoment <- BitConverter.ToInt64(bin,index.Value)
-    index.Value <- index.Value + 8
-    
     p.Postedat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
-    index.Value <- index.Value + 8
-    
-    p.ContentBind <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
     let count_Keywords = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
     p.Keywords <- Encoding.UTF8.GetString(bin,index.Value,count_Keywords)
     index.Value <- index.Value + count_Keywords
-    
-    p.Sticky <- BitConverter.ToInt64(bin,index.Value)
-    index.Value <- index.Value + 8
-    
-    p.Protection <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
-    index.Value <- index.Value + 4
     
     p.MediaType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
@@ -6445,13 +6420,8 @@ let pMOMENT__json (p:pMOMENT) =
         ("Question",p.Question.ToString() |> Json.Num)
         ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
         ("Group",p.Group.ToString() |> Json.Num)
-        ("AutoTranslate",p.AutoTranslate.ToString() |> Json.Num)
-        ("OriginalMoment",p.OriginalMoment.ToString() |> Json.Num)
         ("Postedat",(p.Postedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("ContentBind",p.ContentBind.ToString() |> Json.Num)
         ("Keywords",p.Keywords |> Json.Str)
-        ("Sticky",p.Sticky.ToString() |> Json.Num)
-        ("Protection",(p.Protection |> EnumToValue).ToString() |> Json.Num)
         ("MediaType",(p.MediaType |> EnumToValue).ToString() |> Json.Num)
         ("UrlOriginal",p.UrlOriginal |> Json.Str)
         ("OID",p.OID |> Json.Str)
@@ -6480,13 +6450,8 @@ let MOMENT__json (v:MOMENT) =
         ("Question",p.Question.ToString() |> Json.Num)
         ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
         ("Group",p.Group.ToString() |> Json.Num)
-        ("AutoTranslate",p.AutoTranslate.ToString() |> Json.Num)
-        ("OriginalMoment",p.OriginalMoment.ToString() |> Json.Num)
         ("Postedat",(p.Postedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("ContentBind",p.ContentBind.ToString() |> Json.Num)
         ("Keywords",p.Keywords |> Json.Str)
-        ("Sticky",p.Sticky.ToString() |> Json.Num)
-        ("Protection",(p.Protection |> EnumToValue).ToString() |> Json.Num)
         ("MediaType",(p.MediaType |> EnumToValue).ToString() |> Json.Num)
         ("UrlOriginal",p.UrlOriginal |> Json.Str)
         ("OID",p.OID |> Json.Str)
@@ -6532,19 +6497,9 @@ let json__pMOMENTo (json:Json):pMOMENT option =
     
     p.Group <- checkfield fields "Group" |> parse_int64
     
-    p.AutoTranslate <- checkfield fields "AutoTranslate" |> parse_int64
-    
-    p.OriginalMoment <- checkfield fields "OriginalMoment" |> parse_int64
-    
     p.Postedat <- checkfield fields "Postedat" |> parse_int64 |> Util.Time.unixtime__wintime
     
-    p.ContentBind <- checkfield fields "ContentBind" |> parse_int64
-    
     p.Keywords <- checkfield fields "Keywords"
-    
-    p.Sticky <- checkfield fields "Sticky" |> parse_int64
-    
-    p.Protection <- checkfield fields "Protection" |> parse_int32 |> EnumOfValue
     
     p.MediaType <- checkfield fields "MediaType" |> parse_int32 |> EnumOfValue
     
@@ -6595,19 +6550,9 @@ let json__MOMENTo (json:Json):MOMENT option =
     
     p.Group <- checkfield fields "Group" |> parse_int64
     
-    p.AutoTranslate <- checkfield fields "AutoTranslate" |> parse_int64
-    
-    p.OriginalMoment <- checkfield fields "OriginalMoment" |> parse_int64
-    
     p.Postedat <- checkfield fields "Postedat" |> parse_int64 |> Util.Time.unixtime__wintime
     
-    p.ContentBind <- checkfield fields "ContentBind" |> parse_int64
-    
     p.Keywords <- checkfield fields "Keywords"
-    
-    p.Sticky <- checkfield fields "Sticky" |> parse_int64
-    
-    p.Protection <- checkfield fields "Protection" |> parse_int32 |> EnumOfValue
     
     p.MediaType <- checkfield fields "MediaType" |> parse_int32 |> EnumOfValue
     
@@ -10229,18 +10174,13 @@ let db__pMOMENT(line:Object[]): pMOMENT =
     p.Question <- if Convert.IsDBNull(line.[14]) then 0L else line.[14] :?> int64
     p.State <- EnumOfValue(if Convert.IsDBNull(line.[15]) then 0 else line.[15] :?> int)
     p.Group <- if Convert.IsDBNull(line.[16]) then 0L else line.[16] :?> int64
-    p.AutoTranslate <- if Convert.IsDBNull(line.[17]) then 0L else line.[17] :?> int64
-    p.OriginalMoment <- if Convert.IsDBNull(line.[18]) then 0L else line.[18] :?> int64
-    p.Postedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[19]) then DateTime.MinValue.Ticks else line.[19] :?> int64)
-    p.ContentBind <- if Convert.IsDBNull(line.[20]) then 0L else line.[20] :?> int64
-    p.Keywords <- string(line.[21]).TrimEnd()
-    p.Sticky <- if Convert.IsDBNull(line.[22]) then 0L else line.[22] :?> int64
-    p.Protection <- EnumOfValue(if Convert.IsDBNull(line.[23]) then 0 else line.[23] :?> int)
-    p.MediaType <- EnumOfValue(if Convert.IsDBNull(line.[24]) then 0 else line.[24] :?> int)
-    p.UrlOriginal <- string(line.[25]).TrimEnd()
-    p.OID <- string(line.[26]).TrimEnd()
-    p.PostType <- EnumOfValue(if Convert.IsDBNull(line.[27]) then 0 else line.[27] :?> int)
-    p.AudioUrl <- string(line.[28]).TrimEnd()
+    p.Postedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[17]) then DateTime.MinValue.Ticks else line.[17] :?> int64)
+    p.Keywords <- string(line.[18]).TrimEnd()
+    p.MediaType <- EnumOfValue(if Convert.IsDBNull(line.[19]) then 0 else line.[19] :?> int)
+    p.UrlOriginal <- string(line.[20]).TrimEnd()
+    p.OID <- string(line.[21]).TrimEnd()
+    p.PostType <- EnumOfValue(if Convert.IsDBNull(line.[22]) then 0 else line.[22] :?> int)
+    p.AudioUrl <- string(line.[23]).TrimEnd()
 
     p
 
@@ -10258,13 +10198,8 @@ let pMOMENT__sps (p:pMOMENT) = [|
     new SqlParameter("Question", p.Question)
     new SqlParameter("State", p.State)
     new SqlParameter("Group", p.Group)
-    new SqlParameter("AutoTranslate", p.AutoTranslate)
-    new SqlParameter("OriginalMoment", p.OriginalMoment)
     new SqlParameter("Postedat", p.Postedat.Ticks)
-    new SqlParameter("ContentBind", p.ContentBind)
     new SqlParameter("Keywords", p.Keywords)
-    new SqlParameter("Sticky", p.Sticky)
-    new SqlParameter("Protection", p.Protection)
     new SqlParameter("MediaType", p.MediaType)
     new SqlParameter("UrlOriginal", p.UrlOriginal)
     new SqlParameter("OID", p.OID)
@@ -10291,13 +10226,8 @@ let pMOMENT_clone (p:pMOMENT): pMOMENT = {
     Question = p.Question
     State = p.State
     Group = p.Group
-    AutoTranslate = p.AutoTranslate
-    OriginalMoment = p.OriginalMoment
     Postedat = p.Postedat
-    ContentBind = p.ContentBind
     Keywords = p.Keywords
-    Sticky = p.Sticky
-    Protection = p.Protection
     MediaType = p.MediaType
     UrlOriginal = p.UrlOriginal
     OID = p.OID
@@ -10375,13 +10305,8 @@ let MOMENTTxSqlServer =
     ,[Question]
     ,[State]
     ,[Group]
-    ,[AutoTranslate]
-    ,[OriginalMoment]
     ,[Postedat]
-    ,[ContentBind]
     ,[Keywords]
-    ,[Sticky]
-    ,[Protection]
     ,[MediaType]
     ,[UrlOriginal]
     ,[OID]

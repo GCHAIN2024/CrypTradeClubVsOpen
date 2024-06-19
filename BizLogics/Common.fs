@@ -24,20 +24,29 @@ let defaultHost() = {
     defaultHtml = "index.html"
     fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
 
+type MomentComplex = {
+m: MOMENT }
+
 type EuComplex = {
 eu: EU }
 
 type BizComplex = {
 biz: BIZ
-moments: Dictionary<int64,MOMENT> }
-
+moments: Dictionary<int64,MomentComplex> }
 
 type Runtime = {
 host: Host
 mutable facts: Fact list
+langs: ConcurrentDictionary<string,LANG>
+curs: ConcurrentDictionary<string,CUR>
 ecs: ConcurrentDictionary<int64,EuComplex>
 bcs: ConcurrentDictionary<string,BizComplex>
+moments: ConcurrentDictionary<int64,MomentComplex>
 output: string -> unit }
+
+let runtime__id__bc runtime id = 
+    runtime.bcs.Values
+    |> Seq.tryFind(fun bc -> bc.biz.ID = id)
 
 type HostEnum = 
 | Prod
@@ -65,9 +74,12 @@ let runtime =
 
     {
         host = host
-        facts = []       
+        facts = []      
+        langs = new ConcurrentDictionary<string,LANG>()
+        curs = new ConcurrentDictionary<string,CUR>()
         ecs = new ConcurrentDictionary<int64,EuComplex>()
         bcs = new ConcurrentDictionary<string,BizComplex>()
+        moments = new ConcurrentDictionary<int64,MomentComplex>()
         output = output }
 
 
@@ -97,7 +109,7 @@ let checkoutBizComplex runtime code =
 
             let bc = {
                 biz = rcd
-                moments = new Dictionary<int64,MOMENT>() }
+                moments = new Dictionary<int64,MomentComplex>() }
             runtime.bcs[code] <- bc
 
             Some bc

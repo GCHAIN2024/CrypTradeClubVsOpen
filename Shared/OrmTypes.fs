@@ -3615,32 +3615,6 @@ let momentStateEnum__caption e =
     | momentStateEnum.Submitted -> "已投稿"
     | _ -> ""
 
-type momentProtectionEnum = 
-| Normal = 0 // 常规
-| Archive = 1 // 存档
-
-let momentProtectionEnums = [| momentProtectionEnum.Normal; momentProtectionEnum.Archive |]
-let momentProtectionEnumstrs = [| "momentProtectionEnum"; "momentProtectionEnum" |]
-let momentProtectionNum = 2
-
-let int__momentProtectionEnum v =
-    match v with
-    | 0 -> Some momentProtectionEnum.Normal
-    | 1 -> Some momentProtectionEnum.Archive
-    | _ -> None
-
-let str__momentProtectionEnum s =
-    match s with
-    | "Normal" -> Some momentProtectionEnum.Normal
-    | "Archive" -> Some momentProtectionEnum.Archive
-    | _ -> None
-
-let momentProtectionEnum__caption e =
-    match e with
-    | momentProtectionEnum.Normal -> "常规"
-    | momentProtectionEnum.Archive -> "存档"
-    | _ -> ""
-
 type momentMediaTypeEnum = 
 | None = 0 // 无
 | Video = 1 // 视频
@@ -3715,13 +3689,8 @@ mutable Type: momentTypeEnum
 mutable Question: FK
 mutable State: momentStateEnum
 mutable Group: FK
-mutable AutoTranslate: Integer
-mutable OriginalMoment: FK
 mutable Postedat: Timestamp
-mutable ContentBind: Integer
 mutable Keywords: Text
-mutable Sticky: Integer
-mutable Protection: momentProtectionEnum
 mutable MediaType: momentMediaTypeEnum
 mutable UrlOriginal: Text
 mutable OID: Caption
@@ -3731,7 +3700,7 @@ mutable AudioUrl: Text}
 
 type MOMENT = Rcd<pMOMENT>
 
-let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[Lang],[Title],[Summary],[FullText],[PreviewImgUrl],[Link],[Type],[Question],[State],[Group],[AutoTranslate],[OriginalMoment],[Postedat],[ContentBind],[Keywords],[Sticky],[Protection],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
+let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[Lang],[Title],[Summary],[FullText],[PreviewImgUrl],[Link],[Type],[Question],[State],[Group],[Postedat],[Keywords],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
 
 let pMOMENT_fieldordersArray = [|
     "Agent"
@@ -3747,20 +3716,15 @@ let pMOMENT_fieldordersArray = [|
     "Question"
     "State"
     "Group"
-    "AutoTranslate"
-    "OriginalMoment"
     "Postedat"
-    "ContentBind"
     "Keywords"
-    "Sticky"
-    "Protection"
     "MediaType"
     "UrlOriginal"
     "OID"
     "PostType"
     "AudioUrl" |]
 
-let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[Lang]=@Lang,[Title]=@Title,[Summary]=@Summary,[FullText]=@FullText,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[Group]=@Group,[AutoTranslate]=@AutoTranslate,[OriginalMoment]=@OriginalMoment,[Postedat]=@Postedat,[ContentBind]=@ContentBind,[Keywords]=@Keywords,[Sticky]=@Sticky,[Protection]=@Protection,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
+let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[Lang]=@Lang,[Title]=@Title,[Summary]=@Summary,[FullText]=@FullText,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[Group]=@Group,[Postedat]=@Postedat,[Keywords]=@Keywords,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
 
 let pMOMENT_fields = [|
     FK("Agent")
@@ -3776,13 +3740,8 @@ let pMOMENT_fields = [|
     FK("Question")
     SelectLines("State", [| ("Normal","正常");("Deleted","标记删除");("Scratch","草稿");("Submitted","已投稿") |])
     FK("Group")
-    Integer("AutoTranslate")
-    FK("OriginalMoment")
     Timestamp("Postedat")
-    Integer("ContentBind")
     Text("Keywords")
-    Integer("Sticky")
-    SelectLines("Protection", [| ("Normal","常规");("Archive","存档") |])
     SelectLines("MediaType", [| ("None","无");("Video","视频");("Audio","音频") |])
     Text("UrlOriginal")
     Caption("OID", 256)
@@ -3803,13 +3762,8 @@ let pMOMENT_empty(): pMOMENT = {
     Question = 0L
     State = EnumOfValue 0
     Group = 0L
-    AutoTranslate = 0L
-    OriginalMoment = 0L
     Postedat = DateTime.MinValue
-    ContentBind = 0L
     Keywords = ""
-    Sticky = 0L
-    Protection = EnumOfValue 0
     MediaType = EnumOfValue 0
     UrlOriginal = ""
     OID = ""

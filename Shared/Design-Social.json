@@ -66,33 +66,12 @@
         "name": "Group"
       },
       {
-        "enum": "Integer",
-        "name": "AutoTranslate"
-      },
-      {
-        "enum": "FK",
-        "name": "OriginalMoment"
-      },
-      {
         "enum": "Timestamp",
         "name": "Postedat"
       },
       {
-        "enum": "Integer",
-        "name": "ContentBind"
-      },
-      {
         "enum": "Text",
         "name": "Keywords"
-      },
-      {
-        "enum": "Integer",
-        "name": "Sticky"
-      },
-      {
-        "enum": "SelectLines",
-        "lines": "Normal//常规///Archive//存档",
-        "name": "Protection"
       },
       {
         "enum": "SelectLines",

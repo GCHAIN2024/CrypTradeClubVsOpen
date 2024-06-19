@@ -18,19 +18,33 @@ open Shared.OrmTypes
 open Shared.Types
 open Shared.OrmMor
 
-let createBiz code = 
+let create loc metadata p = 
 
     let pretx = None |> opctx__pretx
 
     let rcd = 
-        let p = pBIZ_empty()
-
-        p.Code <- code
-
         p
-        |> populateCreateTx pretx BIZ_metadata
+        |> populateCreateTx pretx metadata
 
-    if pretx |> loggedPipeline "BizLogics.Ca.code__pBiz" conn then
+    if pretx |> loggedPipeline loc conn then
         Some rcd
     else
         None
+
+let createLang code = 
+    let p = pLANG_empty()
+    p.Code2 <- code
+    p
+    |> create "BizLogics.Ca.createLang" LANG_metadata 
+
+let createCur code = 
+    let p = pCUR_empty()
+    p.Code <- code
+    p
+    |> create "BizLogics.Ca.createCur" CUR_metadata 
+
+let createBiz code = 
+    let p = pBIZ_empty()
+    p.Code <- code
+    p
+    |> create "BizLogics.Ca.createBiz" BIZ_metadata 
