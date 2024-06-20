@@ -24,16 +24,6 @@ let defaultHost() = {
     defaultHtml = "index.html"
     fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
 
-type MomentComplex = {
-m: MOMENT }
-
-type EuComplex = {
-eu: EU }
-
-type BizComplex = {
-biz: BIZ
-moments: Dictionary<int64,MomentComplex> }
-
 type Runtime = {
 host: Host
 mutable facts: Fact list
@@ -65,7 +55,7 @@ let host e =
     | Prod -> 
         h.zmq <- true
     | RevengeDev -> 
-        h.zmq <- true
+        h.zmq <- false
 
     h
 

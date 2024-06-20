@@ -9,6 +9,8 @@ open Util.Cat
 open Util.Bin
 open Util.Perf
 open Util.Json
+open Util.Http
+open Util.HttpServer
 open Util.Zmq
 
 open Shared.OrmTypes
@@ -21,18 +23,33 @@ open UtilWebServer.Api
 
 open BizLogics.Api
 
-let plugin req = 
+let branch service api json = 
 
-    [| |]
-    |> Some
+    match service with
+    | "public" -> 
+        match api with
+        | "ping" -> api_Public_Ping json
+        | "listBiz" -> api_Public_ListBiz json
+        | "listCur" -> api_Public_ListCur json
+        | "homepageMoments" -> api_Public_HomepageMoments json
+        | _ -> [|  er Er.ApiNotExists   |]
+    | "eu" -> [|  er Er.ApiNotExists   |]
+    | "admin" -> [|  er Er.ApiNotExists   |]
+    | "open" -> [|  er Er.ApiNotExists   |]
+    | _ -> [|  er Er.ApiNotExists   |]
 
-let req__rep json = 
-    let bb = new BytesBuilder()
-    json
-    |> apiHandler branch
-    |> Msg.ApiResponse
-    |> Msg__bin bb
-    bb.bytes()
+let echo req = 
+
+    if req.pathline.StartsWith "/m/" then
+        None
+    else if req.path.Length = 3 then
+        if req.path[0] = "api" then
+            echoApiHandler branch req
+            |> Some
+        else
+            None
+    else
+        None
 
 let wsHandlerZweb zweb wsp =
 
@@ -46,9 +63,7 @@ let wsHandlerZweb zweb wsp =
         (wsp.bin, ref 0)
         |> bin__Msg with
     | ApiRequest json ->
-        json
-        |> req__rep
-        |> binPushWs__conn zweb wsp.client
+        ()
     | _ ->
         Console.WriteLine("None")
         ()
@@ -69,9 +84,7 @@ let wsHandler (incoming:byte[]) =
         (incoming, ref 0)
         |> bin__Msg with
     | ApiRequest json ->
-        json
-        |> req__rep
-        |> ignore
+        ()
     | _ ->
         Console.WriteLine("None")
         ()

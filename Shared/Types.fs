@@ -10,6 +10,17 @@ open Shared.OrmTypes
 
 //[TypeManaged]{
 
+type MomentComplex = {
+m: MOMENT }
+
+type EuComplex = {
+eu: EU }
+
+type BizComplex = {
+biz: BIZ
+moments: Dictionary<int64,MomentComplex> }
+
+
 type Album = {
 sbl: SBL
 items: List<MOMENT> }

@@ -24,6 +24,181 @@ open Shared.OrmTypes
 open Shared.Types
 open Shared.OrmMor
 
+// [MomentComplex] Structure
+
+let MomentComplex__bin (bb:BytesBuilder) (v:MomentComplex) =
+
+    MOMENT__bin bb v.m
+
+let bin__MomentComplex (bi:BinIndexed):MomentComplex =
+    let bin,index = bi
+
+    {
+        m =
+            bi
+            |> bin__MOMENT
+    }
+
+let MomentComplex__json (v:MomentComplex) =
+
+    [|  ("m",MOMENT__json v.m)
+         |]
+    |> Json.Braket
+
+let MomentComplex__jsonTbw (w:TextBlockWriter) (v:MomentComplex) =
+    json__str w (MomentComplex__json v)
+
+let MomentComplex__jsonStr (v:MomentComplex) =
+    (MomentComplex__json v) |> json__strFinal
+
+
+let json__MomentComplexo (json:Json):MomentComplex option =
+    let fields = json |> json__items
+
+    let mutable passOptions = true
+
+    let mo =
+        match json__tryFindByName json "m" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__MOMENTo with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    if passOptions then
+        {
+            m = mo.Value} |> Some
+    else
+        None
+
+// [EuComplex] Structure
+
+let EuComplex__bin (bb:BytesBuilder) (v:EuComplex) =
+
+    EU__bin bb v.eu
+
+let bin__EuComplex (bi:BinIndexed):EuComplex =
+    let bin,index = bi
+
+    {
+        eu =
+            bi
+            |> bin__EU
+    }
+
+let EuComplex__json (v:EuComplex) =
+
+    [|  ("eu",EU__json v.eu)
+         |]
+    |> Json.Braket
+
+let EuComplex__jsonTbw (w:TextBlockWriter) (v:EuComplex) =
+    json__str w (EuComplex__json v)
+
+let EuComplex__jsonStr (v:EuComplex) =
+    (EuComplex__json v) |> json__strFinal
+
+
+let json__EuComplexo (json:Json):EuComplex option =
+    let fields = json |> json__items
+
+    let mutable passOptions = true
+
+    let euo =
+        match json__tryFindByName json "eu" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__EUo with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    if passOptions then
+        {
+            eu = euo.Value} |> Some
+    else
+        None
+
+// [BizComplex] Structure
+
+let BizComplex__bin (bb:BytesBuilder) (v:BizComplex) =
+
+    BIZ__bin bb v.biz
+    Dictionary__bin (int64__bin) (MomentComplex__bin) bb v.moments
+
+let bin__BizComplex (bi:BinIndexed):BizComplex =
+    let bin,index = bi
+
+    {
+        biz =
+            bi
+            |> bin__BIZ
+        moments =
+            bi
+            |> (fun bi ->
+                let v = new Dictionary<int64,MomentComplex>()
+                bin__Dictionary (bin__int64) (bin__MomentComplex) v bi
+                v)
+    }
+
+let BizComplex__json (v:BizComplex) =
+
+    [|  ("biz",BIZ__json v.biz)
+        ("moments",Dictionary__json (int64__json) (MomentComplex__json) v.moments)
+         |]
+    |> Json.Braket
+
+let BizComplex__jsonTbw (w:TextBlockWriter) (v:BizComplex) =
+    json__str w (BizComplex__json v)
+
+let BizComplex__jsonStr (v:BizComplex) =
+    (BizComplex__json v) |> json__strFinal
+
+
+let json__BizComplexo (json:Json):BizComplex option =
+    let fields = json |> json__items
+
+    let mutable passOptions = true
+
+    let bizo =
+        match json__tryFindByName json "biz" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__BIZo with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    let momentso =
+        match json__tryFindByName json "moments" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> (fun json ->
+                json__Dictionaryo (json__int64o) (json__MomentComplexo) (new Dictionary<int64,MomentComplex>()) json) with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    if passOptions then
+        {
+            biz = bizo.Value
+            moments = momentso.Value} |> Some
+    else
+        None
+
 // [Album] Structure
 
 let Album__bin (bb:BytesBuilder) (v:Album) =

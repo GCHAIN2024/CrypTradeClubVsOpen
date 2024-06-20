@@ -212,21 +212,7 @@ let ADDRESS__json (v:ADDRESS) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Bind",p.Bind.ToString() |> Json.Num)
-        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
-        ("Line1",p.Line1 |> Json.Str)
-        ("Line2",p.Line2 |> Json.Str)
-        ("State",p.State |> Json.Str)
-        ("County",p.County |> Json.Str)
-        ("Town",p.Town |> Json.Str)
-        ("Contact",p.Contact |> Json.Str)
-        ("Tel",p.Tel |> Json.Str)
-        ("Email",p.Email |> Json.Str)
-        ("Zip",p.Zip |> Json.Str)
-        ("City",p.City.ToString() |> Json.Num)
-        ("Country",p.Country.ToString() |> Json.Num)
-        ("Remarks",p.Remarks |> Json.Str) |]
+        ("p",pADDRESS__json v.p) |]
     |> Json.Braket
 
 let ADDRESS__jsonTbw (w:TextBlockWriter) (v:ADDRESS) =
@@ -282,45 +268,54 @@ let json__ADDRESSo (json:Json):ADDRESS option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pADDRESS_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pADDRESSo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 256
-    
-    p.Bind <- checkfield fields "Bind" |> parse_int64
-    
-    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
-    
-    p.Line1 <- checkfieldz fields "Line1" 300
-    
-    p.Line2 <- checkfieldz fields "Line2" 300
-    
-    p.State <- checkfieldz fields "State" 16
-    
-    p.County <- checkfieldz fields "County" 16
-    
-    p.Town <- checkfieldz fields "Town" 16
-    
-    p.Contact <- checkfieldz fields "Contact" 64
-    
-    p.Tel <- checkfieldz fields "Tel" 20
-    
-    p.Email <- checkfieldz fields "Email" 256
-    
-    p.Zip <- checkfieldz fields "Zip" 16
-    
-    p.City <- checkfield fields "City" |> parse_int64
-    
-    p.Country <- checkfield fields "Country" |> parse_int64
-    
-    p.Remarks <- checkfield fields "Remarks"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 256
+        
+        p.Bind <- checkfield fields "Bind" |> parse_int64
+        
+        p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+        
+        p.Line1 <- checkfieldz fields "Line1" 300
+        
+        p.Line2 <- checkfieldz fields "Line2" 300
+        
+        p.State <- checkfieldz fields "State" 16
+        
+        p.County <- checkfieldz fields "County" 16
+        
+        p.Town <- checkfieldz fields "Town" 16
+        
+        p.Contact <- checkfieldz fields "Contact" 64
+        
+        p.Tel <- checkfieldz fields "Tel" 20
+        
+        p.Email <- checkfieldz fields "Email" 256
+        
+        p.Zip <- checkfieldz fields "Zip" 16
+        
+        p.City <- checkfield fields "City" |> parse_int64
+        
+        p.Country <- checkfield fields "Country" |> parse_int64
+        
+        p.Remarks <- checkfield fields "Remarks"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [AIRPORT] Structure
 
@@ -433,13 +428,7 @@ let AIRPORT__json (v:AIRPORT) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Code3IATA",p.Code3IATA |> Json.Str)
-        ("Code4ICAO",p.Code4ICAO |> Json.Str)
-        ("Caption",p.Caption |> Json.Str)
-        ("CaptionEn",p.CaptionEn |> Json.Str)
-        ("Country",p.Country.ToString() |> Json.Num)
-        ("City",p.City.ToString() |> Json.Num)
-        ("IsMetropolitan",if p.IsMetropolitan then Json.True else Json.False) |]
+        ("p",pAIRPORT__json v.p) |]
     |> Json.Braket
 
 let AIRPORT__jsonTbw (w:TextBlockWriter) (v:AIRPORT) =
@@ -479,29 +468,38 @@ let json__AIRPORTo (json:Json):AIRPORT option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pAIRPORT_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pAIRPORTo v
+        | None -> None
     
-    p.Code3IATA <- checkfieldz fields "Code3IATA" 3
-    
-    p.Code4ICAO <- checkfieldz fields "Code4ICAO" 4
-    
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.CaptionEn <- checkfieldz fields "CaptionEn" 64
-    
-    p.Country <- checkfield fields "Country" |> parse_int64
-    
-    p.City <- checkfield fields "City" |> parse_int64
-    
-    p.IsMetropolitan <- checkfield fields "IsMetropolitan" = "true"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Code3IATA <- checkfieldz fields "Code3IATA" 3
+        
+        p.Code4ICAO <- checkfieldz fields "Code4ICAO" 4
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.CaptionEn <- checkfieldz fields "CaptionEn" 64
+        
+        p.Country <- checkfield fields "Country" |> parse_int64
+        
+        p.City <- checkfield fields "City" |> parse_int64
+        
+        p.IsMetropolitan <- checkfield fields "IsMetropolitan" = "true"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [BIZ] Structure
 
@@ -750,33 +748,7 @@ let BIZ__json (v:BIZ) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Code",p.Code |> Json.Str)
-        ("Caption",p.Caption |> Json.Str)
-        ("Parent",p.Parent.ToString() |> Json.Num)
-        ("BasicAcct",p.BasicAcct.ToString() |> Json.Num)
-        ("Desc",p.Desc |> Json.Str)
-        ("Website",p.Website |> Json.Str)
-        ("Icon",p.Icon |> Json.Str)
-        ("City",p.City.ToString() |> Json.Num)
-        ("Country",p.Country.ToString() |> Json.Num)
-        ("Lang",p.Lang.ToString() |> Json.Num)
-        ("IsSocial",if p.IsSocial then Json.True else Json.False)
-        ("IsCmsSource",if p.IsCmsSource then Json.True else Json.False)
-        ("IsPay",if p.IsPay then Json.True else Json.False)
-        ("MomentLatest",p.MomentLatest.ToString() |> Json.Num)
-        ("CountFollowers",p.CountFollowers.ToString() |> Json.Num)
-        ("CountFollows",p.CountFollows.ToString() |> Json.Num)
-        ("CountMoments",p.CountMoments.ToString() |> Json.Num)
-        ("CountViews",p.CountViews.ToString() |> Json.Num)
-        ("CountComments",p.CountComments.ToString() |> Json.Num)
-        ("CountThumbUps",p.CountThumbUps.ToString() |> Json.Num)
-        ("CountThumbDns",p.CountThumbDns.ToString() |> Json.Num)
-        ("IsCrawling",if p.IsCrawling then Json.True else Json.False)
-        ("IsGSeries",if p.IsGSeries then Json.True else Json.False)
-        ("RemarksCentral",p.RemarksCentral |> Json.Str)
-        ("Agent",p.Agent.ToString() |> Json.Num)
-        ("SiteCats",p.SiteCats |> Json.Str)
-        ("ConfiguredCats",p.ConfiguredCats |> Json.Str) |]
+        ("p",pBIZ__json v.p) |]
     |> Json.Braket
 
 let BIZ__jsonTbw (w:TextBlockWriter) (v:BIZ) =
@@ -856,69 +828,78 @@ let json__BIZo (json:Json):BIZ option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pBIZ_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pBIZo v
+        | None -> None
     
-    p.Code <- checkfieldz fields "Code" 256
-    
-    p.Caption <- checkfieldz fields "Caption" 256
-    
-    p.Parent <- checkfield fields "Parent" |> parse_int64
-    
-    p.BasicAcct <- checkfield fields "BasicAcct" |> parse_int64
-    
-    p.Desc <- checkfield fields "Desc"
-    
-    p.Website <- checkfieldz fields "Website" 256
-    
-    p.Icon <- checkfieldz fields "Icon" 256
-    
-    p.City <- checkfield fields "City" |> parse_int64
-    
-    p.Country <- checkfield fields "Country" |> parse_int64
-    
-    p.Lang <- checkfield fields "Lang" |> parse_int64
-    
-    p.IsSocial <- checkfield fields "IsSocial" = "true"
-    
-    p.IsCmsSource <- checkfield fields "IsCmsSource" = "true"
-    
-    p.IsPay <- checkfield fields "IsPay" = "true"
-    
-    p.MomentLatest <- checkfield fields "MomentLatest" |> parse_int64
-    
-    p.CountFollowers <- checkfield fields "CountFollowers" |> parse_int64
-    
-    p.CountFollows <- checkfield fields "CountFollows" |> parse_int64
-    
-    p.CountMoments <- checkfield fields "CountMoments" |> parse_int64
-    
-    p.CountViews <- checkfield fields "CountViews" |> parse_int64
-    
-    p.CountComments <- checkfield fields "CountComments" |> parse_int64
-    
-    p.CountThumbUps <- checkfield fields "CountThumbUps" |> parse_int64
-    
-    p.CountThumbDns <- checkfield fields "CountThumbDns" |> parse_int64
-    
-    p.IsCrawling <- checkfield fields "IsCrawling" = "true"
-    
-    p.IsGSeries <- checkfield fields "IsGSeries" = "true"
-    
-    p.RemarksCentral <- checkfield fields "RemarksCentral"
-    
-    p.Agent <- checkfield fields "Agent" |> parse_int64
-    
-    p.SiteCats <- checkfield fields "SiteCats"
-    
-    p.ConfiguredCats <- checkfield fields "ConfiguredCats"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Code <- checkfieldz fields "Code" 256
+        
+        p.Caption <- checkfieldz fields "Caption" 256
+        
+        p.Parent <- checkfield fields "Parent" |> parse_int64
+        
+        p.BasicAcct <- checkfield fields "BasicAcct" |> parse_int64
+        
+        p.Desc <- checkfield fields "Desc"
+        
+        p.Website <- checkfieldz fields "Website" 256
+        
+        p.Icon <- checkfieldz fields "Icon" 256
+        
+        p.City <- checkfield fields "City" |> parse_int64
+        
+        p.Country <- checkfield fields "Country" |> parse_int64
+        
+        p.Lang <- checkfield fields "Lang" |> parse_int64
+        
+        p.IsSocial <- checkfield fields "IsSocial" = "true"
+        
+        p.IsCmsSource <- checkfield fields "IsCmsSource" = "true"
+        
+        p.IsPay <- checkfield fields "IsPay" = "true"
+        
+        p.MomentLatest <- checkfield fields "MomentLatest" |> parse_int64
+        
+        p.CountFollowers <- checkfield fields "CountFollowers" |> parse_int64
+        
+        p.CountFollows <- checkfield fields "CountFollows" |> parse_int64
+        
+        p.CountMoments <- checkfield fields "CountMoments" |> parse_int64
+        
+        p.CountViews <- checkfield fields "CountViews" |> parse_int64
+        
+        p.CountComments <- checkfield fields "CountComments" |> parse_int64
+        
+        p.CountThumbUps <- checkfield fields "CountThumbUps" |> parse_int64
+        
+        p.CountThumbDns <- checkfield fields "CountThumbDns" |> parse_int64
+        
+        p.IsCrawling <- checkfield fields "IsCrawling" = "true"
+        
+        p.IsGSeries <- checkfield fields "IsGSeries" = "true"
+        
+        p.RemarksCentral <- checkfield fields "RemarksCentral"
+        
+        p.Agent <- checkfield fields "Agent" |> parse_int64
+        
+        p.SiteCats <- checkfield fields "SiteCats"
+        
+        p.ConfiguredCats <- checkfield fields "ConfiguredCats"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [CAT] Structure
 
@@ -1007,11 +988,7 @@ let CAT__json (v:CAT) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Lang",p.Lang.ToString() |> Json.Num)
-        ("Zh",p.Zh.ToString() |> Json.Num)
-        ("Parent",p.Parent.ToString() |> Json.Num)
-        ("State",(p.State |> EnumToValue).ToString() |> Json.Num) |]
+        ("p",pCAT__json v.p) |]
     |> Json.Braket
 
 let CAT__jsonTbw (w:TextBlockWriter) (v:CAT) =
@@ -1047,25 +1024,34 @@ let json__CATo (json:Json):CAT option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pCAT_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pCATo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Lang <- checkfield fields "Lang" |> parse_int64
-    
-    p.Zh <- checkfield fields "Zh" |> parse_int64
-    
-    p.Parent <- checkfield fields "Parent" |> parse_int64
-    
-    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Lang <- checkfield fields "Lang" |> parse_int64
+        
+        p.Zh <- checkfield fields "Zh" |> parse_int64
+        
+        p.Parent <- checkfield fields "Parent" |> parse_int64
+        
+        p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [CITY] Structure
 
@@ -1182,13 +1168,7 @@ let CITY__json (v:CITY) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Name",p.Name |> Json.Str)
-        ("MetropolitanCode3IATA",p.MetropolitanCode3IATA |> Json.Str)
-        ("NameEn",p.NameEn |> Json.Str)
-        ("Country",p.Country.ToString() |> Json.Num)
-        ("Place",p.Place.ToString() |> Json.Num)
-        ("Icon",p.Icon |> Json.Str)
-        ("Tel",p.Tel |> Json.Str) |]
+        ("p",pCITY__json v.p) |]
     |> Json.Braket
 
 let CITY__jsonTbw (w:TextBlockWriter) (v:CITY) =
@@ -1228,29 +1208,38 @@ let json__CITYo (json:Json):CITY option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pCITY_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pCITYo v
+        | None -> None
     
-    p.Name <- checkfieldz fields "Name" 64
-    
-    p.MetropolitanCode3IATA <- checkfieldz fields "MetropolitanCode3IATA" 3
-    
-    p.NameEn <- checkfieldz fields "NameEn" 64
-    
-    p.Country <- checkfield fields "Country" |> parse_int64
-    
-    p.Place <- checkfield fields "Place" |> parse_int64
-    
-    p.Icon <- checkfieldz fields "Icon" 256
-    
-    p.Tel <- checkfieldz fields "Tel" 4
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Name <- checkfieldz fields "Name" 64
+        
+        p.MetropolitanCode3IATA <- checkfieldz fields "MetropolitanCode3IATA" 3
+        
+        p.NameEn <- checkfieldz fields "NameEn" 64
+        
+        p.Country <- checkfield fields "Country" |> parse_int64
+        
+        p.Place <- checkfield fields "Place" |> parse_int64
+        
+        p.Icon <- checkfieldz fields "Icon" 256
+        
+        p.Tel <- checkfieldz fields "Tel" 4
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [CRY] Structure
 
@@ -1379,15 +1368,7 @@ let CRY__json (v:CRY) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Code2",p.Code2 |> Json.Str)
-        ("Caption",p.Caption |> Json.Str)
-        ("Fullname",p.Fullname |> Json.Str)
-        ("Icon",p.Icon |> Json.Str)
-        ("Tel",p.Tel |> Json.Str)
-        ("Cur",p.Cur.ToString() |> Json.Num)
-        ("Capital",p.Capital.ToString() |> Json.Num)
-        ("Place",p.Place.ToString() |> Json.Num)
-        ("Lang",p.Lang.ToString() |> Json.Num) |]
+        ("p",pCRY__json v.p) |]
     |> Json.Braket
 
 let CRY__jsonTbw (w:TextBlockWriter) (v:CRY) =
@@ -1431,33 +1412,42 @@ let json__CRYo (json:Json):CRY option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pCRY_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pCRYo v
+        | None -> None
     
-    p.Code2 <- checkfieldz fields "Code2" 2
-    
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Fullname <- checkfieldz fields "Fullname" 256
-    
-    p.Icon <- checkfieldz fields "Icon" 256
-    
-    p.Tel <- checkfieldz fields "Tel" 4
-    
-    p.Cur <- checkfield fields "Cur" |> parse_int64
-    
-    p.Capital <- checkfield fields "Capital" |> parse_int64
-    
-    p.Place <- checkfield fields "Place" |> parse_int64
-    
-    p.Lang <- checkfield fields "Lang" |> parse_int64
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Code2 <- checkfieldz fields "Code2" 2
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Fullname <- checkfieldz fields "Fullname" 256
+        
+        p.Icon <- checkfieldz fields "Icon" 256
+        
+        p.Tel <- checkfieldz fields "Tel" 4
+        
+        p.Cur <- checkfield fields "Cur" |> parse_int64
+        
+        p.Capital <- checkfield fields "Capital" |> parse_int64
+        
+        p.Place <- checkfield fields "Place" |> parse_int64
+        
+        p.Lang <- checkfield fields "Lang" |> parse_int64
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [CUR] Structure
 
@@ -1654,25 +1644,7 @@ let CUR__json (v:CUR) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Code",p.Code |> Json.Str)
-        ("Caption",p.Caption |> Json.Str)
-        ("Hidden",if p.Hidden then Json.True else Json.False)
-        ("IsSac",if p.IsSac then Json.True else Json.False)
-        ("IsTransfer",if p.IsTransfer then Json.True else Json.False)
-        ("IsCash",if p.IsCash then Json.True else Json.False)
-        ("EnableReward",if p.EnableReward then Json.True else Json.False)
-        ("EnableOTC",if p.EnableOTC then Json.True else Json.False)
-        ("Icon",p.Icon |> Json.Str)
-        ("CurType",(p.CurType |> EnumToValue).ToString() |> Json.Num)
-        ("Dec",p.Dec.ToString() |> Json.Num)
-        ("AnchorRate",p.AnchorRate.ToString() |> Json.Num)
-        ("Freezable",if p.Freezable then Json.True else Json.False)
-        ("Authorizable",if p.Authorizable then Json.True else Json.False)
-        ("ChaninID",p.ChaninID |> Json.Str)
-        ("ChaninName",p.ChaninName |> Json.Str)
-        ("ContractAddress",p.ContractAddress |> Json.Str)
-        ("WalletAddress",p.WalletAddress |> Json.Str)
-        ("BaseRate",p.BaseRate.ToString() |> Json.Num) |]
+        ("p",pCUR__json v.p) |]
     |> Json.Braket
 
 let CUR__jsonTbw (w:TextBlockWriter) (v:CUR) =
@@ -1736,53 +1708,62 @@ let json__CURo (json:Json):CUR option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pCUR_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pCURo v
+        | None -> None
     
-    p.Code <- checkfieldz fields "Code" 16
-    
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Hidden <- checkfield fields "Hidden" = "true"
-    
-    p.IsSac <- checkfield fields "IsSac" = "true"
-    
-    p.IsTransfer <- checkfield fields "IsTransfer" = "true"
-    
-    p.IsCash <- checkfield fields "IsCash" = "true"
-    
-    p.EnableReward <- checkfield fields "EnableReward" = "true"
-    
-    p.EnableOTC <- checkfield fields "EnableOTC" = "true"
-    
-    p.Icon <- checkfieldz fields "Icon" 512
-    
-    p.CurType <- checkfield fields "CurType" |> parse_int32 |> EnumOfValue
-    
-    p.Dec <- checkfield fields "Dec" |> parse_int64
-    
-    p.AnchorRate <- checkfield fields "AnchorRate" |> parse_float
-    
-    p.Freezable <- checkfield fields "Freezable" = "true"
-    
-    p.Authorizable <- checkfield fields "Authorizable" = "true"
-    
-    p.ChaninID <- checkfieldz fields "ChaninID" 256
-    
-    p.ChaninName <- checkfieldz fields "ChaninName" 256
-    
-    p.ContractAddress <- checkfieldz fields "ContractAddress" 256
-    
-    p.WalletAddress <- checkfieldz fields "WalletAddress" 256
-    
-    p.BaseRate <- checkfield fields "BaseRate" |> parse_float
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Code <- checkfieldz fields "Code" 16
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Hidden <- checkfield fields "Hidden" = "true"
+        
+        p.IsSac <- checkfield fields "IsSac" = "true"
+        
+        p.IsTransfer <- checkfield fields "IsTransfer" = "true"
+        
+        p.IsCash <- checkfield fields "IsCash" = "true"
+        
+        p.EnableReward <- checkfield fields "EnableReward" = "true"
+        
+        p.EnableOTC <- checkfield fields "EnableOTC" = "true"
+        
+        p.Icon <- checkfieldz fields "Icon" 512
+        
+        p.CurType <- checkfield fields "CurType" |> parse_int32 |> EnumOfValue
+        
+        p.Dec <- checkfield fields "Dec" |> parse_int64
+        
+        p.AnchorRate <- checkfield fields "AnchorRate" |> parse_float
+        
+        p.Freezable <- checkfield fields "Freezable" = "true"
+        
+        p.Authorizable <- checkfield fields "Authorizable" = "true"
+        
+        p.ChaninID <- checkfieldz fields "ChaninID" 256
+        
+        p.ChaninName <- checkfieldz fields "ChaninName" 256
+        
+        p.ContractAddress <- checkfieldz fields "ContractAddress" 256
+        
+        p.WalletAddress <- checkfieldz fields "WalletAddress" 256
+        
+        p.BaseRate <- checkfield fields "BaseRate" |> parse_float
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [EU] Structure
 
@@ -2187,51 +2168,7 @@ let EU__json (v:EU) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Username",p.Username |> Json.Str)
-        ("Penname",p.Penname |> Json.Str)
-        ("Rolfname",p.Rolfname |> Json.Str)
-        ("Email",p.Email |> Json.Str)
-        ("Tel",p.Tel |> Json.Str)
-        ("Domainname",p.Domainname.ToString() |> Json.Num)
-        ("Gender",(p.Gender |> EnumToValue).ToString() |> Json.Num)
-        ("Status",(p.Status |> EnumToValue).ToString() |> Json.Num)
-        ("Admin",(p.Admin |> EnumToValue).ToString() |> Json.Num)
-        ("Privilege",p.Privilege.ToString() |> Json.Num)
-        ("Verify",(p.Verify |> EnumToValue).ToString() |> Json.Num)
-        ("Pwd",p.Pwd |> Json.Str)
-        ("Online",if p.Online then Json.True else Json.False)
-        ("Icon",p.Icon |> Json.Str)
-        ("Background",p.Background |> Json.Str)
-        ("BasicAcct",p.BasicAcct.ToString() |> Json.Num)
-        ("Citizen",p.Citizen.ToString() |> Json.Num)
-        ("Refer",p.Refer |> Json.Str)
-        ("Referer",p.Referer.ToString() |> Json.Num)
-        ("Discord",p.Discord |> Json.Str)
-        ("DiscordId",p.DiscordId.ToString() |> Json.Num)
-        ("Google",p.Google |> Json.Str)
-        ("GoogleId",p.GoogleId.ToString() |> Json.Num)
-        ("Apple",p.Apple |> Json.Str)
-        ("AppleId",p.AppleId.ToString() |> Json.Num)
-        ("OAuthProvider",p.OAuthProvider |> Json.Str)
-        ("OAuthID",p.OAuthID |> Json.Str)
-        ("GTV",p.GTV |> Json.Str)
-        ("Gettr",p.Gettr |> Json.Str)
-        ("Farm",p.Farm.ToString() |> Json.Num)
-        ("CountFollows",p.CountFollows.ToString() |> Json.Num)
-        ("CountFollowers",p.CountFollowers.ToString() |> Json.Num)
-        ("CountMoments",p.CountMoments.ToString() |> Json.Num)
-        ("CountViews",p.CountViews.ToString() |> Json.Num)
-        ("CountComments",p.CountComments.ToString() |> Json.Num)
-        ("CountThumbUps",p.CountThumbUps.ToString() |> Json.Num)
-        ("CountThumbDns",p.CountThumbDns.ToString() |> Json.Num)
-        ("Lang",p.Lang.ToString() |> Json.Num)
-        ("BizOperator",p.BizOperator.ToString() |> Json.Num)
-        ("Url",p.Url |> Json.Str)
-        ("About",p.About |> Json.Str)
-        ("PublicPoints",p.PublicPoints.ToString() |> Json.Num)
-        ("Json",p.Json |> Json.Str)
-        ("Agentable",(p.Agentable |> EnumToValue).ToString() |> Json.Num) |]
+        ("p",pEU__json v.p) |]
     |> Json.Braket
 
 let EU__jsonTbw (w:TextBlockWriter) (v:EU) =
@@ -2347,105 +2284,114 @@ let json__EUo (json:Json):EU option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pEU_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pEUo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Username <- checkfieldz fields "Username" 64
-    
-    p.Penname <- checkfieldz fields "Penname" 64
-    
-    p.Rolfname <- checkfieldz fields "Rolfname" 64
-    
-    p.Email <- checkfieldz fields "Email" 256
-    
-    p.Tel <- checkfieldz fields "Tel" 32
-    
-    p.Domainname <- checkfield fields "Domainname" |> parse_int64
-    
-    p.Gender <- checkfield fields "Gender" |> parse_int32 |> EnumOfValue
-    
-    p.Status <- checkfield fields "Status" |> parse_int32 |> EnumOfValue
-    
-    p.Admin <- checkfield fields "Admin" |> parse_int32 |> EnumOfValue
-    
-    p.Privilege <- checkfield fields "Privilege" |> parse_int64
-    
-    p.Verify <- checkfield fields "Verify" |> parse_int32 |> EnumOfValue
-    
-    p.Pwd <- checkfieldz fields "Pwd" 16
-    
-    p.Online <- checkfield fields "Online" = "true"
-    
-    p.Icon <- checkfieldz fields "Icon" 256
-    
-    p.Background <- checkfieldz fields "Background" 256
-    
-    p.BasicAcct <- checkfield fields "BasicAcct" |> parse_int64
-    
-    p.Citizen <- checkfield fields "Citizen" |> parse_int64
-    
-    p.Refer <- checkfieldz fields "Refer" 7
-    
-    p.Referer <- checkfield fields "Referer" |> parse_int64
-    
-    p.Discord <- checkfieldz fields "Discord" 64
-    
-    p.DiscordId <- checkfield fields "DiscordId" |> parse_int64
-    
-    p.Google <- checkfieldz fields "Google" 64
-    
-    p.GoogleId <- checkfield fields "GoogleId" |> parse_int64
-    
-    p.Apple <- checkfieldz fields "Apple" 64
-    
-    p.AppleId <- checkfield fields "AppleId" |> parse_int64
-    
-    p.OAuthProvider <- checkfieldz fields "OAuthProvider" 64
-    
-    p.OAuthID <- checkfieldz fields "OAuthID" 256
-    
-    p.GTV <- checkfieldz fields "GTV" 64
-    
-    p.Gettr <- checkfieldz fields "Gettr" 64
-    
-    p.Farm <- checkfield fields "Farm" |> parse_int64
-    
-    p.CountFollows <- checkfield fields "CountFollows" |> parse_int64
-    
-    p.CountFollowers <- checkfield fields "CountFollowers" |> parse_int64
-    
-    p.CountMoments <- checkfield fields "CountMoments" |> parse_int64
-    
-    p.CountViews <- checkfield fields "CountViews" |> parse_int64
-    
-    p.CountComments <- checkfield fields "CountComments" |> parse_int64
-    
-    p.CountThumbUps <- checkfield fields "CountThumbUps" |> parse_int64
-    
-    p.CountThumbDns <- checkfield fields "CountThumbDns" |> parse_int64
-    
-    p.Lang <- checkfield fields "Lang" |> parse_int64
-    
-    p.BizOperator <- checkfield fields "BizOperator" |> parse_int64
-    
-    p.Url <- checkfield fields "Url"
-    
-    p.About <- checkfield fields "About"
-    
-    p.PublicPoints <- checkfield fields "PublicPoints" |> parse_int64
-    
-    p.Json <- checkfield fields "Json"
-    
-    p.Agentable <- checkfield fields "Agentable" |> parse_int32 |> EnumOfValue
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Username <- checkfieldz fields "Username" 64
+        
+        p.Penname <- checkfieldz fields "Penname" 64
+        
+        p.Rolfname <- checkfieldz fields "Rolfname" 64
+        
+        p.Email <- checkfieldz fields "Email" 256
+        
+        p.Tel <- checkfieldz fields "Tel" 32
+        
+        p.Domainname <- checkfield fields "Domainname" |> parse_int64
+        
+        p.Gender <- checkfield fields "Gender" |> parse_int32 |> EnumOfValue
+        
+        p.Status <- checkfield fields "Status" |> parse_int32 |> EnumOfValue
+        
+        p.Admin <- checkfield fields "Admin" |> parse_int32 |> EnumOfValue
+        
+        p.Privilege <- checkfield fields "Privilege" |> parse_int64
+        
+        p.Verify <- checkfield fields "Verify" |> parse_int32 |> EnumOfValue
+        
+        p.Pwd <- checkfieldz fields "Pwd" 16
+        
+        p.Online <- checkfield fields "Online" = "true"
+        
+        p.Icon <- checkfieldz fields "Icon" 256
+        
+        p.Background <- checkfieldz fields "Background" 256
+        
+        p.BasicAcct <- checkfield fields "BasicAcct" |> parse_int64
+        
+        p.Citizen <- checkfield fields "Citizen" |> parse_int64
+        
+        p.Refer <- checkfieldz fields "Refer" 7
+        
+        p.Referer <- checkfield fields "Referer" |> parse_int64
+        
+        p.Discord <- checkfieldz fields "Discord" 64
+        
+        p.DiscordId <- checkfield fields "DiscordId" |> parse_int64
+        
+        p.Google <- checkfieldz fields "Google" 64
+        
+        p.GoogleId <- checkfield fields "GoogleId" |> parse_int64
+        
+        p.Apple <- checkfieldz fields "Apple" 64
+        
+        p.AppleId <- checkfield fields "AppleId" |> parse_int64
+        
+        p.OAuthProvider <- checkfieldz fields "OAuthProvider" 64
+        
+        p.OAuthID <- checkfieldz fields "OAuthID" 256
+        
+        p.GTV <- checkfieldz fields "GTV" 64
+        
+        p.Gettr <- checkfieldz fields "Gettr" 64
+        
+        p.Farm <- checkfield fields "Farm" |> parse_int64
+        
+        p.CountFollows <- checkfield fields "CountFollows" |> parse_int64
+        
+        p.CountFollowers <- checkfield fields "CountFollowers" |> parse_int64
+        
+        p.CountMoments <- checkfield fields "CountMoments" |> parse_int64
+        
+        p.CountViews <- checkfield fields "CountViews" |> parse_int64
+        
+        p.CountComments <- checkfield fields "CountComments" |> parse_int64
+        
+        p.CountThumbUps <- checkfield fields "CountThumbUps" |> parse_int64
+        
+        p.CountThumbDns <- checkfield fields "CountThumbDns" |> parse_int64
+        
+        p.Lang <- checkfield fields "Lang" |> parse_int64
+        
+        p.BizOperator <- checkfield fields "BizOperator" |> parse_int64
+        
+        p.Url <- checkfield fields "Url"
+        
+        p.About <- checkfield fields "About"
+        
+        p.PublicPoints <- checkfield fields "PublicPoints" |> parse_int64
+        
+        p.Json <- checkfield fields "Json"
+        
+        p.Agentable <- checkfield fields "Agentable" |> parse_int32 |> EnumOfValue
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [FILE] Structure
 
@@ -2572,16 +2518,7 @@ let FILE__json (v:FILE) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Encrypt",(p.Encrypt |> EnumToValue).ToString() |> Json.Num)
-        ("SHA256",p.SHA256 |> Json.Str)
-        ("Size",p.Size.ToString() |> Json.Num)
-        ("Bind",p.Bind.ToString() |> Json.Num)
-        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
-        ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
-        ("Folder",p.Folder.ToString() |> Json.Num)
-        ("FileType",(p.FileType |> EnumToValue).ToString() |> Json.Num)
-        ("JSON",p.JSON |> Json.Str) |]
+        ("p",pFILE__json v.p) |]
     |> Json.Braket
 
 let FILE__jsonTbw (w:TextBlockWriter) (v:FILE) =
@@ -2627,35 +2564,44 @@ let json__FILEo (json:Json):FILE option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pFILE_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pFILEo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 256
-    
-    p.Encrypt <- checkfield fields "Encrypt" |> parse_int32 |> EnumOfValue
-    
-    p.SHA256 <- checkfield fields "SHA256"
-    
-    p.Size <- checkfield fields "Size" |> parse_int64
-    
-    p.Bind <- checkfield fields "Bind" |> parse_int64
-    
-    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
-    
-    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
-    
-    p.Folder <- checkfield fields "Folder" |> parse_int64
-    
-    p.FileType <- checkfield fields "FileType" |> parse_int32 |> EnumOfValue
-    
-    p.JSON <- checkfield fields "JSON"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 256
+        
+        p.Encrypt <- checkfield fields "Encrypt" |> parse_int32 |> EnumOfValue
+        
+        p.SHA256 <- checkfield fields "SHA256"
+        
+        p.Size <- checkfield fields "Size" |> parse_int64
+        
+        p.Bind <- checkfield fields "Bind" |> parse_int64
+        
+        p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+        
+        p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+        
+        p.Folder <- checkfield fields "Folder" |> parse_int64
+        
+        p.FileType <- checkfield fields "FileType" |> parse_int32 |> EnumOfValue
+        
+        p.JSON <- checkfield fields "JSON"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [FOLDER] Structure
 
@@ -2744,11 +2690,7 @@ let FOLDER__json (v:FOLDER) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Encrypt",(p.Encrypt |> EnumToValue).ToString() |> Json.Num)
-        ("Bind",p.Bind.ToString() |> Json.Num)
-        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
-        ("Parent",p.Parent.ToString() |> Json.Num) |]
+        ("p",pFOLDER__json v.p) |]
     |> Json.Braket
 
 let FOLDER__jsonTbw (w:TextBlockWriter) (v:FOLDER) =
@@ -2784,25 +2726,34 @@ let json__FOLDERo (json:Json):FOLDER option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pFOLDER_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pFOLDERo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 256
-    
-    p.Encrypt <- checkfield fields "Encrypt" |> parse_int32 |> EnumOfValue
-    
-    p.Bind <- checkfield fields "Bind" |> parse_int64
-    
-    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
-    
-    p.Parent <- checkfield fields "Parent" |> parse_int64
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 256
+        
+        p.Encrypt <- checkfield fields "Encrypt" |> parse_int32 |> EnumOfValue
+        
+        p.Bind <- checkfield fields "Bind" |> parse_int64
+        
+        p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+        
+        p.Parent <- checkfield fields "Parent" |> parse_int64
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [LANG] Structure
 
@@ -2933,16 +2884,7 @@ let LANG__json (v:LANG) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Code2",p.Code2 |> Json.Str)
-        ("Caption",p.Caption |> Json.Str)
-        ("Native",p.Native |> Json.Str)
-        ("Icon",p.Icon |> Json.Str)
-        ("IsBlank",if p.IsBlank then Json.True else Json.False)
-        ("IsLocale",if p.IsLocale then Json.True else Json.False)
-        ("IsContent",if p.IsContent then Json.True else Json.False)
-        ("IsAutoTranslate",if p.IsAutoTranslate then Json.True else Json.False)
-        ("IsMiles",if p.IsMiles then Json.True else Json.False)
-        ("TextDirection",(p.TextDirection |> EnumToValue).ToString() |> Json.Num) |]
+        ("p",pLANG__json v.p) |]
     |> Json.Braket
 
 let LANG__jsonTbw (w:TextBlockWriter) (v:LANG) =
@@ -2988,35 +2930,44 @@ let json__LANGo (json:Json):LANG option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pLANG_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pLANGo v
+        | None -> None
     
-    p.Code2 <- checkfieldz fields "Code2" 2
-    
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Native <- checkfieldz fields "Native" 64
-    
-    p.Icon <- checkfieldz fields "Icon" 256
-    
-    p.IsBlank <- checkfield fields "IsBlank" = "true"
-    
-    p.IsLocale <- checkfield fields "IsLocale" = "true"
-    
-    p.IsContent <- checkfield fields "IsContent" = "true"
-    
-    p.IsAutoTranslate <- checkfield fields "IsAutoTranslate" = "true"
-    
-    p.IsMiles <- checkfield fields "IsMiles" = "true"
-    
-    p.TextDirection <- checkfield fields "TextDirection" |> parse_int32 |> EnumOfValue
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Code2 <- checkfieldz fields "Code2" 2
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Native <- checkfieldz fields "Native" 64
+        
+        p.Icon <- checkfieldz fields "Icon" 256
+        
+        p.IsBlank <- checkfield fields "IsBlank" = "true"
+        
+        p.IsLocale <- checkfield fields "IsLocale" = "true"
+        
+        p.IsContent <- checkfield fields "IsContent" = "true"
+        
+        p.IsAutoTranslate <- checkfield fields "IsAutoTranslate" = "true"
+        
+        p.IsMiles <- checkfield fields "IsMiles" = "true"
+        
+        p.TextDirection <- checkfield fields "TextDirection" |> parse_int32 |> EnumOfValue
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [LOCALE] Structure
 
@@ -3107,10 +3058,7 @@ let LOCALE__json (v:LOCALE) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Code",p.Code |> Json.Str)
-        ("Lang",p.Lang.ToString() |> Json.Num)
-        ("Zh",p.Zh |> Json.Str)
-        ("Text",p.Text |> Json.Str) |]
+        ("p",pLOCALE__json v.p) |]
     |> Json.Braket
 
 let LOCALE__jsonTbw (w:TextBlockWriter) (v:LOCALE) =
@@ -3144,23 +3092,32 @@ let json__LOCALEo (json:Json):LOCALE option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pLOCALE_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pLOCALEo v
+        | None -> None
     
-    p.Code <- checkfieldz fields "Code" 64
-    
-    p.Lang <- checkfield fields "Lang" |> parse_int64
-    
-    p.Zh <- checkfield fields "Zh"
-    
-    p.Text <- checkfield fields "Text"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Code <- checkfieldz fields "Code" 64
+        
+        p.Lang <- checkfield fields "Lang" |> parse_int64
+        
+        p.Zh <- checkfield fields "Zh"
+        
+        p.Text <- checkfield fields "Text"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [CSI] Structure
 
@@ -3233,9 +3190,7 @@ let CSI__json (v:CSI) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
-        ("Lang",p.Lang.ToString() |> Json.Num)
-        ("Bind",p.Bind.ToString() |> Json.Num) |]
+        ("p",pCSI__json v.p) |]
     |> Json.Braket
 
 let CSI__jsonTbw (w:TextBlockWriter) (v:CSI) =
@@ -3267,21 +3222,30 @@ let json__CSIo (json:Json):CSI option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pCSI_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pCSIo v
+        | None -> None
     
-    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
-    
-    p.Lang <- checkfield fields "Lang" |> parse_int64
-    
-    p.Bind <- checkfield fields "Bind" |> parse_int64
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+        
+        p.Lang <- checkfield fields "Lang" |> parse_int64
+        
+        p.Bind <- checkfield fields "Bind" |> parse_int64
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [CWC] Structure
 
@@ -3384,12 +3348,7 @@ let CWC__json (v:CWC) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("ExternalId",p.ExternalId.ToString() |> Json.Num)
-        ("Icon",p.Icon |> Json.Str)
-        ("EU",p.EU.ToString() |> Json.Num)
-        ("Biz",p.Biz.ToString() |> Json.Num)
-        ("Json",p.Json |> Json.Str) |]
+        ("p",pCWC__json v.p) |]
     |> Json.Braket
 
 let CWC__jsonTbw (w:TextBlockWriter) (v:CWC) =
@@ -3427,27 +3386,36 @@ let json__CWCo (json:Json):CWC option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pCWC_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pCWCo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.ExternalId <- checkfield fields "ExternalId" |> parse_int64
-    
-    p.Icon <- checkfieldz fields "Icon" 256
-    
-    p.EU <- checkfield fields "EU" |> parse_int64
-    
-    p.Biz <- checkfield fields "Biz" |> parse_int64
-    
-    p.Json <- checkfield fields "Json"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.ExternalId <- checkfield fields "ExternalId" |> parse_int64
+        
+        p.Icon <- checkfieldz fields "Icon" 256
+        
+        p.EU <- checkfield fields "EU" |> parse_int64
+        
+        p.Biz <- checkfield fields "Biz" |> parse_int64
+        
+        p.Json <- checkfield fields "Json"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [INS] Structure
 
@@ -4170,106 +4138,7 @@ let INS__json (v:INS) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Desc",p.Desc |> Json.Str)
-        ("Hidden",if p.Hidden then Json.True else Json.False)
-        ("EnableQuote",if p.EnableQuote then Json.True else Json.False)
-        ("Code",p.Code |> Json.Str)
-        ("Caption",p.Caption |> Json.Str)
-        ("Long",p.Long.ToString() |> Json.Num)
-        ("AssetName",p.AssetName |> Json.Str)
-        ("Short",p.Short.ToString() |> Json.Num)
-        ("Convertor",p.Convertor.ToString() |> Json.Num)
-        ("m",p.m.ToString() |> Json.Num)
-        ("mu",p.mu.ToString() |> Json.Num)
-        ("eta",p.eta.ToString() |> Json.Num)
-        ("psi",p.psi.ToString() |> Json.Num)
-        ("MarginCalc",(p.MarginCalc |> EnumToValue).ToString() |> Json.Num)
-        ("MarginRateInit",p.MarginRateInit.ToString() |> Json.Num)
-        ("MarginRateMntn",p.MarginRateMntn.ToString() |> Json.Num)
-        ("MarginMode",(p.MarginMode |> EnumToValue).ToString() |> Json.Num)
-        ("Dec",p.Dec.ToString() |> Json.Num)
-        ("Formatter",p.Formatter |> Json.Str)
-        ("Path",p.Path |> Json.Str)
-        ("Ask",p.Ask.ToString() |> Json.Num)
-        ("Bid",p.Bid.ToString() |> Json.Num)
-        ("Middle",p.Middle.ToString() |> Json.Num)
-        ("FixedSpread",p.FixedSpread.ToString() |> Json.Num)
-        ("PercentageSpread",p.PercentageSpread.ToString() |> Json.Num)
-        ("TaxOpenMode",(p.TaxOpenMode |> EnumToValue).ToString() |> Json.Num)
-        ("TaxOpen",p.TaxOpen.ToString() |> Json.Num)
-        ("TaxCloseMode",(p.TaxCloseMode |> EnumToValue).ToString() |> Json.Num)
-        ("TaxClose",p.TaxClose.ToString() |> Json.Num)
-        ("Tax",p.Tax.ToString() |> Json.Num)
-        ("TaxCur",p.TaxCur.ToString() |> Json.Num)
-        ("TaxCurCode",p.TaxCurCode |> Json.Str)
-        ("LastPrice",p.LastPrice.ToString() |> Json.Num)
-        ("LastUpdatedat",(p.LastUpdatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("LastPriceChange",(p.LastPriceChange |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("TradeStatus",(p.TradeStatus |> EnumToValue).ToString() |> Json.Num)
-        ("RoMode",(p.RoMode |> EnumToValue).ToString() |> Json.Num)
-        ("Schedule",p.Schedule |> Json.Str)
-        ("TradeMode",(p.TradeMode |> EnumToValue).ToString() |> Json.Num)
-        ("DerivativeMode",(p.DerivativeMode |> EnumToValue).ToString() |> Json.Num)
-        ("OptionsMode",(p.OptionsMode |> EnumToValue).ToString() |> Json.Num)
-        ("OptionsCP",(p.OptionsCP |> EnumToValue).ToString() |> Json.Num)
-        ("OptionsExpiry",(p.OptionsExpiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("OptionsStrike",p.OptionsStrike.ToString() |> Json.Num)
-        ("OptionsPricing",p.OptionsPricing |> Json.Str)
-        ("OptionsPeriod",p.OptionsPeriod |> Json.Str)
-        ("OptionsTax",p.OptionsTax.ToString() |> Json.Num)
-        ("OptionsPremiumPerTradeMin",p.OptionsPremiumPerTradeMin.ToString() |> Json.Num)
-        ("OptionsPremiumPerTradeMax",p.OptionsPremiumPerTradeMax.ToString() |> Json.Num)
-        ("LimitLotPerTrade",p.LimitLotPerTrade.ToString() |> Json.Num)
-        ("LimitLotPosition",p.LimitLotPosition.ToString() |> Json.Num)
-        ("CurrentOpen",p.CurrentOpen.ToString() |> Json.Num)
-        ("CurrentHigh",p.CurrentHigh.ToString() |> Json.Num)
-        ("CurrentLow",p.CurrentLow.ToString() |> Json.Num)
-        ("PrevClose",p.PrevClose.ToString() |> Json.Num)
-        ("PrevClosedat",(p.PrevClosedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("CurrentOpenat",(p.CurrentOpenat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("ExtBiz",p.ExtBiz.ToString() |> Json.Num)
-        ("RefExternal",p.RefExternal |> Json.Str)
-        ("ItrnInss",p.ItrnInss |> Json.Str)
-        ("ItrnInssMode",(p.ItrnInssMode |> EnumToValue).ToString() |> Json.Num)
-        ("FlushType",(p.FlushType |> EnumToValue).ToString() |> Json.Num)
-        ("CurTrigger",(p.CurTrigger |> EnumToValue).ToString() |> Json.Num)
-        ("RobotType",(p.RobotType |> EnumToValue).ToString() |> Json.Num)
-        ("ExtLong",p.ExtLong |> Json.Str)
-        ("ExtShort",p.ExtShort |> Json.Str)
-        ("ExtPrice",p.ExtPrice.ToString() |> Json.Num)
-        ("SaveM1",if p.SaveM1 then Json.True else Json.False)
-        ("HistSavedat",(p.HistSavedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("SaveD1",if p.SaveD1 then Json.True else Json.False)
-        ("SlPips",p.SlPips.ToString() |> Json.Num)
-        ("TpPips",p.TpPips.ToString() |> Json.Num)
-        ("PendingLimitPips",p.PendingLimitPips.ToString() |> Json.Num)
-        ("PendingStopPips",p.PendingStopPips.ToString() |> Json.Num)
-        ("LastDirection",(p.LastDirection |> EnumToValue).ToString() |> Json.Num)
-        ("LiqMode",(p.LiqMode |> EnumToValue).ToString() |> Json.Num)
-        ("LiqPeriodSince",(p.LiqPeriodSince |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("LiqPeriodTill",p.LiqPeriodTill.ToString() |> Json.Num)
-        ("LiqPeriod",(p.LiqPeriod |> EnumToValue).ToString() |> Json.Num)
-        ("LiqTime",p.LiqTime.ToString() |> Json.Num)
-        ("ConvertRatio",p.ConvertRatio.ToString() |> Json.Num)
-        ("RoBuyMode",(p.RoBuyMode |> EnumToValue).ToString() |> Json.Num)
-        ("RoBuy",p.RoBuy.ToString() |> Json.Num)
-        ("RoSellMode",(p.RoSellMode |> EnumToValue).ToString() |> Json.Num)
-        ("RoSell",p.RoSell.ToString() |> Json.Num)
-        ("PosLimitBuy",p.PosLimitBuy.ToString() |> Json.Num)
-        ("PosLimitSell",p.PosLimitSell.ToString() |> Json.Num)
-        ("RoCur",p.RoCur.ToString() |> Json.Num)
-        ("RoCurCode",p.RoCurCode |> Json.Str)
-        ("AdjBias",p.AdjBias.ToString() |> Json.Num)
-        ("TaxBuy",p.TaxBuy.ToString() |> Json.Num)
-        ("TaxSell",p.TaxSell.ToString() |> Json.Num)
-        ("Misc",p.Misc |> Json.Str)
-        ("RefLastPriceChange",(p.RefLastPriceChange |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("HedgeExternal",p.HedgeExternal |> Json.Str)
-        ("OfferingPrice",p.OfferingPrice.ToString() |> Json.Num)
-        ("IssuanceAmount",p.IssuanceAmount.ToString() |> Json.Num)
-        ("ListingStatus",(p.ListingStatus |> EnumToValue).ToString() |> Json.Num)
-        ("Turnover",p.Turnover.ToString() |> Json.Num)
-        ("PriceOpened",p.PriceOpened.ToString() |> Json.Num) |]
+        ("p",pINS__json v.p) |]
     |> Json.Braket
 
 let INS__jsonTbw (w:TextBlockWriter) (v:INS) =
@@ -4495,215 +4364,224 @@ let json__INSo (json:Json):INS option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pINS_empty()
-    
-    p.Desc <- checkfield fields "Desc"
-    
-    p.Hidden <- checkfield fields "Hidden" = "true"
-    
-    p.EnableQuote <- checkfield fields "EnableQuote" = "true"
-    
-    p.Code <- checkfieldz fields "Code" 64
-    
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Long <- checkfield fields "Long" |> parse_int64
-    
-    p.AssetName <- checkfieldz fields "AssetName" 64
-    
-    p.Short <- checkfield fields "Short" |> parse_int64
-    
-    p.Convertor <- checkfield fields "Convertor" |> parse_int64
-    
-    p.m <- checkfield fields "m" |> parse_float
-    
-    p.mu <- checkfield fields "mu" |> parse_float
-    
-    p.eta <- checkfield fields "eta" |> parse_float
-    
-    p.psi <- checkfield fields "psi" |> parse_float
-    
-    p.MarginCalc <- checkfield fields "MarginCalc" |> parse_int32 |> EnumOfValue
-    
-    p.MarginRateInit <- checkfield fields "MarginRateInit" |> parse_float
-    
-    p.MarginRateMntn <- checkfield fields "MarginRateMntn" |> parse_float
-    
-    p.MarginMode <- checkfield fields "MarginMode" |> parse_int32 |> EnumOfValue
-    
-    p.Dec <- checkfield fields "Dec" |> parse_int64
-    
-    p.Formatter <- checkfieldz fields "Formatter" 64
-    
-    p.Path <- checkfieldz fields "Path" 256
-    
-    p.Ask <- checkfield fields "Ask" |> parse_int64
-    
-    p.Bid <- checkfield fields "Bid" |> parse_int64
-    
-    p.Middle <- checkfield fields "Middle" |> parse_float
-    
-    p.FixedSpread <- checkfield fields "FixedSpread" |> parse_float
-    
-    p.PercentageSpread <- checkfield fields "PercentageSpread" |> parse_float
-    
-    p.TaxOpenMode <- checkfield fields "TaxOpenMode" |> parse_int32 |> EnumOfValue
-    
-    p.TaxOpen <- checkfield fields "TaxOpen" |> parse_float
-    
-    p.TaxCloseMode <- checkfield fields "TaxCloseMode" |> parse_int32 |> EnumOfValue
-    
-    p.TaxClose <- checkfield fields "TaxClose" |> parse_float
-    
-    p.Tax <- checkfield fields "Tax" |> parse_float
-    
-    p.TaxCur <- checkfield fields "TaxCur" |> parse_int64
-    
-    p.TaxCurCode <- checkfieldz fields "TaxCurCode" 64
-    
-    p.LastPrice <- checkfield fields "LastPrice" |> parse_float
-    
-    p.LastUpdatedat <- checkfield fields "LastUpdatedat" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.LastPriceChange <- checkfield fields "LastPriceChange" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.TradeStatus <- checkfield fields "TradeStatus" |> parse_int32 |> EnumOfValue
-    
-    p.RoMode <- checkfield fields "RoMode" |> parse_int32 |> EnumOfValue
-    
-    p.Schedule <- checkfield fields "Schedule"
-    
-    p.TradeMode <- checkfield fields "TradeMode" |> parse_int32 |> EnumOfValue
-    
-    p.DerivativeMode <- checkfield fields "DerivativeMode" |> parse_int32 |> EnumOfValue
-    
-    p.OptionsMode <- checkfield fields "OptionsMode" |> parse_int32 |> EnumOfValue
-    
-    p.OptionsCP <- checkfield fields "OptionsCP" |> parse_int32 |> EnumOfValue
-    
-    p.OptionsExpiry <- checkfield fields "OptionsExpiry" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.OptionsStrike <- checkfield fields "OptionsStrike" |> parse_float
-    
-    p.OptionsPricing <- checkfield fields "OptionsPricing"
-    
-    p.OptionsPeriod <- checkfield fields "OptionsPeriod"
-    
-    p.OptionsTax <- checkfield fields "OptionsTax" |> parse_float
-    
-    p.OptionsPremiumPerTradeMin <- checkfield fields "OptionsPremiumPerTradeMin" |> parse_float
-    
-    p.OptionsPremiumPerTradeMax <- checkfield fields "OptionsPremiumPerTradeMax" |> parse_float
-    
-    p.LimitLotPerTrade <- checkfield fields "LimitLotPerTrade" |> parse_float
-    
-    p.LimitLotPosition <- checkfield fields "LimitLotPosition" |> parse_float
-    
-    p.CurrentOpen <- checkfield fields "CurrentOpen" |> parse_float
-    
-    p.CurrentHigh <- checkfield fields "CurrentHigh" |> parse_float
-    
-    p.CurrentLow <- checkfield fields "CurrentLow" |> parse_float
-    
-    p.PrevClose <- checkfield fields "PrevClose" |> parse_float
-    
-    p.PrevClosedat <- checkfield fields "PrevClosedat" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.CurrentOpenat <- checkfield fields "CurrentOpenat" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.ExtBiz <- checkfield fields "ExtBiz" |> parse_int64
-    
-    p.RefExternal <- checkfieldz fields "RefExternal" 64
-    
-    p.ItrnInss <- checkfield fields "ItrnInss"
-    
-    p.ItrnInssMode <- checkfield fields "ItrnInssMode" |> parse_int32 |> EnumOfValue
-    
-    p.FlushType <- checkfield fields "FlushType" |> parse_int32 |> EnumOfValue
-    
-    p.CurTrigger <- checkfield fields "CurTrigger" |> parse_int32 |> EnumOfValue
-    
-    p.RobotType <- checkfield fields "RobotType" |> parse_int32 |> EnumOfValue
-    
-    p.ExtLong <- checkfieldz fields "ExtLong" 64
-    
-    p.ExtShort <- checkfieldz fields "ExtShort" 64
-    
-    p.ExtPrice <- checkfield fields "ExtPrice" |> parse_float
-    
-    p.SaveM1 <- checkfield fields "SaveM1" = "true"
-    
-    p.HistSavedat <- checkfield fields "HistSavedat" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.SaveD1 <- checkfield fields "SaveD1" = "true"
-    
-    p.SlPips <- checkfield fields "SlPips" |> parse_float
-    
-    p.TpPips <- checkfield fields "TpPips" |> parse_float
-    
-    p.PendingLimitPips <- checkfield fields "PendingLimitPips" |> parse_float
-    
-    p.PendingStopPips <- checkfield fields "PendingStopPips" |> parse_float
-    
-    p.LastDirection <- checkfield fields "LastDirection" |> parse_int32 |> EnumOfValue
-    
-    p.LiqMode <- checkfield fields "LiqMode" |> parse_int32 |> EnumOfValue
-    
-    p.LiqPeriodSince <- checkfield fields "LiqPeriodSince" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.LiqPeriodTill <- checkfield fields "LiqPeriodTill" |> parse_int64
-    
-    p.LiqPeriod <- checkfield fields "LiqPeriod" |> parse_int32 |> EnumOfValue
-    
-    p.LiqTime <- checkfield fields "LiqTime" |> parse_float
-    
-    p.ConvertRatio <- checkfield fields "ConvertRatio" |> parse_float
-    
-    p.RoBuyMode <- checkfield fields "RoBuyMode" |> parse_int32 |> EnumOfValue
-    
-    p.RoBuy <- checkfield fields "RoBuy" |> parse_float
-    
-    p.RoSellMode <- checkfield fields "RoSellMode" |> parse_int32 |> EnumOfValue
-    
-    p.RoSell <- checkfield fields "RoSell" |> parse_float
-    
-    p.PosLimitBuy <- checkfield fields "PosLimitBuy" |> parse_float
-    
-    p.PosLimitSell <- checkfield fields "PosLimitSell" |> parse_float
-    
-    p.RoCur <- checkfield fields "RoCur" |> parse_int64
-    
-    p.RoCurCode <- checkfieldz fields "RoCurCode" 64
-    
-    p.AdjBias <- checkfield fields "AdjBias" |> parse_float
-    
-    p.TaxBuy <- checkfield fields "TaxBuy" |> parse_float
-    
-    p.TaxSell <- checkfield fields "TaxSell" |> parse_float
-    
-    p.Misc <- checkfield fields "Misc"
-    
-    p.RefLastPriceChange <- checkfield fields "RefLastPriceChange" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.HedgeExternal <- checkfieldz fields "HedgeExternal" 64
-    
-    p.OfferingPrice <- checkfield fields "OfferingPrice" |> parse_float
-    
-    p.IssuanceAmount <- checkfield fields "IssuanceAmount" |> parse_int64
-    
-    p.ListingStatus <- checkfield fields "ListingStatus" |> parse_int32 |> EnumOfValue
-    
-    p.Turnover <- checkfield fields "Turnover" |> parse_float
-    
-    p.PriceOpened <- checkfield fields "PriceOpened" |> parse_int64
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pINSo v
+        | None -> None
+    
+    match o with
+    | Some p ->
+        
+        p.Desc <- checkfield fields "Desc"
+        
+        p.Hidden <- checkfield fields "Hidden" = "true"
+        
+        p.EnableQuote <- checkfield fields "EnableQuote" = "true"
+        
+        p.Code <- checkfieldz fields "Code" 64
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Long <- checkfield fields "Long" |> parse_int64
+        
+        p.AssetName <- checkfieldz fields "AssetName" 64
+        
+        p.Short <- checkfield fields "Short" |> parse_int64
+        
+        p.Convertor <- checkfield fields "Convertor" |> parse_int64
+        
+        p.m <- checkfield fields "m" |> parse_float
+        
+        p.mu <- checkfield fields "mu" |> parse_float
+        
+        p.eta <- checkfield fields "eta" |> parse_float
+        
+        p.psi <- checkfield fields "psi" |> parse_float
+        
+        p.MarginCalc <- checkfield fields "MarginCalc" |> parse_int32 |> EnumOfValue
+        
+        p.MarginRateInit <- checkfield fields "MarginRateInit" |> parse_float
+        
+        p.MarginRateMntn <- checkfield fields "MarginRateMntn" |> parse_float
+        
+        p.MarginMode <- checkfield fields "MarginMode" |> parse_int32 |> EnumOfValue
+        
+        p.Dec <- checkfield fields "Dec" |> parse_int64
+        
+        p.Formatter <- checkfieldz fields "Formatter" 64
+        
+        p.Path <- checkfieldz fields "Path" 256
+        
+        p.Ask <- checkfield fields "Ask" |> parse_int64
+        
+        p.Bid <- checkfield fields "Bid" |> parse_int64
+        
+        p.Middle <- checkfield fields "Middle" |> parse_float
+        
+        p.FixedSpread <- checkfield fields "FixedSpread" |> parse_float
+        
+        p.PercentageSpread <- checkfield fields "PercentageSpread" |> parse_float
+        
+        p.TaxOpenMode <- checkfield fields "TaxOpenMode" |> parse_int32 |> EnumOfValue
+        
+        p.TaxOpen <- checkfield fields "TaxOpen" |> parse_float
+        
+        p.TaxCloseMode <- checkfield fields "TaxCloseMode" |> parse_int32 |> EnumOfValue
+        
+        p.TaxClose <- checkfield fields "TaxClose" |> parse_float
+        
+        p.Tax <- checkfield fields "Tax" |> parse_float
+        
+        p.TaxCur <- checkfield fields "TaxCur" |> parse_int64
+        
+        p.TaxCurCode <- checkfieldz fields "TaxCurCode" 64
+        
+        p.LastPrice <- checkfield fields "LastPrice" |> parse_float
+        
+        p.LastUpdatedat <- checkfield fields "LastUpdatedat" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.LastPriceChange <- checkfield fields "LastPriceChange" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.TradeStatus <- checkfield fields "TradeStatus" |> parse_int32 |> EnumOfValue
+        
+        p.RoMode <- checkfield fields "RoMode" |> parse_int32 |> EnumOfValue
+        
+        p.Schedule <- checkfield fields "Schedule"
+        
+        p.TradeMode <- checkfield fields "TradeMode" |> parse_int32 |> EnumOfValue
+        
+        p.DerivativeMode <- checkfield fields "DerivativeMode" |> parse_int32 |> EnumOfValue
+        
+        p.OptionsMode <- checkfield fields "OptionsMode" |> parse_int32 |> EnumOfValue
+        
+        p.OptionsCP <- checkfield fields "OptionsCP" |> parse_int32 |> EnumOfValue
+        
+        p.OptionsExpiry <- checkfield fields "OptionsExpiry" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.OptionsStrike <- checkfield fields "OptionsStrike" |> parse_float
+        
+        p.OptionsPricing <- checkfield fields "OptionsPricing"
+        
+        p.OptionsPeriod <- checkfield fields "OptionsPeriod"
+        
+        p.OptionsTax <- checkfield fields "OptionsTax" |> parse_float
+        
+        p.OptionsPremiumPerTradeMin <- checkfield fields "OptionsPremiumPerTradeMin" |> parse_float
+        
+        p.OptionsPremiumPerTradeMax <- checkfield fields "OptionsPremiumPerTradeMax" |> parse_float
+        
+        p.LimitLotPerTrade <- checkfield fields "LimitLotPerTrade" |> parse_float
+        
+        p.LimitLotPosition <- checkfield fields "LimitLotPosition" |> parse_float
+        
+        p.CurrentOpen <- checkfield fields "CurrentOpen" |> parse_float
+        
+        p.CurrentHigh <- checkfield fields "CurrentHigh" |> parse_float
+        
+        p.CurrentLow <- checkfield fields "CurrentLow" |> parse_float
+        
+        p.PrevClose <- checkfield fields "PrevClose" |> parse_float
+        
+        p.PrevClosedat <- checkfield fields "PrevClosedat" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.CurrentOpenat <- checkfield fields "CurrentOpenat" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.ExtBiz <- checkfield fields "ExtBiz" |> parse_int64
+        
+        p.RefExternal <- checkfieldz fields "RefExternal" 64
+        
+        p.ItrnInss <- checkfield fields "ItrnInss"
+        
+        p.ItrnInssMode <- checkfield fields "ItrnInssMode" |> parse_int32 |> EnumOfValue
+        
+        p.FlushType <- checkfield fields "FlushType" |> parse_int32 |> EnumOfValue
+        
+        p.CurTrigger <- checkfield fields "CurTrigger" |> parse_int32 |> EnumOfValue
+        
+        p.RobotType <- checkfield fields "RobotType" |> parse_int32 |> EnumOfValue
+        
+        p.ExtLong <- checkfieldz fields "ExtLong" 64
+        
+        p.ExtShort <- checkfieldz fields "ExtShort" 64
+        
+        p.ExtPrice <- checkfield fields "ExtPrice" |> parse_float
+        
+        p.SaveM1 <- checkfield fields "SaveM1" = "true"
+        
+        p.HistSavedat <- checkfield fields "HistSavedat" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.SaveD1 <- checkfield fields "SaveD1" = "true"
+        
+        p.SlPips <- checkfield fields "SlPips" |> parse_float
+        
+        p.TpPips <- checkfield fields "TpPips" |> parse_float
+        
+        p.PendingLimitPips <- checkfield fields "PendingLimitPips" |> parse_float
+        
+        p.PendingStopPips <- checkfield fields "PendingStopPips" |> parse_float
+        
+        p.LastDirection <- checkfield fields "LastDirection" |> parse_int32 |> EnumOfValue
+        
+        p.LiqMode <- checkfield fields "LiqMode" |> parse_int32 |> EnumOfValue
+        
+        p.LiqPeriodSince <- checkfield fields "LiqPeriodSince" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.LiqPeriodTill <- checkfield fields "LiqPeriodTill" |> parse_int64
+        
+        p.LiqPeriod <- checkfield fields "LiqPeriod" |> parse_int32 |> EnumOfValue
+        
+        p.LiqTime <- checkfield fields "LiqTime" |> parse_float
+        
+        p.ConvertRatio <- checkfield fields "ConvertRatio" |> parse_float
+        
+        p.RoBuyMode <- checkfield fields "RoBuyMode" |> parse_int32 |> EnumOfValue
+        
+        p.RoBuy <- checkfield fields "RoBuy" |> parse_float
+        
+        p.RoSellMode <- checkfield fields "RoSellMode" |> parse_int32 |> EnumOfValue
+        
+        p.RoSell <- checkfield fields "RoSell" |> parse_float
+        
+        p.PosLimitBuy <- checkfield fields "PosLimitBuy" |> parse_float
+        
+        p.PosLimitSell <- checkfield fields "PosLimitSell" |> parse_float
+        
+        p.RoCur <- checkfield fields "RoCur" |> parse_int64
+        
+        p.RoCurCode <- checkfieldz fields "RoCurCode" 64
+        
+        p.AdjBias <- checkfield fields "AdjBias" |> parse_float
+        
+        p.TaxBuy <- checkfield fields "TaxBuy" |> parse_float
+        
+        p.TaxSell <- checkfield fields "TaxSell" |> parse_float
+        
+        p.Misc <- checkfield fields "Misc"
+        
+        p.RefLastPriceChange <- checkfield fields "RefLastPriceChange" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.HedgeExternal <- checkfieldz fields "HedgeExternal" 64
+        
+        p.OfferingPrice <- checkfield fields "OfferingPrice" |> parse_float
+        
+        p.IssuanceAmount <- checkfield fields "IssuanceAmount" |> parse_int64
+        
+        p.ListingStatus <- checkfield fields "ListingStatus" |> parse_int32 |> EnumOfValue
+        
+        p.Turnover <- checkfield fields "Turnover" |> parse_float
+        
+        p.PriceOpened <- checkfield fields "PriceOpened" |> parse_int64
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [TICKET] Structure
 
@@ -5132,65 +5010,7 @@ let TICKET__json (v:TICKET) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("EndUser",p.EndUser.ToString() |> Json.Num)
-        ("TradeAcct",p.TradeAcct.ToString() |> Json.Num)
-        ("Ins",p.Ins.ToString() |> Json.Num)
-        ("Code",p.Code |> Json.Str)
-        ("Caption",p.Caption |> Json.Str)
-        ("TradeMode",(p.TradeMode |> EnumToValue).ToString() |> Json.Num)
-        ("Lot",p.Lot.ToString() |> Json.Num)
-        ("PriceOpened",p.PriceOpened.ToString() |> Json.Num)
-        ("PriceOpen",p.PriceOpen.ToString() |> Json.Num)
-        ("PriceSL",p.PriceSL.ToString() |> Json.Num)
-        ("PriceTP",p.PriceTP.ToString() |> Json.Num)
-        ("PriceClose",p.PriceClose.ToString() |> Json.Num)
-        ("Status",(p.Status |> EnumToValue).ToString() |> Json.Num)
-        ("CP",p.CP.ToString() |> Json.Num)
-        ("CptAcct",p.CptAcct.ToString() |> Json.Num)
-        ("Ref",p.Ref.ToString() |> Json.Num)
-        ("OpenRef",p.OpenRef.ToString() |> Json.Num)
-        ("CloseRef",p.CloseRef.ToString() |> Json.Num)
-        ("Origin",p.Origin.ToString() |> Json.Num)
-        ("PnL",p.PnL.ToString() |> Json.Num)
-        ("PnLSpread",p.PnLSpread.ToString() |> Json.Num)
-        ("Margin",p.Margin.ToString() |> Json.Num)
-        ("RO",p.RO.ToString() |> Json.Num)
-        ("Tax",p.Tax.ToString() |> Json.Num)
-        ("CloseType",(p.CloseType |> EnumToValue).ToString() |> Json.Num)
-        ("CommitType",(p.CommitType |> EnumToValue).ToString() |> Json.Num)
-        ("Cmt",p.Cmt |> Json.Str)
-        ("Opendat",(p.Opendat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Closedat",(p.Closedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("CaStrategyAmt",p.CaStrategyAmt.ToString() |> Json.Num)
-        ("CaRo",if p.CaRo then Json.True else Json.False)
-        ("CaAsa",if p.CaAsa then Json.True else Json.False)
-        ("CaCmphsvCharge",p.CaCmphsvCharge.ToString() |> Json.Num)
-        ("RoCheckedat",(p.RoCheckedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Expiry",(p.Expiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("HedgetCP",p.HedgetCP.ToString() |> Json.Num)
-        ("PendingPrice",p.PendingPrice.ToString() |> Json.Num)
-        ("ClosedLot",p.ClosedLot.ToString() |> Json.Num)
-        ("ClosedAmt",p.ClosedAmt.ToString() |> Json.Num)
-        ("PendingAmt",p.PendingAmt.ToString() |> Json.Num)
-        ("DrvPreminum",p.DrvPreminum.ToString() |> Json.Num)
-        ("DrvExpiry",(p.DrvExpiry |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("DrvPeriod",p.DrvPeriod.ToString() |> Json.Num)
-        ("DrvDirection",(p.DrvDirection |> EnumToValue).ToString() |> Json.Num)
-        ("DrvPrice",p.DrvPrice.ToString() |> Json.Num)
-        ("DoubleCp",p.DoubleCp.ToString() |> Json.Num)
-        ("ClearStatus",(p.ClearStatus |> EnumToValue).ToString() |> Json.Num)
-        ("FollowTicket",p.FollowTicket.ToString() |> Json.Num)
-        ("Config",p.Config |> Json.Str)
-        ("OptionStatus",(p.OptionStatus |> EnumToValue).ToString() |> Json.Num)
-        ("NotionalPrincipal",p.NotionalPrincipal.ToString() |> Json.Num)
-        ("ExercisedPrincipal",p.ExercisedPrincipal.ToString() |> Json.Num)
-        ("ExerciseMode",p.ExerciseMode.ToString() |> Json.Num)
-        ("ExercisePrice",p.ExercisePrice.ToString() |> Json.Num)
-        ("ExternalTicketOpen",p.ExternalTicketOpen.ToString() |> Json.Num)
-        ("ExternalTicketClose",p.ExternalTicketClose.ToString() |> Json.Num)
-        ("ExternalTicketPending",p.ExternalTicketPending.ToString() |> Json.Num)
-        ("ExternalTicketCancel",p.ExternalTicketCancel.ToString() |> Json.Num)
-        ("Desc",p.Desc |> Json.Str) |]
+        ("p",pTICKET__json v.p) |]
     |> Json.Braket
 
 let TICKET__jsonTbw (w:TextBlockWriter) (v:TICKET) =
@@ -5334,133 +5154,142 @@ let json__TICKETo (json:Json):TICKET option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pTICKET_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pTICKETo v
+        | None -> None
     
-    p.EndUser <- checkfield fields "EndUser" |> parse_int64
-    
-    p.TradeAcct <- checkfield fields "TradeAcct" |> parse_int64
-    
-    p.Ins <- checkfield fields "Ins" |> parse_int64
-    
-    p.Code <- checkfieldz fields "Code" 64
-    
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.TradeMode <- checkfield fields "TradeMode" |> parse_int32 |> EnumOfValue
-    
-    p.Lot <- checkfield fields "Lot" |> parse_int64
-    
-    p.PriceOpened <- checkfield fields "PriceOpened" |> parse_int64
-    
-    p.PriceOpen <- checkfield fields "PriceOpen" |> parse_int64
-    
-    p.PriceSL <- checkfield fields "PriceSL" |> parse_int64
-    
-    p.PriceTP <- checkfield fields "PriceTP" |> parse_int64
-    
-    p.PriceClose <- checkfield fields "PriceClose" |> parse_int64
-    
-    p.Status <- checkfield fields "Status" |> parse_int32 |> EnumOfValue
-    
-    p.CP <- checkfield fields "CP" |> parse_int64
-    
-    p.CptAcct <- checkfield fields "CptAcct" |> parse_int64
-    
-    p.Ref <- checkfield fields "Ref" |> parse_int64
-    
-    p.OpenRef <- checkfield fields "OpenRef" |> parse_int64
-    
-    p.CloseRef <- checkfield fields "CloseRef" |> parse_int64
-    
-    p.Origin <- checkfield fields "Origin" |> parse_int64
-    
-    p.PnL <- checkfield fields "PnL" |> parse_float
-    
-    p.PnLSpread <- checkfield fields "PnLSpread" |> parse_float
-    
-    p.Margin <- checkfield fields "Margin" |> parse_float
-    
-    p.RO <- checkfield fields "RO" |> parse_float
-    
-    p.Tax <- checkfield fields "Tax" |> parse_float
-    
-    p.CloseType <- checkfield fields "CloseType" |> parse_int32 |> EnumOfValue
-    
-    p.CommitType <- checkfield fields "CommitType" |> parse_int32 |> EnumOfValue
-    
-    p.Cmt <- checkfieldz fields "Cmt" 64
-    
-    p.Opendat <- checkfield fields "Opendat" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.Closedat <- checkfield fields "Closedat" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.CaStrategyAmt <- checkfield fields "CaStrategyAmt" |> parse_float
-    
-    p.CaRo <- checkfield fields "CaRo" = "true"
-    
-    p.CaAsa <- checkfield fields "CaAsa" = "true"
-    
-    p.CaCmphsvCharge <- checkfield fields "CaCmphsvCharge" |> parse_float
-    
-    p.RoCheckedat <- checkfield fields "RoCheckedat" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.Expiry <- checkfield fields "Expiry" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.HedgetCP <- checkfield fields "HedgetCP" |> parse_int64
-    
-    p.PendingPrice <- checkfield fields "PendingPrice" |> parse_int64
-    
-    p.ClosedLot <- checkfield fields "ClosedLot" |> parse_int64
-    
-    p.ClosedAmt <- checkfield fields "ClosedAmt" |> parse_float
-    
-    p.PendingAmt <- checkfield fields "PendingAmt" |> parse_float
-    
-    p.DrvPreminum <- checkfield fields "DrvPreminum" |> parse_float
-    
-    p.DrvExpiry <- checkfield fields "DrvExpiry" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.DrvPeriod <- checkfield fields "DrvPeriod" |> parse_int64
-    
-    p.DrvDirection <- checkfield fields "DrvDirection" |> parse_int32 |> EnumOfValue
-    
-    p.DrvPrice <- checkfield fields "DrvPrice" |> parse_float
-    
-    p.DoubleCp <- checkfield fields "DoubleCp" |> parse_int64
-    
-    p.ClearStatus <- checkfield fields "ClearStatus" |> parse_int32 |> EnumOfValue
-    
-    p.FollowTicket <- checkfield fields "FollowTicket" |> parse_int64
-    
-    p.Config <- checkfield fields "Config"
-    
-    p.OptionStatus <- checkfield fields "OptionStatus" |> parse_int32 |> EnumOfValue
-    
-    p.NotionalPrincipal <- checkfield fields "NotionalPrincipal" |> parse_float
-    
-    p.ExercisedPrincipal <- checkfield fields "ExercisedPrincipal" |> parse_float
-    
-    p.ExerciseMode <- checkfield fields "ExerciseMode" |> parse_float
-    
-    p.ExercisePrice <- checkfield fields "ExercisePrice" |> parse_float
-    
-    p.ExternalTicketOpen <- checkfield fields "ExternalTicketOpen" |> parse_int64
-    
-    p.ExternalTicketClose <- checkfield fields "ExternalTicketClose" |> parse_int64
-    
-    p.ExternalTicketPending <- checkfield fields "ExternalTicketPending" |> parse_int64
-    
-    p.ExternalTicketCancel <- checkfield fields "ExternalTicketCancel" |> parse_int64
-    
-    p.Desc <- checkfield fields "Desc"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.EndUser <- checkfield fields "EndUser" |> parse_int64
+        
+        p.TradeAcct <- checkfield fields "TradeAcct" |> parse_int64
+        
+        p.Ins <- checkfield fields "Ins" |> parse_int64
+        
+        p.Code <- checkfieldz fields "Code" 64
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.TradeMode <- checkfield fields "TradeMode" |> parse_int32 |> EnumOfValue
+        
+        p.Lot <- checkfield fields "Lot" |> parse_int64
+        
+        p.PriceOpened <- checkfield fields "PriceOpened" |> parse_int64
+        
+        p.PriceOpen <- checkfield fields "PriceOpen" |> parse_int64
+        
+        p.PriceSL <- checkfield fields "PriceSL" |> parse_int64
+        
+        p.PriceTP <- checkfield fields "PriceTP" |> parse_int64
+        
+        p.PriceClose <- checkfield fields "PriceClose" |> parse_int64
+        
+        p.Status <- checkfield fields "Status" |> parse_int32 |> EnumOfValue
+        
+        p.CP <- checkfield fields "CP" |> parse_int64
+        
+        p.CptAcct <- checkfield fields "CptAcct" |> parse_int64
+        
+        p.Ref <- checkfield fields "Ref" |> parse_int64
+        
+        p.OpenRef <- checkfield fields "OpenRef" |> parse_int64
+        
+        p.CloseRef <- checkfield fields "CloseRef" |> parse_int64
+        
+        p.Origin <- checkfield fields "Origin" |> parse_int64
+        
+        p.PnL <- checkfield fields "PnL" |> parse_float
+        
+        p.PnLSpread <- checkfield fields "PnLSpread" |> parse_float
+        
+        p.Margin <- checkfield fields "Margin" |> parse_float
+        
+        p.RO <- checkfield fields "RO" |> parse_float
+        
+        p.Tax <- checkfield fields "Tax" |> parse_float
+        
+        p.CloseType <- checkfield fields "CloseType" |> parse_int32 |> EnumOfValue
+        
+        p.CommitType <- checkfield fields "CommitType" |> parse_int32 |> EnumOfValue
+        
+        p.Cmt <- checkfieldz fields "Cmt" 64
+        
+        p.Opendat <- checkfield fields "Opendat" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.Closedat <- checkfield fields "Closedat" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.CaStrategyAmt <- checkfield fields "CaStrategyAmt" |> parse_float
+        
+        p.CaRo <- checkfield fields "CaRo" = "true"
+        
+        p.CaAsa <- checkfield fields "CaAsa" = "true"
+        
+        p.CaCmphsvCharge <- checkfield fields "CaCmphsvCharge" |> parse_float
+        
+        p.RoCheckedat <- checkfield fields "RoCheckedat" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.Expiry <- checkfield fields "Expiry" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.HedgetCP <- checkfield fields "HedgetCP" |> parse_int64
+        
+        p.PendingPrice <- checkfield fields "PendingPrice" |> parse_int64
+        
+        p.ClosedLot <- checkfield fields "ClosedLot" |> parse_int64
+        
+        p.ClosedAmt <- checkfield fields "ClosedAmt" |> parse_float
+        
+        p.PendingAmt <- checkfield fields "PendingAmt" |> parse_float
+        
+        p.DrvPreminum <- checkfield fields "DrvPreminum" |> parse_float
+        
+        p.DrvExpiry <- checkfield fields "DrvExpiry" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.DrvPeriod <- checkfield fields "DrvPeriod" |> parse_int64
+        
+        p.DrvDirection <- checkfield fields "DrvDirection" |> parse_int32 |> EnumOfValue
+        
+        p.DrvPrice <- checkfield fields "DrvPrice" |> parse_float
+        
+        p.DoubleCp <- checkfield fields "DoubleCp" |> parse_int64
+        
+        p.ClearStatus <- checkfield fields "ClearStatus" |> parse_int32 |> EnumOfValue
+        
+        p.FollowTicket <- checkfield fields "FollowTicket" |> parse_int64
+        
+        p.Config <- checkfield fields "Config"
+        
+        p.OptionStatus <- checkfield fields "OptionStatus" |> parse_int32 |> EnumOfValue
+        
+        p.NotionalPrincipal <- checkfield fields "NotionalPrincipal" |> parse_float
+        
+        p.ExercisedPrincipal <- checkfield fields "ExercisedPrincipal" |> parse_float
+        
+        p.ExerciseMode <- checkfield fields "ExerciseMode" |> parse_float
+        
+        p.ExercisePrice <- checkfield fields "ExercisePrice" |> parse_float
+        
+        p.ExternalTicketOpen <- checkfield fields "ExternalTicketOpen" |> parse_int64
+        
+        p.ExternalTicketClose <- checkfield fields "ExternalTicketClose" |> parse_int64
+        
+        p.ExternalTicketPending <- checkfield fields "ExternalTicketPending" |> parse_int64
+        
+        p.ExternalTicketCancel <- checkfield fields "ExternalTicketCancel" |> parse_int64
+        
+        p.Desc <- checkfield fields "Desc"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [TACCT] Structure
 
@@ -5611,20 +5440,7 @@ let TACCT__json (v:TACCT) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("SAC",p.SAC.ToString() |> Json.Num)
-        ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
-        ("TradeType",(p.TradeType |> EnumToValue).ToString() |> Json.Num)
-        ("RealDemo",(p.RealDemo |> EnumToValue).ToString() |> Json.Num)
-        ("PnL",p.PnL.ToString() |> Json.Num)
-        ("Frozen",p.Frozen.ToString() |> Json.Num)
-        ("Leverage",p.Leverage.ToString() |> Json.Num)
-        ("Margin",p.Margin.ToString() |> Json.Num)
-        ("MarginCallRateWarning",p.MarginCallRateWarning.ToString() |> Json.Num)
-        ("MarginCallRateWarningII",p.MarginCallRateWarningII.ToString() |> Json.Num)
-        ("MarginCallRateLiq",p.MarginCallRateLiq.ToString() |> Json.Num)
-        ("PwdTrade",p.PwdTrade |> Json.Str)
-        ("PwdReadonly",p.PwdReadonly |> Json.Str)
-        ("Desc",p.Desc |> Json.Str) |]
+        ("p",pTACCT__json v.p) |]
     |> Json.Braket
 
 let TACCT__jsonTbw (w:TextBlockWriter) (v:TACCT) =
@@ -5678,43 +5494,52 @@ let json__TACCTo (json:Json):TACCT option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pTACCT_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pTACCTo v
+        | None -> None
     
-    p.SAC <- checkfield fields "SAC" |> parse_int64
-    
-    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
-    
-    p.TradeType <- checkfield fields "TradeType" |> parse_int32 |> EnumOfValue
-    
-    p.RealDemo <- checkfield fields "RealDemo" |> parse_int32 |> EnumOfValue
-    
-    p.PnL <- checkfield fields "PnL" |> parse_float
-    
-    p.Frozen <- checkfield fields "Frozen" |> parse_float
-    
-    p.Leverage <- checkfield fields "Leverage" |> parse_float
-    
-    p.Margin <- checkfield fields "Margin" |> parse_float
-    
-    p.MarginCallRateWarning <- checkfield fields "MarginCallRateWarning" |> parse_float
-    
-    p.MarginCallRateWarningII <- checkfield fields "MarginCallRateWarningII" |> parse_float
-    
-    p.MarginCallRateLiq <- checkfield fields "MarginCallRateLiq" |> parse_float
-    
-    p.PwdTrade <- checkfieldz fields "PwdTrade" 64
-    
-    p.PwdReadonly <- checkfieldz fields "PwdReadonly" 64
-    
-    p.Desc <- checkfield fields "Desc"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.SAC <- checkfield fields "SAC" |> parse_int64
+        
+        p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+        
+        p.TradeType <- checkfield fields "TradeType" |> parse_int32 |> EnumOfValue
+        
+        p.RealDemo <- checkfield fields "RealDemo" |> parse_int32 |> EnumOfValue
+        
+        p.PnL <- checkfield fields "PnL" |> parse_float
+        
+        p.Frozen <- checkfield fields "Frozen" |> parse_float
+        
+        p.Leverage <- checkfield fields "Leverage" |> parse_float
+        
+        p.Margin <- checkfield fields "Margin" |> parse_float
+        
+        p.MarginCallRateWarning <- checkfield fields "MarginCallRateWarning" |> parse_float
+        
+        p.MarginCallRateWarningII <- checkfield fields "MarginCallRateWarningII" |> parse_float
+        
+        p.MarginCallRateLiq <- checkfield fields "MarginCallRateLiq" |> parse_float
+        
+        p.PwdTrade <- checkfieldz fields "PwdTrade" 64
+        
+        p.PwdReadonly <- checkfieldz fields "PwdReadonly" 64
+        
+        p.Desc <- checkfield fields "Desc"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [BOOKMARK] Structure
 
@@ -5835,15 +5660,7 @@ let BOOKMARK__json (v:BOOKMARK) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Agent",p.Agent.ToString() |> Json.Num)
-        ("EndUser",p.EndUser.ToString() |> Json.Num)
-        ("Bind",p.Bind.ToString() |> Json.Num)
-        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
-        ("BookmarkList",p.BookmarkList.ToString() |> Json.Num)
-        ("Notes",p.Notes |> Json.Str)
-        ("Path",p.Path |> Json.Str)
-        ("Group",p.Group |> Json.Str)
-        ("Type",p.Type.ToString() |> Json.Num) |]
+        ("p",pBOOKMARK__json v.p) |]
     |> Json.Braket
 
 let BOOKMARK__jsonTbw (w:TextBlockWriter) (v:BOOKMARK) =
@@ -5887,33 +5704,42 @@ let json__BOOKMARKo (json:Json):BOOKMARK option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pBOOKMARK_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pBOOKMARKo v
+        | None -> None
     
-    p.Agent <- checkfield fields "Agent" |> parse_int64
-    
-    p.EndUser <- checkfield fields "EndUser" |> parse_int64
-    
-    p.Bind <- checkfield fields "Bind" |> parse_int64
-    
-    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
-    
-    p.BookmarkList <- checkfield fields "BookmarkList" |> parse_int64
-    
-    p.Notes <- checkfield fields "Notes"
-    
-    p.Path <- checkfield fields "Path"
-    
-    p.Group <- checkfieldz fields "Group" 64
-    
-    p.Type <- checkfield fields "Type" |> parse_int64
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Agent <- checkfield fields "Agent" |> parse_int64
+        
+        p.EndUser <- checkfield fields "EndUser" |> parse_int64
+        
+        p.Bind <- checkfield fields "Bind" |> parse_int64
+        
+        p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+        
+        p.BookmarkList <- checkfield fields "BookmarkList" |> parse_int64
+        
+        p.Notes <- checkfield fields "Notes"
+        
+        p.Path <- checkfield fields "Path"
+        
+        p.Group <- checkfieldz fields "Group" 64
+        
+        p.Type <- checkfield fields "Type" |> parse_int64
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [SBL] Structure
 
@@ -6032,14 +5858,7 @@ let SBL__json (v:SBL) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("EndUser",p.EndUser.ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Icon",p.Icon |> Json.Str)
-        ("Background",p.Background |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
-        ("Privacy",(p.Privacy |> EnumToValue).ToString() |> Json.Num)
-        ("Moment",p.Moment.ToString() |> Json.Num)
-        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num) |]
+        ("p",pSBL__json v.p) |]
     |> Json.Braket
 
 let SBL__jsonTbw (w:TextBlockWriter) (v:SBL) =
@@ -6081,31 +5900,40 @@ let json__SBLo (json:Json):SBL option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pSBL_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pSBLo v
+        | None -> None
     
-    p.EndUser <- checkfield fields "EndUser" |> parse_int64
-    
-    p.Caption <- checkfieldz fields "Caption" 256
-    
-    p.Icon <- checkfieldz fields "Icon" 256
-    
-    p.Background <- checkfieldz fields "Background" 256
-    
-    p.Desc <- checkfield fields "Desc"
-    
-    p.Privacy <- checkfield fields "Privacy" |> parse_int32 |> EnumOfValue
-    
-    p.Moment <- checkfield fields "Moment" |> parse_int64
-    
-    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.EndUser <- checkfield fields "EndUser" |> parse_int64
+        
+        p.Caption <- checkfieldz fields "Caption" 256
+        
+        p.Icon <- checkfieldz fields "Icon" 256
+        
+        p.Background <- checkfieldz fields "Background" 256
+        
+        p.Desc <- checkfield fields "Desc"
+        
+        p.Privacy <- checkfield fields "Privacy" |> parse_int32 |> EnumOfValue
+        
+        p.Moment <- checkfield fields "Moment" |> parse_int64
+        
+        p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [FOLLOW] Structure
 
@@ -6178,9 +6006,7 @@ let FOLLOW__json (v:FOLLOW) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("EndUser",p.EndUser.ToString() |> Json.Num)
-        ("Followee",p.Followee.ToString() |> Json.Num)
-        ("FollowType",(p.FollowType |> EnumToValue).ToString() |> Json.Num) |]
+        ("p",pFOLLOW__json v.p) |]
     |> Json.Braket
 
 let FOLLOW__jsonTbw (w:TextBlockWriter) (v:FOLLOW) =
@@ -6212,21 +6038,30 @@ let json__FOLLOWo (json:Json):FOLLOW option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pFOLLOW_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pFOLLOWo v
+        | None -> None
     
-    p.EndUser <- checkfield fields "EndUser" |> parse_int64
-    
-    p.Followee <- checkfield fields "Followee" |> parse_int64
-    
-    p.FollowType <- checkfield fields "FollowType" |> parse_int32 |> EnumOfValue
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.EndUser <- checkfield fields "EndUser" |> parse_int64
+        
+        p.Followee <- checkfield fields "Followee" |> parse_int64
+        
+        p.FollowType <- checkfield fields "FollowType" |> parse_int32 |> EnumOfValue
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [MOMENT] Structure
 
@@ -6437,26 +6272,7 @@ let MOMENT__json (v:MOMENT) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Agent",p.Agent.ToString() |> Json.Num)
-        ("Bind",p.Bind.ToString() |> Json.Num)
-        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
-        ("Lang",p.Lang.ToString() |> Json.Num)
-        ("Title",p.Title |> Json.Str)
-        ("Summary",p.Summary |> Json.Str)
-        ("FullText",p.FullText |> Json.Str)
-        ("PreviewImgUrl",p.PreviewImgUrl |> Json.Str)
-        ("Link",p.Link |> Json.Str)
-        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
-        ("Question",p.Question.ToString() |> Json.Num)
-        ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
-        ("Group",p.Group.ToString() |> Json.Num)
-        ("Postedat",(p.Postedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Keywords",p.Keywords |> Json.Str)
-        ("MediaType",(p.MediaType |> EnumToValue).ToString() |> Json.Num)
-        ("UrlOriginal",p.UrlOriginal |> Json.Str)
-        ("OID",p.OID |> Json.Str)
-        ("PostType",(p.PostType |> EnumToValue).ToString() |> Json.Num)
-        ("AudioUrl",p.AudioUrl |> Json.Str) |]
+        ("p",pMOMENT__json v.p) |]
     |> Json.Braket
 
 let MOMENT__jsonTbw (w:TextBlockWriter) (v:MOMENT) =
@@ -6522,55 +6338,64 @@ let json__MOMENTo (json:Json):MOMENT option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pMOMENT_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pMOMENTo v
+        | None -> None
     
-    p.Agent <- checkfield fields "Agent" |> parse_int64
-    
-    p.Bind <- checkfield fields "Bind" |> parse_int64
-    
-    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
-    
-    p.Lang <- checkfield fields "Lang" |> parse_int64
-    
-    p.Title <- checkfield fields "Title"
-    
-    p.Summary <- checkfield fields "Summary"
-    
-    p.FullText <- checkfield fields "FullText"
-    
-    p.PreviewImgUrl <- checkfield fields "PreviewImgUrl"
-    
-    p.Link <- checkfield fields "Link"
-    
-    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
-    
-    p.Question <- checkfield fields "Question" |> parse_int64
-    
-    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
-    
-    p.Group <- checkfield fields "Group" |> parse_int64
-    
-    p.Postedat <- checkfield fields "Postedat" |> parse_int64 |> Util.Time.unixtime__wintime
-    
-    p.Keywords <- checkfield fields "Keywords"
-    
-    p.MediaType <- checkfield fields "MediaType" |> parse_int32 |> EnumOfValue
-    
-    p.UrlOriginal <- checkfield fields "UrlOriginal"
-    
-    p.OID <- checkfieldz fields "OID" 256
-    
-    p.PostType <- checkfield fields "PostType" |> parse_int32 |> EnumOfValue
-    
-    p.AudioUrl <- checkfield fields "AudioUrl"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Agent <- checkfield fields "Agent" |> parse_int64
+        
+        p.Bind <- checkfield fields "Bind" |> parse_int64
+        
+        p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+        
+        p.Lang <- checkfield fields "Lang" |> parse_int64
+        
+        p.Title <- checkfield fields "Title"
+        
+        p.Summary <- checkfield fields "Summary"
+        
+        p.FullText <- checkfield fields "FullText"
+        
+        p.PreviewImgUrl <- checkfield fields "PreviewImgUrl"
+        
+        p.Link <- checkfield fields "Link"
+        
+        p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+        
+        p.Question <- checkfield fields "Question" |> parse_int64
+        
+        p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+        
+        p.Group <- checkfield fields "Group" |> parse_int64
+        
+        p.Postedat <- checkfield fields "Postedat" |> parse_int64 |> Util.Time.unixtime__wintime
+        
+        p.Keywords <- checkfield fields "Keywords"
+        
+        p.MediaType <- checkfield fields "MediaType" |> parse_int32 |> EnumOfValue
+        
+        p.UrlOriginal <- checkfield fields "UrlOriginal"
+        
+        p.OID <- checkfieldz fields "OID" 256
+        
+        p.PostType <- checkfield fields "PostType" |> parse_int32 |> EnumOfValue
+        
+        p.AudioUrl <- checkfield fields "AudioUrl"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [LOG] Structure
 
@@ -6655,9 +6480,7 @@ let LOG__json (v:LOG) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Location",p.Location |> Json.Str)
-        ("Content",p.Content |> Json.Str)
-        ("Sql",p.Sql |> Json.Str) |]
+        ("p",pLOG__json v.p) |]
     |> Json.Braket
 
 let LOG__jsonTbw (w:TextBlockWriter) (v:LOG) =
@@ -6689,21 +6512,30 @@ let json__LOGo (json:Json):LOG option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pLOG_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pLOGo v
+        | None -> None
     
-    p.Location <- checkfield fields "Location"
-    
-    p.Content <- checkfield fields "Content"
-    
-    p.Sql <- checkfield fields "Sql"
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Location <- checkfield fields "Location"
+        
+        p.Content <- checkfield fields "Content"
+        
+        p.Sql <- checkfield fields "Sql"
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [FUND] Structure
 
@@ -6790,10 +6622,7 @@ let FUND__json (v:FUND) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
-        ("Bind",p.Bind.ToString() |> Json.Num)
-        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num) |]
+        ("p",pFUND__json v.p) |]
     |> Json.Braket
 
 let FUND__jsonTbw (w:TextBlockWriter) (v:FUND) =
@@ -6827,23 +6656,32 @@ let json__FUNDo (json:Json):FUND option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pFUND_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pFUNDo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Desc <- checkfield fields "Desc"
-    
-    p.Bind <- checkfield fields "Bind" |> parse_int64
-    
-    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Desc <- checkfield fields "Desc"
+        
+        p.Bind <- checkfield fields "Bind" |> parse_int64
+        
+        p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [PORTFOLIO] Structure
 
@@ -6936,11 +6774,7 @@ let PORTFOLIO__json (v:PORTFOLIO) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
-        ("Fund",p.Fund.ToString() |> Json.Num)
-        ("Bind",p.Bind.ToString() |> Json.Num)
-        ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num) |]
+        ("p",pPORTFOLIO__json v.p) |]
     |> Json.Braket
 
 let PORTFOLIO__jsonTbw (w:TextBlockWriter) (v:PORTFOLIO) =
@@ -6976,25 +6810,34 @@ let json__PORTFOLIOo (json:Json):PORTFOLIO option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pPORTFOLIO_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pPORTFOLIOo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Desc <- checkfield fields "Desc"
-    
-    p.Fund <- checkfield fields "Fund" |> parse_int64
-    
-    p.Bind <- checkfield fields "Bind" |> parse_int64
-    
-    p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Desc <- checkfield fields "Desc"
+        
+        p.Fund <- checkfield fields "Fund" |> parse_int64
+        
+        p.Bind <- checkfield fields "Bind" |> parse_int64
+        
+        p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 // [TRADER] Structure
 
@@ -7081,10 +6924,7 @@ let TRADER__json (v:TRADER) =
         ("sort",v.Sort.ToString() |> Json.Num)
         ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("Caption",p.Caption |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
-        ("Fund",p.Fund.ToString() |> Json.Num)
-        ("EndUser",p.EndUser.ToString() |> Json.Num) |]
+        ("p",pTRADER__json v.p) |]
     |> Json.Braket
 
 let TRADER__jsonTbw (w:TextBlockWriter) (v:TRADER) =
@@ -7118,23 +6958,32 @@ let json__TRADERo (json:Json):TRADER option =
     let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
     let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
     
-    let p = pTRADER_empty()
+    let o  =
+        match
+            json
+            |> tryFindByAtt "p" with
+        | Some (s,v) -> json__pTRADERo v
+        | None -> None
     
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.Desc <- checkfield fields "Desc"
-    
-    p.Fund <- checkfield fields "Fund" |> parse_int64
-    
-    p.EndUser <- checkfield fields "EndUser" |> parse_int64
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = p } |> Some
-    
+    match o with
+    | Some p ->
+        
+        p.Caption <- checkfieldz fields "Caption" 64
+        
+        p.Desc <- checkfield fields "Desc"
+        
+        p.Fund <- checkfield fields "Fund" |> parse_int64
+        
+        p.EndUser <- checkfield fields "EndUser" |> parse_int64
+        
+        {
+            ID = ID
+            Sort = Sort
+            Createdat = Createdat
+            Updatedat = Updatedat
+            p = p } |> Some
+        
+    | None -> None
 
 let mutable conn = ""
 
