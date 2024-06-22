@@ -27,37 +27,25 @@ let api_Public_Ping json =
         ("timestamp",Json.Num (DateTime.UtcNow.Ticks.ToString()))   |]
 
 let api_Public_ListBiz json =
-    let list = 
-        runtime.bcs.Values
-        |> Seq.toArray
-        |> Array.map(fun i -> i.biz)
-        |> Array.map BIZ__json
-        |> Json.Ary
-    
-    [|  ok
-        ("list",list)   |]
+    runtime.bcs.Values
+    |> Seq.toArray
+    |> Array.map(fun i -> i.biz)
+    |> Array.map BIZ__json
+    |> wrapOkAry
 
 let api_Public_ListCur json =
-    let list = 
-        runtime.curs.Values
-        |> Seq.toArray
-        |> Array.map CUR__json
-        |> Json.Ary
-    
-    [|  ok
-        ("list",list)   |]
+    runtime.curs.Values
+    |> Seq.toArray
+    |> Array.map CUR__json
+    |> wrapOkAry
 
 let api_Public_HomepageMoments json =
-    let list = 
-        runtime.moments.Values
-        |> Seq.toArray
-        |> Array.map MomentComplex__json
-        |> Json.Ary
-    
-    [|  ok
-        ("list",list)   |]
+    runtime.moments.Values
+    |> Seq.toArray
+    |> Array.map MomentComplex__json
+    |> wrapOkAry
 
 let branch json api = 
 
     match api with
-    | _ -> [|  er Er.ApiNotExists   |]
+    | _ -> er Er.ApiNotExists
