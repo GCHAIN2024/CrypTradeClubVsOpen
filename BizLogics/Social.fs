@@ -16,6 +16,7 @@ open Util.Zmq
 open UtilWebServer.DbLogger
 open UtilWebServer.Db
 open UtilWebServer.Common
+open UtilWebServer.SSR
 
 open Shared.OrmTypes
 open Shared.Types
@@ -55,3 +56,12 @@ let loadAllMoments runtime =
         Util.Runtime.halt output "BizLogics.Social.loadAllMoments" ""
 
     res.ToArray()
+
+let mc__ssrPage mc = 
+    {
+        title = mc.m.p.Title
+        desc = mc.m.p.Summary
+        image = mc.m.p.PreviewImgUrl
+        url = "https://gcha.in/t/" + mc.m.ID.ToString()
+        noscript = "" }
+
