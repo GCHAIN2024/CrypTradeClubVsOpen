@@ -13,6 +13,7 @@ open Shared.OrmTypes
 open Shared.Types
 
 open UtilWebServer.Api
+open UtilWebServer.Json
 
 open Shared.OrmTypes
 open Shared.OrmMor
@@ -44,6 +45,16 @@ let api_Public_HomepageMoments json =
     |> Seq.toArray
     |> Array.map MomentComplex__json
     |> wrapOkAry
+
+let api_Public_LoadMoment =
+    tryLoadFromJsonIdWrapOK
+        MomentComplex__json
+        ("mc",Er.InvalideParameter)
+        (fun id -> 
+            if runtime.moments.ContainsKey id then
+                Some runtime.moments[id]
+            else
+                None)
 
 let branch json api = 
 

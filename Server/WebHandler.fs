@@ -32,6 +32,7 @@ let branch service api json =
         | "listBiz" -> api_Public_ListBiz json
         | "listCur" -> api_Public_ListCur json
         | "homepageMoments" -> api_Public_HomepageMoments json
+        | "loadMoment" -> api_Public_LoadMoment json
         | _ -> er Er.ApiNotExists
     | "eu" -> er Er.ApiNotExists
     | "admin" -> er Er.ApiNotExists
