@@ -2,24 +2,10 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/CrypTradeClubVsOpen/v17
-/.vs/CrypTradeClubVsOpen/FileContentIndex
-/.vs
-/Shared/bin/Debug/net8.0
-/Shared/obj
-/Apps/WebCrawler/bin/Debug/net8.0
-/Apps/WebCrawler/obj/Debug/net8.0
-/Apps/WebCrawler/obj
-/Server/bin/Debug/net8.0
-/Server/obj/Debug/net8.0
-/Apps/Maui/bin/Debug
-/Apps/Maui/obj
-/Apps/MauiLogics/bin/Debug/net8.0
-/Apps/MauiLogics/obj
-/Server/obj/project.assets.json
-/Server/obj/project.nuget.cache
-/Server/obj/Server.fsproj.nuget.dgspec.json
-/BizLogics/bin/Debug/net8.0
-/BizLogics/obj
-/Deploy/as/index.DLbuv3us.css
-/Deploy/js/index.BARcl2NQ.js
+**/obj/**
+**/bin/**
+**/.vs/**
+
+/Deploy/as/**
+/Deploy/js/**
+/Deploy/**
