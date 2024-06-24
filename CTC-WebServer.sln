@@ -18,12 +18,6 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WebCrawler", "Apps\WebCrawl
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Server", "Server\Server.fsproj", "{DDACC469-4811-4F66-BFDC-258305160FFE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{88C20F56-A094-4A12-A8C2-C58F714F8856}"
-	ProjectSection(SolutionItems) = preProject
-		Deploy\favicon.ico = Deploy\favicon.ico
-		Deploy\index.html = Deploy\index.html
-	EndProjectSection
-EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "UtilMaui", "..\..\Common\UtilMaui\UtilMaui.fsproj", "{3AB00064-F8A3-4777-A4BF-C214F2CC5A1D}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MauiLogics", "Apps\MauiLogics\MauiLogics.fsproj", "{6CEC0173-9D3E-4B25-AA85-86F362C9114F}"
@@ -32,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui", "Apps\Maui\Maui.cspr
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "UtilWebServer", "..\..\Common\UtilWebServer\UtilWebServer.fsproj", "{49A1000C-A0E0-4D4A-AF8B-D928F4947A5B}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BizLogics", "BizLogics\BizLogics.fsproj", "{88D5A07B-37E8-4068-A441-CF0B18D4C991}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "BizLogics", "BizLogics\BizLogics.fsproj", "{88D5A07B-37E8-4068-A441-CF0B18D4C991}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

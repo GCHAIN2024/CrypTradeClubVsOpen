@@ -13,7 +13,8 @@ const handler = {
     }
 };
 
-const panelstates = new Proxy({  showpanel: false}, handler);
+globalThis.panelrt = new Proxy({showpanel: false}, handler);
+const panelstates = globalThis.panelrt
 
 // 函数：创建 <div> 元素
 const createPanelDiv = () => {
@@ -34,13 +35,13 @@ const setPanelStyle = (panelDiv) => {
     panelDiv.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
     panelDiv.style.padding = '20px';
     panelDiv.style.boxSizing = 'border-box';
-    panelDiv.style.zIndex = '1000'; // 确保面板在前端显示
+    panelDiv.style.zIndex = '1000';
 };
 
 // 函数：设置内容
 const setPanelContent = (panelDiv) => {
     const closeButton = document.createElement('button');
-    closeButton.innerHTML = '关闭';
+    closeButton.innerHTML = 'Close';
     closeButton.style.position = 'absolute';
     closeButton.style.top = '10px';
     closeButton.style.right = '10px';
@@ -48,7 +49,7 @@ const setPanelContent = (panelDiv) => {
         panelstates.showpanel = false;
     });
 
-    panelDiv.innerHTML = '<p>这是一个自动生成的面板</p>';
+    panelDiv.innerHTML = '<p>Powered by gha.in</p>';
     panelDiv.appendChild(closeButton);
 };
 
@@ -75,15 +76,16 @@ const removePanel = () => {
     }
 };
 
+const tglPanel = () => {
+    panelstates.showpanel = !panelstates.showpanel
+}
 
 
 // 等待 DOM 完全加载后初始化
 document.addEventListener('DOMContentLoaded', () => {
-    panelstates.showpanel = true;
+    panelstates.showpanel = false;
     if (panelstates.showpanel) {
         renderPanel();
     }
-    setInterval(()=>{
-        panelstates.showpanel = !panelstates.showpanel
-    },2000)
+
 });
