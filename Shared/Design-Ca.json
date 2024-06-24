@@ -492,14 +492,12 @@
         "name": "Username"
       },
       {
-        "enum": "Caption",
-        "length": 64,
-        "name": "Penname"
+        "enum": "FK",
+        "name": "SocialAuthBiz"
       },
       {
-        "enum": "Caption",
-        "length": 64,
-        "name": "Rolfname"
+        "enum": "Text",
+        "name": "SocialAuthId"
       },
       {
         "enum": "Chars",
@@ -510,11 +508,6 @@
         "enum": "Chars",
         "length": 32,
         "name": "Tel"
-      },
-      {
-        "enum": "FK",
-        "ref": "Op_PromotionResource",
-        "name": "Domainname"
       },
       {
         "enum": "SelectLines",
@@ -530,6 +523,11 @@
         "enum": "SelectLines",
         "lines": "None//无///Admin//管理员",
         "name": "Admin"
+      },
+      {
+        "enum": "SelectLines",
+        "lines": "None//None///Partner//",
+        "name": "BizPartner"
       },
       {
         "enum": "Integer",
@@ -578,116 +576,14 @@
         "name": "Referer"
       },
       {
-        "enum": "Caption",
-        "length": 64,
-        "name": "Discord"
-      },
-      {
-        "enum": "Integer",
-        "name": "DiscordId"
-      },
-      {
-        "enum": "Caption",
-        "length": 64,
-        "name": "Google"
-      },
-      {
-        "enum": "Integer",
-        "name": "GoogleId"
-      },
-      {
-        "enum": "Caption",
-        "length": 64,
-        "name": "Apple"
-      },
-      {
-        "enum": "Integer",
-        "name": "AppleId"
-      },
-      {
-        "enum": "Caption",
-        "length": 64,
-        "name": "OAuthProvider"
-      },
-      {
-        "enum": "Caption",
-        "length": 256,
-        "name": "OAuthID"
-      },
-      {
-        "enum": "Caption",
-        "length": 64,
-        "name": "GTV"
-      },
-      {
-        "enum": "Caption",
-        "length": 64,
-        "name": "Gettr"
-      },
-      {
-        "enum": "FK",
-        "name": "Farm"
-      },
-      {
-        "enum": "Integer",
-        "name": "CountFollows"
-      },
-      {
-        "enum": "Integer",
-        "name": "CountFollowers"
-      },
-      {
-        "enum": "Integer",
-        "name": "CountMoments"
-      },
-      {
-        "enum": "Integer",
-        "name": "CountViews"
-      },
-      {
-        "enum": "Integer",
-        "name": "CountComments"
-      },
-      {
-        "enum": "Integer",
-        "name": "CountThumbUps"
-      },
-      {
-        "enum": "Integer",
-        "name": "CountThumbDns"
-      },
-      {
-        "enum": "FK",
-        "name": "Lang"
-      },
-      {
-        "enum": "FK",
-        "ref": "Ca_Biz",
-        "name": "BizOperator"
-      },
-      {
         "enum": "Text",
         "name": "Url"
       },
       {
         "enum": "Text",
         "name": "About"
-      },
-      {
-        "enum": "Integer",
-        "name": "PublicPoints"
-      },
-      {
-        "enum": "Text",
-        "name": "Json"
-      },
-      {
-        "enum": "SelectLines",
-        "lines": "No//否///Yes//可",
-        "name": "Agentable"
       }
-    ],
-    "cache": true
+    ]
   },
   {
     "name": "Ca_WebCredential",
