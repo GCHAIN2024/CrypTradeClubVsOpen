@@ -47,6 +47,7 @@ type Msg =
 type Er = 
 | ApiNotExists
 | InvalideParameter
+| Unauthorized
 | Internal
 
 //}

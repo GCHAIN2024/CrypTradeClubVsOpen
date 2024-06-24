@@ -44,6 +44,12 @@ let defaultHost() = {
 
     fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
 
+type SessionRole =
+| EndUser of EuComplex
+| Visitor
+
+type Session = UtilWebServer.Auth.Session<SessionRole,unit>
+
 type Runtime = {
 host: Host
 mutable facts: Fact list
@@ -52,7 +58,10 @@ curs: ConcurrentDictionary<string,CUR>
 ecs: ConcurrentDictionary<int64,EuComplex>
 bcs: ConcurrentDictionary<string,BizComplex>
 moments: ConcurrentDictionary<int64,MomentComplex>
+sessions: ConcurrentDictionary<string,Session>
 output: string -> unit }
+
+type X = UtilWebServer.Api.ApiCtx<Runtime,Session, Er>
 
 let runtime__id__bc runtime id = 
     runtime.bcs.Values
@@ -90,6 +99,7 @@ let runtime =
         ecs = new ConcurrentDictionary<int64,EuComplex>()
         bcs = new ConcurrentDictionary<string,BizComplex>()
         moments = new ConcurrentDictionary<int64,MomentComplex>()
+        sessions = new ConcurrentDictionary<string,Session>()
         output = output }
 
 

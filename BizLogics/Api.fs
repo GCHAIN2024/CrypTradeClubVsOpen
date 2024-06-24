@@ -23,30 +23,30 @@ open Shared.CustomMor
 open BizLogics.Common
 
 
-let api_Public_Ping json =
+let api_Public_Ping x =
     [|  ok
         ("timestamp",Json.Num (DateTime.UtcNow.Ticks.ToString()))   |]
 
-let api_Public_ListBiz json =
+let api_Public_ListBiz x =
     runtime.bcs.Values
     |> Seq.toArray
     |> Array.map(fun i -> i.biz)
     |> Array.map BIZ__json
     |> wrapOkAry
 
-let api_Public_ListCur json =
+let api_Public_ListCur x =
     runtime.curs.Values
     |> Seq.toArray
     |> Array.map CUR__json
     |> wrapOkAry
 
-let api_Public_HomepageMoments json =
+let api_Public_HomepageMoments x =
     runtime.moments.Values
     |> Seq.toArray
     |> Array.map MomentComplex__json
     |> wrapOkAry
 
-let api_Public_LoadMoment =
+let api_Public_LoadMoment: X -> ApiReturn =
     tryLoadFromJsonIdWrapOK
         MomentComplex__json
         ("mc",Er.InvalideParameter)
