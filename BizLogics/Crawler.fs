@@ -42,7 +42,7 @@ let newP (bc:BizComplex) p =
         |> loggedPipeline "BizLogics.Crawler.launchCrawlers" conn
         |> ignore
 
-let cCOINDESK runtime bc = 
+let cCOINDESK (runtime:Runtime) bc = 
 
     let code, html = 
         "https://www.coindesk.com/livewire/"
@@ -63,7 +63,7 @@ let cCOINDESK runtime bc =
 
         let p = pMOMENT_empty()
 
-        p.Lang <- runtime.langs["en"].ID
+        p.Lang <- runtime.data.langs["en"].ID
 
         p.UrlOriginal <- "https://www.coindesk.com" + line
 
@@ -86,9 +86,9 @@ let cCOINDESK runtime bc =
         newP bc p)
 
 
-let launchCrawlers runtime = 
+let launchCrawlers (runtime:Runtime) = 
 
     (fun _ -> 
-        let bc = runtime.bcs["COINDESK"]
+        let bc = runtime.data.bcs["COINDESK"]
         cCOINDESK runtime bc)
     |> asyncCyclerInterval (60 * 1000)

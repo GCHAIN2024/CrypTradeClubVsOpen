@@ -44,24 +44,20 @@ let defaultHost() = {
 
     fsDir = @"C:\Dev\GCHAIN2024\CrypTradeClubVsOpen\Deploy" }
 
-type SessionRole =
-| EndUser of EuComplex
-| Visitor
+type Session = SessionTemplate<EuComplex,unit>
+type Sessions = SessionsTemplate<EuComplex,unit>
 
-type Session = UtilWebServer.Auth.Session<SessionRole,unit>
 
-type Runtime = {
-host: Host
+type RuntimeData = {
 mutable facts: Fact list
 langs: ConcurrentDictionary<string,LANG>
 curs: ConcurrentDictionary<string,CUR>
-ecs: ConcurrentDictionary<int64,EuComplex>
 bcs: ConcurrentDictionary<string,BizComplex>
-moments: ConcurrentDictionary<int64,MomentComplex>
-sessions: ConcurrentDictionary<string,Session>
-output: string -> unit }
+moments: ConcurrentDictionary<int64,MomentComplex> }
 
-type X = UtilWebServer.Api.ApiCtx<Runtime,Session, Er>
+type Runtime = RuntimeTemplate<EuComplex,unit,RuntimeData>
+
+type X = UtilWebServer.Api.ApiCtx<Runtime,Session,Er>
 
 let runtime__id__bc runtime id = 
     runtime.bcs.Values
@@ -93,12 +89,13 @@ let runtime =
 
     {
         host = host
-        facts = []      
-        langs = new ConcurrentDictionary<string,LANG>()
-        curs = new ConcurrentDictionary<string,CUR>()
-        ecs = new ConcurrentDictionary<int64,EuComplex>()
-        bcs = new ConcurrentDictionary<string,BizComplex>()
-        moments = new ConcurrentDictionary<int64,MomentComplex>()
+        data = {
+            facts = []      
+            langs = new ConcurrentDictionary<string,LANG>()
+            curs = new ConcurrentDictionary<string,CUR>()
+            bcs = new ConcurrentDictionary<string,BizComplex>()
+            moments = new ConcurrentDictionary<int64,MomentComplex>() }
+        users = new ConcurrentDictionary<int64,EuComplex>()
         sessions = new ConcurrentDictionary<string,Session>()
         output = output }
 

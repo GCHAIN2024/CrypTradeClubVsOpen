@@ -28,20 +28,20 @@ let api_Public_Ping x =
         ("timestamp",Json.Num (DateTime.UtcNow.Ticks.ToString()))   |]
 
 let api_Public_ListBiz x =
-    runtime.bcs.Values
+    runtime.data.bcs.Values
     |> Seq.toArray
     |> Array.map(fun i -> i.biz)
     |> Array.map BIZ__json
     |> wrapOkAry
 
 let api_Public_ListCur x =
-    runtime.curs.Values
+    runtime.data.curs.Values
     |> Seq.toArray
     |> Array.map CUR__json
     |> wrapOkAry
 
 let api_Public_HomepageMoments x =
-    runtime.moments.Values
+    runtime.data.moments.Values
     |> Seq.toArray
     |> Array.map MomentComplex__json
     |> wrapOkAry
@@ -51,8 +51,8 @@ let api_Public_LoadMoment: X -> ApiReturn =
         MomentComplex__json
         ("mc",Er.InvalideParameter)
         (fun id -> 
-            if runtime.moments.ContainsKey id then
-                Some runtime.moments[id]
+            if runtime.data.moments.ContainsKey id then
+                Some runtime.data.moments[id]
             else
                 None)
 

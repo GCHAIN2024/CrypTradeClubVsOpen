@@ -49,8 +49,8 @@ let hMoment req =
 
     match try_parse_int64 m with
     | Some id ->
-        if runtime.moments.ContainsKey id then
-            runtime.moments[id]
+        if runtime.data.moments.ContainsKey id then
+            runtime.data.moments[id]
             |> mc__ssrPage
             |> render (hash1,hash2)
             |> bin__StandardResponse "text/html"
@@ -72,7 +72,7 @@ let checkSession = UtilWebServer.Auth.checkSession Er.Unauthorized runtime.sessi
 
 let checkSessionEu (x:X) = 
     match x.sessiono.Value.identity with
-    | SessionRole.EndUser eu -> Suc x
+    | Some eu -> Suc x
     | _ -> Fail(Er.Unauthorized,x)
 
 

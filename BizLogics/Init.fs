@@ -24,7 +24,7 @@ open BizLogics.Ca
 open BizLogics.Social
 open BizLogics.Crawler
 
-let init runtime = 
+let init (runtime:Runtime) = 
 
     "Init ..."
     |> runtime.output
@@ -43,42 +43,42 @@ let init runtime =
 
     Shared.OrmMor.init()
 
-    (fun (i:LANG) -> runtime.langs[i.p.Code2] <- i)
+    (fun (i:LANG) -> runtime.data.langs[i.p.Code2] <- i)
     |> loadAll runtime.output conn LANG_metadata
 
     freqLangCodes
     |> Array.iter(fun code ->
-        if runtime.langs.ContainsKey code = false then
+        if runtime.data.langs.ContainsKey code = false then
             match createLang code with
-            | Some lang -> runtime.langs[code] <- lang
+            | Some lang -> runtime.data.langs[code] <- lang
             | None -> halt runtime.output ("BizLogics.Init.createLang [" + code + "]") "")
 
 
-    (fun (i:CUR) -> runtime.curs[i.p.Code] <- i)
+    (fun (i:CUR) -> runtime.data.curs[i.p.Code] <- i)
     |> loadAll runtime.output conn CUR_metadata
 
     freqCurCodes
     |> Array.iter(fun code ->
-        if runtime.curs.ContainsKey code = false then
+        if runtime.data.curs.ContainsKey code = false then
             match createCur code with
-            | Some cur -> runtime.curs[code] <- cur
+            | Some cur -> runtime.data.curs[code] <- cur
             | None -> halt runtime.output ("BizLogics.Init.createCur [" + code + "]") "")
 
-    (fun (i:EU) -> runtime.ecs[i.ID] <- { eu = i })
+    (fun (i:EU) -> runtime.users[i.ID] <- { eu = i })
     |> loadAll runtime.output conn EU_metadata
 
     (fun (i:BIZ) -> 
-        runtime.bcs[i.p.Code] <- {
+        runtime.data.bcs[i.p.Code] <- {
             biz = i
             moments = new Dictionary<int64,MomentComplex>() })
     |> loadAll runtime.output conn BIZ_metadata
 
     freqBizCodes
     |> Array.iter(fun code ->
-        if runtime.bcs.ContainsKey code = false then
+        if runtime.data.bcs.ContainsKey code = false then
             match createBiz code with
             | Some biz -> 
-                runtime.bcs[code] <- 
+                runtime.data.bcs[code] <- 
                     {   
                         biz = biz
                         moments = new Dictionary<int64,MomentComplex>() }
@@ -89,10 +89,10 @@ let init runtime =
     |> Array.iter(fun m -> 
 
         let mc = { m = m }
-        runtime.moments[m.ID] <- mc
+        runtime.data.moments[m.ID] <- mc
 
         if m.p.BindType = momentBindTypeEnum.Biz then
-            match runtime__id__bc runtime m.p.Bind with
+            match runtime__id__bc runtime.data m.p.Bind with
             | Some bc -> bc.moments[m.ID] <- mc
             | None -> ())
 
