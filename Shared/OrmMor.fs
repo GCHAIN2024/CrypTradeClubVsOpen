@@ -1784,6 +1784,10 @@ let pEU__bin (bb:BytesBuilder) (p:pEU) =
     binSocialAuthId.Length |> BitConverter.GetBytes |> bb.append
     binSocialAuthId |> bb.append
     
+    let binSocialAuthAvatar = p.SocialAuthAvatar |> Encoding.UTF8.GetBytes
+    binSocialAuthAvatar.Length |> BitConverter.GetBytes |> bb.append
+    binSocialAuthAvatar |> bb.append
+    
     let binEmail = p.Email |> Encoding.UTF8.GetBytes
     binEmail.Length |> BitConverter.GetBytes |> bb.append
     binEmail |> bb.append
@@ -1866,6 +1870,11 @@ let bin__pEU (bi:BinIndexed):pEU =
     index.Value <- index.Value + 4
     p.SocialAuthId <- Encoding.UTF8.GetString(bin,index.Value,count_SocialAuthId)
     index.Value <- index.Value + count_SocialAuthId
+    
+    let count_SocialAuthAvatar = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.SocialAuthAvatar <- Encoding.UTF8.GetString(bin,index.Value,count_SocialAuthAvatar)
+    index.Value <- index.Value + count_SocialAuthAvatar
     
     let count_Email = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
@@ -1966,6 +1975,7 @@ let pEU__json (p:pEU) =
         ("Username",p.Username |> Json.Str)
         ("SocialAuthBiz",p.SocialAuthBiz.ToString() |> Json.Num)
         ("SocialAuthId",p.SocialAuthId |> Json.Str)
+        ("SocialAuthAvatar",p.SocialAuthAvatar |> Json.Str)
         ("Email",p.Email |> Json.Str)
         ("Tel",p.Tel |> Json.Str)
         ("Gender",(p.Gender |> EnumToValue).ToString() |> Json.Num)
@@ -2016,6 +2026,8 @@ let json__pEUo (json:Json):pEU option =
     p.SocialAuthBiz <- checkfield fields "SocialAuthBiz" |> parse_int64
     
     p.SocialAuthId <- checkfield fields "SocialAuthId"
+    
+    p.SocialAuthAvatar <- checkfield fields "SocialAuthAvatar"
     
     p.Email <- checkfieldz fields "Email" 256
     
@@ -2081,6 +2093,8 @@ let json__EUo (json:Json):EU option =
         p.SocialAuthBiz <- checkfield fields "SocialAuthBiz" |> parse_int64
         
         p.SocialAuthId <- checkfield fields "SocialAuthId"
+        
+        p.SocialAuthAvatar <- checkfield fields "SocialAuthAvatar"
         
         p.Email <- checkfieldz fields "Email" 256
         
@@ -7630,24 +7644,25 @@ let db__pEU(line:Object[]): pEU =
     p.Username <- string(line.[5]).TrimEnd()
     p.SocialAuthBiz <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
     p.SocialAuthId <- string(line.[7]).TrimEnd()
-    p.Email <- string(line.[8]).TrimEnd()
-    p.Tel <- string(line.[9]).TrimEnd()
-    p.Gender <- EnumOfValue(if Convert.IsDBNull(line.[10]) then 0 else line.[10] :?> int)
-    p.Status <- EnumOfValue(if Convert.IsDBNull(line.[11]) then 0 else line.[11] :?> int)
-    p.Admin <- EnumOfValue(if Convert.IsDBNull(line.[12]) then 0 else line.[12] :?> int)
-    p.BizPartner <- EnumOfValue(if Convert.IsDBNull(line.[13]) then 0 else line.[13] :?> int)
-    p.Privilege <- if Convert.IsDBNull(line.[14]) then 0L else line.[14] :?> int64
-    p.Verify <- EnumOfValue(if Convert.IsDBNull(line.[15]) then 0 else line.[15] :?> int)
-    p.Pwd <- string(line.[16]).TrimEnd()
-    p.Online <- if Convert.IsDBNull(line.[17]) then false else line.[17] :?> bool
-    p.Icon <- string(line.[18]).TrimEnd()
-    p.Background <- string(line.[19]).TrimEnd()
-    p.BasicAcct <- if Convert.IsDBNull(line.[20]) then 0L else line.[20] :?> int64
-    p.Citizen <- if Convert.IsDBNull(line.[21]) then 0L else line.[21] :?> int64
-    p.Refer <- string(line.[22]).TrimEnd()
-    p.Referer <- if Convert.IsDBNull(line.[23]) then 0L else line.[23] :?> int64
-    p.Url <- string(line.[24]).TrimEnd()
-    p.About <- string(line.[25]).TrimEnd()
+    p.SocialAuthAvatar <- string(line.[8]).TrimEnd()
+    p.Email <- string(line.[9]).TrimEnd()
+    p.Tel <- string(line.[10]).TrimEnd()
+    p.Gender <- EnumOfValue(if Convert.IsDBNull(line.[11]) then 0 else line.[11] :?> int)
+    p.Status <- EnumOfValue(if Convert.IsDBNull(line.[12]) then 0 else line.[12] :?> int)
+    p.Admin <- EnumOfValue(if Convert.IsDBNull(line.[13]) then 0 else line.[13] :?> int)
+    p.BizPartner <- EnumOfValue(if Convert.IsDBNull(line.[14]) then 0 else line.[14] :?> int)
+    p.Privilege <- if Convert.IsDBNull(line.[15]) then 0L else line.[15] :?> int64
+    p.Verify <- EnumOfValue(if Convert.IsDBNull(line.[16]) then 0 else line.[16] :?> int)
+    p.Pwd <- string(line.[17]).TrimEnd()
+    p.Online <- if Convert.IsDBNull(line.[18]) then false else line.[18] :?> bool
+    p.Icon <- string(line.[19]).TrimEnd()
+    p.Background <- string(line.[20]).TrimEnd()
+    p.BasicAcct <- if Convert.IsDBNull(line.[21]) then 0L else line.[21] :?> int64
+    p.Citizen <- if Convert.IsDBNull(line.[22]) then 0L else line.[22] :?> int64
+    p.Refer <- string(line.[23]).TrimEnd()
+    p.Referer <- if Convert.IsDBNull(line.[24]) then 0L else line.[24] :?> int64
+    p.Url <- string(line.[25]).TrimEnd()
+    p.About <- string(line.[26]).TrimEnd()
 
     p
 
@@ -7656,6 +7671,7 @@ let pEU__sps (p:pEU) = [|
     new SqlParameter("Username", p.Username)
     new SqlParameter("SocialAuthBiz", p.SocialAuthBiz)
     new SqlParameter("SocialAuthId", p.SocialAuthId)
+    new SqlParameter("SocialAuthAvatar", p.SocialAuthAvatar)
     new SqlParameter("Email", p.Email)
     new SqlParameter("Tel", p.Tel)
     new SqlParameter("Gender", p.Gender)
@@ -7686,6 +7702,7 @@ let pEU_clone (p:pEU): pEU = {
     Username = p.Username
     SocialAuthBiz = p.SocialAuthBiz
     SocialAuthId = p.SocialAuthId
+    SocialAuthAvatar = p.SocialAuthAvatar
     Email = p.Email
     Tel = p.Tel
     Gender = p.Gender
@@ -7767,6 +7784,7 @@ let EUTxSqlServer =
     ,[Username]
     ,[SocialAuthBiz]
     ,[SocialAuthId]
+    ,[SocialAuthAvatar]
     ,[Email]
     ,[Tel]
     ,[Gender]

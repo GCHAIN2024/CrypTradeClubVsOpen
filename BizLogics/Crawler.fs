@@ -85,6 +85,53 @@ let cCOINDESK (runtime:Runtime) bc =
 
         newP bc p)
 
+let cCRYPTOSLATE (runtime:Runtime) bc = 
+
+    let code, html = 
+        "https://cryptoslate.com/feed/"
+        |> httpGet None
+
+    let lines = 
+        html
+        |> regex_matches (string__regex "<item>.*?</item>")
+
+    lines.Length.ToString() + " lines"
+    |> runtime.output
+
+    lines
+    |> Array.iter(fun line ->
+
+        Thread.Sleep 1000
+
+        let p = pMOMENT_empty()
+
+        p.Lang <- runtime.data.langs["en"].ID
+
+        p.UrlOriginal <- regex_match (string__regex "(?<=<link>).*?(?=</link>)") line
+
+        let html = 
+            p.UrlOriginal
+            |> httpGet None
+            |> snd
+
+        let headers = find ("<head>","</head>") html
+        p.Title <- regex_match (string__regex "(?<=<title>).*?(?=</title>)") line
+        p.Summary <- 
+            let mutable s = regex_match (string__regex "(?<=<description>).*?(?=</description>)") line
+            s <- s.Trim()
+            if s.StartsWith "<![CDATA[" then
+                s <- s |> find("<![CDATA[","]]>")
+            s
+            
+        p.PreviewImgUrl <- find ("<meta property=\"og:image\" content=\"","\"") headers
+        
+        p.OID <- find ("<link rel=\"shortlink\" href=\"https://cryptoslate.com/?p=","\" />") headers
+
+        p.UrlOriginal + " " + p.Title
+        |> runtime.output
+
+        newP bc p)
+
 // https://cryptoslate.com/news/
 // https://cointelegraph.com/
 // https://blockchain.news/
@@ -93,7 +140,9 @@ let cCOINDESK (runtime:Runtime) bc =
 
 let launchCrawlers (runtime:Runtime) = 
 
-    (fun _ -> 
-        let bc = runtime.data.bcs["COINDESK"]
-        cCOINDESK runtime bc)
-    |> asyncCyclerInterval (60 * 1000)
+    [|  (cCOINDESK,"COINDESK")
+        (cCRYPTOSLATE,"CRYPTOSLATE") |]
+    |> Array.iter(fun (f,c) ->
+        (fun _ -> 
+            f runtime runtime.data.bcs[c])
+        |> asyncCyclerInterval (60 * 1000))

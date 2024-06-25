@@ -556,14 +556,17 @@ let Er__bin (bb:BytesBuilder) (v:Er) =
         int32__bin bb 0
     | Er.InvalideParameter ->
         int32__bin bb 1
-    | Er.Internal ->
+    | Er.Unauthorized ->
         int32__bin bb 2
+    | Er.Internal ->
+        int32__bin bb 3
 
 let bin__Er (bi:BinIndexed):Er =
     let bin,index = bi
 
     match bin__int32 bi with
-    | 2 -> Er.Internal
+    | 3 -> Er.Internal
+    | 2 -> Er.Unauthorized
     | 1 -> Er.InvalideParameter
     | _ -> Er.ApiNotExists
 
@@ -576,8 +579,10 @@ let Er__json (v:Er) =
         ("enum",int32__json 0) |> items.Add
     | Er.InvalideParameter ->
         ("enum",int32__json 1) |> items.Add
-    | Er.Internal ->
+    | Er.Unauthorized ->
         ("enum",int32__json 2) |> items.Add
+    | Er.Internal ->
+        ("enum",int32__json 3) |> items.Add
 
     items.ToArray() |> Json.Braket
 
@@ -598,7 +603,8 @@ let json__Ero (json:Json):Er option =
             match i with
             | 0 -> Er.ApiNotExists |> Some
             | 1 -> Er.InvalideParameter |> Some
-            | 2 -> Er.Internal |> Some
+            | 2 -> Er.Unauthorized |> Some
+            | 3 -> Er.Internal |> Some
             | _ -> None
         | None -> None
     | None -> None

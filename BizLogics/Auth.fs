@@ -37,6 +37,10 @@ let ap = {
     setSocialAuthBiz = fun p v -> p.SocialAuthBiz <- v
     getSocialAuthId = fun p -> p.SocialAuthId
     setSocialAuthId = fun p v -> p.SocialAuthId <- v
+    getSocialAuthCaption = fun p -> p.Caption
+    setSocialAuthCaption = fun p v -> p.Caption <- v
+    getSocialAuthAvatar = fun p -> p.SocialAuthAvatar
+    setSocialAuthAvatar = fun p v -> p.SocialAuthAvatar <- v
     metadata = EU_metadata
     p__complex = fun eu -> { eu = eu }
     complex__ids = fun ec -> (ec.eu.p.SocialAuthBiz,ec.eu.p.SocialAuthId)
@@ -45,7 +49,7 @@ let ap = {
 let tryFindExistingx = tryFindExisting ap runtime.users
 let tryCreateUserx = tryCreateUser ap runtime.users
 
-let checkoutEu bizCode id = 
+let checkoutEu bizCode (id,caption,avatar) = 
 
     let bizId = 
         if runtime.data.bcs.ContainsKey bizCode then
@@ -56,7 +60,7 @@ let checkoutEu bizCode id =
     match bizCode with
     | "DISCORD" -> 
         tryFindExistingx bizId id
-        |> oPipelineNone (fun _ -> tryCreateUserx bizId id)
+        |> oPipelineNone (fun _ -> tryCreateUserx bizId (id,caption,avatar))
 
     | _ -> None
 
