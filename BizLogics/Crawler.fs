@@ -85,6 +85,11 @@ let cCOINDESK (runtime:Runtime) bc =
 
         newP bc p)
 
+// https://cryptoslate.com/news/
+// https://cointelegraph.com/
+// https://blockchain.news/
+// https://decrypt.co/news
+// https://news.bitcoin.com/
 
 let launchCrawlers (runtime:Runtime) = 
 
