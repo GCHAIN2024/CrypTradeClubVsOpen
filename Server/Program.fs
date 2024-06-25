@@ -9,6 +9,7 @@ open System.Diagnostics
 open Util.Cat
 open Util.Perf
 open Util.Zmq
+open Util.HttpServer
 open Util.WebServer
 
 open Shared.Types
@@ -20,6 +21,7 @@ open BizLogics.SSR
 open Server.WebHandler
 
 open UtilWebServer.Common
+open UtilWebServer.SSR
 
 
 [<EntryPoint>]
@@ -52,6 +54,10 @@ let main argv =
             echo
             runtime.host.fsDir
             runtime.host.defaultHtml
+            ((fun _ ->  
+                ssrPageHome 
+                |> render (hash1,hash2) 
+                |> bin__StandardResponse "text/html") |> Some)
             runtime
             wsHandler
             runtime.host.port
