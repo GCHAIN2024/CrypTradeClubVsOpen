@@ -75,24 +75,23 @@ let hMoment req =
             //rep404
     | None -> rep404
 
-
 let echo req = 
 
-    if req.pathline.StartsWith "/ctc" then
-        req.pathline <- req.pathline.Substring "/ctc".Length
+    let h1 x = 
+        let req = x.req
+        if req.pathline.StartsWith "/ctc" then
+            req.pathline <- req.pathline.Substring "/ctc".Length
+        Suc x
 
-    if req.pathline = "/" then
+    match 
+        { req = req; rep = None}
+        |> Suc
+        |> bind h1
+        |> bindFail (hpattern "/m/" hMoment)
+        |> bindFail (hapi echoApiHandler branch) with
+    | Suc x -> x.rep
+    | Fail(x,e) -> 
         ssrPageHome
         |> render (hash1,hash2)
+        |> bin__StandardResponse "text/html"
         |> Some
-    else if req.pathline.StartsWith "/m/" then
-        hMoment req
-        |> Some
-    else if req.path.Length = 3 then
-        if req.path[0] = "api" then
-            echoApiHandler branch req
-            |> Some
-        else
-            None
-    else
-        None

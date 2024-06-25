@@ -45,6 +45,7 @@ let branching x =
     | "public" -> 
         match x.api with
         | "ping" -> bindx api_Public_Ping
+        | "auth" -> bindx auth
         | "listBiz" -> bindx api_Public_ListBiz
         | "listCur" -> bindx api_Public_ListCur
         | "homepageMoments" -> bindx api_Public_HomepageMoments
