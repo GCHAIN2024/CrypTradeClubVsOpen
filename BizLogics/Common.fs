@@ -4,6 +4,7 @@ open System
 open System.Collections.Generic
 open System.Collections.Concurrent
 
+open Util.Cat
 open Util.Db
 open Util.DbTx
 open Util.Orm
@@ -59,6 +60,8 @@ type Runtime = RuntimeTemplate<EuComplex,unit,RuntimeData>
 
 type X = UtilWebServer.Api.ApiCtx<Runtime,Session,Er>
 
+type CtxWrappedX = CtxWrapper<X,Er>
+
 let runtime__id__bc runtime id = 
     runtime.bcs.Values
     |> Seq.tryFind(fun bc -> bc.biz.ID = id)
@@ -84,7 +87,7 @@ let host e =
 
     h
 
-let runtime = 
+let runtime:Runtime = 
     let host = host hostEnum
 
     {

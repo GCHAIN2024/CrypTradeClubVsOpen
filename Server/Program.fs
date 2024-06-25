@@ -15,6 +15,7 @@ open Shared.Types
 
 open BizLogics.Common
 open BizLogics.Init
+open BizLogics.SSR
 
 open Server.WebHandler
 

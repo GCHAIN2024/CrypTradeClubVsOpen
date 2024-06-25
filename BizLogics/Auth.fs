@@ -5,6 +5,7 @@ open System.Text
 open System.Collections.Generic
 open System.Collections.Concurrent
 
+open Util.Cat
 open Util.ADT
 open Util.Text
 open Util.Json
@@ -66,3 +67,10 @@ let auth: X -> ApiReturn =
         checkoutEu
         EuComplex__json
 
+
+let checkSession: X -> CtxWrappedX = checkRuntimeSession Er.Unauthorized runtime.sessions
+
+let checkSessionEu x = 
+    match x.sessiono.Value.identity with
+    | Some eu -> Suc x
+    | _ -> Fail(Er.Unauthorized,x)
