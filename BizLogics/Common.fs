@@ -86,7 +86,7 @@ let host e =
         h.zmq <- true
     | RevengeDev -> 
         h.zmq <- false
-        h.updateDatabase <- false
+        //h.updateDatabase <- false
 
     h
 
