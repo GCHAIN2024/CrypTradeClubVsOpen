@@ -1,6 +1,7 @@
 USE [CTC]
 
 -- [Ca_Address] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Address' AND xtype='U')
 
 BEGIN
@@ -26,6 +27,30 @@ BEGIN
         ,[Remarks] NVARCHAR(MAX)
 , CONSTRAINT [PK_Ca_Address] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Address NVARCHAR(64)
+DECLARE cursor_Ca_Address CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Address') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Bind','Type','Line1','Line2','State','County','Town','Contact','Tel','Email','Zip','City','Country','Remarks'))
+
+OPEN cursor_Ca_Address
+FETCH NEXT FROM cursor_Ca_Address INTO @name_Ca_Address
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Address.' + @name_Ca_Address;
+    
+    DECLARE @sql_Ca_Address NVARCHAR(MAX);
+    SET @sql_Ca_Address = 'ALTER TABLE Ca_Address DROP COLUMN ' + QUOTENAME(@name_Ca_Address)
+    EXEC sp_executesql @sql_Ca_Address
+    
+    
+    FETCH NEXT FROM cursor_Ca_Address INTO @name_Ca_Address
+END
+
+CLOSE cursor_Ca_Address;
+DEALLOCATE cursor_Ca_Address;
 
 
 -- [Ca_Address.Caption] -------------
@@ -373,6 +398,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_AddressRema
     ALTER TABLE Ca_Address DROP  CONSTRAINT [UniqueNonclustered_Ca_AddressRemarks]
     END
 -- [Ca_Airport] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Airport' AND xtype='U')
 
 BEGIN
@@ -390,6 +416,30 @@ BEGIN
         ,[IsMetropolitan] BIT
 , CONSTRAINT [PK_Ca_Airport] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Airport NVARCHAR(64)
+DECLARE cursor_Ca_Airport CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Airport') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Code3IATA','Code4ICAO','Caption','CaptionEn','Country','City','IsMetropolitan'))
+
+OPEN cursor_Ca_Airport
+FETCH NEXT FROM cursor_Ca_Airport INTO @name_Ca_Airport
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Airport.' + @name_Ca_Airport;
+    
+    DECLARE @sql_Ca_Airport NVARCHAR(MAX);
+    SET @sql_Ca_Airport = 'ALTER TABLE Ca_Airport DROP COLUMN ' + QUOTENAME(@name_Ca_Airport)
+    EXEC sp_executesql @sql_Ca_Airport
+    
+    
+    FETCH NEXT FROM cursor_Ca_Airport INTO @name_Ca_Airport
+END
+
+CLOSE cursor_Ca_Airport;
+DEALLOCATE cursor_Ca_Airport;
 
 
 -- [Ca_Airport.Code3IATA] -------------
@@ -553,6 +603,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_AirportIsMe
     ALTER TABLE Ca_Airport DROP  CONSTRAINT [UniqueNonclustered_Ca_AirportIsMetropolitan]
     END
 -- [Ca_Biz] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Biz' AND xtype='U')
 
 BEGIN
@@ -590,6 +641,30 @@ BEGIN
         ,[ConfiguredCats] NVARCHAR(MAX)
 , CONSTRAINT [PK_Ca_Biz] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Biz NVARCHAR(64)
+DECLARE cursor_Ca_Biz CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Biz') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Code','Caption','Parent','BasicAcct','Desc','Website','Icon','City','Country','Lang','IsSocial','IsCmsSource','IsPay','MomentLatest','CountFollowers','CountFollows','CountMoments','CountViews','CountComments','CountThumbUps','CountThumbDns','IsCrawling','IsGSeries','RemarksCentral','Agent','SiteCats','ConfiguredCats'))
+
+OPEN cursor_Ca_Biz
+FETCH NEXT FROM cursor_Ca_Biz INTO @name_Ca_Biz
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Biz.' + @name_Ca_Biz;
+    
+    DECLARE @sql_Ca_Biz NVARCHAR(MAX);
+    SET @sql_Ca_Biz = 'ALTER TABLE Ca_Biz DROP COLUMN ' + QUOTENAME(@name_Ca_Biz)
+    EXEC sp_executesql @sql_Ca_Biz
+    
+    
+    FETCH NEXT FROM cursor_Ca_Biz INTO @name_Ca_Biz
+END
+
+CLOSE cursor_Ca_Biz;
+DEALLOCATE cursor_Ca_Biz;
 
 
 -- [Ca_Biz.Code] -------------
@@ -1213,6 +1288,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_BizConfigur
     ALTER TABLE Ca_Biz DROP  CONSTRAINT [UniqueNonclustered_Ca_BizConfiguredCats]
     END
 -- [Ca_Cat] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Cat' AND xtype='U')
 
 BEGIN
@@ -1228,6 +1304,30 @@ BEGIN
         ,[State] INT
 , CONSTRAINT [PK_Ca_Cat] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Cat NVARCHAR(64)
+DECLARE cursor_Ca_Cat CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Cat') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Lang','Zh','Parent','State'))
+
+OPEN cursor_Ca_Cat
+FETCH NEXT FROM cursor_Ca_Cat INTO @name_Ca_Cat
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Cat.' + @name_Ca_Cat;
+    
+    DECLARE @sql_Ca_Cat NVARCHAR(MAX);
+    SET @sql_Ca_Cat = 'ALTER TABLE Ca_Cat DROP COLUMN ' + QUOTENAME(@name_Ca_Cat)
+    EXEC sp_executesql @sql_Ca_Cat
+    
+    
+    FETCH NEXT FROM cursor_Ca_Cat INTO @name_Ca_Cat
+END
+
+CLOSE cursor_Ca_Cat;
+DEALLOCATE cursor_Ca_Cat;
 
 
 -- [Ca_Cat.Caption] -------------
@@ -1345,6 +1445,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_CatState')
     ALTER TABLE Ca_Cat DROP  CONSTRAINT [UniqueNonclustered_Ca_CatState]
     END
 -- [Ca_City] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_City' AND xtype='U')
 
 BEGIN
@@ -1362,6 +1463,30 @@ BEGIN
         ,[Tel] NVARCHAR(4) COLLATE Chinese_PRC_CI_AS
 , CONSTRAINT [PK_Ca_City] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_City NVARCHAR(64)
+DECLARE cursor_Ca_City CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_City') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Name','MetropolitanCode3IATA','NameEn','Country','Place','Icon','Tel'))
+
+OPEN cursor_Ca_City
+FETCH NEXT FROM cursor_Ca_City INTO @name_Ca_City
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_City.' + @name_Ca_City;
+    
+    DECLARE @sql_Ca_City NVARCHAR(MAX);
+    SET @sql_Ca_City = 'ALTER TABLE Ca_City DROP COLUMN ' + QUOTENAME(@name_Ca_City)
+    EXEC sp_executesql @sql_Ca_City
+    
+    
+    FETCH NEXT FROM cursor_Ca_City INTO @name_Ca_City
+END
+
+CLOSE cursor_Ca_City;
+DEALLOCATE cursor_Ca_City;
 
 
 -- [Ca_City.Name] -------------
@@ -1525,6 +1650,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_CityTel')
     ALTER TABLE Ca_City DROP  CONSTRAINT [UniqueNonclustered_Ca_CityTel]
     END
 -- [Ca_Country] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Country' AND xtype='U')
 
 BEGIN
@@ -1544,6 +1670,30 @@ BEGIN
         ,[Lang] BIGINT
 , CONSTRAINT [PK_Ca_Country] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Country NVARCHAR(64)
+DECLARE cursor_Ca_Country CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Country') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Code2','Caption','Fullname','Icon','Tel','Cur','Capital','Place','Lang'))
+
+OPEN cursor_Ca_Country
+FETCH NEXT FROM cursor_Ca_Country INTO @name_Ca_Country
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Country.' + @name_Ca_Country;
+    
+    DECLARE @sql_Ca_Country NVARCHAR(MAX);
+    SET @sql_Ca_Country = 'ALTER TABLE Ca_Country DROP COLUMN ' + QUOTENAME(@name_Ca_Country)
+    EXEC sp_executesql @sql_Ca_Country
+    
+    
+    FETCH NEXT FROM cursor_Ca_Country INTO @name_Ca_Country
+END
+
+CLOSE cursor_Ca_Country;
+DEALLOCATE cursor_Ca_Country;
 
 
 -- [Ca_Country.Code2] -------------
@@ -1753,6 +1903,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_CountryLang
     ALTER TABLE Ca_Country DROP  CONSTRAINT [UniqueNonclustered_Ca_CountryLang]
     END
 -- [Ca_Cur] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Cur' AND xtype='U')
 
 BEGIN
@@ -1782,6 +1933,30 @@ BEGIN
         ,[BaseRate] FLOAT
 , CONSTRAINT [PK_Ca_Cur] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Cur NVARCHAR(64)
+DECLARE cursor_Ca_Cur CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Cur') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Code','Caption','Hidden','IsSac','IsTransfer','IsCash','EnableReward','EnableOTC','Icon','CurType','Dec','AnchorRate','Freezable','Authorizable','ChaninID','ChaninName','ContractAddress','WalletAddress','BaseRate'))
+
+OPEN cursor_Ca_Cur
+FETCH NEXT FROM cursor_Ca_Cur INTO @name_Ca_Cur
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Cur.' + @name_Ca_Cur;
+    
+    DECLARE @sql_Ca_Cur NVARCHAR(MAX);
+    SET @sql_Ca_Cur = 'ALTER TABLE Ca_Cur DROP COLUMN ' + QUOTENAME(@name_Ca_Cur)
+    EXEC sp_executesql @sql_Ca_Cur
+    
+    
+    FETCH NEXT FROM cursor_Ca_Cur INTO @name_Ca_Cur
+END
+
+CLOSE cursor_Ca_Cur;
+DEALLOCATE cursor_Ca_Cur;
 
 
 -- [Ca_Cur.Code] -------------
@@ -2221,6 +2396,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_CurBaseRate
     ALTER TABLE Ca_Cur DROP  CONSTRAINT [UniqueNonclustered_Ca_CurBaseRate]
     END
 -- [Ca_EndUser] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_EndUser' AND xtype='U')
 
 BEGIN
@@ -2254,6 +2430,30 @@ BEGIN
         ,[About] NVARCHAR(MAX)
 , CONSTRAINT [PK_Ca_EndUser] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_EndUser NVARCHAR(64)
+DECLARE cursor_Ca_EndUser CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_EndUser') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Username','SocialAuthBiz','SocialAuthId','SocialAuthAvatar','Email','Tel','Gender','Status','Admin','BizPartner','Privilege','Verify','Pwd','Online','Icon','Background','BasicAcct','Citizen','Refer','Referer','Url','About'))
+
+OPEN cursor_Ca_EndUser
+FETCH NEXT FROM cursor_Ca_EndUser INTO @name_Ca_EndUser
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_EndUser.' + @name_Ca_EndUser;
+    
+    DECLARE @sql_Ca_EndUser NVARCHAR(MAX);
+    SET @sql_Ca_EndUser = 'ALTER TABLE Ca_EndUser DROP COLUMN ' + QUOTENAME(@name_Ca_EndUser)
+    EXEC sp_executesql @sql_Ca_EndUser
+    
+    
+    FETCH NEXT FROM cursor_Ca_EndUser INTO @name_Ca_EndUser
+END
+
+CLOSE cursor_Ca_EndUser;
+DEALLOCATE cursor_Ca_EndUser;
 
 
 -- [Ca_EndUser.Caption] -------------
@@ -2785,6 +2985,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_EndUserAbou
     ALTER TABLE Ca_EndUser DROP  CONSTRAINT [UniqueNonclustered_Ca_EndUserAbout]
     END
 -- [Ca_File] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_File' AND xtype='U')
 
 BEGIN
@@ -2805,6 +3006,30 @@ BEGIN
         ,[JSON] NVARCHAR(MAX)
 , CONSTRAINT [PK_Ca_File] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_File NVARCHAR(64)
+DECLARE cursor_Ca_File CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_File') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Encrypt','SHA256','Size','Bind','BindType','State','Folder','FileType','JSON'))
+
+OPEN cursor_Ca_File
+FETCH NEXT FROM cursor_Ca_File INTO @name_Ca_File
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_File.' + @name_Ca_File;
+    
+    DECLARE @sql_Ca_File NVARCHAR(MAX);
+    SET @sql_Ca_File = 'ALTER TABLE Ca_File DROP COLUMN ' + QUOTENAME(@name_Ca_File)
+    EXEC sp_executesql @sql_Ca_File
+    
+    
+    FETCH NEXT FROM cursor_Ca_File INTO @name_Ca_File
+END
+
+CLOSE cursor_Ca_File;
+DEALLOCATE cursor_Ca_File;
 
 
 -- [Ca_File.Caption] -------------
@@ -3037,6 +3262,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_FileJSON')
     ALTER TABLE Ca_File DROP  CONSTRAINT [UniqueNonclustered_Ca_FileJSON]
     END
 -- [Ca_Folder] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Folder' AND xtype='U')
 
 BEGIN
@@ -3052,6 +3278,30 @@ BEGIN
         ,[Parent] BIGINT
 , CONSTRAINT [PK_Ca_Folder] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Folder NVARCHAR(64)
+DECLARE cursor_Ca_Folder CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Folder') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Encrypt','Bind','BindType','Parent'))
+
+OPEN cursor_Ca_Folder
+FETCH NEXT FROM cursor_Ca_Folder INTO @name_Ca_Folder
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Folder.' + @name_Ca_Folder;
+    
+    DECLARE @sql_Ca_Folder NVARCHAR(MAX);
+    SET @sql_Ca_Folder = 'ALTER TABLE Ca_Folder DROP COLUMN ' + QUOTENAME(@name_Ca_Folder)
+    EXEC sp_executesql @sql_Ca_Folder
+    
+    
+    FETCH NEXT FROM cursor_Ca_Folder INTO @name_Ca_Folder
+END
+
+CLOSE cursor_Ca_Folder;
+DEALLOCATE cursor_Ca_Folder;
 
 
 -- [Ca_Folder.Caption] -------------
@@ -3169,6 +3419,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_FolderParen
     ALTER TABLE Ca_Folder DROP  CONSTRAINT [UniqueNonclustered_Ca_FolderParent]
     END
 -- [Ca_Lang] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Lang' AND xtype='U')
 
 BEGIN
@@ -3189,6 +3440,30 @@ BEGIN
         ,[TextDirection] INT
 , CONSTRAINT [PK_Ca_Lang] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Lang NVARCHAR(64)
+DECLARE cursor_Ca_Lang CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Lang') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Code2','Caption','Native','Icon','IsBlank','IsLocale','IsContent','IsAutoTranslate','IsMiles','TextDirection'))
+
+OPEN cursor_Ca_Lang
+FETCH NEXT FROM cursor_Ca_Lang INTO @name_Ca_Lang
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Lang.' + @name_Ca_Lang;
+    
+    DECLARE @sql_Ca_Lang NVARCHAR(MAX);
+    SET @sql_Ca_Lang = 'ALTER TABLE Ca_Lang DROP COLUMN ' + QUOTENAME(@name_Ca_Lang)
+    EXEC sp_executesql @sql_Ca_Lang
+    
+    
+    FETCH NEXT FROM cursor_Ca_Lang INTO @name_Ca_Lang
+END
+
+CLOSE cursor_Ca_Lang;
+DEALLOCATE cursor_Ca_Lang;
 
 
 -- [Ca_Lang.Code2] -------------
@@ -3421,6 +3696,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_LangTextDir
     ALTER TABLE Ca_Lang DROP  CONSTRAINT [UniqueNonclustered_Ca_LangTextDirection]
     END
 -- [Ca_Locale] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Locale' AND xtype='U')
 
 BEGIN
@@ -3435,6 +3711,30 @@ BEGIN
         ,[Text] NVARCHAR(MAX)
 , CONSTRAINT [PK_Ca_Locale] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_Locale NVARCHAR(64)
+DECLARE cursor_Ca_Locale CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_Locale') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Code','Lang','Zh','Text'))
+
+OPEN cursor_Ca_Locale
+FETCH NEXT FROM cursor_Ca_Locale INTO @name_Ca_Locale
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_Locale.' + @name_Ca_Locale;
+    
+    DECLARE @sql_Ca_Locale NVARCHAR(MAX);
+    SET @sql_Ca_Locale = 'ALTER TABLE Ca_Locale DROP COLUMN ' + QUOTENAME(@name_Ca_Locale)
+    EXEC sp_executesql @sql_Ca_Locale
+    
+    
+    FETCH NEXT FROM cursor_Ca_Locale INTO @name_Ca_Locale
+END
+
+CLOSE cursor_Ca_Locale;
+DEALLOCATE cursor_Ca_Locale;
 
 
 -- [Ca_Locale.Code] -------------
@@ -3529,6 +3829,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_LocaleText'
     ALTER TABLE Ca_Locale DROP  CONSTRAINT [UniqueNonclustered_Ca_LocaleText]
     END
 -- [Ca_SpecialItem] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_SpecialItem' AND xtype='U')
 
 BEGIN
@@ -3542,6 +3843,30 @@ BEGIN
         ,[Bind] BIGINT
 , CONSTRAINT [PK_Ca_SpecialItem] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_SpecialItem NVARCHAR(64)
+DECLARE cursor_Ca_SpecialItem CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_SpecialItem') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Type','Lang','Bind'))
+
+OPEN cursor_Ca_SpecialItem
+FETCH NEXT FROM cursor_Ca_SpecialItem INTO @name_Ca_SpecialItem
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_SpecialItem.' + @name_Ca_SpecialItem;
+    
+    DECLARE @sql_Ca_SpecialItem NVARCHAR(MAX);
+    SET @sql_Ca_SpecialItem = 'ALTER TABLE Ca_SpecialItem DROP COLUMN ' + QUOTENAME(@name_Ca_SpecialItem)
+    EXEC sp_executesql @sql_Ca_SpecialItem
+    
+    
+    FETCH NEXT FROM cursor_Ca_SpecialItem INTO @name_Ca_SpecialItem
+END
+
+CLOSE cursor_Ca_SpecialItem;
+DEALLOCATE cursor_Ca_SpecialItem;
 
 
 -- [Ca_SpecialItem.Type] -------------
@@ -3613,6 +3938,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_SpecialItem
     ALTER TABLE Ca_SpecialItem DROP  CONSTRAINT [UniqueNonclustered_Ca_SpecialItemBind]
     END
 -- [Ca_WebCredential] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_WebCredential' AND xtype='U')
 
 BEGIN
@@ -3629,6 +3955,30 @@ BEGIN
         ,[Json] NVARCHAR(MAX)
 , CONSTRAINT [PK_Ca_WebCredential] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ca_WebCredential NVARCHAR(64)
+DECLARE cursor_Ca_WebCredential CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ca_WebCredential') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','ExternalId','Icon','EU','Biz','Json'))
+
+OPEN cursor_Ca_WebCredential
+FETCH NEXT FROM cursor_Ca_WebCredential INTO @name_Ca_WebCredential
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ca_WebCredential.' + @name_Ca_WebCredential;
+    
+    DECLARE @sql_Ca_WebCredential NVARCHAR(MAX);
+    SET @sql_Ca_WebCredential = 'ALTER TABLE Ca_WebCredential DROP COLUMN ' + QUOTENAME(@name_Ca_WebCredential)
+    EXEC sp_executesql @sql_Ca_WebCredential
+    
+    
+    FETCH NEXT FROM cursor_Ca_WebCredential INTO @name_Ca_WebCredential
+END
+
+CLOSE cursor_Ca_WebCredential;
+DEALLOCATE cursor_Ca_WebCredential;
 
 
 -- [Ca_WebCredential.Caption] -------------
@@ -3769,6 +4119,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_WebCredenti
     ALTER TABLE Ca_WebCredential DROP  CONSTRAINT [UniqueNonclustered_Ca_WebCredentialJson]
     END
 -- [Ex_Instrument] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ex_Instrument' AND xtype='U')
 
 BEGIN
@@ -3879,6 +4230,30 @@ BEGIN
         ,[PriceOpened] BIGINT
 , CONSTRAINT [PK_Ex_Instrument] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ex_Instrument NVARCHAR(64)
+DECLARE cursor_Ex_Instrument CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Desc','Hidden','EnableQuote','Code','Caption','Long','AssetName','Short','Convertor','m','mu','eta','psi','MarginCalc','MarginRateInit','MarginRateMntn','MarginMode','Dec','Formatter','Path','Ask','Bid','Middle','FixedSpread','PercentageSpread','TaxOpenMode','TaxOpen','TaxCloseMode','TaxClose','Tax','TaxCur','TaxCurCode','LastPrice','LastUpdatedat','LastPriceChange','TradeStatus','RoMode','Schedule','TradeMode','DerivativeMode','OptionsMode','OptionsCP','OptionsExpiry','OptionsStrike','OptionsPricing','OptionsPeriod','OptionsTax','OptionsPremiumPerTradeMin','OptionsPremiumPerTradeMax','LimitLotPerTrade','LimitLotPosition','CurrentOpen','CurrentHigh','CurrentLow','PrevClose','PrevClosedat','CurrentOpenat','ExtBiz','RefExternal','ItrnInss','ItrnInssMode','FlushType','CurTrigger','RobotType','ExtLong','ExtShort','ExtPrice','SaveM1','HistSavedat','SaveD1','SlPips','TpPips','PendingLimitPips','PendingStopPips','LastDirection','LiqMode','LiqPeriodSince','LiqPeriodTill','LiqPeriod','LiqTime','ConvertRatio','RoBuyMode','RoBuy','RoSellMode','RoSell','PosLimitBuy','PosLimitSell','RoCur','RoCurCode','AdjBias','TaxBuy','TaxSell','Misc','RefLastPriceChange','HedgeExternal','OfferingPrice','IssuanceAmount','ListingStatus','Turnover','PriceOpened'))
+
+OPEN cursor_Ex_Instrument
+FETCH NEXT FROM cursor_Ex_Instrument INTO @name_Ex_Instrument
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ex_Instrument.' + @name_Ex_Instrument;
+    
+    DECLARE @sql_Ex_Instrument NVARCHAR(MAX);
+    SET @sql_Ex_Instrument = 'ALTER TABLE Ex_Instrument DROP COLUMN ' + QUOTENAME(@name_Ex_Instrument)
+    EXEC sp_executesql @sql_Ex_Instrument
+    
+    
+    FETCH NEXT FROM cursor_Ex_Instrument INTO @name_Ex_Instrument
+END
+
+CLOSE cursor_Ex_Instrument;
+DEALLOCATE cursor_Ex_Instrument;
 
 
 -- [Ex_Instrument.Desc] -------------
@@ -6181,6 +6556,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentP
     ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPriceOpened]
     END
 -- [Ex_Ticket] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ex_Ticket' AND xtype='U')
 
 BEGIN
@@ -6250,6 +6626,30 @@ BEGIN
         ,[Desc] NVARCHAR(MAX)
 , CONSTRAINT [PK_Ex_Ticket] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Ex_Ticket NVARCHAR(64)
+DECLARE cursor_Ex_Ticket CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','EndUser','TradeAcct','Ins','Code','Caption','TradeMode','Lot','PriceOpened','PriceOpen','PriceSL','PriceTP','PriceClose','Status','CP','CptAcct','Ref','OpenRef','CloseRef','Origin','PnL','PnLSpread','Margin','RO','Tax','CloseType','CommitType','Cmt','Opendat','Closedat','CaStrategyAmt','CaRo','CaAsa','CaCmphsvCharge','RoCheckedat','Expiry','HedgetCP','PendingPrice','ClosedLot','ClosedAmt','PendingAmt','DrvPreminum','DrvExpiry','DrvPeriod','DrvDirection','DrvPrice','DoubleCp','ClearStatus','FollowTicket','Config','OptionStatus','NotionalPrincipal','ExercisedPrincipal','ExerciseMode','ExercisePrice','ExternalTicketOpen','ExternalTicketClose','ExternalTicketPending','ExternalTicketCancel','Desc'))
+
+OPEN cursor_Ex_Ticket
+FETCH NEXT FROM cursor_Ex_Ticket INTO @name_Ex_Ticket
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Ex_Ticket.' + @name_Ex_Ticket;
+    
+    DECLARE @sql_Ex_Ticket NVARCHAR(MAX);
+    SET @sql_Ex_Ticket = 'ALTER TABLE Ex_Ticket DROP COLUMN ' + QUOTENAME(@name_Ex_Ticket)
+    EXEC sp_executesql @sql_Ex_Ticket
+    
+    
+    FETCH NEXT FROM cursor_Ex_Ticket INTO @name_Ex_Ticket
+END
+
+CLOSE cursor_Ex_Ticket;
+DEALLOCATE cursor_Ex_Ticket;
 
 
 -- [Ex_Ticket.EndUser] -------------
@@ -7609,6 +8009,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketDesc'
     ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketDesc]
     END
 -- [Market_TradeAcct] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Market_TradeAcct' AND xtype='U')
 
 BEGIN
@@ -7633,6 +8034,30 @@ BEGIN
         ,[Desc] NVARCHAR(MAX)
 , CONSTRAINT [PK_Market_TradeAcct] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Market_TradeAcct NVARCHAR(64)
+DECLARE cursor_Market_TradeAcct CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Market_TradeAcct') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','SAC','State','TradeType','RealDemo','PnL','Frozen','Leverage','Margin','MarginCallRateWarning','MarginCallRateWarningII','MarginCallRateLiq','PwdTrade','PwdReadonly','Desc'))
+
+OPEN cursor_Market_TradeAcct
+FETCH NEXT FROM cursor_Market_TradeAcct INTO @name_Market_TradeAcct
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Market_TradeAcct.' + @name_Market_TradeAcct;
+    
+    DECLARE @sql_Market_TradeAcct NVARCHAR(MAX);
+    SET @sql_Market_TradeAcct = 'ALTER TABLE Market_TradeAcct DROP COLUMN ' + QUOTENAME(@name_Market_TradeAcct)
+    EXEC sp_executesql @sql_Market_TradeAcct
+    
+    
+    FETCH NEXT FROM cursor_Market_TradeAcct INTO @name_Market_TradeAcct
+END
+
+CLOSE cursor_Market_TradeAcct;
+DEALLOCATE cursor_Market_TradeAcct;
 
 
 -- [Market_TradeAcct.SAC] -------------
@@ -7957,6 +8382,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TradeAc
     ALTER TABLE Market_TradeAcct DROP  CONSTRAINT [UniqueNonclustered_Market_TradeAcctDesc]
     END
 -- [Social_Bookmark] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Bookmark' AND xtype='U')
 
 BEGIN
@@ -7976,6 +8402,30 @@ BEGIN
         ,[Type] BIGINT
 , CONSTRAINT [PK_Social_Bookmark] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Social_Bookmark NVARCHAR(64)
+DECLARE cursor_Social_Bookmark CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Social_Bookmark') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Agent','EndUser','Bind','BindType','BookmarkList','Notes','Path','Group','Type'))
+
+OPEN cursor_Social_Bookmark
+FETCH NEXT FROM cursor_Social_Bookmark INTO @name_Social_Bookmark
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Social_Bookmark.' + @name_Social_Bookmark;
+    
+    DECLARE @sql_Social_Bookmark NVARCHAR(MAX);
+    SET @sql_Social_Bookmark = 'ALTER TABLE Social_Bookmark DROP COLUMN ' + QUOTENAME(@name_Social_Bookmark)
+    EXEC sp_executesql @sql_Social_Bookmark
+    
+    
+    FETCH NEXT FROM cursor_Social_Bookmark INTO @name_Social_Bookmark
+END
+
+CLOSE cursor_Social_Bookmark;
+DEALLOCATE cursor_Social_Bookmark;
 
 
 -- [Social_Bookmark.Agent] -------------
@@ -8185,6 +8635,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Social_Bookmar
     ALTER TABLE Social_Bookmark DROP  CONSTRAINT [UniqueNonclustered_Social_BookmarkType]
     END
 -- [Social_BookmarkList] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_BookmarkList' AND xtype='U')
 
 BEGIN
@@ -8203,6 +8654,30 @@ BEGIN
         ,[Type] INT
 , CONSTRAINT [PK_Social_BookmarkList] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Social_BookmarkList NVARCHAR(64)
+DECLARE cursor_Social_BookmarkList CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Social_BookmarkList') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','EndUser','Caption','Icon','Background','Desc','Privacy','Moment','Type'))
+
+OPEN cursor_Social_BookmarkList
+FETCH NEXT FROM cursor_Social_BookmarkList INTO @name_Social_BookmarkList
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Social_BookmarkList.' + @name_Social_BookmarkList;
+    
+    DECLARE @sql_Social_BookmarkList NVARCHAR(MAX);
+    SET @sql_Social_BookmarkList = 'ALTER TABLE Social_BookmarkList DROP COLUMN ' + QUOTENAME(@name_Social_BookmarkList)
+    EXEC sp_executesql @sql_Social_BookmarkList
+    
+    
+    FETCH NEXT FROM cursor_Social_BookmarkList INTO @name_Social_BookmarkList
+END
+
+CLOSE cursor_Social_BookmarkList;
+DEALLOCATE cursor_Social_BookmarkList;
 
 
 -- [Social_BookmarkList.EndUser] -------------
@@ -8389,6 +8864,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Social_Bookmar
     ALTER TABLE Social_BookmarkList DROP  CONSTRAINT [UniqueNonclustered_Social_BookmarkListType]
     END
 -- [Social_Follow] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Follow' AND xtype='U')
 
 BEGIN
@@ -8402,6 +8878,30 @@ BEGIN
         ,[FollowType] INT
 , CONSTRAINT [PK_Social_Follow] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Social_Follow NVARCHAR(64)
+DECLARE cursor_Social_Follow CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Social_Follow') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','EndUser','Followee','FollowType'))
+
+OPEN cursor_Social_Follow
+FETCH NEXT FROM cursor_Social_Follow INTO @name_Social_Follow
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Social_Follow.' + @name_Social_Follow;
+    
+    DECLARE @sql_Social_Follow NVARCHAR(MAX);
+    SET @sql_Social_Follow = 'ALTER TABLE Social_Follow DROP COLUMN ' + QUOTENAME(@name_Social_Follow)
+    EXEC sp_executesql @sql_Social_Follow
+    
+    
+    FETCH NEXT FROM cursor_Social_Follow INTO @name_Social_Follow
+END
+
+CLOSE cursor_Social_Follow;
+DEALLOCATE cursor_Social_Follow;
 
 
 -- [Social_Follow.EndUser] -------------
@@ -8473,6 +8973,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Social_FollowF
     ALTER TABLE Social_Follow DROP  CONSTRAINT [UniqueNonclustered_Social_FollowFollowType]
     END
 -- [Social_Moment] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Social_Moment' AND xtype='U')
 
 BEGIN
@@ -8503,6 +9004,30 @@ BEGIN
         ,[AudioUrl] NVARCHAR(MAX)
 , CONSTRAINT [PK_Social_Moment] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Social_Moment NVARCHAR(64)
+DECLARE cursor_Social_Moment CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Agent','Bind','BindType','Lang','Title','Summary','FullText','PreviewImgUrl','Link','Type','Question','State','Group','Postedat','Keywords','MediaType','UrlOriginal','OID','PostType','AudioUrl'))
+
+OPEN cursor_Social_Moment
+FETCH NEXT FROM cursor_Social_Moment INTO @name_Social_Moment
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Social_Moment.' + @name_Social_Moment;
+    
+    DECLARE @sql_Social_Moment NVARCHAR(MAX);
+    SET @sql_Social_Moment = 'ALTER TABLE Social_Moment DROP COLUMN ' + QUOTENAME(@name_Social_Moment)
+    EXEC sp_executesql @sql_Social_Moment
+    
+    
+    FETCH NEXT FROM cursor_Social_Moment INTO @name_Social_Moment
+END
+
+CLOSE cursor_Social_Moment;
+DEALLOCATE cursor_Social_Moment;
 
 
 -- [Social_Moment.Agent] -------------
@@ -8965,6 +9490,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Social_MomentA
     ALTER TABLE Social_Moment DROP  CONSTRAINT [UniqueNonclustered_Social_MomentAudioUrl]
     END
 -- [Sys_Log] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Sys_Log' AND xtype='U')
 
 BEGIN
@@ -8978,6 +9504,30 @@ BEGIN
         ,[Sql] NVARCHAR(MAX)
 , CONSTRAINT [PK_Sys_Log] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Sys_Log NVARCHAR(64)
+DECLARE cursor_Sys_Log CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Sys_Log') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Location','Content','Sql'))
+
+OPEN cursor_Sys_Log
+FETCH NEXT FROM cursor_Sys_Log INTO @name_Sys_Log
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Sys_Log.' + @name_Sys_Log;
+    
+    DECLARE @sql_Sys_Log NVARCHAR(MAX);
+    SET @sql_Sys_Log = 'ALTER TABLE Sys_Log DROP COLUMN ' + QUOTENAME(@name_Sys_Log)
+    EXEC sp_executesql @sql_Sys_Log
+    
+    
+    FETCH NEXT FROM cursor_Sys_Log INTO @name_Sys_Log
+END
+
+CLOSE cursor_Sys_Log;
+DEALLOCATE cursor_Sys_Log;
 
 
 -- [Sys_Log.Location] -------------
@@ -9049,6 +9599,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Sys_LogSql')
     ALTER TABLE Sys_Log DROP  CONSTRAINT [UniqueNonclustered_Sys_LogSql]
     END
 -- [Trade_Fund] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Fund' AND xtype='U')
 
 BEGIN
@@ -9063,6 +9614,30 @@ BEGIN
         ,[BindType] INT
 , CONSTRAINT [PK_Trade_Fund] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Trade_Fund NVARCHAR(64)
+DECLARE cursor_Trade_Fund CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Fund') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Bind','BindType'))
+
+OPEN cursor_Trade_Fund
+FETCH NEXT FROM cursor_Trade_Fund INTO @name_Trade_Fund
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Trade_Fund.' + @name_Trade_Fund;
+    
+    DECLARE @sql_Trade_Fund NVARCHAR(MAX);
+    SET @sql_Trade_Fund = 'ALTER TABLE Trade_Fund DROP COLUMN ' + QUOTENAME(@name_Trade_Fund)
+    EXEC sp_executesql @sql_Trade_Fund
+    
+    
+    FETCH NEXT FROM cursor_Trade_Fund INTO @name_Trade_Fund
+END
+
+CLOSE cursor_Trade_Fund;
+DEALLOCATE cursor_Trade_Fund;
 
 
 -- [Trade_Fund.Caption] -------------
@@ -9157,6 +9732,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_FundBind
     ALTER TABLE Trade_Fund DROP  CONSTRAINT [UniqueNonclustered_Trade_FundBindType]
     END
 -- [Trade_Porfolio] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Porfolio' AND xtype='U')
 
 BEGIN
@@ -9172,6 +9748,30 @@ BEGIN
         ,[BindType] INT
 , CONSTRAINT [PK_Trade_Porfolio] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Trade_Porfolio NVARCHAR(64)
+DECLARE cursor_Trade_Porfolio CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Porfolio') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Fund','Bind','BindType'))
+
+OPEN cursor_Trade_Porfolio
+FETCH NEXT FROM cursor_Trade_Porfolio INTO @name_Trade_Porfolio
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Trade_Porfolio.' + @name_Trade_Porfolio;
+    
+    DECLARE @sql_Trade_Porfolio NVARCHAR(MAX);
+    SET @sql_Trade_Porfolio = 'ALTER TABLE Trade_Porfolio DROP COLUMN ' + QUOTENAME(@name_Trade_Porfolio)
+    EXEC sp_executesql @sql_Trade_Porfolio
+    
+    
+    FETCH NEXT FROM cursor_Trade_Porfolio INTO @name_Trade_Porfolio
+END
+
+CLOSE cursor_Trade_Porfolio;
+DEALLOCATE cursor_Trade_Porfolio;
 
 
 -- [Trade_Porfolio.Caption] -------------
@@ -9289,6 +9889,7 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_Porfolio
     ALTER TABLE Trade_Porfolio DROP  CONSTRAINT [UniqueNonclustered_Trade_PorfolioBindType]
     END
 -- [Trade_Trader] ----------------------
+
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Trader' AND xtype='U')
 
 BEGIN
@@ -9303,6 +9904,30 @@ BEGIN
         ,[EndUser] BIGINT
 , CONSTRAINT [PK_Trade_Trader] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Trade_Trader NVARCHAR(64)
+DECLARE cursor_Trade_Trader CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Fund','EndUser'))
+
+OPEN cursor_Trade_Trader
+FETCH NEXT FROM cursor_Trade_Trader INTO @name_Trade_Trader
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Trade_Trader.' + @name_Trade_Trader;
+    
+    DECLARE @sql_Trade_Trader NVARCHAR(MAX);
+    SET @sql_Trade_Trader = 'ALTER TABLE Trade_Trader DROP COLUMN ' + QUOTENAME(@name_Trade_Trader)
+    EXEC sp_executesql @sql_Trade_Trader
+    
+    
+    FETCH NEXT FROM cursor_Trade_Trader INTO @name_Trade_Trader
+END
+
+CLOSE cursor_Trade_Trader;
+DEALLOCATE cursor_Trade_Trader;
 
 
 -- [Trade_Trader.Caption] -------------
