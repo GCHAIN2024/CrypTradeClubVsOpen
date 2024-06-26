@@ -18,6 +18,7 @@ open Shared.OrmMor
 open Shared.CustomMor
 
 open UtilWebServer.Db
+open UtilWebServer.OpenGraph
 
 open BizLogics.Common
 
@@ -42,97 +43,98 @@ let newP (bc:BizComplex) p =
         |> loggedPipeline "BizLogics.Crawler.launchCrawlers" conn
         |> ignore
 
-let cCOINDESK (runtime:Runtime) bc = 
+let og p html = 
+    let title,desc,image = parse html
+    p.Title <- title
+    p.Summary <- desc
+    p.PreviewImgUrl <- image
 
-    let code, html = 
-        "https://www.coindesk.com/livewire/"
-        |> httpGet None
+let template 
+    (__urls: unit -> string[])
+    url__html
+    populator
+    (runtime:Runtime) 
+    bc =
 
-    let lines = 
-        find ("Live Wire</h2>","Show More</button>") html
-        |> regex_matches (string__regex "(?<=href=\x22)/\w+/\d+.*?(?=\x22)")
+    let urls = 
+        __urls()
         |> Array.distinct
 
-    lines.Length.ToString() + " lines"
+    "[" + bc.biz.p.Code + "]" + urls.Length.ToString() + " items"
     |> runtime.output
 
-    lines
-    |> Array.iter(fun line ->
+    urls
+    |> Array.iter(fun url -> 
 
         Thread.Sleep 1000
 
-        let p = pMOMENT_empty()
-
-        p.Lang <- runtime.data.langs["en"].ID
-
-        p.UrlOriginal <- "https://www.coindesk.com" + line
-
-        // "identifier":"6IVEXN2QXNDRHCRTA6HJ7R7AQM"
-        p.OID <- regex_match (string__regex "(?<=\x22identifier\x22:\x22)\w+(?=\x22)") html
-
-        let html = 
-            p.UrlOriginal
-            |> httpGet None
-            |> snd
-
-        let headers = find ("<head>","</head>") html
-        p.Title <- find ("<title>","</title>") html
-        p.Summary <- find ("<meta name=\"description\" content=\"","\"") html
-        p.PreviewImgUrl <- find ("<meta property=\"og:image\" content=\"","\"") html
-        
-        p.UrlOriginal + " " + p.Title
-        |> runtime.output
-
-        newP bc p)
-
-let cCRYPTOSLATE (runtime:Runtime) bc = 
-
-    let code, html = 
-        "https://cryptoslate.com/feed/"
-        |> httpGet None
-
-    let lines = 
-        html
-        |> regex_matches (string__regex "<item>.*?</item>")
-
-    lines.Length.ToString() + " lines"
-    |> runtime.output
-
-    lines
-    |> Array.iter(fun line ->
-
-        Thread.Sleep 1000
+        let html = url__html url
 
         let p = pMOMENT_empty()
 
+        p.UrlOriginal <- url
+
         p.Lang <- runtime.data.langs["en"].ID
+        og p html
 
-        p.UrlOriginal <- regex_match (string__regex "(?<=<link>).*?(?=</link>)") line
+        populator p html
 
-        let html = 
-            p.UrlOriginal
+        if p.UrlOriginal.Length * p.Title.Length > 0 then
+            p.UrlOriginal + " " + p.Title
+            |> runtime.output
+
+            newP bc p)
+
+
+let cCOINDESK = 
+    template
+        (fun _ ->
+            "https://www.coindesk.com/livewire/"
             |> httpGet None
             |> snd
+            |> find ("Live Wire</h2>","Show More</button>")
+            |> regex_matches (string__regex "(?<=href=\x22)/\w+/\d+.*?(?=\x22)")
+            |> Array.map(fun item -> "https://www.coindesk.com" + item))
+        (httpGet None >> snd)
+        (fun p html -> 
+            p.OID <- regex_match (string__regex "(?<=\x22identifier\x22:\x22)\w+(?=\x22)") html)
 
-        let headers = find ("<head>","</head>") html
-        p.Title <- regex_match (string__regex "(?<=<title>).*?(?=</title>)") line
-        p.Summary <- 
-            let mutable s = regex_match (string__regex "(?<=<description>).*?(?=</description>)") line
-            s <- s.Trim()
-            if s.StartsWith "<![CDATA[" then
-                s <- s |> find("<![CDATA[","]]>")
-            s
-            
-        p.PreviewImgUrl <- find ("<meta property=\"og:image\" content=\"","\"") headers
-        
-        p.OID <- find ("<link rel=\"shortlink\" href=\"https://cryptoslate.com/?p=","\" />") headers
+let cCRYPTOSLATE = 
+    template
+        (fun _ ->
+            "https://cryptoslate.com/feed/"
+            |> httpGet None
+            |> snd
+            |> regex_matches (string__regex "(?<=<link>).*?(?=</link>)"))
+        (httpGet None >> snd)
+        (fun p html -> 
+            p.OID <- 
+                html
+                |> find ("<head>","</head>")
+                |> find ("<link rel=\"shortlink\" href=\"https://cryptoslate.com/?p=","\" />"))
 
-        p.UrlOriginal + " " + p.Title
-        |> runtime.output
+let cCOINTELEGRAPH = 
+    template
+        (fun _ ->
+            let hc = empty__HttpClient()
 
-        newP bc p)
+            (hc.get "https://cointelegraph.com/").html
+            |> regex_matches (string__regex "(?<=<a href=\x22/tags/).*?(?=\x22)")
+            |> Array.distinct
+            |> Array.map(fun i -> "https://cointelegraph.com/tags" + i)
+            |> Array.append [| "https://cointelegraph.com/" |]
+            |> Array.map(fun i -> 
+                Thread.Sleep 3000
+                (hc.get i).html
+                |> regex_matches (string__regex "(?<=<a href=\x22)/news/.*?(?=\x22)"))
+            |> Array.concat
+            |> Array.map(fun i -> "https://cointelegraph.com" + i))
+        (fun url -> (empty__HttpClient().get url).html)
+        (fun p html -> 
+            p.OID <- 
+                html
+                |> regex_match (string__regex "(?<=<article id=\x22article-)\d+(?=\x22)"))
 
-// https://cointelegraph.com/
 // https://blockchain.news/
 // https://decrypt.co/news
 // https://news.bitcoin.com/
@@ -140,7 +142,8 @@ let cCRYPTOSLATE (runtime:Runtime) bc =
 let launchCrawlers (runtime:Runtime) = 
 
     [|  (cCOINDESK,"COINDESK")
-        (cCRYPTOSLATE,"CRYPTOSLATE") |]
+        (cCRYPTOSLATE,"CRYPTOSLATE")
+        (cCOINTELEGRAPH,"COINTELEGRAPH")|]
     |> Array.iter(fun (f,c) ->
         (fun _ -> 
             f runtime runtime.data.bcs[c])

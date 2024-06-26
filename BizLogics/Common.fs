@@ -24,6 +24,8 @@ let defaultHost() = {
     conn = "server=.; database=CTC; Trusted_Connection=True;"
     defaultHtml = "index.html"
 
+    updateDatabase = true
+
     openDiscordAppId = 
         [|  "1254790111"
             "913181274" |]
@@ -84,6 +86,7 @@ let host e =
         h.zmq <- true
     | RevengeDev -> 
         h.zmq <- false
+        h.updateDatabase <- false
 
     h
 

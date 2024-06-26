@@ -41,7 +41,8 @@ let init (runtime:Runtime) =
         |> createDbLogger LOG_metadata conn
         |> Some
 
-    updateDbStructure runtime conn
+    if runtime.host.updateDatabase then
+        updateDbStructure runtime conn
 
     Shared.OrmMor.init()
 

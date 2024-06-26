@@ -43,6 +43,7 @@ let api_Public_ListCur x =
 let api_Public_HomepageMoments x =
     runtime.data.moments.Values
     |> Seq.toArray
+    |> Array.sortByDescending(fun i -> i.m.Createdat)
     |> Array.map MomentComplex__json
     |> wrapOkAry
 
