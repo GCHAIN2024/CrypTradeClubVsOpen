@@ -290,7 +290,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "Legal//法币///Crypto//数字币",
+        "lines": "Fiat//法币///Crypto//数字币",
         "name": "CurType"
       },
       {

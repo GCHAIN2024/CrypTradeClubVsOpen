@@ -488,28 +488,28 @@ let CRY_table = "Ca_Country"
 // [Ca_Cur] (CUR)
 
 type curCurTypeEnum = 
-| Legal = 0 // 法币
+| Fiat = 0 // 法币
 | Crypto = 1 // 数字币
 
-let curCurTypeEnums = [| curCurTypeEnum.Legal; curCurTypeEnum.Crypto |]
+let curCurTypeEnums = [| curCurTypeEnum.Fiat; curCurTypeEnum.Crypto |]
 let curCurTypeEnumstrs = [| "curCurTypeEnum"; "curCurTypeEnum" |]
 let curCurTypeNum = 2
 
 let int__curCurTypeEnum v =
     match v with
-    | 0 -> Some curCurTypeEnum.Legal
+    | 0 -> Some curCurTypeEnum.Fiat
     | 1 -> Some curCurTypeEnum.Crypto
     | _ -> None
 
 let str__curCurTypeEnum s =
     match s with
-    | "Legal" -> Some curCurTypeEnum.Legal
+    | "Fiat" -> Some curCurTypeEnum.Fiat
     | "Crypto" -> Some curCurTypeEnum.Crypto
     | _ -> None
 
 let curCurTypeEnum__caption e =
     match e with
-    | curCurTypeEnum.Legal -> "法币"
+    | curCurTypeEnum.Fiat -> "法币"
     | curCurTypeEnum.Crypto -> "数字币"
     | _ -> ""
 
@@ -572,7 +572,7 @@ let pCUR_fields = [|
     Boolean("EnableReward")
     Boolean("EnableOTC")
     Link("Icon", 512)
-    SelectLines("CurType", [| ("Legal","法币");("Crypto","数字币") |])
+    SelectLines("CurType", [| ("Fiat","法币");("Crypto","数字币") |])
     Integer("Dec")
     Float("AnchorRate")
     Boolean("Freezable")

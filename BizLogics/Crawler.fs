@@ -146,8 +146,9 @@ let cCOINTELEGRAPH =
 // https://blockchain.news/
 // https://decrypt.co/news
 // https://news.bitcoin.com/
+// https://www.coingecko.com/en/news
 
-let launchCrawlers (runtime:Runtime) = 
+let launchNewsCrawlers (runtime:Runtime) = 
 
     [|  (cCOINDESK,"COINDESK")
         (cCRYPTOSLATE,"CRYPTOSLATE")

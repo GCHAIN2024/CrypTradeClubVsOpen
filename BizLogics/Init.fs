@@ -23,6 +23,7 @@ open BizLogics.Common
 open BizLogics.Ca
 open BizLogics.Social
 open BizLogics.Crawler
+open BizLogics.Market
 
 let init (runtime:Runtime) = 
 
@@ -102,7 +103,8 @@ let init (runtime:Runtime) =
 
     //runtime.facts
 
-    launchCrawlers runtime            
+    launchMarketCrawlers runtime            
+    launchNewsCrawlers runtime            
 
 
 

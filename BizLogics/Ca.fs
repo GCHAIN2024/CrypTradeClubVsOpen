@@ -8,6 +8,7 @@ open System.Collections.Concurrent
 open Util.Text
 open Util.Crypto
 open Util.DbTx
+open Util.Orm
 open Util.Zmq
 
 open UtilWebServer.DbLogger
@@ -25,11 +26,28 @@ let create loc metadata p =
     let rcd = 
         p
         |> populateCreateTx pretx metadata
-
+        
     if pretx |> loggedPipeline loc conn then
         Some rcd
     else
         None
+
+let update loc metadata changer rcd = 
+
+    let current = metadata.clone rcd.p
+    changer rcd.p
+
+    let pretx = None |> opctx__pretx
+
+    (rcd.ID,DateTime.UtcNow,rcd.p)
+    |> build_update_sql metadata
+    |> pretx.sqls.Add
+        
+    if pretx |> loggedPipeline loc conn then
+        true
+    else
+        rcd.p <- current
+        false
 
 let createLang code = 
     let p = pLANG_empty()
