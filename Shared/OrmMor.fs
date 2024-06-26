@@ -5822,6 +5822,10 @@ let pMOMENT__bin (bb:BytesBuilder) (p:pMOMENT) =
     
     p.BindType |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
+    let binBizCode = p.BizCode |> Encoding.UTF8.GetBytes
+    binBizCode.Length |> BitConverter.GetBytes |> bb.append
+    binBizCode |> bb.append
+    
     p.Lang |> BitConverter.GetBytes |> bb.append
     
     let binTitle = p.Title |> Encoding.UTF8.GetBytes
@@ -5895,6 +5899,11 @@ let bin__pMOMENT (bi:BinIndexed):pMOMENT =
     
     p.BindType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
+    
+    let count_BizCode = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.BizCode <- Encoding.UTF8.GetString(bin,index.Value,count_BizCode)
+    index.Value <- index.Value + count_BizCode
     
     p.Lang <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
@@ -5993,6 +6002,7 @@ let pMOMENT__json (p:pMOMENT) =
         ("Agent",p.Agent.ToString() |> Json.Num)
         ("Bind",p.Bind.ToString() |> Json.Num)
         ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num)
+        ("BizCode",p.BizCode |> Json.Str)
         ("Lang",p.Lang.ToString() |> Json.Num)
         ("Title",p.Title |> Json.Str)
         ("Summary",p.Summary |> Json.Str)
@@ -6040,6 +6050,8 @@ let json__pMOMENTo (json:Json):pMOMENT option =
     p.Bind <- checkfield fields "Bind" |> parse_int64
     
     p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+    
+    p.BizCode <- checkfieldz fields "BizCode" 256
     
     p.Lang <- checkfield fields "Lang" |> parse_int64
     
@@ -6101,6 +6113,8 @@ let json__MOMENTo (json:Json):MOMENT option =
         p.Bind <- checkfield fields "Bind" |> parse_int64
         
         p.BindType <- checkfield fields "BindType" |> parse_int32 |> EnumOfValue
+        
+        p.BizCode <- checkfieldz fields "BizCode" 256
         
         p.Lang <- checkfield fields "Lang" |> parse_int64
         
@@ -9673,23 +9687,24 @@ let db__pMOMENT(line:Object[]): pMOMENT =
     p.Agent <- if Convert.IsDBNull(line.[4]) then 0L else line.[4] :?> int64
     p.Bind <- if Convert.IsDBNull(line.[5]) then 0L else line.[5] :?> int64
     p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
-    p.Lang <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
-    p.Title <- string(line.[8]).TrimEnd()
-    p.Summary <- string(line.[9]).TrimEnd()
-    p.FullText <- string(line.[10]).TrimEnd()
-    p.PreviewImgUrl <- string(line.[11]).TrimEnd()
-    p.Link <- string(line.[12]).TrimEnd()
-    p.Type <- EnumOfValue(if Convert.IsDBNull(line.[13]) then 0 else line.[13] :?> int)
-    p.Question <- if Convert.IsDBNull(line.[14]) then 0L else line.[14] :?> int64
-    p.State <- EnumOfValue(if Convert.IsDBNull(line.[15]) then 0 else line.[15] :?> int)
-    p.Group <- if Convert.IsDBNull(line.[16]) then 0L else line.[16] :?> int64
-    p.Postedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[17]) then DateTime.MinValue.Ticks else line.[17] :?> int64)
-    p.Keywords <- string(line.[18]).TrimEnd()
-    p.MediaType <- EnumOfValue(if Convert.IsDBNull(line.[19]) then 0 else line.[19] :?> int)
-    p.UrlOriginal <- string(line.[20]).TrimEnd()
-    p.OID <- string(line.[21]).TrimEnd()
-    p.PostType <- EnumOfValue(if Convert.IsDBNull(line.[22]) then 0 else line.[22] :?> int)
-    p.AudioUrl <- string(line.[23]).TrimEnd()
+    p.BizCode <- string(line.[7]).TrimEnd()
+    p.Lang <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
+    p.Title <- string(line.[9]).TrimEnd()
+    p.Summary <- string(line.[10]).TrimEnd()
+    p.FullText <- string(line.[11]).TrimEnd()
+    p.PreviewImgUrl <- string(line.[12]).TrimEnd()
+    p.Link <- string(line.[13]).TrimEnd()
+    p.Type <- EnumOfValue(if Convert.IsDBNull(line.[14]) then 0 else line.[14] :?> int)
+    p.Question <- if Convert.IsDBNull(line.[15]) then 0L else line.[15] :?> int64
+    p.State <- EnumOfValue(if Convert.IsDBNull(line.[16]) then 0 else line.[16] :?> int)
+    p.Group <- if Convert.IsDBNull(line.[17]) then 0L else line.[17] :?> int64
+    p.Postedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[18]) then DateTime.MinValue.Ticks else line.[18] :?> int64)
+    p.Keywords <- string(line.[19]).TrimEnd()
+    p.MediaType <- EnumOfValue(if Convert.IsDBNull(line.[20]) then 0 else line.[20] :?> int)
+    p.UrlOriginal <- string(line.[21]).TrimEnd()
+    p.OID <- string(line.[22]).TrimEnd()
+    p.PostType <- EnumOfValue(if Convert.IsDBNull(line.[23]) then 0 else line.[23] :?> int)
+    p.AudioUrl <- string(line.[24]).TrimEnd()
 
     p
 
@@ -9697,6 +9712,7 @@ let pMOMENT__sps (p:pMOMENT) = [|
     new SqlParameter("Agent", p.Agent)
     new SqlParameter("Bind", p.Bind)
     new SqlParameter("BindType", p.BindType)
+    new SqlParameter("BizCode", p.BizCode)
     new SqlParameter("Lang", p.Lang)
     new SqlParameter("Title", p.Title)
     new SqlParameter("Summary", p.Summary)
@@ -9725,6 +9741,7 @@ let pMOMENT_clone (p:pMOMENT): pMOMENT = {
     Agent = p.Agent
     Bind = p.Bind
     BindType = p.BindType
+    BizCode = p.BizCode
     Lang = p.Lang
     Title = p.Title
     Summary = p.Summary
@@ -9804,6 +9821,7 @@ let MOMENTTxSqlServer =
     ,[Agent]
     ,[Bind]
     ,[BindType]
+    ,[BizCode]
     ,[Lang]
     ,[Title]
     ,[Summary]

@@ -3591,6 +3591,7 @@ type pMOMENT = {
 mutable Agent: FK
 mutable Bind: Integer
 mutable BindType: momentBindTypeEnum
+mutable BizCode: Chars
 mutable Lang: FK
 mutable Title: Text
 mutable Summary: Text
@@ -3612,12 +3613,13 @@ mutable AudioUrl: Text}
 
 type MOMENT = Rcd<pMOMENT>
 
-let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[Lang],[Title],[Summary],[FullText],[PreviewImgUrl],[Link],[Type],[Question],[State],[Group],[Postedat],[Keywords],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
+let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[BizCode],[Lang],[Title],[Summary],[FullText],[PreviewImgUrl],[Link],[Type],[Question],[State],[Group],[Postedat],[Keywords],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
 
 let pMOMENT_fieldordersArray = [|
     "Agent"
     "Bind"
     "BindType"
+    "BizCode"
     "Lang"
     "Title"
     "Summary"
@@ -3636,12 +3638,13 @@ let pMOMENT_fieldordersArray = [|
     "PostType"
     "AudioUrl" |]
 
-let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[Lang]=@Lang,[Title]=@Title,[Summary]=@Summary,[FullText]=@FullText,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[Group]=@Group,[Postedat]=@Postedat,[Keywords]=@Keywords,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
+let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[BizCode]=@BizCode,[Lang]=@Lang,[Title]=@Title,[Summary]=@Summary,[FullText]=@FullText,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[Group]=@Group,[Postedat]=@Postedat,[Keywords]=@Keywords,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
 
 let pMOMENT_fields = [|
     FK("Agent")
     Integer("Bind")
     SelectLines("BindType", [| ("EndUser","用户");("Biz","机构") |])
+    Chars("BizCode", 256)
     FK("Lang")
     Text("Title")
     Text("Summary")
@@ -3664,6 +3667,7 @@ let pMOMENT_empty(): pMOMENT = {
     Agent = 0L
     Bind = 0L
     BindType = EnumOfValue 0
+    BizCode = ""
     Lang = 0L
     Title = ""
     Summary = ""

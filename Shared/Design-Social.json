@@ -19,6 +19,11 @@
         "name": "BindType"
       },
       {
+        "enum": "Chars",
+        "length": 256,
+        "name": "BizCode"
+      },
+      {
         "enum": "FK",
         "name": "Lang"
       },

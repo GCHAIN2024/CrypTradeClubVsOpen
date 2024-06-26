@@ -8985,6 +8985,7 @@ BEGIN
         [Agent] BIGINT
         ,[Bind] BIGINT
         ,[BindType] INT
+        ,[BizCode] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS
         ,[Lang] BIGINT
         ,[Title] NVARCHAR(MAX)
         ,[Summary] NVARCHAR(MAX)
@@ -9009,7 +9010,7 @@ END
 -- Dropping obsolete fields -----------
 DECLARE @name_Social_Moment NVARCHAR(64)
 DECLARE cursor_Social_Moment CURSOR FOR 
-    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Agent','Bind','BindType','Lang','Title','Summary','FullText','PreviewImgUrl','Link','Type','Question','State','Group','Postedat','Keywords','MediaType','UrlOriginal','OID','PostType','AudioUrl'))
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Agent','Bind','BindType','BizCode','Lang','Title','Summary','FullText','PreviewImgUrl','Link','Type','Question','State','Group','Postedat','Keywords','MediaType','UrlOriginal','OID','PostType','AudioUrl'))
 
 OPEN cursor_Social_Moment
 FETCH NEXT FROM cursor_Social_Moment INTO @name_Social_Moment
@@ -9097,6 +9098,29 @@ IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Social_Mo
 IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Social_MomentBindType')
     BEGIN
     ALTER TABLE Social_Moment DROP  CONSTRAINT [UniqueNonclustered_Social_MomentBindType]
+    END
+
+-- [Social_Moment.BizCode] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Social_Moment') AND name='BizCode')
+    BEGIN
+     ALTER TABLE Social_Moment ALTER COLUMN [BizCode] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS
+    END
+ELSE
+    BEGIN
+    ALTER TABLE Social_Moment ADD [BizCode] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS
+    END
+
+UPDATE Social_Moment SET [BizCode]='' WHERE ([BizCode] IS NULL)
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Social_MomentBizCode')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Social_MomentBizCode]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Social_MomentBizCode')
+    BEGIN
+    ALTER TABLE Social_Moment DROP  CONSTRAINT [UniqueNonclustered_Social_MomentBizCode]
     END
 
 -- [Social_Moment.Lang] -------------

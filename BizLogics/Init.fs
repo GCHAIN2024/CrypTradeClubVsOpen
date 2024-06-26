@@ -91,7 +91,8 @@ let init (runtime:Runtime) =
     moments
     |> Array.iter(fun m -> 
 
-        let mc = { m = m }
+        let mc = { 
+            m = m }
         runtime.data.moments[m.ID] <- mc
 
         if m.p.BindType = momentBindTypeEnum.Biz then

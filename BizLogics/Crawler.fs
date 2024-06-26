@@ -33,8 +33,10 @@ let newP (bc:BizComplex) p =
         let pretx = None |> opctx__pretx
 
         let rcd = 
+            
             p.BindType <- momentBindTypeEnum.Biz
             p.Bind <- bc.biz.ID
+            p.BizCode <- bc.biz.p.Code
 
             p
             |> populateCreateTx pretx MOMENT_metadata
@@ -75,6 +77,7 @@ let template
         p.UrlOriginal <- url
 
         p.Lang <- runtime.data.langs["en"].ID
+
         og p html
 
         populator p html
