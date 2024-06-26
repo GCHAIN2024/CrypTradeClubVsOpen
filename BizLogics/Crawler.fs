@@ -56,18 +56,18 @@ let template
     url__html
     populator
     (runtime:Runtime) 
-    bc =
+    (bc:BizComplex) =
 
     let urls = 
         __urls()
         |> Array.distinct
+        |> Array.filter(fun url -> 
+            (bc.moments.Values |> Seq.tryFind(fun mc -> mc.m.p.UrlOriginal = url)).IsNone)
 
     "[" + bc.biz.p.Code + "]" + urls.Length.ToString() + " items"
     |> runtime.output
 
     urls
-    |> Array.filter(fun url -> 
-        (bc.moments.Values |> Seq.tryFind(fun mc -> mc.m.p.UrlOriginal = url)).IsNone)
     |> Array.iter(fun url -> 
 
         Thread.Sleep 1000
