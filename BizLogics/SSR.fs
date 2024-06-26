@@ -87,7 +87,7 @@ let echo req =
         { req = req; rep = None}
         |> Suc
         |> bind h1
-        |> bindFail (hpattern "/m/" hMoment)
+        |> bind (hpattern "/m/" hMoment)
         |> bindFail (hapi echoApiHandler branch) with
     | Suc x -> x.rep
     | Fail(x,e) -> None
