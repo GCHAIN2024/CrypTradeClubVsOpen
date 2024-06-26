@@ -41,6 +41,8 @@ let init (runtime:Runtime) =
         |> createDbLogger LOG_metadata conn
         |> Some
 
+    updateDbStructure runtime conn
+
     Shared.OrmMor.init()
 
     (fun (i:LANG) -> runtime.data.langs[i.p.Code2] <- i)
