@@ -66,6 +66,8 @@ let template
     |> runtime.output
 
     urls
+    |> Array.filter(fun url -> 
+        (bc.moments.Values |> Seq.tryFind(fun mc -> mc.m.p.UrlOriginal = url)).IsNone)
     |> Array.iter(fun url -> 
 
         Thread.Sleep 1000
@@ -124,10 +126,13 @@ let cCOINTELEGRAPH =
             (hc.get "https://cointelegraph.com/").html
             |> regex_matches (string__regex "(?<=<a href=\x22/tags/).*?(?=\x22)")
             |> Array.distinct
-            |> Array.map(fun i -> "https://cointelegraph.com/tags" + i)
+            |> Array.map(fun i -> "https://cointelegraph.com/tags/" + i)
             |> Array.append [| "https://cointelegraph.com/" |]
             |> Array.map(fun i -> 
                 Thread.Sleep 3000
+
+                "Loading " + i |> runtime.output
+
                 (hc.get i).html
                 |> regex_matches (string__regex "(?<=<a href=\x22)/news/.*?(?=\x22)"))
             |> Array.concat
@@ -150,4 +155,4 @@ let launchCrawlers (runtime:Runtime) =
     |> Array.iter(fun (f,c) ->
         (fun _ -> 
             f runtime runtime.data.bcs[c])
-        |> asyncCyclerInterval (60 * 1000))
+        |> asyncCyclerInterval (15 * 60 * 1000))
