@@ -57,8 +57,7 @@ let crawler (runtime:Runtime) =
             p.AnchorRate <- price
             p.Icon <- img
             p.CurType <- curCurTypeEnum.Crypto
-            p
-            |> create "BizLogics.Market.crawler" CUR_metadata 
+            p__createRcd p CUR_metadata "BizLogics.Market.crawler" conn
             |> oPipelineSome (fun cur -> 
                 runtime.data.curs[cur.p.Code] <- cur)
             |> ignore

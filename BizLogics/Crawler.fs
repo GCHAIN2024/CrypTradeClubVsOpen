@@ -35,14 +35,13 @@ let newP (bc:BizComplex) p =
         p__createRcd p MOMENT_metadata "BizLogics.Crawler.launchCrawlers" conn
         |> ignore
 
-let og host p html = 
-    let title,desc,image = parse host html
+let og p html = 
+    let title,desc,image = parse html
     p.Title <- title
     p.Summary <- desc
     p.PreviewImgUrl <- image
 
 let template 
-    host
     (__urls: unit -> string[])
     url__html
     populator
@@ -71,11 +70,14 @@ let template
 
         p.Lang <- runtime.data.langs["en"].ID
 
-        og host p html
+        og p html
 
         populator p html
 
-        if p.UrlOriginal.Length * p.Title.Length > 0 then
+        if p.OID.Length = 0 then
+            p.OID <- p.UrlOriginal
+
+        if p.OID.Length * p.UrlOriginal.Length * p.Title.Length > 0 then
             p.UrlOriginal + " " + p.Title
             |> runtime.output
 
@@ -84,7 +86,6 @@ let template
 
 let cCOINDESK = 
     template
-        "www.coindesk.com"
         (fun _ ->
             "https://www.coindesk.com/livewire/"
             |> httpGet None
@@ -98,7 +99,6 @@ let cCOINDESK =
 
 let cCRYPTOSLATE = 
     template
-        "cryptoslate.com"
         (fun _ ->
             "https://cryptoslate.com/feed/"
             |> httpGet None
@@ -113,7 +113,6 @@ let cCRYPTOSLATE =
 
 let cCOINTELEGRAPH = 
     template
-        "cointelegraph.com"
         (fun _ ->
             (empty__HttpClient().get "https://cointelegraph.com/").html
             |> regex_matches (string__regex "(?<=<a href=\x22/tags/).*?(?=\x22)")
@@ -135,7 +134,26 @@ let cCOINTELEGRAPH =
                 html
                 |> regex_match (string__regex "(?<=<article id=\x22article-)\d+(?=\x22)"))
 
-// https://blockchain.news/
+let cBLOCKCHAINNEWS = 
+    template
+        (fun _ ->
+            (empty__HttpClient().get "https://blockchain.news").html
+            |> regex_matches (string__regex "(?<=<a href=\x22/tag/).*?(?=\x22)")
+            |> Array.distinct
+            |> Array.map(fun i -> "https://blockchain.news/tag/" + i)
+            |> Array.append [| "https://blockchain.news/" |]
+            |> Array.map(fun i -> 
+                Thread.Sleep 3000
+
+                "Loading " + i |> runtime.output
+
+                (empty__HttpClient().get i).html
+                |> regex_matches (string__regex "(?<=<a href=\x22)/news/.*?(?=\x22)"))
+            |> Array.concat
+            |> Array.map(fun i -> "https://blockchain.news" + i))
+        (fun url -> (empty__HttpClient().get url).html)
+        (fun p html -> ())
+
 // https://decrypt.co/news
 // https://news.bitcoin.com/
 // https://www.coingecko.com/en/news
@@ -144,7 +162,8 @@ let launchNewsCrawlers (runtime:Runtime) =
 
     [|  (cCOINDESK,"COINDESK")
         (cCRYPTOSLATE,"CRYPTOSLATE")
-        (cCOINTELEGRAPH,"COINTELEGRAPH")|]
+        (cCOINTELEGRAPH,"COINTELEGRAPH") 
+        (cBLOCKCHAINNEWS,"BLOCKCHAIN.NEWS") |]
     |> Array.iter(fun (f,c) ->
         (fun _ -> 
             f runtime runtime.data.bcs[c])
