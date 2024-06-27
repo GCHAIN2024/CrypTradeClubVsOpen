@@ -7676,6 +7676,10 @@ BEGIN
         ,[Sort] BIGINT NOT NULL,
         [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Desc] NVARCHAR(MAX)
+        ,[Ins] BIGINT
+        ,[Stake] FLOAT
+        ,[Entry] FLOAT
+        ,[Exist] FLOAT
         ,[Fund] BIGINT
         ,[EndUser] BIGINT
 , CONSTRAINT [PK_Trade_Arbitrage] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
@@ -7685,7 +7689,7 @@ END
 -- Dropping obsolete fields -----------
 DECLARE @name_Trade_Arbitrage NVARCHAR(64)
 DECLARE cursor_Trade_Arbitrage CURSOR FOR 
-    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Fund','EndUser'))
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Ins','Stake','Entry','Exist','Fund','EndUser'))
 
 OPEN cursor_Trade_Arbitrage
 FETCH NEXT FROM cursor_Trade_Arbitrage INTO @name_Trade_Arbitrage
@@ -7752,6 +7756,102 @@ IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_Arb
 IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageDesc')
     BEGIN
     ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageDesc]
+    END
+
+-- [Trade_Arbitrage.Ins] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Ins')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Ins] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_Ins NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Ins = 'ALTER TABLE Trade_Arbitrage ADD [Ins] BIGINT'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Ins
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageIns')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageIns]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageIns')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageIns]
+    END
+
+-- [Trade_Arbitrage.Stake] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Stake')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Stake] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_Stake NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Stake = 'ALTER TABLE Trade_Arbitrage ADD [Stake] FLOAT'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Stake
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageStake')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageStake]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageStake')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageStake]
+    END
+
+-- [Trade_Arbitrage.Entry] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Entry')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Entry] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_Entry NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Entry = 'ALTER TABLE Trade_Arbitrage ADD [Entry] FLOAT'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Entry
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageEntry')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageEntry]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageEntry')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageEntry]
+    END
+
+-- [Trade_Arbitrage.Exist] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Exist')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Exist] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_Exist NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Exist = 'ALTER TABLE Trade_Arbitrage ADD [Exist] FLOAT'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Exist
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageExist')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageExist]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageExist')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageExist]
     END
 
 -- [Trade_Arbitrage.Fund] -------------
@@ -8112,10 +8212,6 @@ BEGIN
         ,[Sort] BIGINT NOT NULL,
         [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Desc] NVARCHAR(MAX)
-        ,[Ins] BIGINT
-        ,[Stake] FLOAT
-        ,[Entry] FLOAT
-        ,[Exist] FLOAT
         ,[Fund] BIGINT
         ,[Portfolio] BIGINT
         ,[EndUser] BIGINT
@@ -8126,7 +8222,7 @@ END
 -- Dropping obsolete fields -----------
 DECLARE @name_Trade_Trader NVARCHAR(64)
 DECLARE cursor_Trade_Trader CURSOR FOR 
-    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Ins','Stake','Entry','Exist','Fund','Portfolio','EndUser'))
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Fund','Portfolio','EndUser'))
 
 OPEN cursor_Trade_Trader
 FETCH NEXT FROM cursor_Trade_Trader INTO @name_Trade_Trader
@@ -8193,102 +8289,6 @@ IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_Tra
 IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderDesc')
     BEGIN
     ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderDesc]
-    END
-
--- [Trade_Trader.Ins] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Ins')
-    BEGIN
-     ALTER TABLE Trade_Trader ALTER COLUMN [Ins] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Trade_Trader_Ins NVARCHAR(MAX);
-    SET @sql_add_Trade_Trader_Ins = 'ALTER TABLE Trade_Trader ADD [Ins] BIGINT'
-    EXEC sp_executesql @sql_add_Trade_Trader_Ins
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderIns')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderIns]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderIns')
-    BEGIN
-    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderIns]
-    END
-
--- [Trade_Trader.Stake] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Stake')
-    BEGIN
-     ALTER TABLE Trade_Trader ALTER COLUMN [Stake] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Trade_Trader_Stake NVARCHAR(MAX);
-    SET @sql_add_Trade_Trader_Stake = 'ALTER TABLE Trade_Trader ADD [Stake] FLOAT'
-    EXEC sp_executesql @sql_add_Trade_Trader_Stake
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderStake')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderStake]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderStake')
-    BEGIN
-    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderStake]
-    END
-
--- [Trade_Trader.Entry] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Entry')
-    BEGIN
-     ALTER TABLE Trade_Trader ALTER COLUMN [Entry] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Trade_Trader_Entry NVARCHAR(MAX);
-    SET @sql_add_Trade_Trader_Entry = 'ALTER TABLE Trade_Trader ADD [Entry] FLOAT'
-    EXEC sp_executesql @sql_add_Trade_Trader_Entry
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderEntry')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderEntry]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderEntry')
-    BEGIN
-    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderEntry]
-    END
-
--- [Trade_Trader.Exist] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Exist')
-    BEGIN
-     ALTER TABLE Trade_Trader ALTER COLUMN [Exist] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Trade_Trader_Exist NVARCHAR(MAX);
-    SET @sql_add_Trade_Trader_Exist = 'ALTER TABLE Trade_Trader ADD [Exist] FLOAT'
-    EXEC sp_executesql @sql_add_Trade_Trader_Exist
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderExist')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderExist]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderExist')
-    BEGIN
-    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderExist]
     END
 
 -- [Trade_Trader.Fund] -------------

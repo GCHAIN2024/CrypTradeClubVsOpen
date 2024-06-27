@@ -5,6 +5,7 @@ open System.Text
 open System.Collections.Generic
 open System.Threading
 
+open Util.ADT
 open Util.Text
 open Util.Json
 open Util.HttpClient
@@ -54,12 +55,18 @@ let api_Public_CreateArbitrage (x:X) =
     
     let fields = x.json |> json__items
 
+    p.Ins <- checkfield fields "Ins" |> parse_int64
     p.Caption <- checkfield fields "Caption"
 
-    match 
-        p__createRcd p ARBITRAGE_metadata "api/public/createArbitrage" conn with
-    | Some rcd -> rcd |> ARBITRAGE__json |> wrapOk "arbitrage"
-    | None -> er Er.Internal
+    match
+        runtime.data.inss.Values
+        |> Seq.tryFind(fun i -> i.ID = p.Ins) with
+    | Some ins -> 
+        match 
+            p__createRcd p ARBITRAGE_metadata "api/public/createArbitrage" conn with
+        | Some rcd -> rcd |> ARBITRAGE__json |> wrapOk "arbitrage"
+        | None -> er Er.Internal
+    | None -> er Er.InvalideParameter
       
 
 let api_Public_UpdateArbitrage x =

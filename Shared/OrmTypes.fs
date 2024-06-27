@@ -2760,31 +2760,47 @@ let LOG_table = "Sys_Log"
 type pARBITRAGE = {
 mutable Caption: Chars
 mutable Desc: Text
+mutable Ins: FK
+mutable Stake: Float
+mutable Entry: Float
+mutable Exist: Float
 mutable Fund: FK
 mutable EndUser: FK}
 
 
 type ARBITRAGE = Rcd<pARBITRAGE>
 
-let ARBITRAGE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Fund],[EndUser]"
+let ARBITRAGE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Ins],[Stake],[Entry],[Exist],[Fund],[EndUser]"
 
 let pARBITRAGE_fieldordersArray = [|
     "Caption"
     "Desc"
+    "Ins"
+    "Stake"
+    "Entry"
+    "Exist"
     "Fund"
     "EndUser" |]
 
-let ARBITRAGE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Fund]=@Fund,[EndUser]=@EndUser"
+let ARBITRAGE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Ins]=@Ins,[Stake]=@Stake,[Entry]=@Entry,[Exist]=@Exist,[Fund]=@Fund,[EndUser]=@EndUser"
 
 let pARBITRAGE_fields = [|
     Chars("Caption", 64)
     Text("Desc")
+    FK("Ins")
+    Float("Stake")
+    Float("Entry")
+    Float("Exist")
     FK("Fund")
     FK("EndUser") |]
 
 let pARBITRAGE_empty(): pARBITRAGE = {
     Caption = ""
     Desc = ""
+    Ins = 0L
+    Stake = 0.0
+    Entry = 0.0
+    Exist = 0.0
     Fund = 0L
     EndUser = 0L }
 
@@ -2927,10 +2943,6 @@ let PORTFOLIO_table = "Trade_Porfolio"
 type pTRADER = {
 mutable Caption: Chars
 mutable Desc: Text
-mutable Ins: FK
-mutable Stake: Float
-mutable Entry: Float
-mutable Exist: Float
 mutable Fund: FK
 mutable Portfolio: FK
 mutable EndUser: FK}
@@ -2938,28 +2950,20 @@ mutable EndUser: FK}
 
 type TRADER = Rcd<pTRADER>
 
-let TRADER_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Ins],[Stake],[Entry],[Exist],[Fund],[Portfolio],[EndUser]"
+let TRADER_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Fund],[Portfolio],[EndUser]"
 
 let pTRADER_fieldordersArray = [|
     "Caption"
     "Desc"
-    "Ins"
-    "Stake"
-    "Entry"
-    "Exist"
     "Fund"
     "Portfolio"
     "EndUser" |]
 
-let TRADER_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Ins]=@Ins,[Stake]=@Stake,[Entry]=@Entry,[Exist]=@Exist,[Fund]=@Fund,[Portfolio]=@Portfolio,[EndUser]=@EndUser"
+let TRADER_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Fund]=@Fund,[Portfolio]=@Portfolio,[EndUser]=@EndUser"
 
 let pTRADER_fields = [|
     Chars("Caption", 64)
     Text("Desc")
-    FK("Ins")
-    Float("Stake")
-    Float("Entry")
-    Float("Exist")
     FK("Fund")
     FK("Portfolio")
     FK("EndUser") |]
@@ -2967,10 +2971,6 @@ let pTRADER_fields = [|
 let pTRADER_empty(): pTRADER = {
     Caption = ""
     Desc = ""
-    Ins = 0L
-    Stake = 0.0
-    Entry = 0.0
-    Exist = 0.0
     Fund = 0L
     Portfolio = 0L
     EndUser = 0L }
