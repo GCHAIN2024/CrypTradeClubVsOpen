@@ -56,8 +56,8 @@ let hMoment req =
 
     match try_parse_int64 m with
     | Some id ->
-        if runtime.data.moments.ContainsKey id then
-            runtime.data.moments[id]
+        if runtime.data.mcs.ContainsKey id then
+            runtime.data.mcs[id]
             |> mc__ssrPage
             |> render (hash1,hash2)
             |> bin__StandardResponse "text/html"

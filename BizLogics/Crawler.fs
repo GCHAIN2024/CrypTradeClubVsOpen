@@ -25,15 +25,20 @@ open BizLogics.Common
 let newP (bc:BizComplex) p =
 
     match
-        bc.moments.Values
+        bc.mcs.Values
         |> Seq.tryFind(fun mc -> mc.m.p.OID = p.OID) with
     | Some m -> ()
     | None -> 
         p.BindType <- momentBindTypeEnum.Biz
         p.Bind <- bc.biz.ID
         p.BizCode <- bc.biz.p.Code
-        p__createRcd p MOMENT_metadata "BizLogics.Crawler.launchCrawlers" conn
-        |> ignore
+        match 
+            p__createRcd p MOMENT_metadata "BizLogics.Crawler.launchCrawlers" conn with
+        | Some m -> 
+            let mc = { m = m }
+            bc.mcs[m.ID] <- mc
+            runtime.data.mcs[m.ID] <- mc
+        | None -> ()
 
 let og p html = 
     let title,desc,image = parse html
@@ -52,7 +57,7 @@ let template
         __urls()
         |> Array.distinct
         |> Array.filter(fun url -> 
-            (bc.moments.Values |> Seq.tryFind(fun mc -> mc.m.p.UrlOriginal = url)).IsNone)
+            (bc.mcs.Values |> Seq.tryFind(fun mc -> mc.m.p.UrlOriginal = url)).IsNone)
 
     "[" + bc.biz.p.Code + "]" + urls.Length.ToString() + " items"
     |> runtime.output

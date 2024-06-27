@@ -74,7 +74,7 @@ let init (runtime:Runtime) =
     (fun (i:BIZ) -> 
         runtime.data.bcs[i.p.Code] <- {
             biz = i
-            moments = new Dictionary<int64,MomentComplex>() })
+            mcs = new Dictionary<int64,MomentComplex>() })
     |> loadAll runtime.output conn BIZ_metadata
 
     freqBizCodes
@@ -85,7 +85,7 @@ let init (runtime:Runtime) =
                 runtime.data.bcs[code] <- 
                     {   
                         biz = biz
-                        moments = new Dictionary<int64,MomentComplex>() }
+                        mcs = new Dictionary<int64,MomentComplex>() }
             | None -> halt runtime.output ("BizLogics.Init.createBiz [" + code + "]") "")
 
     let moments = loadAllMoments runtime
@@ -94,11 +94,11 @@ let init (runtime:Runtime) =
 
         let mc = { 
             m = m }
-        runtime.data.moments[m.ID] <- mc
+        runtime.data.mcs[m.ID] <- mc
 
         if m.p.BindType = momentBindTypeEnum.Biz then
             match runtime__id__bc runtime.data m.p.Bind with
-            | Some bc -> bc.moments[m.ID] <- mc
+            | Some bc -> bc.mcs[m.ID] <- mc
             | None -> ())
 
     //runtime.facts

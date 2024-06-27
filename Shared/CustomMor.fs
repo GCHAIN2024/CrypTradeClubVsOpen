@@ -131,7 +131,7 @@ let json__EuComplexo (json:Json):EuComplex option =
 let BizComplex__bin (bb:BytesBuilder) (v:BizComplex) =
 
     BIZ__bin bb v.biz
-    Dictionary__bin (int64__bin) (MomentComplex__bin) bb v.moments
+    Dictionary__bin (int64__bin) (MomentComplex__bin) bb v.mcs
 
 let bin__BizComplex (bi:BinIndexed):BizComplex =
     let bin,index = bi
@@ -140,7 +140,7 @@ let bin__BizComplex (bi:BinIndexed):BizComplex =
         biz =
             bi
             |> bin__BIZ
-        moments =
+        mcs =
             bi
             |> (fun bi ->
                 let v = new Dictionary<int64,MomentComplex>()
@@ -151,7 +151,7 @@ let bin__BizComplex (bi:BinIndexed):BizComplex =
 let BizComplex__json (v:BizComplex) =
 
     [|  ("biz",BIZ__json v.biz)
-        ("moments",Dictionary__json (int64__json) (MomentComplex__json) v.moments)
+        ("moments",Dictionary__json (int64__json) (MomentComplex__json) v.mcs)
          |]
     |> Json.Braket
 
@@ -195,7 +195,7 @@ let json__BizComplexo (json:Json):BizComplex option =
     if passOptions then
         {
             biz = bizo.Value
-            moments = momentso.Value} |> Some
+            mcs = momentso.Value} |> Some
     else
         None
 

@@ -80,6 +80,32 @@
         "name": "EndUser"
       }
     ]
+  },
+
+  {
+    "name": "Trade_Arbitrage",
+    "shorthand": "arbitrage",
+    "id": 2978739,
+    "fields": [
+      {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Caption"
+      },
+      {
+        "enum": "Text",
+        "name": "Desc"
+      },
+      {
+        "enum": "FK",
+        "name": "Fund"
+      },
+      {
+        "enum": "FK",
+        "name": "EndUser"
+      }
+    ]
   }
+
 
 ]

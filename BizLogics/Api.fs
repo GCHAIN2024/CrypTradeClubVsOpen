@@ -50,7 +50,7 @@ let api_Public_Homepage x =
         |> Json.Ary
 
     let mcs = 
-        runtime.data.moments.Values
+        runtime.data.mcs.Values
         |> Seq.toArray
         |> Array.sortByDescending(fun i -> i.m.Createdat)
         |> Array.map MomentComplex__json
@@ -65,8 +65,8 @@ let api_Public_LoadMoment: X -> ApiReturn =
         MomentComplex__json
         ("mc",Er.InvalideParameter)
         (fun id -> 
-            if runtime.data.moments.ContainsKey id then
-                Some runtime.data.moments[id]
+            if runtime.data.mcs.ContainsKey id then
+                Some runtime.data.mcs[id]
             else
                 None)
 

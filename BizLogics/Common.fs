@@ -56,7 +56,7 @@ mutable facts: Fact list
 langs: ConcurrentDictionary<string,LANG>
 curs: ConcurrentDictionary<string,CUR>
 bcs: ConcurrentDictionary<string,BizComplex>
-moments: ConcurrentDictionary<int64,MomentComplex> }
+mcs: ConcurrentDictionary<int64,MomentComplex> }
 
 type Runtime = RuntimeTemplate<EuComplex,unit,RuntimeData>
 
@@ -83,8 +83,7 @@ let host e =
 
     match e with
     | Prod -> 
-        h.zmq <- false
-        h.port <- 11782
+        h.zmq <- true
     | RevengeDev -> 
         h.zmq <- false
         h.updateDatabase <- false
@@ -101,7 +100,7 @@ let runtime:Runtime =
             langs = new ConcurrentDictionary<string,LANG>()
             curs = new ConcurrentDictionary<string,CUR>()
             bcs = new ConcurrentDictionary<string,BizComplex>()
-            moments = new ConcurrentDictionary<int64,MomentComplex>() }
+            mcs = new ConcurrentDictionary<int64,MomentComplex>() }
         users = new ConcurrentDictionary<int64,EuComplex>()
         sessions = new ConcurrentDictionary<string,Session>()
         output = output }
@@ -133,7 +132,7 @@ let checkoutBizComplex runtime code =
 
             let bc = {
                 biz = rcd
-                moments = new Dictionary<int64,MomentComplex>() }
+                mcs = new Dictionary<int64,MomentComplex>() }
             runtime.bcs[code] <- bc
 
             Some bc
