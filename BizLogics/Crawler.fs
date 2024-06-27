@@ -29,20 +29,12 @@ let newP (bc:BizComplex) p =
         |> Seq.tryFind(fun mc -> mc.m.p.OID = p.OID) with
     | Some m -> ()
     | None -> 
-
-        let pretx = None |> opctx__pretx
-
-        let rcd = 
-            
-            p.BindType <- momentBindTypeEnum.Biz
-            p.Bind <- bc.biz.ID
-            p.BizCode <- bc.biz.p.Code
-
-            p
-            |> populateCreateTx pretx MOMENT_metadata
-
-        pretx 
-        |> loggedPipeline "BizLogics.Crawler.launchCrawlers" conn
+        create MOMENT_metadata "BizLogics.Crawler.launchCrawlers" conn
+            (fun _ -> 
+                p.BindType <- momentBindTypeEnum.Biz
+                p.Bind <- bc.biz.ID
+                p.BizCode <- bc.biz.p.Code
+                p) ()
         |> ignore
 
 let og host p html = 
