@@ -45,13 +45,14 @@ let newP (bc:BizComplex) p =
         |> loggedPipeline "BizLogics.Crawler.launchCrawlers" conn
         |> ignore
 
-let og p html = 
-    let title,desc,image = parse html
+let og host p html = 
+    let title,desc,image = parse host html
     p.Title <- title
     p.Summary <- desc
     p.PreviewImgUrl <- image
 
 let template 
+    host
     (__urls: unit -> string[])
     url__html
     populator
@@ -80,7 +81,7 @@ let template
 
         p.Lang <- runtime.data.langs["en"].ID
 
-        og p html
+        og host p html
 
         populator p html
 
@@ -93,6 +94,7 @@ let template
 
 let cCOINDESK = 
     template
+        "www.coindesk.com"
         (fun _ ->
             "https://www.coindesk.com/livewire/"
             |> httpGet None
@@ -106,6 +108,7 @@ let cCOINDESK =
 
 let cCRYPTOSLATE = 
     template
+        "cryptoslate.com"
         (fun _ ->
             "https://cryptoslate.com/feed/"
             |> httpGet None
@@ -120,10 +123,9 @@ let cCRYPTOSLATE =
 
 let cCOINTELEGRAPH = 
     template
+        "cointelegraph.com"
         (fun _ ->
-            let hc = empty__HttpClient()
-
-            (hc.get "https://cointelegraph.com/").html
+            (empty__HttpClient().get "https://cointelegraph.com/").html
             |> regex_matches (string__regex "(?<=<a href=\x22/tags/).*?(?=\x22)")
             |> Array.distinct
             |> Array.map(fun i -> "https://cointelegraph.com/tags/" + i)
@@ -133,7 +135,7 @@ let cCOINTELEGRAPH =
 
                 "Loading " + i |> runtime.output
 
-                (hc.get i).html
+                (empty__HttpClient().get i).html
                 |> regex_matches (string__regex "(?<=<a href=\x22)/news/.*?(?=\x22)"))
             |> Array.concat
             |> Array.map(fun i -> "https://cointelegraph.com" + i))
