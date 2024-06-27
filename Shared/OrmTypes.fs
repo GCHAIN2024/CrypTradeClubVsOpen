@@ -1405,1024 +1405,48 @@ let CWC_id = ref 0L
 let CWC_count = ref 0
 let CWC_table = "Ca_WebCredential"
 
-// [Ex_Instrument] (INS)
-
-type insMarginCalcEnum = 
-| Normal = 0 // 正常模式，按市值和账户杠杆计算
-| BaseCur = 1 // 按照每手本币计算
-| Short = 2 // 按照每手b或short计算
-| Long = 3 // 按照每手a或long计算
-
-let insMarginCalcEnums = [| insMarginCalcEnum.Normal; insMarginCalcEnum.BaseCur; insMarginCalcEnum.Short; insMarginCalcEnum.Long |]
-let insMarginCalcEnumstrs = [| "insMarginCalcEnum"; "insMarginCalcEnum"; "insMarginCalcEnum"; "insMarginCalcEnum" |]
-let insMarginCalcNum = 4
-
-let int__insMarginCalcEnum v =
-    match v with
-    | 0 -> Some insMarginCalcEnum.Normal
-    | 1 -> Some insMarginCalcEnum.BaseCur
-    | 2 -> Some insMarginCalcEnum.Short
-    | 3 -> Some insMarginCalcEnum.Long
-    | _ -> None
-
-let str__insMarginCalcEnum s =
-    match s with
-    | "Normal" -> Some insMarginCalcEnum.Normal
-    | "BaseCur" -> Some insMarginCalcEnum.BaseCur
-    | "Short" -> Some insMarginCalcEnum.Short
-    | "Long" -> Some insMarginCalcEnum.Long
-    | _ -> None
-
-let insMarginCalcEnum__caption e =
-    match e with
-    | insMarginCalcEnum.Normal -> "正常模式，按市值和账户杠杆计算"
-    | insMarginCalcEnum.BaseCur -> "按照每手本币计算"
-    | insMarginCalcEnum.Short -> "按照每手b或short计算"
-    | insMarginCalcEnum.Long -> "按照每手a或long计算"
-    | _ -> ""
-
-type insMarginModeEnum = 
-| Hedged = 0 // 双向对冲
-| Abs = 1 // 仓位保证金绝对值累计
-
-let insMarginModeEnums = [| insMarginModeEnum.Hedged; insMarginModeEnum.Abs |]
-let insMarginModeEnumstrs = [| "insMarginModeEnum"; "insMarginModeEnum" |]
-let insMarginModeNum = 2
-
-let int__insMarginModeEnum v =
-    match v with
-    | 0 -> Some insMarginModeEnum.Hedged
-    | 1 -> Some insMarginModeEnum.Abs
-    | _ -> None
-
-let str__insMarginModeEnum s =
-    match s with
-    | "Hedged" -> Some insMarginModeEnum.Hedged
-    | "Abs" -> Some insMarginModeEnum.Abs
-    | _ -> None
-
-let insMarginModeEnum__caption e =
-    match e with
-    | insMarginModeEnum.Hedged -> "双向对冲"
-    | insMarginModeEnum.Abs -> "仓位保证金绝对值累计"
-    | _ -> ""
-
-type insTaxOpenModeEnum = 
-| Fixed = 0 // 固定
-| Percentage = 1 // 按百分比
-
-let insTaxOpenModeEnums = [| insTaxOpenModeEnum.Fixed; insTaxOpenModeEnum.Percentage |]
-let insTaxOpenModeEnumstrs = [| "insTaxOpenModeEnum"; "insTaxOpenModeEnum" |]
-let insTaxOpenModeNum = 2
-
-let int__insTaxOpenModeEnum v =
-    match v with
-    | 0 -> Some insTaxOpenModeEnum.Fixed
-    | 1 -> Some insTaxOpenModeEnum.Percentage
-    | _ -> None
-
-let str__insTaxOpenModeEnum s =
-    match s with
-    | "Fixed" -> Some insTaxOpenModeEnum.Fixed
-    | "Percentage" -> Some insTaxOpenModeEnum.Percentage
-    | _ -> None
-
-let insTaxOpenModeEnum__caption e =
-    match e with
-    | insTaxOpenModeEnum.Fixed -> "固定"
-    | insTaxOpenModeEnum.Percentage -> "按百分比"
-    | _ -> ""
-
-type insTaxCloseModeEnum = 
-| Fixed = 0 // 固定
-| Percentage = 1 // 按百分比
-
-let insTaxCloseModeEnums = [| insTaxCloseModeEnum.Fixed; insTaxCloseModeEnum.Percentage |]
-let insTaxCloseModeEnumstrs = [| "insTaxCloseModeEnum"; "insTaxCloseModeEnum" |]
-let insTaxCloseModeNum = 2
-
-let int__insTaxCloseModeEnum v =
-    match v with
-    | 0 -> Some insTaxCloseModeEnum.Fixed
-    | 1 -> Some insTaxCloseModeEnum.Percentage
-    | _ -> None
-
-let str__insTaxCloseModeEnum s =
-    match s with
-    | "Fixed" -> Some insTaxCloseModeEnum.Fixed
-    | "Percentage" -> Some insTaxCloseModeEnum.Percentage
-    | _ -> None
-
-let insTaxCloseModeEnum__caption e =
-    match e with
-    | insTaxCloseModeEnum.Fixed -> "固定"
-    | insTaxCloseModeEnum.Percentage -> "按百分比"
-    | _ -> ""
-
-type insTradeStatusEnum = 
-| On = 0 // 交易时段
-| Off = 1 // 非交易时段
-| Disabled = 2 // 禁用
-| Sustained = 3 // 持续交易
-
-let insTradeStatusEnums = [| insTradeStatusEnum.On; insTradeStatusEnum.Off; insTradeStatusEnum.Disabled; insTradeStatusEnum.Sustained |]
-let insTradeStatusEnumstrs = [| "insTradeStatusEnum"; "insTradeStatusEnum"; "insTradeStatusEnum"; "insTradeStatusEnum" |]
-let insTradeStatusNum = 4
-
-let int__insTradeStatusEnum v =
-    match v with
-    | 0 -> Some insTradeStatusEnum.On
-    | 1 -> Some insTradeStatusEnum.Off
-    | 2 -> Some insTradeStatusEnum.Disabled
-    | 3 -> Some insTradeStatusEnum.Sustained
-    | _ -> None
-
-let str__insTradeStatusEnum s =
-    match s with
-    | "On" -> Some insTradeStatusEnum.On
-    | "Off" -> Some insTradeStatusEnum.Off
-    | "Disabled" -> Some insTradeStatusEnum.Disabled
-    | "Sustained" -> Some insTradeStatusEnum.Sustained
-    | _ -> None
-
-let insTradeStatusEnum__caption e =
-    match e with
-    | insTradeStatusEnum.On -> "交易时段"
-    | insTradeStatusEnum.Off -> "非交易时段"
-    | insTradeStatusEnum.Disabled -> "禁用"
-    | insTradeStatusEnum.Sustained -> "持续交易"
-    | _ -> ""
-
-type insRoModeEnum = 
-| Forex = 0 // 外汇模式（提前两个工作日，周三收到周末）
-| Daily = 1 // 每日收取模式
-
-let insRoModeEnums = [| insRoModeEnum.Forex; insRoModeEnum.Daily |]
-let insRoModeEnumstrs = [| "insRoModeEnum"; "insRoModeEnum" |]
-let insRoModeNum = 2
-
-let int__insRoModeEnum v =
-    match v with
-    | 0 -> Some insRoModeEnum.Forex
-    | 1 -> Some insRoModeEnum.Daily
-    | _ -> None
-
-let str__insRoModeEnum s =
-    match s with
-    | "Forex" -> Some insRoModeEnum.Forex
-    | "Daily" -> Some insRoModeEnum.Daily
-    | _ -> None
-
-let insRoModeEnum__caption e =
-    match e with
-    | insRoModeEnum.Forex -> "外汇模式（提前两个工作日，周三收到周末）"
-    | insRoModeEnum.Daily -> "每日收取模式"
-    | _ -> ""
-
-type insTradeModeEnum = 
-| External = 0 // External
-| Indictive = 1 // Indictive
-| Match = 2 // Match
-| Make = 3 // Make
-| OTC = 4 // OTC
-
-let insTradeModeEnums = [| insTradeModeEnum.External; insTradeModeEnum.Indictive; insTradeModeEnum.Match; insTradeModeEnum.Make; insTradeModeEnum.OTC |]
-let insTradeModeEnumstrs = [| "insTradeModeEnum"; "insTradeModeEnum"; "insTradeModeEnum"; "insTradeModeEnum"; "insTradeModeEnum" |]
-let insTradeModeNum = 5
-
-let int__insTradeModeEnum v =
-    match v with
-    | 0 -> Some insTradeModeEnum.External
-    | 1 -> Some insTradeModeEnum.Indictive
-    | 2 -> Some insTradeModeEnum.Match
-    | 3 -> Some insTradeModeEnum.Make
-    | 4 -> Some insTradeModeEnum.OTC
-    | _ -> None
-
-let str__insTradeModeEnum s =
-    match s with
-    | "External" -> Some insTradeModeEnum.External
-    | "Indictive" -> Some insTradeModeEnum.Indictive
-    | "Match" -> Some insTradeModeEnum.Match
-    | "Make" -> Some insTradeModeEnum.Make
-    | "OTC" -> Some insTradeModeEnum.OTC
-    | _ -> None
-
-let insTradeModeEnum__caption e =
-    match e with
-    | insTradeModeEnum.External -> "External"
-    | insTradeModeEnum.Indictive -> "Indictive"
-    | insTradeModeEnum.Match -> "Match"
-    | insTradeModeEnum.Make -> "Make"
-    | insTradeModeEnum.OTC -> "OTC"
-    | _ -> ""
-
-type insDerivativeModeEnum = 
-| None = 0 // 无
-| Futures = 1 // 远期
-| Options = 2 // 期权
-
-let insDerivativeModeEnums = [| insDerivativeModeEnum.None; insDerivativeModeEnum.Futures; insDerivativeModeEnum.Options |]
-let insDerivativeModeEnumstrs = [| "insDerivativeModeEnum"; "insDerivativeModeEnum"; "insDerivativeModeEnum" |]
-let insDerivativeModeNum = 3
-
-let int__insDerivativeModeEnum v =
-    match v with
-    | 0 -> Some insDerivativeModeEnum.None
-    | 1 -> Some insDerivativeModeEnum.Futures
-    | 2 -> Some insDerivativeModeEnum.Options
-    | _ -> None
-
-let str__insDerivativeModeEnum s =
-    match s with
-    | "None" -> Some insDerivativeModeEnum.None
-    | "Futures" -> Some insDerivativeModeEnum.Futures
-    | "Options" -> Some insDerivativeModeEnum.Options
-    | _ -> None
-
-let insDerivativeModeEnum__caption e =
-    match e with
-    | insDerivativeModeEnum.None -> "无"
-    | insDerivativeModeEnum.Futures -> "远期"
-    | insDerivativeModeEnum.Options -> "期权"
-    | _ -> ""
-
-type insOptionsModeEnum = 
-| None = 0 // 无
-| Simple = 1 // 简化模式
-| LimitBSM = 2 // 极限BSM
-
-let insOptionsModeEnums = [| insOptionsModeEnum.None; insOptionsModeEnum.Simple; insOptionsModeEnum.LimitBSM |]
-let insOptionsModeEnumstrs = [| "insOptionsModeEnum"; "insOptionsModeEnum"; "insOptionsModeEnum" |]
-let insOptionsModeNum = 3
-
-let int__insOptionsModeEnum v =
-    match v with
-    | 0 -> Some insOptionsModeEnum.None
-    | 1 -> Some insOptionsModeEnum.Simple
-    | 2 -> Some insOptionsModeEnum.LimitBSM
-    | _ -> None
-
-let str__insOptionsModeEnum s =
-    match s with
-    | "None" -> Some insOptionsModeEnum.None
-    | "Simple" -> Some insOptionsModeEnum.Simple
-    | "LimitBSM" -> Some insOptionsModeEnum.LimitBSM
-    | _ -> None
-
-let insOptionsModeEnum__caption e =
-    match e with
-    | insOptionsModeEnum.None -> "无"
-    | insOptionsModeEnum.Simple -> "简化模式"
-    | insOptionsModeEnum.LimitBSM -> "极限BSM"
-    | _ -> ""
-
-type insOptionsCPEnum = 
-| Call = 0 // 看涨
-| Put = 1 // 看跌
-
-let insOptionsCPEnums = [| insOptionsCPEnum.Call; insOptionsCPEnum.Put |]
-let insOptionsCPEnumstrs = [| "insOptionsCPEnum"; "insOptionsCPEnum" |]
-let insOptionsCPNum = 2
-
-let int__insOptionsCPEnum v =
-    match v with
-    | 0 -> Some insOptionsCPEnum.Call
-    | 1 -> Some insOptionsCPEnum.Put
-    | _ -> None
-
-let str__insOptionsCPEnum s =
-    match s with
-    | "Call" -> Some insOptionsCPEnum.Call
-    | "Put" -> Some insOptionsCPEnum.Put
-    | _ -> None
-
-let insOptionsCPEnum__caption e =
-    match e with
-    | insOptionsCPEnum.Call -> "看涨"
-    | insOptionsCPEnum.Put -> "看跌"
-    | _ -> ""
-
-type insItrnInssModeEnum = 
-| All = 0 // All
-| Price = 1 // Update Price Only
-| History = 2 // Update History Only
-
-let insItrnInssModeEnums = [| insItrnInssModeEnum.All; insItrnInssModeEnum.Price; insItrnInssModeEnum.History |]
-let insItrnInssModeEnumstrs = [| "insItrnInssModeEnum"; "insItrnInssModeEnum"; "insItrnInssModeEnum" |]
-let insItrnInssModeNum = 3
-
-let int__insItrnInssModeEnum v =
-    match v with
-    | 0 -> Some insItrnInssModeEnum.All
-    | 1 -> Some insItrnInssModeEnum.Price
-    | 2 -> Some insItrnInssModeEnum.History
-    | _ -> None
-
-let str__insItrnInssModeEnum s =
-    match s with
-    | "All" -> Some insItrnInssModeEnum.All
-    | "Price" -> Some insItrnInssModeEnum.Price
-    | "History" -> Some insItrnInssModeEnum.History
-    | _ -> None
-
-let insItrnInssModeEnum__caption e =
-    match e with
-    | insItrnInssModeEnum.All -> "All"
-    | insItrnInssModeEnum.Price -> "Update Price Only"
-    | insItrnInssModeEnum.History -> "Update History Only"
-    | _ -> ""
-
-type insFlushTypeEnum = 
-| None = 0 // 不刷新
-| FlushLong = 1 // 刷新多头
-| FlushShort = 2 // 刷新空头
-| Both = 3 // 多空刷新
-
-let insFlushTypeEnums = [| insFlushTypeEnum.None; insFlushTypeEnum.FlushLong; insFlushTypeEnum.FlushShort; insFlushTypeEnum.Both |]
-let insFlushTypeEnumstrs = [| "insFlushTypeEnum"; "insFlushTypeEnum"; "insFlushTypeEnum"; "insFlushTypeEnum" |]
-let insFlushTypeNum = 4
-
-let int__insFlushTypeEnum v =
-    match v with
-    | 0 -> Some insFlushTypeEnum.None
-    | 1 -> Some insFlushTypeEnum.FlushLong
-    | 2 -> Some insFlushTypeEnum.FlushShort
-    | 3 -> Some insFlushTypeEnum.Both
-    | _ -> None
-
-let str__insFlushTypeEnum s =
-    match s with
-    | "None" -> Some insFlushTypeEnum.None
-    | "FlushLong" -> Some insFlushTypeEnum.FlushLong
-    | "FlushShort" -> Some insFlushTypeEnum.FlushShort
-    | "Both" -> Some insFlushTypeEnum.Both
-    | _ -> None
-
-let insFlushTypeEnum__caption e =
-    match e with
-    | insFlushTypeEnum.None -> "不刷新"
-    | insFlushTypeEnum.FlushLong -> "刷新多头"
-    | insFlushTypeEnum.FlushShort -> "刷新空头"
-    | insFlushTypeEnum.Both -> "多空刷新"
-    | _ -> ""
-
-type insCurTriggerEnum = 
-| None = 0 // 不触发
-| LongTrigger = 1 // 多头触发
-| ShortTrigger = 2 // 空头触发
-| Both = 3 // 多空触发
-
-let insCurTriggerEnums = [| insCurTriggerEnum.None; insCurTriggerEnum.LongTrigger; insCurTriggerEnum.ShortTrigger; insCurTriggerEnum.Both |]
-let insCurTriggerEnumstrs = [| "insCurTriggerEnum"; "insCurTriggerEnum"; "insCurTriggerEnum"; "insCurTriggerEnum" |]
-let insCurTriggerNum = 4
-
-let int__insCurTriggerEnum v =
-    match v with
-    | 0 -> Some insCurTriggerEnum.None
-    | 1 -> Some insCurTriggerEnum.LongTrigger
-    | 2 -> Some insCurTriggerEnum.ShortTrigger
-    | 3 -> Some insCurTriggerEnum.Both
-    | _ -> None
-
-let str__insCurTriggerEnum s =
-    match s with
-    | "None" -> Some insCurTriggerEnum.None
-    | "LongTrigger" -> Some insCurTriggerEnum.LongTrigger
-    | "ShortTrigger" -> Some insCurTriggerEnum.ShortTrigger
-    | "Both" -> Some insCurTriggerEnum.Both
-    | _ -> None
-
-let insCurTriggerEnum__caption e =
-    match e with
-    | insCurTriggerEnum.None -> "不触发"
-    | insCurTriggerEnum.LongTrigger -> "多头触发"
-    | insCurTriggerEnum.ShortTrigger -> "空头触发"
-    | insCurTriggerEnum.Both -> "多空触发"
-    | _ -> ""
-
-type insRobotTypeEnum = 
-| None = 0 // 无
-| Trigger = 1 // 触发
-
-let insRobotTypeEnums = [| insRobotTypeEnum.None; insRobotTypeEnum.Trigger |]
-let insRobotTypeEnumstrs = [| "insRobotTypeEnum"; "insRobotTypeEnum" |]
-let insRobotTypeNum = 2
-
-let int__insRobotTypeEnum v =
-    match v with
-    | 0 -> Some insRobotTypeEnum.None
-    | 1 -> Some insRobotTypeEnum.Trigger
-    | _ -> None
-
-let str__insRobotTypeEnum s =
-    match s with
-    | "None" -> Some insRobotTypeEnum.None
-    | "Trigger" -> Some insRobotTypeEnum.Trigger
-    | _ -> None
-
-let insRobotTypeEnum__caption e =
-    match e with
-    | insRobotTypeEnum.None -> "无"
-    | insRobotTypeEnum.Trigger -> "触发"
-    | _ -> ""
-
-type insLastDirectionEnum = 
-| Up = 0 // 上升
-| Dn = 1 // 下降
-| NoChange = 2 // 无变化
-
-let insLastDirectionEnums = [| insLastDirectionEnum.Up; insLastDirectionEnum.Dn; insLastDirectionEnum.NoChange |]
-let insLastDirectionEnumstrs = [| "insLastDirectionEnum"; "insLastDirectionEnum"; "insLastDirectionEnum" |]
-let insLastDirectionNum = 3
-
-let int__insLastDirectionEnum v =
-    match v with
-    | 0 -> Some insLastDirectionEnum.Up
-    | 1 -> Some insLastDirectionEnum.Dn
-    | 2 -> Some insLastDirectionEnum.NoChange
-    | _ -> None
-
-let str__insLastDirectionEnum s =
-    match s with
-    | "Up" -> Some insLastDirectionEnum.Up
-    | "Dn" -> Some insLastDirectionEnum.Dn
-    | "NoChange" -> Some insLastDirectionEnum.NoChange
-    | _ -> None
-
-let insLastDirectionEnum__caption e =
-    match e with
-    | insLastDirectionEnum.Up -> "上升"
-    | insLastDirectionEnum.Dn -> "下降"
-    | insLastDirectionEnum.NoChange -> "无变化"
-    | _ -> ""
-
-type insLiqModeEnum = 
-| None = 0 // 连续交易
-| PeriodicLiq = 1 // 周期结算
-
-let insLiqModeEnums = [| insLiqModeEnum.None; insLiqModeEnum.PeriodicLiq |]
-let insLiqModeEnumstrs = [| "insLiqModeEnum"; "insLiqModeEnum" |]
-let insLiqModeNum = 2
-
-let int__insLiqModeEnum v =
-    match v with
-    | 0 -> Some insLiqModeEnum.None
-    | 1 -> Some insLiqModeEnum.PeriodicLiq
-    | _ -> None
-
-let str__insLiqModeEnum s =
-    match s with
-    | "None" -> Some insLiqModeEnum.None
-    | "PeriodicLiq" -> Some insLiqModeEnum.PeriodicLiq
-    | _ -> None
-
-let insLiqModeEnum__caption e =
-    match e with
-    | insLiqModeEnum.None -> "连续交易"
-    | insLiqModeEnum.PeriodicLiq -> "周期结算"
-    | _ -> ""
-
-type insLiqPeriodEnum = 
-| None = 0 // 无
-| Daily = 1 // 每天
-| Weekly = 2 // 每周
-| Monthly = 3 // 每月
-| Quarterly = 4 // 每季度
-
-let insLiqPeriodEnums = [| insLiqPeriodEnum.None; insLiqPeriodEnum.Daily; insLiqPeriodEnum.Weekly; insLiqPeriodEnum.Monthly; insLiqPeriodEnum.Quarterly |]
-let insLiqPeriodEnumstrs = [| "insLiqPeriodEnum"; "insLiqPeriodEnum"; "insLiqPeriodEnum"; "insLiqPeriodEnum"; "insLiqPeriodEnum" |]
-let insLiqPeriodNum = 5
-
-let int__insLiqPeriodEnum v =
-    match v with
-    | 0 -> Some insLiqPeriodEnum.None
-    | 1 -> Some insLiqPeriodEnum.Daily
-    | 2 -> Some insLiqPeriodEnum.Weekly
-    | 3 -> Some insLiqPeriodEnum.Monthly
-    | 4 -> Some insLiqPeriodEnum.Quarterly
-    | _ -> None
-
-let str__insLiqPeriodEnum s =
-    match s with
-    | "None" -> Some insLiqPeriodEnum.None
-    | "Daily" -> Some insLiqPeriodEnum.Daily
-    | "Weekly" -> Some insLiqPeriodEnum.Weekly
-    | "Monthly" -> Some insLiqPeriodEnum.Monthly
-    | "Quarterly" -> Some insLiqPeriodEnum.Quarterly
-    | _ -> None
-
-let insLiqPeriodEnum__caption e =
-    match e with
-    | insLiqPeriodEnum.None -> "无"
-    | insLiqPeriodEnum.Daily -> "每天"
-    | insLiqPeriodEnum.Weekly -> "每周"
-    | insLiqPeriodEnum.Monthly -> "每月"
-    | insLiqPeriodEnum.Quarterly -> "每季度"
-    | _ -> ""
-
-type insRoBuyModeEnum = 
-| Fixed = 0 // 固定
-| Percentage = 1 // 按百分比
-
-let insRoBuyModeEnums = [| insRoBuyModeEnum.Fixed; insRoBuyModeEnum.Percentage |]
-let insRoBuyModeEnumstrs = [| "insRoBuyModeEnum"; "insRoBuyModeEnum" |]
-let insRoBuyModeNum = 2
-
-let int__insRoBuyModeEnum v =
-    match v with
-    | 0 -> Some insRoBuyModeEnum.Fixed
-    | 1 -> Some insRoBuyModeEnum.Percentage
-    | _ -> None
-
-let str__insRoBuyModeEnum s =
-    match s with
-    | "Fixed" -> Some insRoBuyModeEnum.Fixed
-    | "Percentage" -> Some insRoBuyModeEnum.Percentage
-    | _ -> None
-
-let insRoBuyModeEnum__caption e =
-    match e with
-    | insRoBuyModeEnum.Fixed -> "固定"
-    | insRoBuyModeEnum.Percentage -> "按百分比"
-    | _ -> ""
-
-type insRoSellModeEnum = 
-| Fixed = 0 // 固定
-| Percentage = 1 // 按百分比
-
-let insRoSellModeEnums = [| insRoSellModeEnum.Fixed; insRoSellModeEnum.Percentage |]
-let insRoSellModeEnumstrs = [| "insRoSellModeEnum"; "insRoSellModeEnum" |]
-let insRoSellModeNum = 2
-
-let int__insRoSellModeEnum v =
-    match v with
-    | 0 -> Some insRoSellModeEnum.Fixed
-    | 1 -> Some insRoSellModeEnum.Percentage
-    | _ -> None
-
-let str__insRoSellModeEnum s =
-    match s with
-    | "Fixed" -> Some insRoSellModeEnum.Fixed
-    | "Percentage" -> Some insRoSellModeEnum.Percentage
-    | _ -> None
-
-let insRoSellModeEnum__caption e =
-    match e with
-    | insRoSellModeEnum.Fixed -> "固定"
-    | insRoSellModeEnum.Percentage -> "按百分比"
-    | _ -> ""
-
-type insListingStatusEnum = 
-| None = 0 // 未知
-| Pending = 1 // 未上市
-| Trading = 2 // 交易中
-
-let insListingStatusEnums = [| insListingStatusEnum.None; insListingStatusEnum.Pending; insListingStatusEnum.Trading |]
-let insListingStatusEnumstrs = [| "insListingStatusEnum"; "insListingStatusEnum"; "insListingStatusEnum" |]
-let insListingStatusNum = 3
-
-let int__insListingStatusEnum v =
-    match v with
-    | 0 -> Some insListingStatusEnum.None
-    | 1 -> Some insListingStatusEnum.Pending
-    | 2 -> Some insListingStatusEnum.Trading
-    | _ -> None
-
-let str__insListingStatusEnum s =
-    match s with
-    | "None" -> Some insListingStatusEnum.None
-    | "Pending" -> Some insListingStatusEnum.Pending
-    | "Trading" -> Some insListingStatusEnum.Trading
-    | _ -> None
-
-let insListingStatusEnum__caption e =
-    match e with
-    | insListingStatusEnum.None -> "未知"
-    | insListingStatusEnum.Pending -> "未上市"
-    | insListingStatusEnum.Trading -> "交易中"
-    | _ -> ""
+// [Market_Instrument] (INS)
 
 type pINS = {
 mutable Desc: Text
-mutable Hidden: Boolean
-mutable EnableQuote: Boolean
 mutable Code: Chars
 mutable Caption: Chars
 mutable Long: FK
-mutable AssetName: Chars
-mutable Short: FK
-mutable Convertor: FK
-mutable m: Float
-mutable mu: Float
-mutable eta: Float
-mutable psi: Float
-mutable MarginCalc: insMarginCalcEnum
-mutable MarginRateInit: Float
-mutable MarginRateMntn: Float
-mutable MarginMode: insMarginModeEnum
-mutable Dec: Integer
-mutable Formatter: Chars
-mutable Path: Chars
-mutable Ask: Integer
-mutable Bid: Integer
-mutable Middle: Float
-mutable FixedSpread: Float
-mutable PercentageSpread: Float
-mutable TaxOpenMode: insTaxOpenModeEnum
-mutable TaxOpen: Float
-mutable TaxCloseMode: insTaxCloseModeEnum
-mutable TaxClose: Float
-mutable Tax: Float
-mutable TaxCur: FK
-mutable TaxCurCode: Chars
-mutable LastPrice: Float
-mutable LastUpdatedat: Timestamp
-mutable LastPriceChange: Timestamp
-mutable TradeStatus: insTradeStatusEnum
-mutable RoMode: insRoModeEnum
-mutable Schedule: Text
-mutable TradeMode: insTradeModeEnum
-mutable DerivativeMode: insDerivativeModeEnum
-mutable OptionsMode: insOptionsModeEnum
-mutable OptionsCP: insOptionsCPEnum
-mutable OptionsExpiry: Timestamp
-mutable OptionsStrike: Float
-mutable OptionsPricing: Text
-mutable OptionsPeriod: Text
-mutable OptionsTax: Float
-mutable OptionsPremiumPerTradeMin: Float
-mutable OptionsPremiumPerTradeMax: Float
-mutable LimitLotPerTrade: Float
-mutable LimitLotPosition: Float
-mutable CurrentOpen: Float
-mutable CurrentHigh: Float
-mutable CurrentLow: Float
-mutable PrevClose: Float
-mutable PrevClosedat: Timestamp
-mutable CurrentOpenat: Timestamp
-mutable ExtBiz: FK
-mutable RefExternal: Chars
-mutable ItrnInss: Text
-mutable ItrnInssMode: insItrnInssModeEnum
-mutable FlushType: insFlushTypeEnum
-mutable CurTrigger: insCurTriggerEnum
-mutable RobotType: insRobotTypeEnum
-mutable ExtLong: Chars
-mutable ExtShort: Chars
-mutable ExtPrice: Float
-mutable SaveM1: Boolean
-mutable HistSavedat: Timestamp
-mutable SaveD1: Boolean
-mutable SlPips: Float
-mutable TpPips: Float
-mutable PendingLimitPips: Float
-mutable PendingStopPips: Float
-mutable LastDirection: insLastDirectionEnum
-mutable LiqMode: insLiqModeEnum
-mutable LiqPeriodSince: Timestamp
-mutable LiqPeriodTill: FK
-mutable LiqPeriod: insLiqPeriodEnum
-mutable LiqTime: Float
-mutable ConvertRatio: Float
-mutable RoBuyMode: insRoBuyModeEnum
-mutable RoBuy: Float
-mutable RoSellMode: insRoSellModeEnum
-mutable RoSell: Float
-mutable PosLimitBuy: Float
-mutable PosLimitSell: Float
-mutable RoCur: FK
-mutable RoCurCode: Chars
-mutable AdjBias: Float
-mutable TaxBuy: Float
-mutable TaxSell: Float
-mutable Misc: Text
-mutable RefLastPriceChange: Timestamp
-mutable HedgeExternal: Chars
-mutable OfferingPrice: Float
-mutable IssuanceAmount: Integer
-mutable ListingStatus: insListingStatusEnum
-mutable Turnover: Float
-mutable PriceOpened: Integer}
+mutable Short: FK}
 
 
 type INS = Rcd<pINS>
 
-let INS_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Desc],[Hidden],[EnableQuote],[Code],[Caption],[Long],[AssetName],[Short],[Convertor],[m],[mu],[eta],[psi],[MarginCalc],[MarginRateInit],[MarginRateMntn],[MarginMode],[Dec],[Formatter],[Path],[Ask],[Bid],[Middle],[FixedSpread],[PercentageSpread],[TaxOpenMode],[TaxOpen],[TaxCloseMode],[TaxClose],[Tax],[TaxCur],[TaxCurCode],[LastPrice],[LastUpdatedat],[LastPriceChange],[TradeStatus],[RoMode],[Schedule],[TradeMode],[DerivativeMode],[OptionsMode],[OptionsCP],[OptionsExpiry],[OptionsStrike],[OptionsPricing],[OptionsPeriod],[OptionsTax],[OptionsPremiumPerTradeMin],[OptionsPremiumPerTradeMax],[LimitLotPerTrade],[LimitLotPosition],[CurrentOpen],[CurrentHigh],[CurrentLow],[PrevClose],[PrevClosedat],[CurrentOpenat],[ExtBiz],[RefExternal],[ItrnInss],[ItrnInssMode],[FlushType],[CurTrigger],[RobotType],[ExtLong],[ExtShort],[ExtPrice],[SaveM1],[HistSavedat],[SaveD1],[SlPips],[TpPips],[PendingLimitPips],[PendingStopPips],[LastDirection],[LiqMode],[LiqPeriodSince],[LiqPeriodTill],[LiqPeriod],[LiqTime],[ConvertRatio],[RoBuyMode],[RoBuy],[RoSellMode],[RoSell],[PosLimitBuy],[PosLimitSell],[RoCur],[RoCurCode],[AdjBias],[TaxBuy],[TaxSell],[Misc],[RefLastPriceChange],[HedgeExternal],[OfferingPrice],[IssuanceAmount],[ListingStatus],[Turnover],[PriceOpened]"
+let INS_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Desc],[Code],[Caption],[Long],[Short]"
 
 let pINS_fieldordersArray = [|
     "Desc"
-    "Hidden"
-    "EnableQuote"
     "Code"
     "Caption"
     "Long"
-    "AssetName"
-    "Short"
-    "Convertor"
-    "m"
-    "mu"
-    "eta"
-    "psi"
-    "MarginCalc"
-    "MarginRateInit"
-    "MarginRateMntn"
-    "MarginMode"
-    "Dec"
-    "Formatter"
-    "Path"
-    "Ask"
-    "Bid"
-    "Middle"
-    "FixedSpread"
-    "PercentageSpread"
-    "TaxOpenMode"
-    "TaxOpen"
-    "TaxCloseMode"
-    "TaxClose"
-    "Tax"
-    "TaxCur"
-    "TaxCurCode"
-    "LastPrice"
-    "LastUpdatedat"
-    "LastPriceChange"
-    "TradeStatus"
-    "RoMode"
-    "Schedule"
-    "TradeMode"
-    "DerivativeMode"
-    "OptionsMode"
-    "OptionsCP"
-    "OptionsExpiry"
-    "OptionsStrike"
-    "OptionsPricing"
-    "OptionsPeriod"
-    "OptionsTax"
-    "OptionsPremiumPerTradeMin"
-    "OptionsPremiumPerTradeMax"
-    "LimitLotPerTrade"
-    "LimitLotPosition"
-    "CurrentOpen"
-    "CurrentHigh"
-    "CurrentLow"
-    "PrevClose"
-    "PrevClosedat"
-    "CurrentOpenat"
-    "ExtBiz"
-    "RefExternal"
-    "ItrnInss"
-    "ItrnInssMode"
-    "FlushType"
-    "CurTrigger"
-    "RobotType"
-    "ExtLong"
-    "ExtShort"
-    "ExtPrice"
-    "SaveM1"
-    "HistSavedat"
-    "SaveD1"
-    "SlPips"
-    "TpPips"
-    "PendingLimitPips"
-    "PendingStopPips"
-    "LastDirection"
-    "LiqMode"
-    "LiqPeriodSince"
-    "LiqPeriodTill"
-    "LiqPeriod"
-    "LiqTime"
-    "ConvertRatio"
-    "RoBuyMode"
-    "RoBuy"
-    "RoSellMode"
-    "RoSell"
-    "PosLimitBuy"
-    "PosLimitSell"
-    "RoCur"
-    "RoCurCode"
-    "AdjBias"
-    "TaxBuy"
-    "TaxSell"
-    "Misc"
-    "RefLastPriceChange"
-    "HedgeExternal"
-    "OfferingPrice"
-    "IssuanceAmount"
-    "ListingStatus"
-    "Turnover"
-    "PriceOpened" |]
+    "Short" |]
 
-let INS_sql_update = "[Updatedat]=@Updatedat,[Desc]=@Desc,[Hidden]=@Hidden,[EnableQuote]=@EnableQuote,[Code]=@Code,[Caption]=@Caption,[Long]=@Long,[AssetName]=@AssetName,[Short]=@Short,[Convertor]=@Convertor,[m]=@m,[mu]=@mu,[eta]=@eta,[psi]=@psi,[MarginCalc]=@MarginCalc,[MarginRateInit]=@MarginRateInit,[MarginRateMntn]=@MarginRateMntn,[MarginMode]=@MarginMode,[Dec]=@Dec,[Formatter]=@Formatter,[Path]=@Path,[Ask]=@Ask,[Bid]=@Bid,[Middle]=@Middle,[FixedSpread]=@FixedSpread,[PercentageSpread]=@PercentageSpread,[TaxOpenMode]=@TaxOpenMode,[TaxOpen]=@TaxOpen,[TaxCloseMode]=@TaxCloseMode,[TaxClose]=@TaxClose,[Tax]=@Tax,[TaxCur]=@TaxCur,[TaxCurCode]=@TaxCurCode,[LastPrice]=@LastPrice,[LastUpdatedat]=@LastUpdatedat,[LastPriceChange]=@LastPriceChange,[TradeStatus]=@TradeStatus,[RoMode]=@RoMode,[Schedule]=@Schedule,[TradeMode]=@TradeMode,[DerivativeMode]=@DerivativeMode,[OptionsMode]=@OptionsMode,[OptionsCP]=@OptionsCP,[OptionsExpiry]=@OptionsExpiry,[OptionsStrike]=@OptionsStrike,[OptionsPricing]=@OptionsPricing,[OptionsPeriod]=@OptionsPeriod,[OptionsTax]=@OptionsTax,[OptionsPremiumPerTradeMin]=@OptionsPremiumPerTradeMin,[OptionsPremiumPerTradeMax]=@OptionsPremiumPerTradeMax,[LimitLotPerTrade]=@LimitLotPerTrade,[LimitLotPosition]=@LimitLotPosition,[CurrentOpen]=@CurrentOpen,[CurrentHigh]=@CurrentHigh,[CurrentLow]=@CurrentLow,[PrevClose]=@PrevClose,[PrevClosedat]=@PrevClosedat,[CurrentOpenat]=@CurrentOpenat,[ExtBiz]=@ExtBiz,[RefExternal]=@RefExternal,[ItrnInss]=@ItrnInss,[ItrnInssMode]=@ItrnInssMode,[FlushType]=@FlushType,[CurTrigger]=@CurTrigger,[RobotType]=@RobotType,[ExtLong]=@ExtLong,[ExtShort]=@ExtShort,[ExtPrice]=@ExtPrice,[SaveM1]=@SaveM1,[HistSavedat]=@HistSavedat,[SaveD1]=@SaveD1,[SlPips]=@SlPips,[TpPips]=@TpPips,[PendingLimitPips]=@PendingLimitPips,[PendingStopPips]=@PendingStopPips,[LastDirection]=@LastDirection,[LiqMode]=@LiqMode,[LiqPeriodSince]=@LiqPeriodSince,[LiqPeriodTill]=@LiqPeriodTill,[LiqPeriod]=@LiqPeriod,[LiqTime]=@LiqTime,[ConvertRatio]=@ConvertRatio,[RoBuyMode]=@RoBuyMode,[RoBuy]=@RoBuy,[RoSellMode]=@RoSellMode,[RoSell]=@RoSell,[PosLimitBuy]=@PosLimitBuy,[PosLimitSell]=@PosLimitSell,[RoCur]=@RoCur,[RoCurCode]=@RoCurCode,[AdjBias]=@AdjBias,[TaxBuy]=@TaxBuy,[TaxSell]=@TaxSell,[Misc]=@Misc,[RefLastPriceChange]=@RefLastPriceChange,[HedgeExternal]=@HedgeExternal,[OfferingPrice]=@OfferingPrice,[IssuanceAmount]=@IssuanceAmount,[ListingStatus]=@ListingStatus,[Turnover]=@Turnover,[PriceOpened]=@PriceOpened"
+let INS_sql_update = "[Updatedat]=@Updatedat,[Desc]=@Desc,[Code]=@Code,[Caption]=@Caption,[Long]=@Long,[Short]=@Short"
 
 let pINS_fields = [|
     Text("Desc")
-    Boolean("Hidden")
-    Boolean("EnableQuote")
     Chars("Code", 64)
     Chars("Caption", 64)
     FK("Long")
-    Chars("AssetName", 64)
-    FK("Short")
-    FK("Convertor")
-    Float("m")
-    Float("mu")
-    Float("eta")
-    Float("psi")
-    SelectLines("MarginCalc", [| ("Normal","正常模式，按市值和账户杠杆计算");("BaseCur","按照每手本币计算");("Short","按照每手b或short计算");("Long","按照每手a或long计算") |])
-    Float("MarginRateInit")
-    Float("MarginRateMntn")
-    SelectLines("MarginMode", [| ("Hedged","双向对冲");("Abs","仓位保证金绝对值累计") |])
-    Integer("Dec")
-    Chars("Formatter", 64)
-    Chars("Path", 256)
-    Integer("Ask")
-    Integer("Bid")
-    Float("Middle")
-    Float("FixedSpread")
-    Float("PercentageSpread")
-    SelectLines("TaxOpenMode", [| ("Fixed","固定");("Percentage","按百分比") |])
-    Float("TaxOpen")
-    SelectLines("TaxCloseMode", [| ("Fixed","固定");("Percentage","按百分比") |])
-    Float("TaxClose")
-    Float("Tax")
-    FK("TaxCur")
-    Chars("TaxCurCode", 64)
-    Float("LastPrice")
-    Timestamp("LastUpdatedat")
-    Timestamp("LastPriceChange")
-    SelectLines("TradeStatus", [| ("On","交易时段");("Off","非交易时段");("Disabled","禁用");("Sustained","持续交易") |])
-    SelectLines("RoMode", [| ("Forex","外汇模式（提前两个工作日，周三收到周末）");("Daily","每日收取模式") |])
-    Text("Schedule")
-    SelectLines("TradeMode", [| ("External","External");("Indictive","Indictive");("Match","Match");("Make","Make");("OTC","OTC") |])
-    SelectLines("DerivativeMode", [| ("None","无");("Futures","远期");("Options","期权") |])
-    SelectLines("OptionsMode", [| ("None","无");("Simple","简化模式");("LimitBSM","极限BSM") |])
-    SelectLines("OptionsCP", [| ("Call","看涨");("Put","看跌") |])
-    Timestamp("OptionsExpiry")
-    Float("OptionsStrike")
-    Text("OptionsPricing")
-    Text("OptionsPeriod")
-    Float("OptionsTax")
-    Float("OptionsPremiumPerTradeMin")
-    Float("OptionsPremiumPerTradeMax")
-    Float("LimitLotPerTrade")
-    Float("LimitLotPosition")
-    Float("CurrentOpen")
-    Float("CurrentHigh")
-    Float("CurrentLow")
-    Float("PrevClose")
-    Timestamp("PrevClosedat")
-    Timestamp("CurrentOpenat")
-    FK("ExtBiz")
-    Chars("RefExternal", 64)
-    Text("ItrnInss")
-    SelectLines("ItrnInssMode", [| ("All","All");("Price","Update Price Only");("History","Update History Only") |])
-    SelectLines("FlushType", [| ("None","不刷新");("FlushLong","刷新多头");("FlushShort","刷新空头");("Both","多空刷新") |])
-    SelectLines("CurTrigger", [| ("None","不触发");("LongTrigger","多头触发");("ShortTrigger","空头触发");("Both","多空触发") |])
-    SelectLines("RobotType", [| ("None","无");("Trigger","触发") |])
-    Chars("ExtLong", 64)
-    Chars("ExtShort", 64)
-    Float("ExtPrice")
-    Boolean("SaveM1")
-    Timestamp("HistSavedat")
-    Boolean("SaveD1")
-    Float("SlPips")
-    Float("TpPips")
-    Float("PendingLimitPips")
-    Float("PendingStopPips")
-    SelectLines("LastDirection", [| ("Up","上升");("Dn","下降");("NoChange","无变化") |])
-    SelectLines("LiqMode", [| ("None","连续交易");("PeriodicLiq","周期结算") |])
-    Timestamp("LiqPeriodSince")
-    FK("LiqPeriodTill")
-    SelectLines("LiqPeriod", [| ("None","无");("Daily","每天");("Weekly","每周");("Monthly","每月");("Quarterly","每季度") |])
-    Float("LiqTime")
-    Float("ConvertRatio")
-    SelectLines("RoBuyMode", [| ("Fixed","固定");("Percentage","按百分比") |])
-    Float("RoBuy")
-    SelectLines("RoSellMode", [| ("Fixed","固定");("Percentage","按百分比") |])
-    Float("RoSell")
-    Float("PosLimitBuy")
-    Float("PosLimitSell")
-    FK("RoCur")
-    Chars("RoCurCode", 64)
-    Float("AdjBias")
-    Float("TaxBuy")
-    Float("TaxSell")
-    Text("Misc")
-    Timestamp("RefLastPriceChange")
-    Chars("HedgeExternal", 64)
-    Float("OfferingPrice")
-    Integer("IssuanceAmount")
-    SelectLines("ListingStatus", [| ("None","未知");("Pending","未上市");("Trading","交易中") |])
-    Float("Turnover")
-    Integer("PriceOpened") |]
+    FK("Short") |]
 
 let pINS_empty(): pINS = {
     Desc = ""
-    Hidden = true
-    EnableQuote = true
     Code = ""
     Caption = ""
     Long = 0L
-    AssetName = ""
-    Short = 0L
-    Convertor = 0L
-    m = 0.0
-    mu = 0.0
-    eta = 0.0
-    psi = 0.0
-    MarginCalc = EnumOfValue 0
-    MarginRateInit = 0.0
-    MarginRateMntn = 0.0
-    MarginMode = EnumOfValue 0
-    Dec = 0L
-    Formatter = ""
-    Path = ""
-    Ask = 0L
-    Bid = 0L
-    Middle = 0.0
-    FixedSpread = 0.0
-    PercentageSpread = 0.0
-    TaxOpenMode = EnumOfValue 0
-    TaxOpen = 0.0
-    TaxCloseMode = EnumOfValue 0
-    TaxClose = 0.0
-    Tax = 0.0
-    TaxCur = 0L
-    TaxCurCode = ""
-    LastPrice = 0.0
-    LastUpdatedat = DateTime.MinValue
-    LastPriceChange = DateTime.MinValue
-    TradeStatus = EnumOfValue 0
-    RoMode = EnumOfValue 0
-    Schedule = ""
-    TradeMode = EnumOfValue 0
-    DerivativeMode = EnumOfValue 0
-    OptionsMode = EnumOfValue 0
-    OptionsCP = EnumOfValue 0
-    OptionsExpiry = DateTime.MinValue
-    OptionsStrike = 0.0
-    OptionsPricing = ""
-    OptionsPeriod = ""
-    OptionsTax = 0.0
-    OptionsPremiumPerTradeMin = 0.0
-    OptionsPremiumPerTradeMax = 0.0
-    LimitLotPerTrade = 0.0
-    LimitLotPosition = 0.0
-    CurrentOpen = 0.0
-    CurrentHigh = 0.0
-    CurrentLow = 0.0
-    PrevClose = 0.0
-    PrevClosedat = DateTime.MinValue
-    CurrentOpenat = DateTime.MinValue
-    ExtBiz = 0L
-    RefExternal = ""
-    ItrnInss = ""
-    ItrnInssMode = EnumOfValue 0
-    FlushType = EnumOfValue 0
-    CurTrigger = EnumOfValue 0
-    RobotType = EnumOfValue 0
-    ExtLong = ""
-    ExtShort = ""
-    ExtPrice = 0.0
-    SaveM1 = true
-    HistSavedat = DateTime.MinValue
-    SaveD1 = true
-    SlPips = 0.0
-    TpPips = 0.0
-    PendingLimitPips = 0.0
-    PendingStopPips = 0.0
-    LastDirection = EnumOfValue 0
-    LiqMode = EnumOfValue 0
-    LiqPeriodSince = DateTime.MinValue
-    LiqPeriodTill = 0L
-    LiqPeriod = EnumOfValue 0
-    LiqTime = 0.0
-    ConvertRatio = 0.0
-    RoBuyMode = EnumOfValue 0
-    RoBuy = 0.0
-    RoSellMode = EnumOfValue 0
-    RoSell = 0.0
-    PosLimitBuy = 0.0
-    PosLimitSell = 0.0
-    RoCur = 0L
-    RoCurCode = ""
-    AdjBias = 0.0
-    TaxBuy = 0.0
-    TaxSell = 0.0
-    Misc = ""
-    RefLastPriceChange = DateTime.MinValue
-    HedgeExternal = ""
-    OfferingPrice = 0.0
-    IssuanceAmount = 0L
-    ListingStatus = EnumOfValue 0
-    Turnover = 0.0
-    PriceOpened = 0L }
+    Short = 0L }
 
 let INS_id = ref 0L
 let INS_count = ref 0
-let INS_table = "Ex_Instrument"
+let INS_table = "Market_Instrument"
 
-// [Ex_Ticket] (TICKET)
+// [Market_Ticket] (TICKET)
 
 type ticketTradeModeEnum = 
 | Match = 0 // 撮合
@@ -2955,7 +1979,7 @@ let pTICKET_empty(): pTICKET = {
 
 let TICKET_id = ref 75921367L
 let TICKET_count = ref 0
-let TICKET_table = "Ex_Ticket"
+let TICKET_table = "Market_Ticket"
 
 // [Market_TradeAcct] (TACCT)
 
@@ -3723,6 +2747,43 @@ let LOG_id = ref 0L
 let LOG_count = ref 0
 let LOG_table = "Sys_Log"
 
+// [Trade_Arbitrage] (ARBITRAGE)
+
+type pARBITRAGE = {
+mutable Caption: Chars
+mutable Desc: Text
+mutable Fund: FK
+mutable EndUser: FK}
+
+
+type ARBITRAGE = Rcd<pARBITRAGE>
+
+let ARBITRAGE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Fund],[EndUser]"
+
+let pARBITRAGE_fieldordersArray = [|
+    "Caption"
+    "Desc"
+    "Fund"
+    "EndUser" |]
+
+let ARBITRAGE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Fund]=@Fund,[EndUser]=@EndUser"
+
+let pARBITRAGE_fields = [|
+    Chars("Caption", 64)
+    Text("Desc")
+    FK("Fund")
+    FK("EndUser") |]
+
+let pARBITRAGE_empty(): pARBITRAGE = {
+    Caption = ""
+    Desc = ""
+    Fund = 0L
+    EndUser = 0L }
+
+let ARBITRAGE_id = ref 2978739L
+let ARBITRAGE_count = ref 0
+let ARBITRAGE_table = "Trade_Arbitrage"
+
 // [Trade_Fund] (FUND)
 
 type fundBindTypeEnum = 
@@ -3858,32 +2919,52 @@ let PORTFOLIO_table = "Trade_Porfolio"
 type pTRADER = {
 mutable Caption: Chars
 mutable Desc: Text
+mutable Ins: FK
+mutable Stake: Float
+mutable Entry: Float
+mutable Exist: Float
 mutable Fund: FK
+mutable Portfolio: FK
 mutable EndUser: FK}
 
 
 type TRADER = Rcd<pTRADER>
 
-let TRADER_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Fund],[EndUser]"
+let TRADER_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Ins],[Stake],[Entry],[Exist],[Fund],[Portfolio],[EndUser]"
 
 let pTRADER_fieldordersArray = [|
     "Caption"
     "Desc"
+    "Ins"
+    "Stake"
+    "Entry"
+    "Exist"
     "Fund"
+    "Portfolio"
     "EndUser" |]
 
-let TRADER_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Fund]=@Fund,[EndUser]=@EndUser"
+let TRADER_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Ins]=@Ins,[Stake]=@Stake,[Entry]=@Entry,[Exist]=@Exist,[Fund]=@Fund,[Portfolio]=@Portfolio,[EndUser]=@EndUser"
 
 let pTRADER_fields = [|
     Chars("Caption", 64)
     Text("Desc")
+    FK("Ins")
+    Float("Stake")
+    Float("Entry")
+    Float("Exist")
     FK("Fund")
+    FK("Portfolio")
     FK("EndUser") |]
 
 let pTRADER_empty(): pTRADER = {
     Caption = ""
     Desc = ""
+    Ins = 0L
+    Stake = 0.0
+    Entry = 0.0
+    Exist = 0.0
     Fund = 0L
+    Portfolio = 0L
     EndUser = 0L }
 
 let TRADER_id = ref 2978739L

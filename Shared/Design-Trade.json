@@ -73,7 +73,28 @@
       },
       {
         "enum": "FK",
+        "ref": "Market_Instrument",
+        "name": "Ins"
+      },
+      {
+        "enum": "Float",
+        "name": "Stake"
+      },
+      {
+        "enum": "Float",
+        "name": "Entry"
+      },
+      {
+        "enum": "Float",
+        "name": "Exist"
+      },
+      {
+        "enum": "FK",
         "name": "Fund"
+      },
+      {
+        "enum": "FK",
+        "name": "Portfolio"
       },
       {
         "enum": "FK",

@@ -151,7 +151,7 @@ let bin__BizComplex (bi:BinIndexed):BizComplex =
 let BizComplex__json (v:BizComplex) =
 
     [|  ("biz",BIZ__json v.biz)
-        ("moments",Dictionary__json (int64__json) (MomentComplex__json) v.mcs)
+        ("mcs",Dictionary__json (int64__json) (MomentComplex__json) v.mcs)
          |]
     |> Json.Braket
 
@@ -179,8 +179,8 @@ let json__BizComplexo (json:Json):BizComplex option =
                 passOptions <- false
                 None
 
-    let momentso =
-        match json__tryFindByName json "moments" with
+    let mcso =
+        match json__tryFindByName json "mcs" with
         | None ->
             passOptions <- false
             None
@@ -195,7 +195,7 @@ let json__BizComplexo (json:Json):BizComplex option =
     if passOptions then
         {
             biz = bizo.Value
-            mcs = momentso.Value} |> Some
+            mcs = mcso.Value} |> Some
     else
         None
 

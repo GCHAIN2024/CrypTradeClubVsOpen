@@ -4268,2550 +4268,175 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ca_WebCredenti
     BEGIN
     ALTER TABLE Ca_WebCredential DROP  CONSTRAINT [UniqueNonclustered_Ca_WebCredentialJson]
     END
--- [Ex_Instrument] ----------------------
+-- [Market_Instrument] ----------------------
 
-IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ex_Instrument' AND xtype='U')
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Market_Instrument' AND xtype='U')
 
 BEGIN
 
-    CREATE TABLE Ex_Instrument ([ID] BIGINT NOT NULL
+    CREATE TABLE Market_Instrument ([ID] BIGINT NOT NULL
         ,[Createdat] BIGINT NOT NULL
         ,[Updatedat] BIGINT NOT NULL
         ,[Sort] BIGINT NOT NULL,
         [Desc] NVARCHAR(MAX)
-        ,[Hidden] BIT
-        ,[EnableQuote] BIT
         ,[Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Long] BIGINT
-        ,[AssetName] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Short] BIGINT
-        ,[Convertor] BIGINT
-        ,[m] FLOAT
-        ,[mu] FLOAT
-        ,[eta] FLOAT
-        ,[psi] FLOAT
-        ,[MarginCalc] INT
-        ,[MarginRateInit] FLOAT
-        ,[MarginRateMntn] FLOAT
-        ,[MarginMode] INT
-        ,[Dec] BIGINT
-        ,[Formatter] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-        ,[Path] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS
-        ,[Ask] BIGINT
-        ,[Bid] BIGINT
-        ,[Middle] FLOAT
-        ,[FixedSpread] FLOAT
-        ,[PercentageSpread] FLOAT
-        ,[TaxOpenMode] INT
-        ,[TaxOpen] FLOAT
-        ,[TaxCloseMode] INT
-        ,[TaxClose] FLOAT
-        ,[Tax] FLOAT
-        ,[TaxCur] BIGINT
-        ,[TaxCurCode] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-        ,[LastPrice] FLOAT
-        ,[LastUpdatedat] BIGINT
-        ,[LastPriceChange] BIGINT
-        ,[TradeStatus] INT
-        ,[RoMode] INT
-        ,[Schedule] NVARCHAR(MAX)
-        ,[TradeMode] INT
-        ,[DerivativeMode] INT
-        ,[OptionsMode] INT
-        ,[OptionsCP] INT
-        ,[OptionsExpiry] BIGINT
-        ,[OptionsStrike] FLOAT
-        ,[OptionsPricing] NVARCHAR(MAX)
-        ,[OptionsPeriod] NVARCHAR(MAX)
-        ,[OptionsTax] FLOAT
-        ,[OptionsPremiumPerTradeMin] FLOAT
-        ,[OptionsPremiumPerTradeMax] FLOAT
-        ,[LimitLotPerTrade] FLOAT
-        ,[LimitLotPosition] FLOAT
-        ,[CurrentOpen] FLOAT
-        ,[CurrentHigh] FLOAT
-        ,[CurrentLow] FLOAT
-        ,[PrevClose] FLOAT
-        ,[PrevClosedat] BIGINT
-        ,[CurrentOpenat] BIGINT
-        ,[ExtBiz] BIGINT
-        ,[RefExternal] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-        ,[ItrnInss] NVARCHAR(MAX)
-        ,[ItrnInssMode] INT
-        ,[FlushType] INT
-        ,[CurTrigger] INT
-        ,[RobotType] INT
-        ,[ExtLong] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-        ,[ExtShort] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-        ,[ExtPrice] FLOAT
-        ,[SaveM1] BIT
-        ,[HistSavedat] BIGINT
-        ,[SaveD1] BIT
-        ,[SlPips] FLOAT
-        ,[TpPips] FLOAT
-        ,[PendingLimitPips] FLOAT
-        ,[PendingStopPips] FLOAT
-        ,[LastDirection] INT
-        ,[LiqMode] INT
-        ,[LiqPeriodSince] BIGINT
-        ,[LiqPeriodTill] BIGINT
-        ,[LiqPeriod] INT
-        ,[LiqTime] FLOAT
-        ,[ConvertRatio] FLOAT
-        ,[RoBuyMode] INT
-        ,[RoBuy] FLOAT
-        ,[RoSellMode] INT
-        ,[RoSell] FLOAT
-        ,[PosLimitBuy] FLOAT
-        ,[PosLimitSell] FLOAT
-        ,[RoCur] BIGINT
-        ,[RoCurCode] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-        ,[AdjBias] FLOAT
-        ,[TaxBuy] FLOAT
-        ,[TaxSell] FLOAT
-        ,[Misc] NVARCHAR(MAX)
-        ,[RefLastPriceChange] BIGINT
-        ,[HedgeExternal] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-        ,[OfferingPrice] FLOAT
-        ,[IssuanceAmount] BIGINT
-        ,[ListingStatus] INT
-        ,[Turnover] FLOAT
-        ,[PriceOpened] BIGINT
-, CONSTRAINT [PK_Ex_Instrument] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+, CONSTRAINT [PK_Market_Instrument] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
 
 
 -- Dropping obsolete fields -----------
-DECLARE @name_Ex_Instrument NVARCHAR(64)
-DECLARE cursor_Ex_Instrument CURSOR FOR 
-    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Desc','Hidden','EnableQuote','Code','Caption','Long','AssetName','Short','Convertor','m','mu','eta','psi','MarginCalc','MarginRateInit','MarginRateMntn','MarginMode','Dec','Formatter','Path','Ask','Bid','Middle','FixedSpread','PercentageSpread','TaxOpenMode','TaxOpen','TaxCloseMode','TaxClose','Tax','TaxCur','TaxCurCode','LastPrice','LastUpdatedat','LastPriceChange','TradeStatus','RoMode','Schedule','TradeMode','DerivativeMode','OptionsMode','OptionsCP','OptionsExpiry','OptionsStrike','OptionsPricing','OptionsPeriod','OptionsTax','OptionsPremiumPerTradeMin','OptionsPremiumPerTradeMax','LimitLotPerTrade','LimitLotPosition','CurrentOpen','CurrentHigh','CurrentLow','PrevClose','PrevClosedat','CurrentOpenat','ExtBiz','RefExternal','ItrnInss','ItrnInssMode','FlushType','CurTrigger','RobotType','ExtLong','ExtShort','ExtPrice','SaveM1','HistSavedat','SaveD1','SlPips','TpPips','PendingLimitPips','PendingStopPips','LastDirection','LiqMode','LiqPeriodSince','LiqPeriodTill','LiqPeriod','LiqTime','ConvertRatio','RoBuyMode','RoBuy','RoSellMode','RoSell','PosLimitBuy','PosLimitSell','RoCur','RoCurCode','AdjBias','TaxBuy','TaxSell','Misc','RefLastPriceChange','HedgeExternal','OfferingPrice','IssuanceAmount','ListingStatus','Turnover','PriceOpened'))
+DECLARE @name_Market_Instrument NVARCHAR(64)
+DECLARE cursor_Market_Instrument CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Desc','Code','Caption','Long','Short'))
 
-OPEN cursor_Ex_Instrument
-FETCH NEXT FROM cursor_Ex_Instrument INTO @name_Ex_Instrument
+OPEN cursor_Market_Instrument
+FETCH NEXT FROM cursor_Market_Instrument INTO @name_Market_Instrument
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-    PRINT 'Dropping Ex_Instrument.' + @name_Ex_Instrument;
+    PRINT 'Dropping Market_Instrument.' + @name_Market_Instrument;
     
-    DECLARE @sql_Ex_Instrument NVARCHAR(MAX);
-    SET @sql_Ex_Instrument = 'ALTER TABLE Ex_Instrument DROP COLUMN ' + QUOTENAME(@name_Ex_Instrument)
-    EXEC sp_executesql @sql_Ex_Instrument
+    DECLARE @sql_Market_Instrument NVARCHAR(MAX);
+    SET @sql_Market_Instrument = 'ALTER TABLE Market_Instrument DROP COLUMN ' + QUOTENAME(@name_Market_Instrument)
+    EXEC sp_executesql @sql_Market_Instrument
     
     
-    FETCH NEXT FROM cursor_Ex_Instrument INTO @name_Ex_Instrument
+    FETCH NEXT FROM cursor_Market_Instrument INTO @name_Market_Instrument
 END
 
-CLOSE cursor_Ex_Instrument;
-DEALLOCATE cursor_Ex_Instrument;
+CLOSE cursor_Market_Instrument;
+DEALLOCATE cursor_Market_Instrument;
 
 
--- [Ex_Instrument.Desc] -------------
+-- [Market_Instrument.Desc] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Desc')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND name='Desc')
     BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Desc] NVARCHAR(MAX)
+     ALTER TABLE Market_Instrument ALTER COLUMN [Desc] NVARCHAR(MAX)
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Instrument_Desc NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Desc = 'ALTER TABLE Ex_Instrument ADD [Desc] NVARCHAR(MAX)'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Desc
+    DECLARE @sql_add_Market_Instrument_Desc NVARCHAR(MAX);
+    SET @sql_add_Market_Instrument_Desc = 'ALTER TABLE Market_Instrument ADD [Desc] NVARCHAR(MAX)'
+    EXEC sp_executesql @sql_add_Market_Instrument_Desc
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentDesc')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_InstrumentDesc')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentDesc]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_InstrumentDesc]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentDesc')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_InstrumentDesc')
     BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentDesc]
+    ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentDesc]
     END
 
--- [Ex_Instrument.Hidden] -------------
+-- [Market_Instrument.Code] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Hidden')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND name='Code')
     BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Hidden] BIT
+     ALTER TABLE Market_Instrument ALTER COLUMN [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Instrument_Hidden NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Hidden = 'ALTER TABLE Ex_Instrument ADD [Hidden] BIT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Hidden
+    DECLARE @sql_add_Market_Instrument_Code NVARCHAR(MAX);
+    SET @sql_add_Market_Instrument_Code = 'ALTER TABLE Market_Instrument ADD [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Market_Instrument_Code
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentHidden')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_InstrumentCode')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentHidden]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_InstrumentCode]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentHidden')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_InstrumentCode')
     BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentHidden]
+    ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentCode]
     END
 
--- [Ex_Instrument.EnableQuote] -------------
+-- [Market_Instrument.Caption] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='EnableQuote')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND name='Caption')
     BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [EnableQuote] BIT
+     ALTER TABLE Market_Instrument ALTER COLUMN [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Instrument_EnableQuote NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_EnableQuote = 'ALTER TABLE Ex_Instrument ADD [EnableQuote] BIT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_EnableQuote
+    DECLARE @sql_add_Market_Instrument_Caption NVARCHAR(MAX);
+    SET @sql_add_Market_Instrument_Caption = 'ALTER TABLE Market_Instrument ADD [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Market_Instrument_Caption
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentEnableQuote')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_InstrumentCaption')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentEnableQuote]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_InstrumentCaption]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentEnableQuote')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_InstrumentCaption')
     BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentEnableQuote]
+    ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentCaption]
     END
 
--- [Ex_Instrument.Code] -------------
+-- [Market_Instrument.Long] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Code')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND name='Long')
     BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
+     ALTER TABLE Market_Instrument ALTER COLUMN [Long] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Instrument_Code NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Code = 'ALTER TABLE Ex_Instrument ADD [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Code
+    DECLARE @sql_add_Market_Instrument_Long NVARCHAR(MAX);
+    SET @sql_add_Market_Instrument_Long = 'ALTER TABLE Market_Instrument ADD [Long] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Instrument_Long
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentCode')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_InstrumentLong')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentCode]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_InstrumentLong]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentCode')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_InstrumentLong')
     BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentCode]
+    ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentLong]
     END
 
--- [Ex_Instrument.Caption] -------------
+-- [Market_Instrument.Short] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Caption')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND name='Short')
     BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
+     ALTER TABLE Market_Instrument ALTER COLUMN [Short] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Instrument_Caption NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Caption = 'ALTER TABLE Ex_Instrument ADD [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Caption
+    DECLARE @sql_add_Market_Instrument_Short NVARCHAR(MAX);
+    SET @sql_add_Market_Instrument_Short = 'ALTER TABLE Market_Instrument ADD [Short] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Instrument_Short
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentCaption')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_InstrumentShort')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentCaption]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_InstrumentShort]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentCaption')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_InstrumentShort')
     BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentCaption]
+    ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentShort]
     END
+-- [Market_Ticket] ----------------------
 
--- [Ex_Instrument.Long] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Long')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Long] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Long NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Long = 'ALTER TABLE Ex_Instrument ADD [Long] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Long
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLong')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLong]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLong')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLong]
-    END
-
--- [Ex_Instrument.AssetName] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='AssetName')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [AssetName] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_AssetName NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_AssetName = 'ALTER TABLE Ex_Instrument ADD [AssetName] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_AssetName
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentAssetName')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentAssetName]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentAssetName')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentAssetName]
-    END
-
--- [Ex_Instrument.Short] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Short')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Short] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Short NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Short = 'ALTER TABLE Ex_Instrument ADD [Short] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Short
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentShort')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentShort]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentShort')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentShort]
-    END
-
--- [Ex_Instrument.Convertor] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Convertor')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Convertor] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Convertor NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Convertor = 'ALTER TABLE Ex_Instrument ADD [Convertor] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Convertor
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentConvertor')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentConvertor]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentConvertor')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentConvertor]
-    END
-
--- [Ex_Instrument.m] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='m')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [m] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_m NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_m = 'ALTER TABLE Ex_Instrument ADD [m] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_m
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_Instrumentm')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_Instrumentm]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_Instrumentm')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_Instrumentm]
-    END
-
--- [Ex_Instrument.mu] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='mu')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [mu] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_mu NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_mu = 'ALTER TABLE Ex_Instrument ADD [mu] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_mu
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_Instrumentmu')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_Instrumentmu]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_Instrumentmu')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_Instrumentmu]
-    END
-
--- [Ex_Instrument.eta] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='eta')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [eta] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_eta NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_eta = 'ALTER TABLE Ex_Instrument ADD [eta] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_eta
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_Instrumenteta')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_Instrumenteta]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_Instrumenteta')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_Instrumenteta]
-    END
-
--- [Ex_Instrument.psi] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='psi')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [psi] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_psi NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_psi = 'ALTER TABLE Ex_Instrument ADD [psi] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_psi
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_Instrumentpsi')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_Instrumentpsi]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_Instrumentpsi')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_Instrumentpsi]
-    END
-
--- [Ex_Instrument.MarginCalc] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='MarginCalc')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [MarginCalc] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_MarginCalc NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_MarginCalc = 'ALTER TABLE Ex_Instrument ADD [MarginCalc] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_MarginCalc
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentMarginCalc')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentMarginCalc]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentMarginCalc')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentMarginCalc]
-    END
-
--- [Ex_Instrument.MarginRateInit] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='MarginRateInit')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [MarginRateInit] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_MarginRateInit NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_MarginRateInit = 'ALTER TABLE Ex_Instrument ADD [MarginRateInit] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_MarginRateInit
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentMarginRateInit')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentMarginRateInit]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentMarginRateInit')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentMarginRateInit]
-    END
-
--- [Ex_Instrument.MarginRateMntn] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='MarginRateMntn')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [MarginRateMntn] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_MarginRateMntn NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_MarginRateMntn = 'ALTER TABLE Ex_Instrument ADD [MarginRateMntn] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_MarginRateMntn
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentMarginRateMntn')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentMarginRateMntn]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentMarginRateMntn')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentMarginRateMntn]
-    END
-
--- [Ex_Instrument.MarginMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='MarginMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [MarginMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_MarginMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_MarginMode = 'ALTER TABLE Ex_Instrument ADD [MarginMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_MarginMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentMarginMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentMarginMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentMarginMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentMarginMode]
-    END
-
--- [Ex_Instrument.Dec] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Dec')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Dec] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Dec NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Dec = 'ALTER TABLE Ex_Instrument ADD [Dec] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Dec
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentDec')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentDec]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentDec')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentDec]
-    END
-
--- [Ex_Instrument.Formatter] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Formatter')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Formatter] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Formatter NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Formatter = 'ALTER TABLE Ex_Instrument ADD [Formatter] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Formatter
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentFormatter')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentFormatter]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentFormatter')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentFormatter]
-    END
-
--- [Ex_Instrument.Path] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Path')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Path] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Path NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Path = 'ALTER TABLE Ex_Instrument ADD [Path] NVARCHAR(256) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Path
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPath')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPath]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPath')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPath]
-    END
-
--- [Ex_Instrument.Ask] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Ask')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Ask] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Ask NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Ask = 'ALTER TABLE Ex_Instrument ADD [Ask] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Ask
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentAsk')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentAsk]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentAsk')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentAsk]
-    END
-
--- [Ex_Instrument.Bid] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Bid')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Bid] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Bid NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Bid = 'ALTER TABLE Ex_Instrument ADD [Bid] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Bid
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentBid')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentBid]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentBid')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentBid]
-    END
-
--- [Ex_Instrument.Middle] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Middle')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Middle] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Middle NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Middle = 'ALTER TABLE Ex_Instrument ADD [Middle] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Middle
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentMiddle')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentMiddle]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentMiddle')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentMiddle]
-    END
-
--- [Ex_Instrument.FixedSpread] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='FixedSpread')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [FixedSpread] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_FixedSpread NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_FixedSpread = 'ALTER TABLE Ex_Instrument ADD [FixedSpread] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_FixedSpread
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentFixedSpread')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentFixedSpread]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentFixedSpread')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentFixedSpread]
-    END
-
--- [Ex_Instrument.PercentageSpread] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PercentageSpread')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [PercentageSpread] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_PercentageSpread NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_PercentageSpread = 'ALTER TABLE Ex_Instrument ADD [PercentageSpread] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_PercentageSpread
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPercentageSpread')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPercentageSpread]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPercentageSpread')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPercentageSpread]
-    END
-
--- [Ex_Instrument.TaxOpenMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxOpenMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TaxOpenMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TaxOpenMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TaxOpenMode = 'ALTER TABLE Ex_Instrument ADD [TaxOpenMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TaxOpenMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTaxOpenMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTaxOpenMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTaxOpenMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTaxOpenMode]
-    END
-
--- [Ex_Instrument.TaxOpen] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxOpen')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TaxOpen] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TaxOpen NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TaxOpen = 'ALTER TABLE Ex_Instrument ADD [TaxOpen] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TaxOpen
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTaxOpen')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTaxOpen]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTaxOpen')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTaxOpen]
-    END
-
--- [Ex_Instrument.TaxCloseMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxCloseMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TaxCloseMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TaxCloseMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TaxCloseMode = 'ALTER TABLE Ex_Instrument ADD [TaxCloseMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TaxCloseMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTaxCloseMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTaxCloseMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTaxCloseMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTaxCloseMode]
-    END
-
--- [Ex_Instrument.TaxClose] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxClose')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TaxClose] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TaxClose NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TaxClose = 'ALTER TABLE Ex_Instrument ADD [TaxClose] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TaxClose
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTaxClose')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTaxClose]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTaxClose')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTaxClose]
-    END
-
--- [Ex_Instrument.Tax] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Tax')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Tax] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Tax NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Tax = 'ALTER TABLE Ex_Instrument ADD [Tax] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Tax
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTax')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTax]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTax')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTax]
-    END
-
--- [Ex_Instrument.TaxCur] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxCur')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TaxCur] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TaxCur NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TaxCur = 'ALTER TABLE Ex_Instrument ADD [TaxCur] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TaxCur
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTaxCur')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTaxCur]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTaxCur')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTaxCur]
-    END
-
--- [Ex_Instrument.TaxCurCode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxCurCode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TaxCurCode] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TaxCurCode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TaxCurCode = 'ALTER TABLE Ex_Instrument ADD [TaxCurCode] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TaxCurCode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTaxCurCode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTaxCurCode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTaxCurCode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTaxCurCode]
-    END
-
--- [Ex_Instrument.LastPrice] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LastPrice')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LastPrice] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LastPrice NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LastPrice = 'ALTER TABLE Ex_Instrument ADD [LastPrice] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LastPrice
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLastPrice')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLastPrice]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLastPrice')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLastPrice]
-    END
-
--- [Ex_Instrument.LastUpdatedat] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LastUpdatedat')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LastUpdatedat] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LastUpdatedat NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LastUpdatedat = 'ALTER TABLE Ex_Instrument ADD [LastUpdatedat] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LastUpdatedat
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLastUpdatedat')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLastUpdatedat]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLastUpdatedat')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLastUpdatedat]
-    END
-
--- [Ex_Instrument.LastPriceChange] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LastPriceChange')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LastPriceChange] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LastPriceChange NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LastPriceChange = 'ALTER TABLE Ex_Instrument ADD [LastPriceChange] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LastPriceChange
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLastPriceChange')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLastPriceChange]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLastPriceChange')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLastPriceChange]
-    END
-
--- [Ex_Instrument.TradeStatus] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TradeStatus')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TradeStatus] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TradeStatus NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TradeStatus = 'ALTER TABLE Ex_Instrument ADD [TradeStatus] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TradeStatus
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTradeStatus')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTradeStatus]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTradeStatus')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTradeStatus]
-    END
-
--- [Ex_Instrument.RoMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RoMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RoMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RoMode = 'ALTER TABLE Ex_Instrument ADD [RoMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RoMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRoMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRoMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRoMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRoMode]
-    END
-
--- [Ex_Instrument.Schedule] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Schedule')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Schedule] NVARCHAR(MAX)
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Schedule NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Schedule = 'ALTER TABLE Ex_Instrument ADD [Schedule] NVARCHAR(MAX)'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Schedule
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentSchedule')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentSchedule]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentSchedule')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentSchedule]
-    END
-
--- [Ex_Instrument.TradeMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TradeMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TradeMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TradeMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TradeMode = 'ALTER TABLE Ex_Instrument ADD [TradeMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TradeMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTradeMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTradeMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTradeMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTradeMode]
-    END
-
--- [Ex_Instrument.DerivativeMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='DerivativeMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [DerivativeMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_DerivativeMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_DerivativeMode = 'ALTER TABLE Ex_Instrument ADD [DerivativeMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_DerivativeMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentDerivativeMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentDerivativeMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentDerivativeMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentDerivativeMode]
-    END
-
--- [Ex_Instrument.OptionsMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsMode = 'ALTER TABLE Ex_Instrument ADD [OptionsMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsMode]
-    END
-
--- [Ex_Instrument.OptionsCP] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsCP')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsCP] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsCP NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsCP = 'ALTER TABLE Ex_Instrument ADD [OptionsCP] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsCP
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsCP')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsCP]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsCP')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsCP]
-    END
-
--- [Ex_Instrument.OptionsExpiry] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsExpiry')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsExpiry] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsExpiry NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsExpiry = 'ALTER TABLE Ex_Instrument ADD [OptionsExpiry] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsExpiry
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsExpiry')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsExpiry]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsExpiry')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsExpiry]
-    END
-
--- [Ex_Instrument.OptionsStrike] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsStrike')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsStrike] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsStrike NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsStrike = 'ALTER TABLE Ex_Instrument ADD [OptionsStrike] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsStrike
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsStrike')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsStrike]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsStrike')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsStrike]
-    END
-
--- [Ex_Instrument.OptionsPricing] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsPricing')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsPricing] NVARCHAR(MAX)
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsPricing NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsPricing = 'ALTER TABLE Ex_Instrument ADD [OptionsPricing] NVARCHAR(MAX)'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsPricing
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsPricing')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsPricing]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsPricing')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsPricing]
-    END
-
--- [Ex_Instrument.OptionsPeriod] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsPeriod')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsPeriod] NVARCHAR(MAX)
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsPeriod NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsPeriod = 'ALTER TABLE Ex_Instrument ADD [OptionsPeriod] NVARCHAR(MAX)'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsPeriod
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsPeriod')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsPeriod]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsPeriod')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsPeriod]
-    END
-
--- [Ex_Instrument.OptionsTax] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsTax')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsTax] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsTax NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsTax = 'ALTER TABLE Ex_Instrument ADD [OptionsTax] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsTax
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsTax')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsTax]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsTax')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsTax]
-    END
-
--- [Ex_Instrument.OptionsPremiumPerTradeMin] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsPremiumPerTradeMin')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsPremiumPerTradeMin] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsPremiumPerTradeMin NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsPremiumPerTradeMin = 'ALTER TABLE Ex_Instrument ADD [OptionsPremiumPerTradeMin] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsPremiumPerTradeMin
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsPremiumPerTradeMin')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsPremiumPerTradeMin]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsPremiumPerTradeMin')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsPremiumPerTradeMin]
-    END
-
--- [Ex_Instrument.OptionsPremiumPerTradeMax] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OptionsPremiumPerTradeMax')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OptionsPremiumPerTradeMax] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OptionsPremiumPerTradeMax NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OptionsPremiumPerTradeMax = 'ALTER TABLE Ex_Instrument ADD [OptionsPremiumPerTradeMax] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OptionsPremiumPerTradeMax
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOptionsPremiumPerTradeMax')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOptionsPremiumPerTradeMax]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOptionsPremiumPerTradeMax')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOptionsPremiumPerTradeMax]
-    END
-
--- [Ex_Instrument.LimitLotPerTrade] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LimitLotPerTrade')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LimitLotPerTrade] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LimitLotPerTrade NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LimitLotPerTrade = 'ALTER TABLE Ex_Instrument ADD [LimitLotPerTrade] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LimitLotPerTrade
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLimitLotPerTrade')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLimitLotPerTrade]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLimitLotPerTrade')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLimitLotPerTrade]
-    END
-
--- [Ex_Instrument.LimitLotPosition] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LimitLotPosition')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LimitLotPosition] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LimitLotPosition NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LimitLotPosition = 'ALTER TABLE Ex_Instrument ADD [LimitLotPosition] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LimitLotPosition
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLimitLotPosition')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLimitLotPosition]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLimitLotPosition')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLimitLotPosition]
-    END
-
--- [Ex_Instrument.CurrentOpen] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurrentOpen')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [CurrentOpen] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_CurrentOpen NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_CurrentOpen = 'ALTER TABLE Ex_Instrument ADD [CurrentOpen] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_CurrentOpen
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentCurrentOpen')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentCurrentOpen]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentCurrentOpen')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentCurrentOpen]
-    END
-
--- [Ex_Instrument.CurrentHigh] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurrentHigh')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [CurrentHigh] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_CurrentHigh NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_CurrentHigh = 'ALTER TABLE Ex_Instrument ADD [CurrentHigh] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_CurrentHigh
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentCurrentHigh')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentCurrentHigh]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentCurrentHigh')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentCurrentHigh]
-    END
-
--- [Ex_Instrument.CurrentLow] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurrentLow')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [CurrentLow] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_CurrentLow NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_CurrentLow = 'ALTER TABLE Ex_Instrument ADD [CurrentLow] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_CurrentLow
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentCurrentLow')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentCurrentLow]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentCurrentLow')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentCurrentLow]
-    END
-
--- [Ex_Instrument.PrevClose] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PrevClose')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [PrevClose] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_PrevClose NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_PrevClose = 'ALTER TABLE Ex_Instrument ADD [PrevClose] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_PrevClose
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPrevClose')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPrevClose]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPrevClose')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPrevClose]
-    END
-
--- [Ex_Instrument.PrevClosedat] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PrevClosedat')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [PrevClosedat] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_PrevClosedat NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_PrevClosedat = 'ALTER TABLE Ex_Instrument ADD [PrevClosedat] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_PrevClosedat
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPrevClosedat')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPrevClosedat]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPrevClosedat')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPrevClosedat]
-    END
-
--- [Ex_Instrument.CurrentOpenat] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurrentOpenat')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [CurrentOpenat] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_CurrentOpenat NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_CurrentOpenat = 'ALTER TABLE Ex_Instrument ADD [CurrentOpenat] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_CurrentOpenat
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentCurrentOpenat')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentCurrentOpenat]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentCurrentOpenat')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentCurrentOpenat]
-    END
-
--- [Ex_Instrument.ExtBiz] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ExtBiz')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [ExtBiz] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_ExtBiz NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_ExtBiz = 'ALTER TABLE Ex_Instrument ADD [ExtBiz] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_ExtBiz
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentExtBiz')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentExtBiz]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentExtBiz')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentExtBiz]
-    END
-
--- [Ex_Instrument.RefExternal] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RefExternal')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RefExternal] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RefExternal NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RefExternal = 'ALTER TABLE Ex_Instrument ADD [RefExternal] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RefExternal
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRefExternal')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRefExternal]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRefExternal')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRefExternal]
-    END
-
--- [Ex_Instrument.ItrnInss] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ItrnInss')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [ItrnInss] NVARCHAR(MAX)
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_ItrnInss NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_ItrnInss = 'ALTER TABLE Ex_Instrument ADD [ItrnInss] NVARCHAR(MAX)'
-    EXEC sp_executesql @sql_add_Ex_Instrument_ItrnInss
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentItrnInss')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentItrnInss]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentItrnInss')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentItrnInss]
-    END
-
--- [Ex_Instrument.ItrnInssMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ItrnInssMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [ItrnInssMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_ItrnInssMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_ItrnInssMode = 'ALTER TABLE Ex_Instrument ADD [ItrnInssMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_ItrnInssMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentItrnInssMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentItrnInssMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentItrnInssMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentItrnInssMode]
-    END
-
--- [Ex_Instrument.FlushType] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='FlushType')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [FlushType] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_FlushType NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_FlushType = 'ALTER TABLE Ex_Instrument ADD [FlushType] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_FlushType
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentFlushType')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentFlushType]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentFlushType')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentFlushType]
-    END
-
--- [Ex_Instrument.CurTrigger] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='CurTrigger')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [CurTrigger] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_CurTrigger NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_CurTrigger = 'ALTER TABLE Ex_Instrument ADD [CurTrigger] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_CurTrigger
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentCurTrigger')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentCurTrigger]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentCurTrigger')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentCurTrigger]
-    END
-
--- [Ex_Instrument.RobotType] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RobotType')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RobotType] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RobotType NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RobotType = 'ALTER TABLE Ex_Instrument ADD [RobotType] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RobotType
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRobotType')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRobotType]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRobotType')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRobotType]
-    END
-
--- [Ex_Instrument.ExtLong] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ExtLong')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [ExtLong] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_ExtLong NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_ExtLong = 'ALTER TABLE Ex_Instrument ADD [ExtLong] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_ExtLong
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentExtLong')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentExtLong]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentExtLong')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentExtLong]
-    END
-
--- [Ex_Instrument.ExtShort] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ExtShort')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [ExtShort] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_ExtShort NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_ExtShort = 'ALTER TABLE Ex_Instrument ADD [ExtShort] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_ExtShort
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentExtShort')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentExtShort]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentExtShort')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentExtShort]
-    END
-
--- [Ex_Instrument.ExtPrice] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ExtPrice')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [ExtPrice] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_ExtPrice NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_ExtPrice = 'ALTER TABLE Ex_Instrument ADD [ExtPrice] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_ExtPrice
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentExtPrice')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentExtPrice]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentExtPrice')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentExtPrice]
-    END
-
--- [Ex_Instrument.SaveM1] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='SaveM1')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [SaveM1] BIT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_SaveM1 NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_SaveM1 = 'ALTER TABLE Ex_Instrument ADD [SaveM1] BIT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_SaveM1
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentSaveM1')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentSaveM1]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentSaveM1')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentSaveM1]
-    END
-
--- [Ex_Instrument.HistSavedat] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='HistSavedat')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [HistSavedat] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_HistSavedat NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_HistSavedat = 'ALTER TABLE Ex_Instrument ADD [HistSavedat] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_HistSavedat
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentHistSavedat')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentHistSavedat]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentHistSavedat')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentHistSavedat]
-    END
-
--- [Ex_Instrument.SaveD1] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='SaveD1')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [SaveD1] BIT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_SaveD1 NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_SaveD1 = 'ALTER TABLE Ex_Instrument ADD [SaveD1] BIT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_SaveD1
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentSaveD1')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentSaveD1]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentSaveD1')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentSaveD1]
-    END
-
--- [Ex_Instrument.SlPips] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='SlPips')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [SlPips] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_SlPips NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_SlPips = 'ALTER TABLE Ex_Instrument ADD [SlPips] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_SlPips
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentSlPips')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentSlPips]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentSlPips')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentSlPips]
-    END
-
--- [Ex_Instrument.TpPips] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TpPips')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TpPips] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TpPips NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TpPips = 'ALTER TABLE Ex_Instrument ADD [TpPips] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TpPips
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTpPips')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTpPips]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTpPips')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTpPips]
-    END
-
--- [Ex_Instrument.PendingLimitPips] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PendingLimitPips')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [PendingLimitPips] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_PendingLimitPips NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_PendingLimitPips = 'ALTER TABLE Ex_Instrument ADD [PendingLimitPips] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_PendingLimitPips
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPendingLimitPips')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPendingLimitPips]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPendingLimitPips')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPendingLimitPips]
-    END
-
--- [Ex_Instrument.PendingStopPips] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PendingStopPips')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [PendingStopPips] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_PendingStopPips NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_PendingStopPips = 'ALTER TABLE Ex_Instrument ADD [PendingStopPips] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_PendingStopPips
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPendingStopPips')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPendingStopPips]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPendingStopPips')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPendingStopPips]
-    END
-
--- [Ex_Instrument.LastDirection] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LastDirection')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LastDirection] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LastDirection NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LastDirection = 'ALTER TABLE Ex_Instrument ADD [LastDirection] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LastDirection
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLastDirection')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLastDirection]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLastDirection')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLastDirection]
-    END
-
--- [Ex_Instrument.LiqMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LiqMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LiqMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LiqMode = 'ALTER TABLE Ex_Instrument ADD [LiqMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LiqMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLiqMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLiqMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLiqMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLiqMode]
-    END
-
--- [Ex_Instrument.LiqPeriodSince] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqPeriodSince')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LiqPeriodSince] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LiqPeriodSince NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LiqPeriodSince = 'ALTER TABLE Ex_Instrument ADD [LiqPeriodSince] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LiqPeriodSince
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLiqPeriodSince')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLiqPeriodSince]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLiqPeriodSince')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLiqPeriodSince]
-    END
-
--- [Ex_Instrument.LiqPeriodTill] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqPeriodTill')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LiqPeriodTill] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LiqPeriodTill NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LiqPeriodTill = 'ALTER TABLE Ex_Instrument ADD [LiqPeriodTill] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LiqPeriodTill
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLiqPeriodTill')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLiqPeriodTill]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLiqPeriodTill')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLiqPeriodTill]
-    END
-
--- [Ex_Instrument.LiqPeriod] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqPeriod')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LiqPeriod] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LiqPeriod NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LiqPeriod = 'ALTER TABLE Ex_Instrument ADD [LiqPeriod] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LiqPeriod
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLiqPeriod')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLiqPeriod]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLiqPeriod')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLiqPeriod]
-    END
-
--- [Ex_Instrument.LiqTime] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='LiqTime')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [LiqTime] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_LiqTime NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_LiqTime = 'ALTER TABLE Ex_Instrument ADD [LiqTime] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_LiqTime
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentLiqTime')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentLiqTime]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentLiqTime')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentLiqTime]
-    END
-
--- [Ex_Instrument.ConvertRatio] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ConvertRatio')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [ConvertRatio] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_ConvertRatio NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_ConvertRatio = 'ALTER TABLE Ex_Instrument ADD [ConvertRatio] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_ConvertRatio
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentConvertRatio')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentConvertRatio]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentConvertRatio')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentConvertRatio]
-    END
-
--- [Ex_Instrument.RoBuyMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoBuyMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RoBuyMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RoBuyMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RoBuyMode = 'ALTER TABLE Ex_Instrument ADD [RoBuyMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RoBuyMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRoBuyMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRoBuyMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRoBuyMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRoBuyMode]
-    END
-
--- [Ex_Instrument.RoBuy] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoBuy')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RoBuy] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RoBuy NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RoBuy = 'ALTER TABLE Ex_Instrument ADD [RoBuy] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RoBuy
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRoBuy')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRoBuy]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRoBuy')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRoBuy]
-    END
-
--- [Ex_Instrument.RoSellMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoSellMode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RoSellMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RoSellMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RoSellMode = 'ALTER TABLE Ex_Instrument ADD [RoSellMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RoSellMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRoSellMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRoSellMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRoSellMode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRoSellMode]
-    END
-
--- [Ex_Instrument.RoSell] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoSell')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RoSell] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RoSell NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RoSell = 'ALTER TABLE Ex_Instrument ADD [RoSell] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RoSell
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRoSell')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRoSell]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRoSell')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRoSell]
-    END
-
--- [Ex_Instrument.PosLimitBuy] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PosLimitBuy')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [PosLimitBuy] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_PosLimitBuy NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_PosLimitBuy = 'ALTER TABLE Ex_Instrument ADD [PosLimitBuy] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_PosLimitBuy
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPosLimitBuy')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPosLimitBuy]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPosLimitBuy')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPosLimitBuy]
-    END
-
--- [Ex_Instrument.PosLimitSell] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PosLimitSell')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [PosLimitSell] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_PosLimitSell NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_PosLimitSell = 'ALTER TABLE Ex_Instrument ADD [PosLimitSell] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_PosLimitSell
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPosLimitSell')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPosLimitSell]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPosLimitSell')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPosLimitSell]
-    END
-
--- [Ex_Instrument.RoCur] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoCur')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RoCur] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RoCur NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RoCur = 'ALTER TABLE Ex_Instrument ADD [RoCur] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RoCur
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRoCur')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRoCur]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRoCur')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRoCur]
-    END
-
--- [Ex_Instrument.RoCurCode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RoCurCode')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RoCurCode] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RoCurCode NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RoCurCode = 'ALTER TABLE Ex_Instrument ADD [RoCurCode] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RoCurCode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRoCurCode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRoCurCode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRoCurCode')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRoCurCode]
-    END
-
--- [Ex_Instrument.AdjBias] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='AdjBias')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [AdjBias] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_AdjBias NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_AdjBias = 'ALTER TABLE Ex_Instrument ADD [AdjBias] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_AdjBias
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentAdjBias')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentAdjBias]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentAdjBias')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentAdjBias]
-    END
-
--- [Ex_Instrument.TaxBuy] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxBuy')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TaxBuy] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TaxBuy NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TaxBuy = 'ALTER TABLE Ex_Instrument ADD [TaxBuy] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TaxBuy
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTaxBuy')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTaxBuy]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTaxBuy')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTaxBuy]
-    END
-
--- [Ex_Instrument.TaxSell] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='TaxSell')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [TaxSell] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_TaxSell NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_TaxSell = 'ALTER TABLE Ex_Instrument ADD [TaxSell] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_TaxSell
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTaxSell')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTaxSell]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTaxSell')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTaxSell]
-    END
-
--- [Ex_Instrument.Misc] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Misc')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Misc] NVARCHAR(MAX)
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Misc NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Misc = 'ALTER TABLE Ex_Instrument ADD [Misc] NVARCHAR(MAX)'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Misc
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentMisc')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentMisc]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentMisc')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentMisc]
-    END
-
--- [Ex_Instrument.RefLastPriceChange] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='RefLastPriceChange')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [RefLastPriceChange] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_RefLastPriceChange NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_RefLastPriceChange = 'ALTER TABLE Ex_Instrument ADD [RefLastPriceChange] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_RefLastPriceChange
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentRefLastPriceChange')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentRefLastPriceChange]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentRefLastPriceChange')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentRefLastPriceChange]
-    END
-
--- [Ex_Instrument.HedgeExternal] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='HedgeExternal')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [HedgeExternal] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_HedgeExternal NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_HedgeExternal = 'ALTER TABLE Ex_Instrument ADD [HedgeExternal] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Instrument_HedgeExternal
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentHedgeExternal')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentHedgeExternal]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentHedgeExternal')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentHedgeExternal]
-    END
-
--- [Ex_Instrument.OfferingPrice] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='OfferingPrice')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [OfferingPrice] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_OfferingPrice NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_OfferingPrice = 'ALTER TABLE Ex_Instrument ADD [OfferingPrice] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_OfferingPrice
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentOfferingPrice')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentOfferingPrice]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentOfferingPrice')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentOfferingPrice]
-    END
-
--- [Ex_Instrument.IssuanceAmount] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='IssuanceAmount')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [IssuanceAmount] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_IssuanceAmount NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_IssuanceAmount = 'ALTER TABLE Ex_Instrument ADD [IssuanceAmount] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_IssuanceAmount
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentIssuanceAmount')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentIssuanceAmount]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentIssuanceAmount')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentIssuanceAmount]
-    END
-
--- [Ex_Instrument.ListingStatus] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='ListingStatus')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [ListingStatus] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_ListingStatus NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_ListingStatus = 'ALTER TABLE Ex_Instrument ADD [ListingStatus] INT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_ListingStatus
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentListingStatus')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentListingStatus]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentListingStatus')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentListingStatus]
-    END
-
--- [Ex_Instrument.Turnover] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='Turnover')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [Turnover] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_Turnover NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_Turnover = 'ALTER TABLE Ex_Instrument ADD [Turnover] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_Turnover
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentTurnover')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentTurnover]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentTurnover')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentTurnover]
-    END
-
--- [Ex_Instrument.PriceOpened] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Instrument') AND name='PriceOpened')
-    BEGIN
-     ALTER TABLE Ex_Instrument ALTER COLUMN [PriceOpened] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Instrument_PriceOpened NVARCHAR(MAX);
-    SET @sql_add_Ex_Instrument_PriceOpened = 'ALTER TABLE Ex_Instrument ADD [PriceOpened] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Instrument_PriceOpened
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_InstrumentPriceOpened')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_InstrumentPriceOpened]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_InstrumentPriceOpened')
-    BEGIN
-    ALTER TABLE Ex_Instrument DROP  CONSTRAINT [UniqueNonclustered_Ex_InstrumentPriceOpened]
-    END
--- [Ex_Ticket] ----------------------
-
-IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ex_Ticket' AND xtype='U')
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Market_Ticket' AND xtype='U')
 
 BEGIN
 
-    CREATE TABLE Ex_Ticket ([ID] BIGINT NOT NULL
+    CREATE TABLE Market_Ticket ([ID] BIGINT NOT NULL
         ,[Createdat] BIGINT NOT NULL
         ,[Updatedat] BIGINT NOT NULL
         ,[Sort] BIGINT NOT NULL,
@@ -6874,1448 +4499,1448 @@ BEGIN
         ,[ExternalTicketPending] BIGINT
         ,[ExternalTicketCancel] BIGINT
         ,[Desc] NVARCHAR(MAX)
-, CONSTRAINT [PK_Ex_Ticket] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+, CONSTRAINT [PK_Market_Ticket] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
 
 
 -- Dropping obsolete fields -----------
-DECLARE @name_Ex_Ticket NVARCHAR(64)
-DECLARE cursor_Ex_Ticket CURSOR FOR 
-    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','EndUser','TradeAcct','Ins','Code','Caption','TradeMode','Lot','PriceOpened','PriceOpen','PriceSL','PriceTP','PriceClose','Status','CP','CptAcct','Ref','OpenRef','CloseRef','Origin','PnL','PnLSpread','Margin','RO','Tax','CloseType','CommitType','Cmt','Opendat','Closedat','CaStrategyAmt','CaRo','CaAsa','CaCmphsvCharge','RoCheckedat','Expiry','HedgetCP','PendingPrice','ClosedLot','ClosedAmt','PendingAmt','DrvPreminum','DrvExpiry','DrvPeriod','DrvDirection','DrvPrice','DoubleCp','ClearStatus','FollowTicket','Config','OptionStatus','NotionalPrincipal','ExercisedPrincipal','ExerciseMode','ExercisePrice','ExternalTicketOpen','ExternalTicketClose','ExternalTicketPending','ExternalTicketCancel','Desc'))
+DECLARE @name_Market_Ticket NVARCHAR(64)
+DECLARE cursor_Market_Ticket CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','EndUser','TradeAcct','Ins','Code','Caption','TradeMode','Lot','PriceOpened','PriceOpen','PriceSL','PriceTP','PriceClose','Status','CP','CptAcct','Ref','OpenRef','CloseRef','Origin','PnL','PnLSpread','Margin','RO','Tax','CloseType','CommitType','Cmt','Opendat','Closedat','CaStrategyAmt','CaRo','CaAsa','CaCmphsvCharge','RoCheckedat','Expiry','HedgetCP','PendingPrice','ClosedLot','ClosedAmt','PendingAmt','DrvPreminum','DrvExpiry','DrvPeriod','DrvDirection','DrvPrice','DoubleCp','ClearStatus','FollowTicket','Config','OptionStatus','NotionalPrincipal','ExercisedPrincipal','ExerciseMode','ExercisePrice','ExternalTicketOpen','ExternalTicketClose','ExternalTicketPending','ExternalTicketCancel','Desc'))
 
-OPEN cursor_Ex_Ticket
-FETCH NEXT FROM cursor_Ex_Ticket INTO @name_Ex_Ticket
+OPEN cursor_Market_Ticket
+FETCH NEXT FROM cursor_Market_Ticket INTO @name_Market_Ticket
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-    PRINT 'Dropping Ex_Ticket.' + @name_Ex_Ticket;
+    PRINT 'Dropping Market_Ticket.' + @name_Market_Ticket;
     
-    DECLARE @sql_Ex_Ticket NVARCHAR(MAX);
-    SET @sql_Ex_Ticket = 'ALTER TABLE Ex_Ticket DROP COLUMN ' + QUOTENAME(@name_Ex_Ticket)
-    EXEC sp_executesql @sql_Ex_Ticket
+    DECLARE @sql_Market_Ticket NVARCHAR(MAX);
+    SET @sql_Market_Ticket = 'ALTER TABLE Market_Ticket DROP COLUMN ' + QUOTENAME(@name_Market_Ticket)
+    EXEC sp_executesql @sql_Market_Ticket
     
     
-    FETCH NEXT FROM cursor_Ex_Ticket INTO @name_Ex_Ticket
+    FETCH NEXT FROM cursor_Market_Ticket INTO @name_Market_Ticket
 END
 
-CLOSE cursor_Ex_Ticket;
-DEALLOCATE cursor_Ex_Ticket;
+CLOSE cursor_Market_Ticket;
+DEALLOCATE cursor_Market_Ticket;
 
 
--- [Ex_Ticket.EndUser] -------------
+-- [Market_Ticket.EndUser] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='EndUser')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='EndUser')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [EndUser] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [EndUser] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_EndUser NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_EndUser = 'ALTER TABLE Ex_Ticket ADD [EndUser] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_EndUser
+    DECLARE @sql_add_Market_Ticket_EndUser NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_EndUser = 'ALTER TABLE Market_Ticket ADD [EndUser] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_EndUser
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketEndUser')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketEndUser')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketEndUser]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketEndUser]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketEndUser')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketEndUser')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketEndUser]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketEndUser]
     END
 
--- [Ex_Ticket.TradeAcct] -------------
+-- [Market_Ticket.TradeAcct] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='TradeAcct')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='TradeAcct')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [TradeAcct] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_TradeAcct NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_TradeAcct = 'ALTER TABLE Ex_Ticket ADD [TradeAcct] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_TradeAcct
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketTradeAcct')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketTradeAcct]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketTradeAcct')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketTradeAcct]
-    END
-
--- [Ex_Ticket.Ins] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Ins')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Ins] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [TradeAcct] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Ins NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Ins = 'ALTER TABLE Ex_Ticket ADD [Ins] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Ins
+    DECLARE @sql_add_Market_Ticket_TradeAcct NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_TradeAcct = 'ALTER TABLE Market_Ticket ADD [TradeAcct] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_TradeAcct
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketIns')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketTradeAcct')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketIns]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketTradeAcct]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketIns')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketTradeAcct')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketIns]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketTradeAcct]
     END
 
--- [Ex_Ticket.Code] -------------
+-- [Market_Ticket.Ins] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Code')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Ins')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_Code NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Code = 'ALTER TABLE Ex_Ticket ADD [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Code
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCode')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCode]
-    END
-
--- [Ex_Ticket.Caption] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Caption')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
+     ALTER TABLE Market_Ticket ALTER COLUMN [Ins] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Caption NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Caption = 'ALTER TABLE Ex_Ticket ADD [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Caption
+    DECLARE @sql_add_Market_Ticket_Ins NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Ins = 'ALTER TABLE Market_Ticket ADD [Ins] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Ins
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCaption')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketIns')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCaption]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketIns]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCaption')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketIns')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCaption]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketIns]
     END
 
--- [Ex_Ticket.TradeMode] -------------
+-- [Market_Ticket.Code] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='TradeMode')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Code')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [TradeMode] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_TradeMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_TradeMode = 'ALTER TABLE Ex_Ticket ADD [TradeMode] INT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_TradeMode
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketTradeMode')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketTradeMode]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketTradeMode')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketTradeMode]
-    END
-
--- [Ex_Ticket.Lot] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Lot')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Lot] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Lot NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Lot = 'ALTER TABLE Ex_Ticket ADD [Lot] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Lot
+    DECLARE @sql_add_Market_Ticket_Code NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Code = 'ALTER TABLE Market_Ticket ADD [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Market_Ticket_Code
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketLot')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCode')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketLot]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCode]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketLot')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCode')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketLot]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCode]
     END
 
--- [Ex_Ticket.PriceOpened] -------------
+-- [Market_Ticket.Caption] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceOpened')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Caption')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PriceOpened] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_PriceOpened NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PriceOpened = 'ALTER TABLE Ex_Ticket ADD [PriceOpened] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PriceOpened
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPriceOpened')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPriceOpened]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPriceOpened')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPriceOpened]
-    END
-
--- [Ex_Ticket.PriceOpen] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceOpen')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PriceOpen] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_PriceOpen NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PriceOpen = 'ALTER TABLE Ex_Ticket ADD [PriceOpen] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PriceOpen
+    DECLARE @sql_add_Market_Ticket_Caption NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Caption = 'ALTER TABLE Market_Ticket ADD [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Market_Ticket_Caption
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPriceOpen')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCaption')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPriceOpen]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCaption]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPriceOpen')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCaption')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPriceOpen]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCaption]
     END
 
--- [Ex_Ticket.PriceSL] -------------
+-- [Market_Ticket.TradeMode] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceSL')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='TradeMode')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PriceSL] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_PriceSL NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PriceSL = 'ALTER TABLE Ex_Ticket ADD [PriceSL] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PriceSL
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPriceSL')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPriceSL]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPriceSL')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPriceSL]
-    END
-
--- [Ex_Ticket.PriceTP] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceTP')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PriceTP] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [TradeMode] INT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_PriceTP NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PriceTP = 'ALTER TABLE Ex_Ticket ADD [PriceTP] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PriceTP
+    DECLARE @sql_add_Market_Ticket_TradeMode NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_TradeMode = 'ALTER TABLE Market_Ticket ADD [TradeMode] INT'
+    EXEC sp_executesql @sql_add_Market_Ticket_TradeMode
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPriceTP')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketTradeMode')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPriceTP]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketTradeMode]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPriceTP')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketTradeMode')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPriceTP]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketTradeMode]
     END
 
--- [Ex_Ticket.PriceClose] -------------
+-- [Market_Ticket.Lot] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PriceClose')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Lot')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PriceClose] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_PriceClose NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PriceClose = 'ALTER TABLE Ex_Ticket ADD [PriceClose] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PriceClose
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPriceClose')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPriceClose]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPriceClose')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPriceClose]
-    END
-
--- [Ex_Ticket.Status] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Status')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Status] INT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Lot] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Status NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Status = 'ALTER TABLE Ex_Ticket ADD [Status] INT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Status
+    DECLARE @sql_add_Market_Ticket_Lot NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Lot = 'ALTER TABLE Market_Ticket ADD [Lot] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Lot
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketStatus')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketLot')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketStatus]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketLot]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketStatus')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketLot')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketStatus]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketLot]
     END
 
--- [Ex_Ticket.CP] -------------
+-- [Market_Ticket.PriceOpened] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CP')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PriceOpened')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CP] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_CP NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CP = 'ALTER TABLE Ex_Ticket ADD [CP] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CP
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCP')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCP]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCP')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCP]
-    END
-
--- [Ex_Ticket.CptAcct] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CptAcct')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CptAcct] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [PriceOpened] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_CptAcct NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CptAcct = 'ALTER TABLE Ex_Ticket ADD [CptAcct] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CptAcct
+    DECLARE @sql_add_Market_Ticket_PriceOpened NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PriceOpened = 'ALTER TABLE Market_Ticket ADD [PriceOpened] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PriceOpened
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCptAcct')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPriceOpened')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCptAcct]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPriceOpened]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCptAcct')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPriceOpened')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCptAcct]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPriceOpened]
     END
 
--- [Ex_Ticket.Ref] -------------
+-- [Market_Ticket.PriceOpen] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Ref')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PriceOpen')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Ref] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_Ref NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Ref = 'ALTER TABLE Ex_Ticket ADD [Ref] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Ref
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketRef')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketRef]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketRef')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketRef]
-    END
-
--- [Ex_Ticket.OpenRef] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='OpenRef')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [OpenRef] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [PriceOpen] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_OpenRef NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_OpenRef = 'ALTER TABLE Ex_Ticket ADD [OpenRef] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_OpenRef
+    DECLARE @sql_add_Market_Ticket_PriceOpen NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PriceOpen = 'ALTER TABLE Market_Ticket ADD [PriceOpen] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PriceOpen
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketOpenRef')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPriceOpen')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketOpenRef]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPriceOpen]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketOpenRef')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPriceOpen')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketOpenRef]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPriceOpen]
     END
 
--- [Ex_Ticket.CloseRef] -------------
+-- [Market_Ticket.PriceSL] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CloseRef')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PriceSL')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CloseRef] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_CloseRef NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CloseRef = 'ALTER TABLE Ex_Ticket ADD [CloseRef] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CloseRef
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCloseRef')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCloseRef]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCloseRef')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCloseRef]
-    END
-
--- [Ex_Ticket.Origin] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Origin')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Origin] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [PriceSL] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Origin NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Origin = 'ALTER TABLE Ex_Ticket ADD [Origin] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Origin
+    DECLARE @sql_add_Market_Ticket_PriceSL NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PriceSL = 'ALTER TABLE Market_Ticket ADD [PriceSL] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PriceSL
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketOrigin')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPriceSL')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketOrigin]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPriceSL]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketOrigin')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPriceSL')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketOrigin]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPriceSL]
     END
 
--- [Ex_Ticket.PnL] -------------
+-- [Market_Ticket.PriceTP] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PnL')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PriceTP')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PnL] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_PnL NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PnL = 'ALTER TABLE Ex_Ticket ADD [PnL] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PnL
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPnL')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPnL]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPnL')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPnL]
-    END
-
--- [Ex_Ticket.PnLSpread] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PnLSpread')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PnLSpread] FLOAT
+     ALTER TABLE Market_Ticket ALTER COLUMN [PriceTP] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_PnLSpread NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PnLSpread = 'ALTER TABLE Ex_Ticket ADD [PnLSpread] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PnLSpread
+    DECLARE @sql_add_Market_Ticket_PriceTP NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PriceTP = 'ALTER TABLE Market_Ticket ADD [PriceTP] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PriceTP
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPnLSpread')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPriceTP')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPnLSpread]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPriceTP]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPnLSpread')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPriceTP')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPnLSpread]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPriceTP]
     END
 
--- [Ex_Ticket.Margin] -------------
+-- [Market_Ticket.PriceClose] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Margin')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PriceClose')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Margin] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_Margin NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Margin = 'ALTER TABLE Ex_Ticket ADD [Margin] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Margin
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketMargin')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketMargin]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketMargin')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketMargin]
-    END
-
--- [Ex_Ticket.RO] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='RO')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [RO] FLOAT
+     ALTER TABLE Market_Ticket ALTER COLUMN [PriceClose] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_RO NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_RO = 'ALTER TABLE Ex_Ticket ADD [RO] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_RO
+    DECLARE @sql_add_Market_Ticket_PriceClose NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PriceClose = 'ALTER TABLE Market_Ticket ADD [PriceClose] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PriceClose
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketRO')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPriceClose')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketRO]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPriceClose]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketRO')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPriceClose')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketRO]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPriceClose]
     END
 
--- [Ex_Ticket.Tax] -------------
+-- [Market_Ticket.Status] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Tax')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Status')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Tax] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_Tax NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Tax = 'ALTER TABLE Ex_Ticket ADD [Tax] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Tax
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketTax')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketTax]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketTax')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketTax]
-    END
-
--- [Ex_Ticket.CloseType] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CloseType')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CloseType] INT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Status] INT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_CloseType NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CloseType = 'ALTER TABLE Ex_Ticket ADD [CloseType] INT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CloseType
+    DECLARE @sql_add_Market_Ticket_Status NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Status = 'ALTER TABLE Market_Ticket ADD [Status] INT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Status
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCloseType')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketStatus')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCloseType]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketStatus]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCloseType')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketStatus')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCloseType]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketStatus]
     END
 
--- [Ex_Ticket.CommitType] -------------
+-- [Market_Ticket.CP] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CommitType')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CP')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CommitType] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_CommitType NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CommitType = 'ALTER TABLE Ex_Ticket ADD [CommitType] INT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CommitType
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCommitType')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCommitType]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCommitType')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCommitType]
-    END
-
--- [Ex_Ticket.Cmt] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Cmt')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Cmt] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
+     ALTER TABLE Market_Ticket ALTER COLUMN [CP] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Cmt NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Cmt = 'ALTER TABLE Ex_Ticket ADD [Cmt] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Cmt
+    DECLARE @sql_add_Market_Ticket_CP NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CP = 'ALTER TABLE Market_Ticket ADD [CP] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CP
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCmt')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCP')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCmt]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCP]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCmt')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCP')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCmt]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCP]
     END
 
--- [Ex_Ticket.Opendat] -------------
+-- [Market_Ticket.CptAcct] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Opendat')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CptAcct')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Opendat] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_Opendat NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Opendat = 'ALTER TABLE Ex_Ticket ADD [Opendat] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Opendat
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketOpendat')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketOpendat]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketOpendat')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketOpendat]
-    END
-
--- [Ex_Ticket.Closedat] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Closedat')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Closedat] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [CptAcct] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Closedat NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Closedat = 'ALTER TABLE Ex_Ticket ADD [Closedat] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Closedat
+    DECLARE @sql_add_Market_Ticket_CptAcct NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CptAcct = 'ALTER TABLE Market_Ticket ADD [CptAcct] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CptAcct
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketClosedat')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCptAcct')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketClosedat]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCptAcct]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketClosedat')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCptAcct')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketClosedat]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCptAcct]
     END
 
--- [Ex_Ticket.CaStrategyAmt] -------------
+-- [Market_Ticket.Ref] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CaStrategyAmt')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Ref')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CaStrategyAmt] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_CaStrategyAmt NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CaStrategyAmt = 'ALTER TABLE Ex_Ticket ADD [CaStrategyAmt] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CaStrategyAmt
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCaStrategyAmt')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCaStrategyAmt]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCaStrategyAmt')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCaStrategyAmt]
-    END
-
--- [Ex_Ticket.CaRo] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CaRo')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CaRo] BIT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Ref] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_CaRo NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CaRo = 'ALTER TABLE Ex_Ticket ADD [CaRo] BIT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CaRo
+    DECLARE @sql_add_Market_Ticket_Ref NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Ref = 'ALTER TABLE Market_Ticket ADD [Ref] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Ref
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCaRo')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketRef')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCaRo]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketRef]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCaRo')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketRef')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCaRo]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketRef]
     END
 
--- [Ex_Ticket.CaAsa] -------------
+-- [Market_Ticket.OpenRef] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CaAsa')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='OpenRef')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CaAsa] BIT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_CaAsa NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CaAsa = 'ALTER TABLE Ex_Ticket ADD [CaAsa] BIT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CaAsa
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCaAsa')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCaAsa]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCaAsa')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCaAsa]
-    END
-
--- [Ex_Ticket.CaCmphsvCharge] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='CaCmphsvCharge')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [CaCmphsvCharge] FLOAT
+     ALTER TABLE Market_Ticket ALTER COLUMN [OpenRef] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_CaCmphsvCharge NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_CaCmphsvCharge = 'ALTER TABLE Ex_Ticket ADD [CaCmphsvCharge] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_CaCmphsvCharge
+    DECLARE @sql_add_Market_Ticket_OpenRef NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_OpenRef = 'ALTER TABLE Market_Ticket ADD [OpenRef] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_OpenRef
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketCaCmphsvCharge')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketOpenRef')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketCaCmphsvCharge]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketOpenRef]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketCaCmphsvCharge')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketOpenRef')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketCaCmphsvCharge]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketOpenRef]
     END
 
--- [Ex_Ticket.RoCheckedat] -------------
+-- [Market_Ticket.CloseRef] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='RoCheckedat')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CloseRef')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [RoCheckedat] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_RoCheckedat NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_RoCheckedat = 'ALTER TABLE Ex_Ticket ADD [RoCheckedat] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_RoCheckedat
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketRoCheckedat')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketRoCheckedat]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketRoCheckedat')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketRoCheckedat]
-    END
-
--- [Ex_Ticket.Expiry] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Expiry')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Expiry] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [CloseRef] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Expiry NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Expiry = 'ALTER TABLE Ex_Ticket ADD [Expiry] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Expiry
+    DECLARE @sql_add_Market_Ticket_CloseRef NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CloseRef = 'ALTER TABLE Market_Ticket ADD [CloseRef] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CloseRef
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketExpiry')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCloseRef')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketExpiry]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCloseRef]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketExpiry')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCloseRef')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketExpiry]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCloseRef]
     END
 
--- [Ex_Ticket.HedgetCP] -------------
+-- [Market_Ticket.Origin] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='HedgetCP')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Origin')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [HedgetCP] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_HedgetCP NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_HedgetCP = 'ALTER TABLE Ex_Ticket ADD [HedgetCP] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_HedgetCP
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketHedgetCP')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketHedgetCP]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketHedgetCP')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketHedgetCP]
-    END
-
--- [Ex_Ticket.PendingPrice] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PendingPrice')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PendingPrice] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Origin] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_PendingPrice NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PendingPrice = 'ALTER TABLE Ex_Ticket ADD [PendingPrice] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PendingPrice
+    DECLARE @sql_add_Market_Ticket_Origin NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Origin = 'ALTER TABLE Market_Ticket ADD [Origin] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Origin
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPendingPrice')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketOrigin')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPendingPrice]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketOrigin]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPendingPrice')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketOrigin')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPendingPrice]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketOrigin]
     END
 
--- [Ex_Ticket.ClosedLot] -------------
+-- [Market_Ticket.PnL] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ClosedLot')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PnL')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ClosedLot] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_ClosedLot NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ClosedLot = 'ALTER TABLE Ex_Ticket ADD [ClosedLot] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ClosedLot
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketClosedLot')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketClosedLot]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketClosedLot')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketClosedLot]
-    END
-
--- [Ex_Ticket.ClosedAmt] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ClosedAmt')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ClosedAmt] FLOAT
+     ALTER TABLE Market_Ticket ALTER COLUMN [PnL] FLOAT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_ClosedAmt NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ClosedAmt = 'ALTER TABLE Ex_Ticket ADD [ClosedAmt] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ClosedAmt
+    DECLARE @sql_add_Market_Ticket_PnL NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PnL = 'ALTER TABLE Market_Ticket ADD [PnL] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PnL
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketClosedAmt')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPnL')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketClosedAmt]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPnL]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketClosedAmt')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPnL')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketClosedAmt]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPnL]
     END
 
--- [Ex_Ticket.PendingAmt] -------------
+-- [Market_Ticket.PnLSpread] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='PendingAmt')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PnLSpread')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [PendingAmt] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_PendingAmt NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_PendingAmt = 'ALTER TABLE Ex_Ticket ADD [PendingAmt] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_PendingAmt
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketPendingAmt')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketPendingAmt]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketPendingAmt')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketPendingAmt]
-    END
-
--- [Ex_Ticket.DrvPreminum] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvPreminum')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [DrvPreminum] FLOAT
+     ALTER TABLE Market_Ticket ALTER COLUMN [PnLSpread] FLOAT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_DrvPreminum NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_DrvPreminum = 'ALTER TABLE Ex_Ticket ADD [DrvPreminum] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_DrvPreminum
+    DECLARE @sql_add_Market_Ticket_PnLSpread NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PnLSpread = 'ALTER TABLE Market_Ticket ADD [PnLSpread] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PnLSpread
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketDrvPreminum')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPnLSpread')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketDrvPreminum]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPnLSpread]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketDrvPreminum')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPnLSpread')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketDrvPreminum]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPnLSpread]
     END
 
--- [Ex_Ticket.DrvExpiry] -------------
+-- [Market_Ticket.Margin] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvExpiry')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Margin')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [DrvExpiry] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_DrvExpiry NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_DrvExpiry = 'ALTER TABLE Ex_Ticket ADD [DrvExpiry] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_DrvExpiry
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketDrvExpiry')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketDrvExpiry]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketDrvExpiry')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketDrvExpiry]
-    END
-
--- [Ex_Ticket.DrvPeriod] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvPeriod')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [DrvPeriod] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Margin] FLOAT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_DrvPeriod NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_DrvPeriod = 'ALTER TABLE Ex_Ticket ADD [DrvPeriod] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_DrvPeriod
+    DECLARE @sql_add_Market_Ticket_Margin NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Margin = 'ALTER TABLE Market_Ticket ADD [Margin] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Margin
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketDrvPeriod')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketMargin')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketDrvPeriod]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketMargin]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketDrvPeriod')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketMargin')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketDrvPeriod]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketMargin]
     END
 
--- [Ex_Ticket.DrvDirection] -------------
+-- [Market_Ticket.RO] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvDirection')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='RO')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [DrvDirection] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_DrvDirection NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_DrvDirection = 'ALTER TABLE Ex_Ticket ADD [DrvDirection] INT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_DrvDirection
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketDrvDirection')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketDrvDirection]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketDrvDirection')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketDrvDirection]
-    END
-
--- [Ex_Ticket.DrvPrice] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DrvPrice')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [DrvPrice] FLOAT
+     ALTER TABLE Market_Ticket ALTER COLUMN [RO] FLOAT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_DrvPrice NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_DrvPrice = 'ALTER TABLE Ex_Ticket ADD [DrvPrice] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_DrvPrice
+    DECLARE @sql_add_Market_Ticket_RO NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_RO = 'ALTER TABLE Market_Ticket ADD [RO] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_RO
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketDrvPrice')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketRO')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketDrvPrice]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketRO]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketDrvPrice')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketRO')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketDrvPrice]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketRO]
     END
 
--- [Ex_Ticket.DoubleCp] -------------
+-- [Market_Ticket.Tax] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='DoubleCp')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Tax')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [DoubleCp] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_DoubleCp NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_DoubleCp = 'ALTER TABLE Ex_Ticket ADD [DoubleCp] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_DoubleCp
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketDoubleCp')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketDoubleCp]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketDoubleCp')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketDoubleCp]
-    END
-
--- [Ex_Ticket.ClearStatus] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ClearStatus')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ClearStatus] INT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Tax] FLOAT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_ClearStatus NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ClearStatus = 'ALTER TABLE Ex_Ticket ADD [ClearStatus] INT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ClearStatus
+    DECLARE @sql_add_Market_Ticket_Tax NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Tax = 'ALTER TABLE Market_Ticket ADD [Tax] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Tax
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketClearStatus')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketTax')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketClearStatus]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketTax]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketClearStatus')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketTax')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketClearStatus]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketTax]
     END
 
--- [Ex_Ticket.FollowTicket] -------------
+-- [Market_Ticket.CloseType] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='FollowTicket')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CloseType')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [FollowTicket] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_FollowTicket NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_FollowTicket = 'ALTER TABLE Ex_Ticket ADD [FollowTicket] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_FollowTicket
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketFollowTicket')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketFollowTicket]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketFollowTicket')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketFollowTicket]
-    END
-
--- [Ex_Ticket.Config] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Config')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Config] NVARCHAR(MAX)
+     ALTER TABLE Market_Ticket ALTER COLUMN [CloseType] INT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Config NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Config = 'ALTER TABLE Ex_Ticket ADD [Config] NVARCHAR(MAX)'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Config
+    DECLARE @sql_add_Market_Ticket_CloseType NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CloseType = 'ALTER TABLE Market_Ticket ADD [CloseType] INT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CloseType
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketConfig')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCloseType')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketConfig]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCloseType]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketConfig')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCloseType')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketConfig]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCloseType]
     END
 
--- [Ex_Ticket.OptionStatus] -------------
+-- [Market_Ticket.CommitType] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='OptionStatus')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CommitType')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [OptionStatus] INT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_OptionStatus NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_OptionStatus = 'ALTER TABLE Ex_Ticket ADD [OptionStatus] INT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_OptionStatus
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketOptionStatus')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketOptionStatus]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketOptionStatus')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketOptionStatus]
-    END
-
--- [Ex_Ticket.NotionalPrincipal] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='NotionalPrincipal')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [NotionalPrincipal] FLOAT
+     ALTER TABLE Market_Ticket ALTER COLUMN [CommitType] INT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_NotionalPrincipal NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_NotionalPrincipal = 'ALTER TABLE Ex_Ticket ADD [NotionalPrincipal] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_NotionalPrincipal
+    DECLARE @sql_add_Market_Ticket_CommitType NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CommitType = 'ALTER TABLE Market_Ticket ADD [CommitType] INT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CommitType
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketNotionalPrincipal')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCommitType')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketNotionalPrincipal]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCommitType]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketNotionalPrincipal')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCommitType')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketNotionalPrincipal]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCommitType]
     END
 
--- [Ex_Ticket.ExercisedPrincipal] -------------
+-- [Market_Ticket.Cmt] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExercisedPrincipal')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Cmt')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ExercisedPrincipal] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_ExercisedPrincipal NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ExercisedPrincipal = 'ALTER TABLE Ex_Ticket ADD [ExercisedPrincipal] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ExercisedPrincipal
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketExercisedPrincipal')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketExercisedPrincipal]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketExercisedPrincipal')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketExercisedPrincipal]
-    END
-
--- [Ex_Ticket.ExerciseMode] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExerciseMode')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ExerciseMode] FLOAT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Cmt] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_ExerciseMode NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ExerciseMode = 'ALTER TABLE Ex_Ticket ADD [ExerciseMode] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ExerciseMode
+    DECLARE @sql_add_Market_Ticket_Cmt NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Cmt = 'ALTER TABLE Market_Ticket ADD [Cmt] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Market_Ticket_Cmt
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketExerciseMode')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCmt')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketExerciseMode]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCmt]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketExerciseMode')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCmt')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketExerciseMode]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCmt]
     END
 
--- [Ex_Ticket.ExercisePrice] -------------
+-- [Market_Ticket.Opendat] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExercisePrice')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Opendat')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ExercisePrice] FLOAT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_ExercisePrice NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ExercisePrice = 'ALTER TABLE Ex_Ticket ADD [ExercisePrice] FLOAT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ExercisePrice
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketExercisePrice')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketExercisePrice]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketExercisePrice')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketExercisePrice]
-    END
-
--- [Ex_Ticket.ExternalTicketOpen] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExternalTicketOpen')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ExternalTicketOpen] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Opendat] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_ExternalTicketOpen NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ExternalTicketOpen = 'ALTER TABLE Ex_Ticket ADD [ExternalTicketOpen] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ExternalTicketOpen
+    DECLARE @sql_add_Market_Ticket_Opendat NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Opendat = 'ALTER TABLE Market_Ticket ADD [Opendat] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Opendat
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketExternalTicketOpen')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketOpendat')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketExternalTicketOpen]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketOpendat]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketExternalTicketOpen')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketOpendat')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketExternalTicketOpen]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketOpendat]
     END
 
--- [Ex_Ticket.ExternalTicketClose] -------------
+-- [Market_Ticket.Closedat] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExternalTicketClose')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Closedat')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ExternalTicketClose] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_ExternalTicketClose NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ExternalTicketClose = 'ALTER TABLE Ex_Ticket ADD [ExternalTicketClose] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ExternalTicketClose
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketExternalTicketClose')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketExternalTicketClose]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketExternalTicketClose')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketExternalTicketClose]
-    END
-
--- [Ex_Ticket.ExternalTicketPending] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExternalTicketPending')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ExternalTicketPending] BIGINT
+     ALTER TABLE Market_Ticket ALTER COLUMN [Closedat] BIGINT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_ExternalTicketPending NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ExternalTicketPending = 'ALTER TABLE Ex_Ticket ADD [ExternalTicketPending] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ExternalTicketPending
+    DECLARE @sql_add_Market_Ticket_Closedat NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Closedat = 'ALTER TABLE Market_Ticket ADD [Closedat] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Closedat
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketExternalTicketPending')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketClosedat')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketExternalTicketPending]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketClosedat]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketExternalTicketPending')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketClosedat')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketExternalTicketPending]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketClosedat]
     END
 
--- [Ex_Ticket.ExternalTicketCancel] -------------
+-- [Market_Ticket.CaStrategyAmt] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='ExternalTicketCancel')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CaStrategyAmt')
     BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [ExternalTicketCancel] BIGINT
-    END
-ELSE
-    BEGIN
-    DECLARE @sql_add_Ex_Ticket_ExternalTicketCancel NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_ExternalTicketCancel = 'ALTER TABLE Ex_Ticket ADD [ExternalTicketCancel] BIGINT'
-    EXEC sp_executesql @sql_add_Ex_Ticket_ExternalTicketCancel
-    END
-
-
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketExternalTicketCancel')
-    BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketExternalTicketCancel]
-    END
-
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketExternalTicketCancel')
-    BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketExternalTicketCancel]
-    END
-
--- [Ex_Ticket.Desc] -------------
-
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Ex_Ticket') AND name='Desc')
-    BEGIN
-     ALTER TABLE Ex_Ticket ALTER COLUMN [Desc] NVARCHAR(MAX)
+     ALTER TABLE Market_Ticket ALTER COLUMN [CaStrategyAmt] FLOAT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Ex_Ticket_Desc NVARCHAR(MAX);
-    SET @sql_add_Ex_Ticket_Desc = 'ALTER TABLE Ex_Ticket ADD [Desc] NVARCHAR(MAX)'
-    EXEC sp_executesql @sql_add_Ex_Ticket_Desc
+    DECLARE @sql_add_Market_Ticket_CaStrategyAmt NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CaStrategyAmt = 'ALTER TABLE Market_Ticket ADD [CaStrategyAmt] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CaStrategyAmt
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Ex_TicketDesc')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCaStrategyAmt')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Ex_TicketDesc]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCaStrategyAmt]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Ex_TicketDesc')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCaStrategyAmt')
     BEGIN
-    ALTER TABLE Ex_Ticket DROP  CONSTRAINT [UniqueNonclustered_Ex_TicketDesc]
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCaStrategyAmt]
+    END
+
+-- [Market_Ticket.CaRo] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CaRo')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [CaRo] BIT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_CaRo NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CaRo = 'ALTER TABLE Market_Ticket ADD [CaRo] BIT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CaRo
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCaRo')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCaRo]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCaRo')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCaRo]
+    END
+
+-- [Market_Ticket.CaAsa] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CaAsa')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [CaAsa] BIT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_CaAsa NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CaAsa = 'ALTER TABLE Market_Ticket ADD [CaAsa] BIT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CaAsa
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCaAsa')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCaAsa]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCaAsa')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCaAsa]
+    END
+
+-- [Market_Ticket.CaCmphsvCharge] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='CaCmphsvCharge')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [CaCmphsvCharge] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_CaCmphsvCharge NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_CaCmphsvCharge = 'ALTER TABLE Market_Ticket ADD [CaCmphsvCharge] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_CaCmphsvCharge
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketCaCmphsvCharge')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketCaCmphsvCharge]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketCaCmphsvCharge')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketCaCmphsvCharge]
+    END
+
+-- [Market_Ticket.RoCheckedat] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='RoCheckedat')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [RoCheckedat] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_RoCheckedat NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_RoCheckedat = 'ALTER TABLE Market_Ticket ADD [RoCheckedat] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_RoCheckedat
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketRoCheckedat')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketRoCheckedat]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketRoCheckedat')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketRoCheckedat]
+    END
+
+-- [Market_Ticket.Expiry] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Expiry')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [Expiry] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_Expiry NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Expiry = 'ALTER TABLE Market_Ticket ADD [Expiry] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_Expiry
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketExpiry')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketExpiry]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketExpiry')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketExpiry]
+    END
+
+-- [Market_Ticket.HedgetCP] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='HedgetCP')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [HedgetCP] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_HedgetCP NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_HedgetCP = 'ALTER TABLE Market_Ticket ADD [HedgetCP] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_HedgetCP
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketHedgetCP')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketHedgetCP]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketHedgetCP')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketHedgetCP]
+    END
+
+-- [Market_Ticket.PendingPrice] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PendingPrice')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [PendingPrice] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_PendingPrice NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PendingPrice = 'ALTER TABLE Market_Ticket ADD [PendingPrice] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PendingPrice
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPendingPrice')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPendingPrice]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPendingPrice')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPendingPrice]
+    END
+
+-- [Market_Ticket.ClosedLot] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ClosedLot')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ClosedLot] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ClosedLot NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ClosedLot = 'ALTER TABLE Market_Ticket ADD [ClosedLot] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ClosedLot
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketClosedLot')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketClosedLot]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketClosedLot')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketClosedLot]
+    END
+
+-- [Market_Ticket.ClosedAmt] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ClosedAmt')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ClosedAmt] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ClosedAmt NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ClosedAmt = 'ALTER TABLE Market_Ticket ADD [ClosedAmt] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ClosedAmt
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketClosedAmt')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketClosedAmt]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketClosedAmt')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketClosedAmt]
+    END
+
+-- [Market_Ticket.PendingAmt] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='PendingAmt')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [PendingAmt] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_PendingAmt NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_PendingAmt = 'ALTER TABLE Market_Ticket ADD [PendingAmt] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_PendingAmt
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketPendingAmt')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketPendingAmt]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketPendingAmt')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketPendingAmt]
+    END
+
+-- [Market_Ticket.DrvPreminum] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='DrvPreminum')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [DrvPreminum] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_DrvPreminum NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_DrvPreminum = 'ALTER TABLE Market_Ticket ADD [DrvPreminum] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_DrvPreminum
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketDrvPreminum')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketDrvPreminum]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketDrvPreminum')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketDrvPreminum]
+    END
+
+-- [Market_Ticket.DrvExpiry] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='DrvExpiry')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [DrvExpiry] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_DrvExpiry NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_DrvExpiry = 'ALTER TABLE Market_Ticket ADD [DrvExpiry] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_DrvExpiry
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketDrvExpiry')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketDrvExpiry]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketDrvExpiry')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketDrvExpiry]
+    END
+
+-- [Market_Ticket.DrvPeriod] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='DrvPeriod')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [DrvPeriod] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_DrvPeriod NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_DrvPeriod = 'ALTER TABLE Market_Ticket ADD [DrvPeriod] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_DrvPeriod
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketDrvPeriod')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketDrvPeriod]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketDrvPeriod')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketDrvPeriod]
+    END
+
+-- [Market_Ticket.DrvDirection] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='DrvDirection')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [DrvDirection] INT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_DrvDirection NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_DrvDirection = 'ALTER TABLE Market_Ticket ADD [DrvDirection] INT'
+    EXEC sp_executesql @sql_add_Market_Ticket_DrvDirection
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketDrvDirection')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketDrvDirection]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketDrvDirection')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketDrvDirection]
+    END
+
+-- [Market_Ticket.DrvPrice] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='DrvPrice')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [DrvPrice] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_DrvPrice NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_DrvPrice = 'ALTER TABLE Market_Ticket ADD [DrvPrice] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_DrvPrice
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketDrvPrice')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketDrvPrice]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketDrvPrice')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketDrvPrice]
+    END
+
+-- [Market_Ticket.DoubleCp] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='DoubleCp')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [DoubleCp] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_DoubleCp NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_DoubleCp = 'ALTER TABLE Market_Ticket ADD [DoubleCp] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_DoubleCp
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketDoubleCp')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketDoubleCp]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketDoubleCp')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketDoubleCp]
+    END
+
+-- [Market_Ticket.ClearStatus] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ClearStatus')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ClearStatus] INT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ClearStatus NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ClearStatus = 'ALTER TABLE Market_Ticket ADD [ClearStatus] INT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ClearStatus
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketClearStatus')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketClearStatus]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketClearStatus')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketClearStatus]
+    END
+
+-- [Market_Ticket.FollowTicket] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='FollowTicket')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [FollowTicket] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_FollowTicket NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_FollowTicket = 'ALTER TABLE Market_Ticket ADD [FollowTicket] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_FollowTicket
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketFollowTicket')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketFollowTicket]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketFollowTicket')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketFollowTicket]
+    END
+
+-- [Market_Ticket.Config] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Config')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [Config] NVARCHAR(MAX)
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_Config NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Config = 'ALTER TABLE Market_Ticket ADD [Config] NVARCHAR(MAX)'
+    EXEC sp_executesql @sql_add_Market_Ticket_Config
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketConfig')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketConfig]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketConfig')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketConfig]
+    END
+
+-- [Market_Ticket.OptionStatus] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='OptionStatus')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [OptionStatus] INT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_OptionStatus NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_OptionStatus = 'ALTER TABLE Market_Ticket ADD [OptionStatus] INT'
+    EXEC sp_executesql @sql_add_Market_Ticket_OptionStatus
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketOptionStatus')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketOptionStatus]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketOptionStatus')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketOptionStatus]
+    END
+
+-- [Market_Ticket.NotionalPrincipal] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='NotionalPrincipal')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [NotionalPrincipal] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_NotionalPrincipal NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_NotionalPrincipal = 'ALTER TABLE Market_Ticket ADD [NotionalPrincipal] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_NotionalPrincipal
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketNotionalPrincipal')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketNotionalPrincipal]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketNotionalPrincipal')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketNotionalPrincipal]
+    END
+
+-- [Market_Ticket.ExercisedPrincipal] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ExercisedPrincipal')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ExercisedPrincipal] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ExercisedPrincipal NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ExercisedPrincipal = 'ALTER TABLE Market_Ticket ADD [ExercisedPrincipal] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ExercisedPrincipal
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketExercisedPrincipal')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketExercisedPrincipal]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketExercisedPrincipal')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketExercisedPrincipal]
+    END
+
+-- [Market_Ticket.ExerciseMode] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ExerciseMode')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ExerciseMode] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ExerciseMode NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ExerciseMode = 'ALTER TABLE Market_Ticket ADD [ExerciseMode] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ExerciseMode
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketExerciseMode')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketExerciseMode]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketExerciseMode')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketExerciseMode]
+    END
+
+-- [Market_Ticket.ExercisePrice] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ExercisePrice')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ExercisePrice] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ExercisePrice NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ExercisePrice = 'ALTER TABLE Market_Ticket ADD [ExercisePrice] FLOAT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ExercisePrice
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketExercisePrice')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketExercisePrice]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketExercisePrice')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketExercisePrice]
+    END
+
+-- [Market_Ticket.ExternalTicketOpen] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ExternalTicketOpen')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ExternalTicketOpen] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ExternalTicketOpen NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ExternalTicketOpen = 'ALTER TABLE Market_Ticket ADD [ExternalTicketOpen] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ExternalTicketOpen
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketExternalTicketOpen')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketExternalTicketOpen]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketExternalTicketOpen')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketExternalTicketOpen]
+    END
+
+-- [Market_Ticket.ExternalTicketClose] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ExternalTicketClose')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ExternalTicketClose] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ExternalTicketClose NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ExternalTicketClose = 'ALTER TABLE Market_Ticket ADD [ExternalTicketClose] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ExternalTicketClose
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketExternalTicketClose')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketExternalTicketClose]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketExternalTicketClose')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketExternalTicketClose]
+    END
+
+-- [Market_Ticket.ExternalTicketPending] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ExternalTicketPending')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ExternalTicketPending] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ExternalTicketPending NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ExternalTicketPending = 'ALTER TABLE Market_Ticket ADD [ExternalTicketPending] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ExternalTicketPending
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketExternalTicketPending')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketExternalTicketPending]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketExternalTicketPending')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketExternalTicketPending]
+    END
+
+-- [Market_Ticket.ExternalTicketCancel] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='ExternalTicketCancel')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [ExternalTicketCancel] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_ExternalTicketCancel NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_ExternalTicketCancel = 'ALTER TABLE Market_Ticket ADD [ExternalTicketCancel] BIGINT'
+    EXEC sp_executesql @sql_add_Market_Ticket_ExternalTicketCancel
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketExternalTicketCancel')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketExternalTicketCancel]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketExternalTicketCancel')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketExternalTicketCancel]
+    END
+
+-- [Market_Ticket.Desc] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Ticket') AND name='Desc')
+    BEGIN
+     ALTER TABLE Market_Ticket ALTER COLUMN [Desc] NVARCHAR(MAX)
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Ticket_Desc NVARCHAR(MAX);
+    SET @sql_add_Market_Ticket_Desc = 'ALTER TABLE Market_Ticket ADD [Desc] NVARCHAR(MAX)'
+    EXEC sp_executesql @sql_add_Market_Ticket_Desc
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_TicketDesc')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_TicketDesc]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_TicketDesc')
+    BEGIN
+    ALTER TABLE Market_Ticket DROP  CONSTRAINT [UniqueNonclustered_Market_TicketDesc]
     END
 -- [Market_TradeAcct] ----------------------
 
@@ -9989,6 +7614,143 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Sys_LogSql')
     BEGIN
     ALTER TABLE Sys_Log DROP  CONSTRAINT [UniqueNonclustered_Sys_LogSql]
     END
+-- [Trade_Arbitrage] ----------------------
+
+IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Arbitrage' AND xtype='U')
+
+BEGIN
+
+    CREATE TABLE Trade_Arbitrage ([ID] BIGINT NOT NULL
+        ,[Createdat] BIGINT NOT NULL
+        ,[Updatedat] BIGINT NOT NULL
+        ,[Sort] BIGINT NOT NULL,
+        [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
+        ,[Desc] NVARCHAR(MAX)
+        ,[Fund] BIGINT
+        ,[EndUser] BIGINT
+, CONSTRAINT [PK_Trade_Arbitrage] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
+END
+
+
+-- Dropping obsolete fields -----------
+DECLARE @name_Trade_Arbitrage NVARCHAR(64)
+DECLARE cursor_Trade_Arbitrage CURSOR FOR 
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Fund','EndUser'))
+
+OPEN cursor_Trade_Arbitrage
+FETCH NEXT FROM cursor_Trade_Arbitrage INTO @name_Trade_Arbitrage
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    PRINT 'Dropping Trade_Arbitrage.' + @name_Trade_Arbitrage;
+    
+    DECLARE @sql_Trade_Arbitrage NVARCHAR(MAX);
+    SET @sql_Trade_Arbitrage = 'ALTER TABLE Trade_Arbitrage DROP COLUMN ' + QUOTENAME(@name_Trade_Arbitrage)
+    EXEC sp_executesql @sql_Trade_Arbitrage
+    
+    
+    FETCH NEXT FROM cursor_Trade_Arbitrage INTO @name_Trade_Arbitrage
+END
+
+CLOSE cursor_Trade_Arbitrage;
+DEALLOCATE cursor_Trade_Arbitrage;
+
+
+-- [Trade_Arbitrage.Caption] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Caption')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_Caption NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Caption = 'ALTER TABLE Trade_Arbitrage ADD [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Caption
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageCaption')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageCaption]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageCaption')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageCaption]
+    END
+
+-- [Trade_Arbitrage.Desc] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Desc')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Desc] NVARCHAR(MAX)
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_Desc NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Desc = 'ALTER TABLE Trade_Arbitrage ADD [Desc] NVARCHAR(MAX)'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Desc
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageDesc')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageDesc]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageDesc')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageDesc]
+    END
+
+-- [Trade_Arbitrage.Fund] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Fund')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Fund] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_Fund NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Fund = 'ALTER TABLE Trade_Arbitrage ADD [Fund] BIGINT'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Fund
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageFund')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageFund]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageFund')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageFund]
+    END
+
+-- [Trade_Arbitrage.EndUser] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='EndUser')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [EndUser] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_EndUser NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_EndUser = 'ALTER TABLE Trade_Arbitrage ADD [EndUser] BIGINT'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_EndUser
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageEndUser')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageEndUser]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageEndUser')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageEndUser]
+    END
 -- [Trade_Fund] ----------------------
 
 IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Trade_Fund' AND xtype='U')
@@ -10300,7 +8062,12 @@ BEGIN
         ,[Sort] BIGINT NOT NULL,
         [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Desc] NVARCHAR(MAX)
+        ,[Ins] BIGINT
+        ,[Stake] FLOAT
+        ,[Entry] FLOAT
+        ,[Exist] FLOAT
         ,[Fund] BIGINT
+        ,[Portfolio] BIGINT
         ,[EndUser] BIGINT
 , CONSTRAINT [PK_Trade_Trader] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
@@ -10309,7 +8076,7 @@ END
 -- Dropping obsolete fields -----------
 DECLARE @name_Trade_Trader NVARCHAR(64)
 DECLARE cursor_Trade_Trader CURSOR FOR 
-    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Fund','EndUser'))
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Ins','Stake','Entry','Exist','Fund','Portfolio','EndUser'))
 
 OPEN cursor_Trade_Trader
 FETCH NEXT FROM cursor_Trade_Trader INTO @name_Trade_Trader
@@ -10378,6 +8145,102 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderDe
     ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderDesc]
     END
 
+-- [Trade_Trader.Ins] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Ins')
+    BEGIN
+     ALTER TABLE Trade_Trader ALTER COLUMN [Ins] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Trader_Ins NVARCHAR(MAX);
+    SET @sql_add_Trade_Trader_Ins = 'ALTER TABLE Trade_Trader ADD [Ins] BIGINT'
+    EXEC sp_executesql @sql_add_Trade_Trader_Ins
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderIns')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderIns]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderIns')
+    BEGIN
+    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderIns]
+    END
+
+-- [Trade_Trader.Stake] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Stake')
+    BEGIN
+     ALTER TABLE Trade_Trader ALTER COLUMN [Stake] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Trader_Stake NVARCHAR(MAX);
+    SET @sql_add_Trade_Trader_Stake = 'ALTER TABLE Trade_Trader ADD [Stake] FLOAT'
+    EXEC sp_executesql @sql_add_Trade_Trader_Stake
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderStake')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderStake]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderStake')
+    BEGIN
+    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderStake]
+    END
+
+-- [Trade_Trader.Entry] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Entry')
+    BEGIN
+     ALTER TABLE Trade_Trader ALTER COLUMN [Entry] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Trader_Entry NVARCHAR(MAX);
+    SET @sql_add_Trade_Trader_Entry = 'ALTER TABLE Trade_Trader ADD [Entry] FLOAT'
+    EXEC sp_executesql @sql_add_Trade_Trader_Entry
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderEntry')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderEntry]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderEntry')
+    BEGIN
+    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderEntry]
+    END
+
+-- [Trade_Trader.Exist] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Exist')
+    BEGIN
+     ALTER TABLE Trade_Trader ALTER COLUMN [Exist] FLOAT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Trader_Exist NVARCHAR(MAX);
+    SET @sql_add_Trade_Trader_Exist = 'ALTER TABLE Trade_Trader ADD [Exist] FLOAT'
+    EXEC sp_executesql @sql_add_Trade_Trader_Exist
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderExist')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderExist]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderExist')
+    BEGIN
+    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderExist]
+    END
+
 -- [Trade_Trader.Fund] -------------
 
 IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Fund')
@@ -10400,6 +8263,30 @@ IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_Tra
 IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderFund')
     BEGIN
     ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderFund]
+    END
+
+-- [Trade_Trader.Portfolio] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Trader') AND name='Portfolio')
+    BEGIN
+     ALTER TABLE Trade_Trader ALTER COLUMN [Portfolio] BIGINT
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Trader_Portfolio NVARCHAR(MAX);
+    SET @sql_add_Trade_Trader_Portfolio = 'ALTER TABLE Trade_Trader ADD [Portfolio] BIGINT'
+    EXEC sp_executesql @sql_add_Trade_Trader_Portfolio
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_TraderPortfolio')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_TraderPortfolio]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_TraderPortfolio')
+    BEGIN
+    ALTER TABLE Trade_Trader DROP  CONSTRAINT [UniqueNonclustered_Trade_TraderPortfolio]
     END
 
 -- [Trade_Trader.EndUser] -------------
