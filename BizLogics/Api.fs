@@ -40,12 +40,25 @@ let api_Public_ListCur x =
     |> Array.map CUR__json
     |> wrapOkAry
 
-let api_Public_HomepageMoments x =
-    runtime.data.moments.Values
-    |> Seq.toArray
-    |> Array.sortByDescending(fun i -> i.m.Createdat)
-    |> Array.map MomentComplex__json
-    |> wrapOkAry
+let api_Public_Homepage x =
+
+    let curs = 
+        runtime.data.curs.Values
+        |> Seq.toArray
+        |> Array.filter(fun i -> i.p.CurType = curCurTypeEnum.Crypto)
+        |> Array.map CUR__json
+        |> Json.Ary
+
+    let mcs = 
+        runtime.data.moments.Values
+        |> Seq.toArray
+        |> Array.sortByDescending(fun i -> i.m.Createdat)
+        |> Array.map MomentComplex__json
+        |> Json.Ary
+
+    [|  ok
+        ("curs",curs)
+        ("mcs",mcs) |]
 
 let api_Public_LoadMoment: X -> ApiReturn =
     tryLoadFromJsonIdWrapOK

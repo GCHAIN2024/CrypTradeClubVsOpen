@@ -48,7 +48,7 @@ let branching x =
         | "auth" -> bindx auth
         | "listBiz" -> bindx api_Public_ListBiz
         | "listCur" -> bindx api_Public_ListCur
-        | "homepageMoments" -> bindx api_Public_HomepageMoments
+        | "homepage" -> bindx api_Public_Homepage
         | "loadMoment" -> bindx api_Public_LoadMoment
         | _ -> Fail(Er.ApiNotExists,x)
     | "eu" -> Fail(Er.ApiNotExists,x)
