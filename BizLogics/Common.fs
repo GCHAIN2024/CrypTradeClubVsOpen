@@ -56,6 +56,7 @@ mutable facts: Fact list
 langs: ConcurrentDictionary<string,LANG>
 curs: ConcurrentDictionary<string,CUR>
 inss: ConcurrentDictionary<string,INS>
+arbitrages: ConcurrentDictionary<int64,ARBITRAGE>
 bcs: ConcurrentDictionary<string,BizComplex>
 mcs: ConcurrentDictionary<int64,MomentComplex> }
 
@@ -103,6 +104,7 @@ let runtime:Runtime =
             curs = new ConcurrentDictionary<string,CUR>()
             bcs = new ConcurrentDictionary<string,BizComplex>()
             inss = new ConcurrentDictionary<string,INS>()
+            arbitrages = new ConcurrentDictionary<int64,ARBITRAGE>()
             mcs = new ConcurrentDictionary<int64,MomentComplex>() }
         users = new ConcurrentDictionary<int64,EuComplex>()
         sessions = new ConcurrentDictionary<string,Session>()

@@ -12,6 +12,7 @@ open Util.HttpClient
 open Shared.OrmTypes
 open Shared.Types
 
+open UtilWebServer.Db
 open UtilWebServer.Api
 open UtilWebServer.Json
 open UtilWebServer.Cache
@@ -39,6 +40,32 @@ let api_Public_ListCur x =
     runtime.data.curs.Values
     |> Seq.toArray
     |> Array.map CUR__json
+    |> wrapOkAry
+
+let api_Public_ListArbitrage x =
+    runtime.data.arbitrages.Values
+    |> Seq.toArray
+    |> Array.map ARBITRAGE__json
+    |> wrapOkAry
+
+let api_Public_CreateArbitrage (x:X) =
+    
+    let p = pARBITRAGE_empty()
+    
+    let fields = x.json |> json__items
+
+    p.Caption <- checkfield fields "Caption"
+
+    match 
+        p__createRcd p ARBITRAGE_metadata "api/public/createArbitrage" conn with
+    | Some rcd -> rcd |> ARBITRAGE__json |> wrapOk "arbitrage"
+    | None -> er Er.Internal
+      
+
+let api_Public_UpdateArbitrage x =
+    runtime.data.arbitrages.Values
+    |> Seq.toArray
+    |> Array.map ARBITRAGE__json
     |> wrapOkAry
 
 let homepageCache = empty__CachedWithExpiry()

@@ -48,6 +48,11 @@ let branching x =
         | "auth" -> bindx auth
         | "listBiz" -> bindx api_Public_ListBiz
         | "listCur" -> bindx api_Public_ListCur
+
+        | "listArbitrage" -> bindx api_Public_ListArbitrage
+        | "createArbitrage" -> bindx api_Public_CreateArbitrage
+        | "updateArbitrage" -> bindx api_Public_UpdateArbitrage
+
         | "homepage" -> bindx api_Public_Homepage
         | "loadMoment" -> bindx api_Public_LoadMoment
         | _ -> Fail(Er.ApiNotExists,x)
