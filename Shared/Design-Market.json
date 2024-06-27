@@ -101,9 +101,19 @@
         "name": "Long"
       },
       {
+        "enum": "Chars",
+        "length": 16,
+        "name": "LongCode"
+      },
+      {
         "enum": "FK",
         "ref": "Ca_Cur",
         "name": "Short"
+      },
+      {
+        "enum": "Chars",
+        "length": 16,
+        "name": "ShortCode"
       }
     ]
   },

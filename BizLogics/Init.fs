@@ -68,6 +68,9 @@ let init (runtime:Runtime) =
             | Some cur -> runtime.data.curs[code] <- cur
             | None -> halt runtime.output ("BizLogics.Init.createCur [" + code + "]") "")
 
+    (fun (i:INS) -> runtime.data.inss[i.p.Code] <- i)
+    |> loadAll runtime.output conn INS_metadata
+
     (fun (i:EU) -> runtime.users[i.ID] <- { eu = i })
     |> loadAll runtime.output conn EU_metadata
 

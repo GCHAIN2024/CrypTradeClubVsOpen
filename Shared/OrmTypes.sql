@@ -4282,7 +4282,9 @@ BEGIN
         ,[Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Long] BIGINT
+        ,[LongCode] NVARCHAR(16) COLLATE Chinese_PRC_CI_AS
         ,[Short] BIGINT
+        ,[ShortCode] NVARCHAR(16) COLLATE Chinese_PRC_CI_AS
 , CONSTRAINT [PK_Market_Instrument] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
 END
 
@@ -4290,7 +4292,7 @@ END
 -- Dropping obsolete fields -----------
 DECLARE @name_Market_Instrument NVARCHAR(64)
 DECLARE cursor_Market_Instrument CURSOR FOR 
-    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Desc','Code','Caption','Long','Short'))
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Desc','Code','Caption','Long','LongCode','Short','ShortCode'))
 
 OPEN cursor_Market_Instrument
 FETCH NEXT FROM cursor_Market_Instrument INTO @name_Market_Instrument
@@ -4407,6 +4409,30 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_Instrum
     ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentLong]
     END
 
+-- [Market_Instrument.LongCode] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND name='LongCode')
+    BEGIN
+     ALTER TABLE Market_Instrument ALTER COLUMN [LongCode] NVARCHAR(16) COLLATE Chinese_PRC_CI_AS
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Instrument_LongCode NVARCHAR(MAX);
+    SET @sql_add_Market_Instrument_LongCode = 'ALTER TABLE Market_Instrument ADD [LongCode] NVARCHAR(16) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Market_Instrument_LongCode
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_InstrumentLongCode')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_InstrumentLongCode]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_InstrumentLongCode')
+    BEGIN
+    ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentLongCode]
+    END
+
 -- [Market_Instrument.Short] -------------
 
 IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND name='Short')
@@ -4429,6 +4455,30 @@ IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_In
 IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_InstrumentShort')
     BEGIN
     ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentShort]
+    END
+
+-- [Market_Instrument.ShortCode] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Market_Instrument') AND name='ShortCode')
+    BEGIN
+     ALTER TABLE Market_Instrument ALTER COLUMN [ShortCode] NVARCHAR(16) COLLATE Chinese_PRC_CI_AS
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Market_Instrument_ShortCode NVARCHAR(MAX);
+    SET @sql_add_Market_Instrument_ShortCode = 'ALTER TABLE Market_Instrument ADD [ShortCode] NVARCHAR(16) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Market_Instrument_ShortCode
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Market_InstrumentShortCode')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Market_InstrumentShortCode]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Market_InstrumentShortCode')
+    BEGIN
+    ALTER TABLE Market_Instrument DROP  CONSTRAINT [UniqueNonclustered_Market_InstrumentShortCode]
     END
 -- [Market_Ticket] ----------------------
 

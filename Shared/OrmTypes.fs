@@ -1412,35 +1412,43 @@ mutable Desc: Text
 mutable Code: Chars
 mutable Caption: Chars
 mutable Long: FK
-mutable Short: FK}
+mutable LongCode: Chars
+mutable Short: FK
+mutable ShortCode: Chars}
 
 
 type INS = Rcd<pINS>
 
-let INS_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Desc],[Code],[Caption],[Long],[Short]"
+let INS_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Desc],[Code],[Caption],[Long],[LongCode],[Short],[ShortCode]"
 
 let pINS_fieldordersArray = [|
     "Desc"
     "Code"
     "Caption"
     "Long"
-    "Short" |]
+    "LongCode"
+    "Short"
+    "ShortCode" |]
 
-let INS_sql_update = "[Updatedat]=@Updatedat,[Desc]=@Desc,[Code]=@Code,[Caption]=@Caption,[Long]=@Long,[Short]=@Short"
+let INS_sql_update = "[Updatedat]=@Updatedat,[Desc]=@Desc,[Code]=@Code,[Caption]=@Caption,[Long]=@Long,[LongCode]=@LongCode,[Short]=@Short,[ShortCode]=@ShortCode"
 
 let pINS_fields = [|
     Text("Desc")
     Chars("Code", 64)
     Chars("Caption", 64)
     FK("Long")
-    FK("Short") |]
+    Chars("LongCode", 16)
+    FK("Short")
+    Chars("ShortCode", 16) |]
 
 let pINS_empty(): pINS = {
     Desc = ""
     Code = ""
     Caption = ""
     Long = 0L
-    Short = 0L }
+    LongCode = ""
+    Short = 0L
+    ShortCode = "" }
 
 let INS_id = ref 0L
 let INS_count = ref 0

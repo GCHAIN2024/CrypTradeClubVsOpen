@@ -3184,7 +3184,15 @@ let pINS__bin (bb:BytesBuilder) (p:pINS) =
     
     p.Long |> BitConverter.GetBytes |> bb.append
     
+    let binLongCode = p.LongCode |> Encoding.UTF8.GetBytes
+    binLongCode.Length |> BitConverter.GetBytes |> bb.append
+    binLongCode |> bb.append
+    
     p.Short |> BitConverter.GetBytes |> bb.append
+    
+    let binShortCode = p.ShortCode |> Encoding.UTF8.GetBytes
+    binShortCode.Length |> BitConverter.GetBytes |> bb.append
+    binShortCode |> bb.append
 
 let INS__bin (bb:BytesBuilder) (v:INS) =
     v.ID |> BitConverter.GetBytes |> bb.append
@@ -3217,8 +3225,18 @@ let bin__pINS (bi:BinIndexed):pINS =
     p.Long <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
+    let count_LongCode = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.LongCode <- Encoding.UTF8.GetString(bin,index.Value,count_LongCode)
+    index.Value <- index.Value + count_LongCode
+    
     p.Short <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
+    
+    let count_ShortCode = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.ShortCode <- Encoding.UTF8.GetString(bin,index.Value,count_ShortCode)
+    index.Value <- index.Value + count_ShortCode
     
     p
 
@@ -3249,7 +3267,9 @@ let pINS__json (p:pINS) =
         ("Code",p.Code |> Json.Str)
         ("Caption",p.Caption |> Json.Str)
         ("Long",p.Long.ToString() |> Json.Num)
-        ("Short",p.Short.ToString() |> Json.Num) |]
+        ("LongCode",p.LongCode |> Json.Str)
+        ("Short",p.Short.ToString() |> Json.Num)
+        ("ShortCode",p.ShortCode |> Json.Str) |]
     |> Json.Braket
 
 let INS__json (v:INS) =
@@ -3283,7 +3303,11 @@ let json__pINSo (json:Json):pINS option =
     
     p.Long <- checkfield fields "Long" |> parse_int64
     
+    p.LongCode <- checkfieldz fields "LongCode" 16
+    
     p.Short <- checkfield fields "Short" |> parse_int64
+    
+    p.ShortCode <- checkfieldz fields "ShortCode" 16
     
     p |> Some
     
@@ -3314,7 +3338,11 @@ let json__INSo (json:Json):INS option =
         
         p.Long <- checkfield fields "Long" |> parse_int64
         
+        p.LongCode <- checkfieldz fields "LongCode" 16
+        
         p.Short <- checkfield fields "Short" |> parse_int64
+        
+        p.ShortCode <- checkfieldz fields "ShortCode" 16
         
         {
             ID = ID
@@ -7638,7 +7666,9 @@ let db__pINS(line:Object[]): pINS =
     p.Code <- string(line.[5]).TrimEnd()
     p.Caption <- string(line.[6]).TrimEnd()
     p.Long <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
-    p.Short <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
+    p.LongCode <- string(line.[8]).TrimEnd()
+    p.Short <- if Convert.IsDBNull(line.[9]) then 0L else line.[9] :?> int64
+    p.ShortCode <- string(line.[10]).TrimEnd()
 
     p
 
@@ -7647,7 +7677,9 @@ let pINS__sps (p:pINS) = [|
     new SqlParameter("Code", p.Code)
     new SqlParameter("Caption", p.Caption)
     new SqlParameter("Long", p.Long)
-    new SqlParameter("Short", p.Short) |]
+    new SqlParameter("LongCode", p.LongCode)
+    new SqlParameter("Short", p.Short)
+    new SqlParameter("ShortCode", p.ShortCode) |]
 
 let db__INS = db__Rcd db__pINS
 
@@ -7660,7 +7692,9 @@ let pINS_clone (p:pINS): pINS = {
     Code = p.Code
     Caption = p.Caption
     Long = p.Long
-    Short = p.Short }
+    LongCode = p.LongCode
+    Short = p.Short
+    ShortCode = p.ShortCode }
 
 let INS_update_transaction output (updater,suc,fail) (rcd:INS) =
     let rollback_p = rcd.p |> pINS_clone
@@ -7724,7 +7758,9 @@ let INSTxSqlServer =
     ,[Code]
     ,[Caption]
     ,[Long]
-    ,[Short])
+    ,[LongCode]
+    ,[Short]
+    ,[ShortCode])
     END
     """
 
