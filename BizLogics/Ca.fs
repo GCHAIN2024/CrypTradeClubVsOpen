@@ -19,19 +19,6 @@ open Shared.OrmTypes
 open Shared.Types
 open Shared.OrmMor
 
-let create loc metadata p = 
-
-    let pretx = None |> opctx__pretx
-
-    let rcd = 
-        p
-        |> populateCreateTx pretx metadata
-        
-    if pretx |> loggedPipeline loc conn then
-        Some rcd
-    else
-        None
-
 let update loc metadata changer rcd = 
 
     let current = metadata.clone rcd.p
@@ -52,17 +39,14 @@ let update loc metadata changer rcd =
 let createLang code = 
     let p = pLANG_empty()
     p.Code2 <- code
-    p
-    |> create "BizLogics.Ca.createLang" LANG_metadata 
+    p__createRcd p LANG_metadata "BizLogics.Ca.createLang" conn
 
 let createCur code = 
     let p = pCUR_empty()
     p.Code <- code
-    p
-    |> create "BizLogics.Ca.createCur" CUR_metadata 
+    p__createRcd p CUR_metadata "BizLogics.Ca.createCur" conn
 
 let createBiz code = 
     let p = pBIZ_empty()
     p.Code <- code
-    p
-    |> create "BizLogics.Ca.createBiz" BIZ_metadata 
+    p__createRcd p BIZ_metadata "BizLogics.Ca.createBiz" conn

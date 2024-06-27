@@ -32,8 +32,7 @@ let newP (bc:BizComplex) p =
         p.BindType <- momentBindTypeEnum.Biz
         p.Bind <- bc.biz.ID
         p.BizCode <- bc.biz.p.Code
-        p
-        |> p__rcd MOMENT_metadata "BizLogics.Crawler.launchCrawlers" conn
+        p__createRcd p MOMENT_metadata "BizLogics.Crawler.launchCrawlers" conn
         |> ignore
 
 let og host p html = 
