@@ -3686,7 +3686,7 @@ let pMOMENT_empty(): pMOMENT = {
     PostType = EnumOfValue 0
     AudioUrl = "" }
 
-let MOMENT_id = ref 0L
+let MOMENT_id = ref 54864675L
 let MOMENT_count = ref 0
 let MOMENT_table = "Social_Moment"
 
