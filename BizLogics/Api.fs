@@ -14,6 +14,7 @@ open Shared.Types
 
 open UtilWebServer.Api
 open UtilWebServer.Json
+open UtilWebServer.Cache
 
 open Shared.OrmTypes
 open Shared.OrmMor
@@ -40,6 +41,8 @@ let api_Public_ListCur x =
     |> Array.map CUR__json
     |> wrapOkAry
 
+let homepageCache = empty__CachedWithExpiry()
+
 let api_Public_Homepage x =
 
     let curs = 
@@ -49,16 +52,14 @@ let api_Public_Homepage x =
         |> Array.map CUR__json
         |> Json.Ary
 
-    let mcs = 
+    checkCache (fun _ -> 
         runtime.data.mcs.Values
         |> Seq.toArray
-        |> Array.sortByDescending(fun i -> i.m.Createdat)
-        |> Array.map MomentComplex__json
-        |> Json.Ary
+        |> Array.sortByDescending(fun i -> i.m.Createdat)) MomentComplex__json 20 homepageCache
 
     [|  ok
         ("curs",curs)
-        ("mcs",mcs) |]
+        ("mcs",homepageCache.json) |]
 
 let api_Public_LoadMoment: X -> ApiReturn =
     tryLoadFromJsonIdWrapOK
