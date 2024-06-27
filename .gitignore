@@ -9,3 +9,5 @@
 /Deploy/as/**
 /Deploy/js/**
 /Deploy/**
+
+**/*.user
