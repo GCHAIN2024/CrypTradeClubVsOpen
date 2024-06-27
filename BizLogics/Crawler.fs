@@ -29,12 +29,11 @@ let newP (bc:BizComplex) p =
         |> Seq.tryFind(fun mc -> mc.m.p.OID = p.OID) with
     | Some m -> ()
     | None -> 
-        create MOMENT_metadata "BizLogics.Crawler.launchCrawlers" conn
-            (fun _ -> 
-                p.BindType <- momentBindTypeEnum.Biz
-                p.Bind <- bc.biz.ID
-                p.BizCode <- bc.biz.p.Code
-                p) ()
+        p.BindType <- momentBindTypeEnum.Biz
+        p.Bind <- bc.biz.ID
+        p.BizCode <- bc.biz.p.Code
+        p
+        |> p__rcd MOMENT_metadata "BizLogics.Crawler.launchCrawlers" conn
         |> ignore
 
 let og host p html = 
