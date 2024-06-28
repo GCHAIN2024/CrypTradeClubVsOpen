@@ -88,7 +88,7 @@ let api_Public_CreateArbitrage x =
 let api_Public_UpdateArbitrage x =
     x.json 
     |> json__items
-    |> tryDeserialize bin__ARBITRAGE "p"
+    |> tryDeserialize bin__ARBITRAGE "rcd"
     |> oPipeline(fun rcd -> 
         if runtime.data.arbitrages.ContainsKey rcd.ID then
             Some rcd
