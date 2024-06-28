@@ -49,12 +49,12 @@ let api_Public_ListArbitrage x =
     |> Array.map ARBITRAGE__json
     |> wrapOkAry
 
-let api_Public_CreateArbitrage (x:X) =
+let api_Public_CreateArbitrage x =
     
     let fields = x.json |> json__items
 
     match
-        tryDeserialize bin__pARBITRAGE fields "p"
+        tryDeserialize bin__pARBITRAGE "p" fields
         |> oPipeline (fun p -> 
             let code = checkfield fields "Ins"
             if runtime.data.inss.ContainsKey code then
@@ -86,10 +86,23 @@ let api_Public_CreateArbitrage (x:X) =
       
 
 let api_Public_UpdateArbitrage x =
-    runtime.data.arbitrages.Values
-    |> Seq.toArray
-    |> Array.map ARBITRAGE__json
-    |> wrapOkAry
+    x.json 
+    |> json__items
+    |> tryDeserialize bin__ARBITRAGE "p"
+    |> oPipeline(fun rcd -> 
+        if runtime.data.arbitrages.ContainsKey rcd.ID then
+            Some rcd
+        else
+            None) (fun _ -> None)
+    |> oPipeline (fun rcd -> 
+        if 
+            (rcd.ID,rcd.p)
+            |> update "api/public/updateArbitrage" conn ARBITRAGE_metadata then
+            runtime.data.arbitrages[rcd.ID] <- rcd
+            [| ok |]
+        else
+            er Er.InvalideParameter)(fun _ -> er Er.InvalideParameter)
+
 
 let homepageCache = empty__CachedWithExpiry()
 
@@ -109,7 +122,7 @@ let api_Public_Homepage x =
 
     [|  ok
         ("curs",curs)
-        ("mcs",homepageCache.json) |]
+        ("mcs",homepageCache.cachedJson) |]
 
 let api_Public_LoadMoment: X -> ApiReturn =
     tryLoadFromJsonIdWrapOK

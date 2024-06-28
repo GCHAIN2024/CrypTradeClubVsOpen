@@ -63,7 +63,7 @@ let crawler (runtime:Runtime) =
             |> ignore
         else
             runtime.data.curs[c]
-            |> update "BizLogics.Market.crawler" CUR_metadata (fun p -> 
+            |> updateRcd "BizLogics.Market.crawler" conn CUR_metadata (fun p -> 
                 p.Caption <- n
                 p.AnchorRate <- price
                 p.Icon <- img

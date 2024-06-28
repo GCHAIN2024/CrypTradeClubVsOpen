@@ -106,6 +106,9 @@ let init (runtime:Runtime) =
             | Some bc -> bc.mcs[m.ID] <- mc
             | None -> ())
 
+    (fun (i:ARBITRAGE) -> runtime.data.arbitrages[i.ID] <- i)
+    |> loadAll runtime.output conn ARBITRAGE_metadata
+
     //runtime.facts
 
     launchMarketCrawlers runtime            
