@@ -40,10 +40,10 @@ let hash1,hash2 =
     |> vueIndexFile__hashes
 
 let ssrPageHome = {
-    title = "GCHA.IN"
-    desc = "GCHAIN is a revolutionary way to promote websites through a hierarchical referral program."
+    title = "cpto.cc"
+    desc = "Social trading. Portfolio. Aggregated news and market data."
     image = "https://i.imgur.com/N3MaARt.jpg"
-    url = "https:// /"
+    url = "https://cpto.cc"
     noscript = "" }
 
 let r1 = string__regex @"\w+"
