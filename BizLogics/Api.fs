@@ -32,29 +32,23 @@ let api_Public_Ping x =
 
 let api_Public_ListBiz x =
     runtime.data.bcs.Values
-    |> Seq.toArray
-    |> Array.map(fun i -> i.biz)
-    |> Array.map BIZ__json
-    |> wrapOkAry
+    |> Seq.map(fun i -> i.biz)
+    |> apiList BIZ__json
 
 let api_Public_ListCur x =
     runtime.data.curs.Values
-    |> Seq.toArray
-    |> Array.map CUR__json
-    |> wrapOkAry
+    |> apiList CUR__json
 
 let api_Public_ListArbitrage x =
     runtime.data.arbitrages.Values
-    |> Seq.toArray
-    |> Array.map ARBITRAGE__json
-    |> wrapOkAry
+    |> apiList ARBITRAGE__json
 
 let api_Public_CreateArbitrage x =
     
-    let fields = x.json |> json__items
+    let fields,o = apiCreate bin__pARBITRAGE x
 
     match
-        tryDeserialize bin__pARBITRAGE "p" fields
+        o
         |> oPipeline (fun p -> 
             let code = checkfield fields "Ins"
             if runtime.data.inss.ContainsKey code then
@@ -86,9 +80,8 @@ let api_Public_CreateArbitrage x =
       
 
 let api_Public_UpdateArbitrage x =
-    x.json 
-    |> json__items
-    |> tryDeserialize bin__ARBITRAGE "rcd"
+    x
+    |> apiUpdate bin__ARBITRAGE
     |> oPipeline(fun rcd -> 
         if runtime.data.arbitrages.ContainsKey rcd.ID then
             Some rcd
@@ -110,10 +103,9 @@ let api_Public_Homepage x =
 
     let curs = 
         runtime.data.curs.Values
-        |> Seq.toArray
-        |> Array.filter(fun i -> i.p.CurType = curCurTypeEnum.Crypto)
-        |> Array.map CUR__json
-        |> Json.Ary
+        |> Seq.filter(fun i -> i.p.CurType = curCurTypeEnum.Crypto)
+        |> apiList CUR__json
+        |> Json.Braket
 
     checkCache (fun _ -> 
         runtime.data.mcs.Values
