@@ -159,7 +159,15 @@ let cBLOCKCHAINNEWS =
         (fun url -> (empty__HttpClient().get url).html)
         (fun p html -> ())
 
-// https://decrypt.co/news
+let cDECRYPTCO = 
+    template
+        (fun _ ->
+            (empty__HttpClient().get "https://decrypt.co/news").html
+            |> regex_matches (string__regex "(?<= href=\x22)/\d+/.*?(?=\x22)")
+            |> Array.map(fun i -> "https://decrypt.co" + i))
+        (fun url -> (empty__HttpClient().get url).html)
+        (fun p html -> ())
+
 // https://news.bitcoin.com/
 // https://www.coingecko.com/en/news
 
@@ -168,7 +176,8 @@ let launchNewsCrawlers (runtime:Runtime) =
     [|  (cCOINDESK,"COINDESK")
         (cCRYPTOSLATE,"CRYPTOSLATE")
         (cCOINTELEGRAPH,"COINTELEGRAPH") 
-        (cBLOCKCHAINNEWS,"BLOCKCHAIN.NEWS") |]
+        (cBLOCKCHAINNEWS,"BLOCKCHAIN.NEWS")
+        (cDECRYPTCO,"DECRYPT.CO") |]
     |> Array.iter(fun (f,c) ->
         (fun _ -> 
             f runtime runtime.data.bcs[c])
