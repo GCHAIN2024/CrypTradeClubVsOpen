@@ -5330,6 +5330,10 @@ let pARBITRAGE__bin (bb:BytesBuilder) (p:pARBITRAGE) =
     binCaption.Length |> BitConverter.GetBytes |> bb.append
     binCaption |> bb.append
     
+    let binCode = p.Code |> Encoding.UTF8.GetBytes
+    binCode.Length |> BitConverter.GetBytes |> bb.append
+    binCode |> bb.append
+    
     let binDesc = p.Desc |> Encoding.UTF8.GetBytes
     binDesc.Length |> BitConverter.GetBytes |> bb.append
     binDesc |> bb.append
@@ -5340,7 +5344,7 @@ let pARBITRAGE__bin (bb:BytesBuilder) (p:pARBITRAGE) =
     
     p.Entry |> BitConverter.GetBytes |> bb.append
     
-    p.Exist |> BitConverter.GetBytes |> bb.append
+    p.Exit |> BitConverter.GetBytes |> bb.append
     
     p.Fund |> BitConverter.GetBytes |> bb.append
     
@@ -5364,6 +5368,11 @@ let bin__pARBITRAGE (bi:BinIndexed):pARBITRAGE =
     p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
     index.Value <- index.Value + count_Caption
     
+    let count_Code = BitConverter.ToInt32(bin,index.Value)
+    index.Value <- index.Value + 4
+    p.Code <- Encoding.UTF8.GetString(bin,index.Value,count_Code)
+    index.Value <- index.Value + count_Code
+    
     let count_Desc = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
     p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
@@ -5378,7 +5387,7 @@ let bin__pARBITRAGE (bi:BinIndexed):pARBITRAGE =
     p.Entry <- BitConverter.ToDouble(bin,index.Value)
     index.Value <- index.Value + 8
     
-    p.Exist <- BitConverter.ToDouble(bin,index.Value)
+    p.Exit <- BitConverter.ToDouble(bin,index.Value)
     index.Value <- index.Value + 8
     
     p.Fund <- BitConverter.ToInt64(bin,index.Value)
@@ -5413,11 +5422,12 @@ let pARBITRAGE__json (p:pARBITRAGE) =
 
     [|
         ("Caption",p.Caption |> Json.Str)
+        ("Code",p.Code |> Json.Str)
         ("Desc",p.Desc |> Json.Str)
         ("Ins",p.Ins.ToString() |> Json.Num)
         ("Stake",p.Stake.ToString() |> Json.Num)
         ("Entry",p.Entry.ToString() |> Json.Num)
-        ("Exist",p.Exist.ToString() |> Json.Num)
+        ("Exit",p.Exit.ToString() |> Json.Num)
         ("Fund",p.Fund.ToString() |> Json.Num)
         ("EndUser",p.EndUser.ToString() |> Json.Num) |]
     |> Json.Braket
@@ -5447,6 +5457,8 @@ let json__pARBITRAGEo (json:Json):pARBITRAGE option =
     
     p.Caption <- checkfieldz fields "Caption" 64
     
+    p.Code <- checkfieldz fields "Code" 64
+    
     p.Desc <- checkfield fields "Desc"
     
     p.Ins <- checkfield fields "Ins" |> parse_int64
@@ -5455,7 +5467,7 @@ let json__pARBITRAGEo (json:Json):pARBITRAGE option =
     
     p.Entry <- checkfield fields "Entry" |> parse_float
     
-    p.Exist <- checkfield fields "Exist" |> parse_float
+    p.Exit <- checkfield fields "Exit" |> parse_float
     
     p.Fund <- checkfield fields "Fund" |> parse_int64
     
@@ -5484,6 +5496,8 @@ let json__ARBITRAGEo (json:Json):ARBITRAGE option =
         
         p.Caption <- checkfieldz fields "Caption" 64
         
+        p.Code <- checkfieldz fields "Code" 64
+        
         p.Desc <- checkfield fields "Desc"
         
         p.Ins <- checkfield fields "Ins" |> parse_int64
@@ -5492,7 +5506,7 @@ let json__ARBITRAGEo (json:Json):ARBITRAGE option =
         
         p.Entry <- checkfield fields "Entry" |> parse_float
         
-        p.Exist <- checkfield fields "Exist" |> parse_float
+        p.Exit <- checkfield fields "Exit" |> parse_float
         
         p.Fund <- checkfield fields "Fund" |> parse_int64
         
@@ -8783,23 +8797,25 @@ let db__pARBITRAGE(line:Object[]): pARBITRAGE =
     let p = pARBITRAGE_empty()
 
     p.Caption <- string(line.[4]).TrimEnd()
-    p.Desc <- string(line.[5]).TrimEnd()
-    p.Ins <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
-    p.Stake <- if Convert.IsDBNull(line.[7]) then 0.0 else line.[7] :?> float
-    p.Entry <- if Convert.IsDBNull(line.[8]) then 0.0 else line.[8] :?> float
-    p.Exist <- if Convert.IsDBNull(line.[9]) then 0.0 else line.[9] :?> float
-    p.Fund <- if Convert.IsDBNull(line.[10]) then 0L else line.[10] :?> int64
-    p.EndUser <- if Convert.IsDBNull(line.[11]) then 0L else line.[11] :?> int64
+    p.Code <- string(line.[5]).TrimEnd()
+    p.Desc <- string(line.[6]).TrimEnd()
+    p.Ins <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
+    p.Stake <- if Convert.IsDBNull(line.[8]) then 0.0 else line.[8] :?> float
+    p.Entry <- if Convert.IsDBNull(line.[9]) then 0.0 else line.[9] :?> float
+    p.Exit <- if Convert.IsDBNull(line.[10]) then 0.0 else line.[10] :?> float
+    p.Fund <- if Convert.IsDBNull(line.[11]) then 0L else line.[11] :?> int64
+    p.EndUser <- if Convert.IsDBNull(line.[12]) then 0L else line.[12] :?> int64
 
     p
 
 let pARBITRAGE__sps (p:pARBITRAGE) = [|
     new SqlParameter("Caption", p.Caption)
+    new SqlParameter("Code", p.Code)
     new SqlParameter("Desc", p.Desc)
     new SqlParameter("Ins", p.Ins)
     new SqlParameter("Stake", p.Stake)
     new SqlParameter("Entry", p.Entry)
-    new SqlParameter("Exist", p.Exist)
+    new SqlParameter("Exit", p.Exit)
     new SqlParameter("Fund", p.Fund)
     new SqlParameter("EndUser", p.EndUser) |]
 
@@ -8811,11 +8827,12 @@ let ARBITRAGE_wrapper item: ARBITRAGE =
 
 let pARBITRAGE_clone (p:pARBITRAGE): pARBITRAGE = {
     Caption = p.Caption
+    Code = p.Code
     Desc = p.Desc
     Ins = p.Ins
     Stake = p.Stake
     Entry = p.Entry
-    Exist = p.Exist
+    Exit = p.Exit
     Fund = p.Fund
     EndUser = p.EndUser }
 
@@ -8878,11 +8895,12 @@ let ARBITRAGETxSqlServer =
     ,[Updatedat] BIGINT NOT NULL
     ,[Sort] BIGINT NOT NULL,
     ,[Caption]
+    ,[Code]
     ,[Desc]
     ,[Ins]
     ,[Stake]
     ,[Entry]
-    ,[Exist]
+    ,[Exit]
     ,[Fund]
     ,[EndUser])
     END

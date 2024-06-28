@@ -2759,48 +2759,52 @@ let LOG_table = "Sys_Log"
 
 type pARBITRAGE = {
 mutable Caption: Chars
+mutable Code: Chars
 mutable Desc: Text
 mutable Ins: FK
 mutable Stake: Float
 mutable Entry: Float
-mutable Exist: Float
+mutable Exit: Float
 mutable Fund: FK
 mutable EndUser: FK}
 
 
 type ARBITRAGE = Rcd<pARBITRAGE>
 
-let ARBITRAGE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Ins],[Stake],[Entry],[Exist],[Fund],[EndUser]"
+let ARBITRAGE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Code],[Desc],[Ins],[Stake],[Entry],[Exit],[Fund],[EndUser]"
 
 let pARBITRAGE_fieldordersArray = [|
     "Caption"
+    "Code"
     "Desc"
     "Ins"
     "Stake"
     "Entry"
-    "Exist"
+    "Exit"
     "Fund"
     "EndUser" |]
 
-let ARBITRAGE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Ins]=@Ins,[Stake]=@Stake,[Entry]=@Entry,[Exist]=@Exist,[Fund]=@Fund,[EndUser]=@EndUser"
+let ARBITRAGE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Code]=@Code,[Desc]=@Desc,[Ins]=@Ins,[Stake]=@Stake,[Entry]=@Entry,[Exit]=@Exit,[Fund]=@Fund,[EndUser]=@EndUser"
 
 let pARBITRAGE_fields = [|
     Chars("Caption", 64)
+    Chars("Code", 64)
     Text("Desc")
     FK("Ins")
     Float("Stake")
     Float("Entry")
-    Float("Exist")
+    Float("Exit")
     FK("Fund")
     FK("EndUser") |]
 
 let pARBITRAGE_empty(): pARBITRAGE = {
     Caption = ""
+    Code = ""
     Desc = ""
     Ins = 0L
     Stake = 0.0
     Entry = 0.0
-    Exist = 0.0
+    Exit = 0.0
     Fund = 0L
     EndUser = 0L }
 

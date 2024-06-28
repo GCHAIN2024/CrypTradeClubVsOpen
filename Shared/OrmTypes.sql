@@ -7675,11 +7675,12 @@ BEGIN
         ,[Updatedat] BIGINT NOT NULL
         ,[Sort] BIGINT NOT NULL,
         [Caption] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
+        ,[Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
         ,[Desc] NVARCHAR(MAX)
         ,[Ins] BIGINT
         ,[Stake] FLOAT
         ,[Entry] FLOAT
-        ,[Exist] FLOAT
+        ,[Exit] FLOAT
         ,[Fund] BIGINT
         ,[EndUser] BIGINT
 , CONSTRAINT [PK_Trade_Arbitrage] PRIMARY KEY CLUSTERED ([ID] ASC)) ON [PRIMARY]
@@ -7689,7 +7690,7 @@ END
 -- Dropping obsolete fields -----------
 DECLARE @name_Trade_Arbitrage NVARCHAR(64)
 DECLARE cursor_Trade_Arbitrage CURSOR FOR 
-    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Desc','Ins','Stake','Entry','Exist','Fund','EndUser'))
+    SELECT name FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND (name NOT IN ('ID','Createdat','Updatedat','Sort','Caption','Code','Desc','Ins','Stake','Entry','Exit','Fund','EndUser'))
 
 OPEN cursor_Trade_Arbitrage
 FETCH NEXT FROM cursor_Trade_Arbitrage INTO @name_Trade_Arbitrage
@@ -7732,6 +7733,30 @@ IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_Arb
 IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageCaption')
     BEGIN
     ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageCaption]
+    END
+
+-- [Trade_Arbitrage.Code] -------------
+
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Code')
+    BEGIN
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS
+    END
+ELSE
+    BEGIN
+    DECLARE @sql_add_Trade_Arbitrage_Code NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Code = 'ALTER TABLE Trade_Arbitrage ADD [Code] NVARCHAR(64) COLLATE Chinese_PRC_CI_AS'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Code
+    END
+
+
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageCode')
+    BEGIN
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageCode]
+    END
+
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageCode')
+    BEGIN
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageCode]
     END
 
 -- [Trade_Arbitrage.Desc] -------------
@@ -7830,28 +7855,28 @@ IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_Arbitrag
     ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageEntry]
     END
 
--- [Trade_Arbitrage.Exist] -------------
+-- [Trade_Arbitrage.Exit] -------------
 
-IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Exist')
+IF EXISTS(SELECT * FROM SYSCOLUMNS WHERE id=object_id('Trade_Arbitrage') AND name='Exit')
     BEGIN
-     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Exist] FLOAT
+     ALTER TABLE Trade_Arbitrage ALTER COLUMN [Exit] FLOAT
     END
 ELSE
     BEGIN
-    DECLARE @sql_add_Trade_Arbitrage_Exist NVARCHAR(MAX);
-    SET @sql_add_Trade_Arbitrage_Exist = 'ALTER TABLE Trade_Arbitrage ADD [Exist] FLOAT'
-    EXEC sp_executesql @sql_add_Trade_Arbitrage_Exist
+    DECLARE @sql_add_Trade_Arbitrage_Exit NVARCHAR(MAX);
+    SET @sql_add_Trade_Arbitrage_Exit = 'ALTER TABLE Trade_Arbitrage ADD [Exit] FLOAT'
+    EXEC sp_executesql @sql_add_Trade_Arbitrage_Exit
     END
 
 
-IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageExist')
+IF EXISTS(SELECT object_id FROM [sys].[objects] WHERE name='Constraint_Trade_ArbitrageExit')
     BEGIN
-    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageExist]
+    ALTER TABLE Ca_Staff DROP  CONSTRAINT [Constraint_Trade_ArbitrageExit]
     END
 
-IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageExist')
+IF EXISTS(SELECT * FROM SYSINDEXES WHERE name='UniqueNonclustered_Trade_ArbitrageExit')
     BEGIN
-    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageExist]
+    ALTER TABLE Trade_Arbitrage DROP  CONSTRAINT [UniqueNonclustered_Trade_ArbitrageExit]
     END
 
 -- [Trade_Arbitrage.Fund] -------------

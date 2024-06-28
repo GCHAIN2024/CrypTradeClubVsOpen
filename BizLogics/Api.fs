@@ -51,21 +51,37 @@ let api_Public_ListArbitrage x =
 
 let api_Public_CreateArbitrage (x:X) =
     
-    let p = pARBITRAGE_empty()
-    
     let fields = x.json |> json__items
 
-    p.Ins <- checkfield fields "Ins" |> parse_int64
-    p.Caption <- checkfield fields "Caption"
-
     match
-        runtime.data.inss.Values
-        |> Seq.tryFind(fun i -> i.ID = p.Ins) with
-    | Some ins -> 
+        tryDeserialize bin__pARBITRAGE fields "p"
+        |> oPipeline (fun p -> 
+            let code = checkfield fields "Ins"
+            if runtime.data.inss.ContainsKey code then
+                let ins = runtime.data.inss[code]
+                p.Ins <- ins.ID
+                p.Code <- ins.p.Code
+                Some p
+            else
+                None) (fun _ -> None)
+        |> oPipeline (fun p -> 
+            if p.Stake <= 0.0 || p.Entry <= 0.0 || p.Exit <= 0.0 then
+                None
+            else
+                Some p) (fun _ -> None) with
+    | Some p -> 
+        if p.Exit < p.Entry then
+            p.Stake <- - p.Stake
+
         match 
             p__createRcd p ARBITRAGE_metadata "api/public/createArbitrage" conn with
-        | Some rcd -> rcd |> ARBITRAGE__json |> wrapOk "arbitrage"
+        | Some rcd -> 
+            runtime.data.arbitrages[rcd.ID] <- rcd
+            rcd 
+            |> ARBITRAGE__json 
+            |> wrapOk "arbitrage"
         | None -> er Er.Internal
+
     | None -> er Er.InvalideParameter
       
 

@@ -68,6 +68,8 @@ let init (runtime:Runtime) =
             | Some cur -> runtime.data.curs[code] <- cur
             | None -> halt runtime.output ("BizLogics.Init.createCur [" + code + "]") "")
 
+    runtime.data.curs["USD"].p.AnchorRate <- 1.0
+
     (fun (i:INS) -> runtime.data.inss[i.p.Code] <- i)
     |> loadAll runtime.output conn INS_metadata
 

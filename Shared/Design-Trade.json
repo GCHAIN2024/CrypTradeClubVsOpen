@@ -97,6 +97,11 @@
         "name": "Caption"
       },
       {
+        "enum": "Chars",
+        "length": 64,
+        "name": "Code"
+      },
+      {
         "enum": "Text",
         "name": "Desc"
       },
@@ -115,7 +120,7 @@
       },
       {
         "enum": "Float",
-        "name": "Exist"
+        "name": "Exit"
       },
       {
         "enum": "FK",
