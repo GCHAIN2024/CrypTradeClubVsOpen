@@ -62,6 +62,6 @@ let mc__ssrPage mc =
         title = mc.m.p.Title
         desc = mc.m.p.Summary
         image = mc.m.p.PreviewImgUrl
-        url = "https://gcha.in/t/" + mc.m.ID.ToString()
+        url = runtime.host.url + "/m/" + mc.m.ID.ToString()
         noscript = "" }
 

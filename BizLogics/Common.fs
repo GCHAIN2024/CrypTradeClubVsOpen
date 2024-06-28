@@ -23,6 +23,7 @@ let defaultHost() = {
     port = 80
     conn = "server=.; database=CTC; Trusted_Connection=True;"
     defaultHtml = "index.html"
+    url = "https://cpto.cc"
 
     updateDatabase = true
 

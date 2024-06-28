@@ -42,8 +42,8 @@ let hash1,hash2 =
 let ssrPageHome = {
     title = "cpto.cc"
     desc = "Social trading. Portfolio. Aggregated news and market data."
-    image = "https://i.imgur.com/N3MaARt.jpg"
-    url = "https://cpto.cc"
+    image = "https://i.imgur.com/hzWYQow.png"
+    url = runtime.host.url
     noscript = "" }
 
 let r1 = string__regex @"\w+"
@@ -88,6 +88,7 @@ let echo req =
         |> Suc
         |> bind h1
         |> bind (hpattern "/m/" hMoment)
+        |> bindFail (hHomepage (fun _ -> ssrPageHome |> render((hash1,hash2))))
         |> bindFail (hapi echoApiHandler branch) with
     | Suc x -> x.rep
     | Fail(x,e) -> None
