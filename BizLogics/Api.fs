@@ -103,9 +103,10 @@ let api_Public_Homepage x =
 
     let curs = 
         runtime.data.curs.Values
-        |> Seq.filter(fun i -> i.p.CurType = curCurTypeEnum.Crypto)
-        |> apiList CUR__json
-        |> Json.Braket
+        |> Seq.toArray
+        |> Array.filter(fun i -> i.p.CurType = curCurTypeEnum.Crypto)
+        |> Array.map CUR__json
+        |> Json.Ary
 
     checkCache (fun _ -> 
         runtime.data.mcs.Values
