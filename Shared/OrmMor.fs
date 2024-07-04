@@ -6002,22 +6002,23 @@ let db__pADDRESS(line:Object[]): pADDRESS =
 
     p
 
-let pADDRESS__sps (p:pADDRESS) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Bind", p.Bind)
-    new SqlParameter("Type", p.Type)
-    new SqlParameter("Line1", p.Line1)
-    new SqlParameter("Line2", p.Line2)
-    new SqlParameter("State", p.State)
-    new SqlParameter("County", p.County)
-    new SqlParameter("Town", p.Town)
-    new SqlParameter("Contact", p.Contact)
-    new SqlParameter("Tel", p.Tel)
-    new SqlParameter("Email", p.Email)
-    new SqlParameter("Zip", p.Zip)
-    new SqlParameter("City", p.City)
-    new SqlParameter("Country", p.Country)
-    new SqlParameter("Remarks", p.Remarks) |]
+let pADDRESS__sps (p:pADDRESS) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Bind", p.Bind) |> kvp__sqlparam
+        ("Type", p.Type) |> kvp__sqlparam
+        ("Line1", p.Line1) |> kvp__sqlparam
+        ("Line2", p.Line2) |> kvp__sqlparam
+        ("State", p.State) |> kvp__sqlparam
+        ("County", p.County) |> kvp__sqlparam
+        ("Town", p.Town) |> kvp__sqlparam
+        ("Contact", p.Contact) |> kvp__sqlparam
+        ("Tel", p.Tel) |> kvp__sqlparam
+        ("Email", p.Email) |> kvp__sqlparam
+        ("Zip", p.Zip) |> kvp__sqlparam
+        ("City", p.City) |> kvp__sqlparam
+        ("Country", p.Country) |> kvp__sqlparam
+        ("Remarks", p.Remarks) |> kvp__sqlparam |]
 
 let db__ADDRESS = db__Rcd db__pADDRESS
 
@@ -6132,14 +6133,15 @@ let db__pAIRPORT(line:Object[]): pAIRPORT =
 
     p
 
-let pAIRPORT__sps (p:pAIRPORT) = [|
-    new SqlParameter("Code3IATA", p.Code3IATA)
-    new SqlParameter("Code4ICAO", p.Code4ICAO)
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("CaptionEn", p.CaptionEn)
-    new SqlParameter("Country", p.Country)
-    new SqlParameter("City", p.City)
-    new SqlParameter("IsMetropolitan", p.IsMetropolitan) |]
+let pAIRPORT__sps (p:pAIRPORT) =
+    [|
+        ("Code3IATA", p.Code3IATA) |> kvp__sqlparam
+        ("Code4ICAO", p.Code4ICAO) |> kvp__sqlparam
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("CaptionEn", p.CaptionEn) |> kvp__sqlparam
+        ("Country", p.Country) |> kvp__sqlparam
+        ("City", p.City) |> kvp__sqlparam
+        ("IsMetropolitan", p.IsMetropolitan) |> kvp__sqlparam |]
 
 let db__AIRPORT = db__Rcd db__pAIRPORT
 
@@ -6258,34 +6260,35 @@ let db__pBIZ(line:Object[]): pBIZ =
 
     p
 
-let pBIZ__sps (p:pBIZ) = [|
-    new SqlParameter("Code", p.Code)
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Parent", p.Parent)
-    new SqlParameter("BasicAcct", p.BasicAcct)
-    new SqlParameter("Desc", p.Desc)
-    new SqlParameter("Website", p.Website)
-    new SqlParameter("Icon", p.Icon)
-    new SqlParameter("City", p.City)
-    new SqlParameter("Country", p.Country)
-    new SqlParameter("Lang", p.Lang)
-    new SqlParameter("IsSocial", p.IsSocial)
-    new SqlParameter("IsCmsSource", p.IsCmsSource)
-    new SqlParameter("IsPay", p.IsPay)
-    new SqlParameter("MomentLatest", p.MomentLatest)
-    new SqlParameter("CountFollowers", p.CountFollowers)
-    new SqlParameter("CountFollows", p.CountFollows)
-    new SqlParameter("CountMoments", p.CountMoments)
-    new SqlParameter("CountViews", p.CountViews)
-    new SqlParameter("CountComments", p.CountComments)
-    new SqlParameter("CountThumbUps", p.CountThumbUps)
-    new SqlParameter("CountThumbDns", p.CountThumbDns)
-    new SqlParameter("IsCrawling", p.IsCrawling)
-    new SqlParameter("IsGSeries", p.IsGSeries)
-    new SqlParameter("RemarksCentral", p.RemarksCentral)
-    new SqlParameter("Agent", p.Agent)
-    new SqlParameter("SiteCats", p.SiteCats)
-    new SqlParameter("ConfiguredCats", p.ConfiguredCats) |]
+let pBIZ__sps (p:pBIZ) =
+    [|
+        ("Code", p.Code) |> kvp__sqlparam
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Parent", p.Parent) |> kvp__sqlparam
+        ("BasicAcct", p.BasicAcct) |> kvp__sqlparam
+        ("Desc", p.Desc) |> kvp__sqlparam
+        ("Website", p.Website) |> kvp__sqlparam
+        ("Icon", p.Icon) |> kvp__sqlparam
+        ("City", p.City) |> kvp__sqlparam
+        ("Country", p.Country) |> kvp__sqlparam
+        ("Lang", p.Lang) |> kvp__sqlparam
+        ("IsSocial", p.IsSocial) |> kvp__sqlparam
+        ("IsCmsSource", p.IsCmsSource) |> kvp__sqlparam
+        ("IsPay", p.IsPay) |> kvp__sqlparam
+        ("MomentLatest", p.MomentLatest) |> kvp__sqlparam
+        ("CountFollowers", p.CountFollowers) |> kvp__sqlparam
+        ("CountFollows", p.CountFollows) |> kvp__sqlparam
+        ("CountMoments", p.CountMoments) |> kvp__sqlparam
+        ("CountViews", p.CountViews) |> kvp__sqlparam
+        ("CountComments", p.CountComments) |> kvp__sqlparam
+        ("CountThumbUps", p.CountThumbUps) |> kvp__sqlparam
+        ("CountThumbDns", p.CountThumbDns) |> kvp__sqlparam
+        ("IsCrawling", p.IsCrawling) |> kvp__sqlparam
+        ("IsGSeries", p.IsGSeries) |> kvp__sqlparam
+        ("RemarksCentral", p.RemarksCentral) |> kvp__sqlparam
+        ("Agent", p.Agent) |> kvp__sqlparam
+        ("SiteCats", p.SiteCats) |> kvp__sqlparam
+        ("ConfiguredCats", p.ConfiguredCats) |> kvp__sqlparam |]
 
 let db__BIZ = db__Rcd db__pBIZ
 
@@ -6422,12 +6425,13 @@ let db__pCAT(line:Object[]): pCAT =
 
     p
 
-let pCAT__sps (p:pCAT) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Lang", p.Lang)
-    new SqlParameter("Zh", p.Zh)
-    new SqlParameter("Parent", p.Parent)
-    new SqlParameter("State", p.State) |]
+let pCAT__sps (p:pCAT) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Lang", p.Lang) |> kvp__sqlparam
+        ("Zh", p.Zh) |> kvp__sqlparam
+        ("Parent", p.Parent) |> kvp__sqlparam
+        ("State", p.State) |> kvp__sqlparam |]
 
 let db__CAT = db__Rcd db__pCAT
 
@@ -6522,14 +6526,15 @@ let db__pCITY(line:Object[]): pCITY =
 
     p
 
-let pCITY__sps (p:pCITY) = [|
-    new SqlParameter("Name", p.Name)
-    new SqlParameter("MetropolitanCode3IATA", p.MetropolitanCode3IATA)
-    new SqlParameter("NameEn", p.NameEn)
-    new SqlParameter("Country", p.Country)
-    new SqlParameter("Place", p.Place)
-    new SqlParameter("Icon", p.Icon)
-    new SqlParameter("Tel", p.Tel) |]
+let pCITY__sps (p:pCITY) =
+    [|
+        ("Name", p.Name) |> kvp__sqlparam
+        ("MetropolitanCode3IATA", p.MetropolitanCode3IATA) |> kvp__sqlparam
+        ("NameEn", p.NameEn) |> kvp__sqlparam
+        ("Country", p.Country) |> kvp__sqlparam
+        ("Place", p.Place) |> kvp__sqlparam
+        ("Icon", p.Icon) |> kvp__sqlparam
+        ("Tel", p.Tel) |> kvp__sqlparam |]
 
 let db__CITY = db__Rcd db__pCITY
 
@@ -6630,16 +6635,17 @@ let db__pCRY(line:Object[]): pCRY =
 
     p
 
-let pCRY__sps (p:pCRY) = [|
-    new SqlParameter("Code2", p.Code2)
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Fullname", p.Fullname)
-    new SqlParameter("Icon", p.Icon)
-    new SqlParameter("Tel", p.Tel)
-    new SqlParameter("Cur", p.Cur)
-    new SqlParameter("Capital", p.Capital)
-    new SqlParameter("Place", p.Place)
-    new SqlParameter("Lang", p.Lang) |]
+let pCRY__sps (p:pCRY) =
+    [|
+        ("Code2", p.Code2) |> kvp__sqlparam
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Fullname", p.Fullname) |> kvp__sqlparam
+        ("Icon", p.Icon) |> kvp__sqlparam
+        ("Tel", p.Tel) |> kvp__sqlparam
+        ("Cur", p.Cur) |> kvp__sqlparam
+        ("Capital", p.Capital) |> kvp__sqlparam
+        ("Place", p.Place) |> kvp__sqlparam
+        ("Lang", p.Lang) |> kvp__sqlparam |]
 
 let db__CRY = db__Rcd db__pCRY
 
@@ -6754,26 +6760,27 @@ let db__pCUR(line:Object[]): pCUR =
 
     p
 
-let pCUR__sps (p:pCUR) = [|
-    new SqlParameter("Code", p.Code)
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Hidden", p.Hidden)
-    new SqlParameter("IsSac", p.IsSac)
-    new SqlParameter("IsTransfer", p.IsTransfer)
-    new SqlParameter("IsCash", p.IsCash)
-    new SqlParameter("EnableReward", p.EnableReward)
-    new SqlParameter("EnableOTC", p.EnableOTC)
-    new SqlParameter("Icon", p.Icon)
-    new SqlParameter("CurType", p.CurType)
-    new SqlParameter("Dec", p.Dec)
-    new SqlParameter("AnchorRate", p.AnchorRate)
-    new SqlParameter("Freezable", p.Freezable)
-    new SqlParameter("Authorizable", p.Authorizable)
-    new SqlParameter("ChaninID", p.ChaninID)
-    new SqlParameter("ChaninName", p.ChaninName)
-    new SqlParameter("ContractAddress", p.ContractAddress)
-    new SqlParameter("WalletAddress", p.WalletAddress)
-    new SqlParameter("BaseRate", p.BaseRate) |]
+let pCUR__sps (p:pCUR) =
+    [|
+        ("Code", p.Code) |> kvp__sqlparam
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Hidden", p.Hidden) |> kvp__sqlparam
+        ("IsSac", p.IsSac) |> kvp__sqlparam
+        ("IsTransfer", p.IsTransfer) |> kvp__sqlparam
+        ("IsCash", p.IsCash) |> kvp__sqlparam
+        ("EnableReward", p.EnableReward) |> kvp__sqlparam
+        ("EnableOTC", p.EnableOTC) |> kvp__sqlparam
+        ("Icon", p.Icon) |> kvp__sqlparam
+        ("CurType", p.CurType) |> kvp__sqlparam
+        ("Dec", p.Dec) |> kvp__sqlparam
+        ("AnchorRate", p.AnchorRate) |> kvp__sqlparam
+        ("Freezable", p.Freezable) |> kvp__sqlparam
+        ("Authorizable", p.Authorizable) |> kvp__sqlparam
+        ("ChaninID", p.ChaninID) |> kvp__sqlparam
+        ("ChaninName", p.ChaninName) |> kvp__sqlparam
+        ("ContractAddress", p.ContractAddress) |> kvp__sqlparam
+        ("WalletAddress", p.WalletAddress) |> kvp__sqlparam
+        ("BaseRate", p.BaseRate) |> kvp__sqlparam |]
 
 let db__CUR = db__Rcd db__pCUR
 
@@ -6912,30 +6919,31 @@ let db__pEU(line:Object[]): pEU =
 
     p
 
-let pEU__sps (p:pEU) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Username", p.Username)
-    new SqlParameter("SocialAuthBiz", p.SocialAuthBiz)
-    new SqlParameter("SocialAuthId", p.SocialAuthId)
-    new SqlParameter("SocialAuthAvatar", p.SocialAuthAvatar)
-    new SqlParameter("Email", p.Email)
-    new SqlParameter("Tel", p.Tel)
-    new SqlParameter("Gender", p.Gender)
-    new SqlParameter("Status", p.Status)
-    new SqlParameter("Admin", p.Admin)
-    new SqlParameter("BizPartner", p.BizPartner)
-    new SqlParameter("Privilege", p.Privilege)
-    new SqlParameter("Verify", p.Verify)
-    new SqlParameter("Pwd", p.Pwd)
-    new SqlParameter("Online", p.Online)
-    new SqlParameter("Icon", p.Icon)
-    new SqlParameter("Background", p.Background)
-    new SqlParameter("BasicAcct", p.BasicAcct)
-    new SqlParameter("Citizen", p.Citizen)
-    new SqlParameter("Refer", p.Refer)
-    new SqlParameter("Referer", p.Referer)
-    new SqlParameter("Url", p.Url)
-    new SqlParameter("About", p.About) |]
+let pEU__sps (p:pEU) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Username", p.Username) |> kvp__sqlparam
+        ("SocialAuthBiz", p.SocialAuthBiz) |> kvp__sqlparam
+        ("SocialAuthId", p.SocialAuthId) |> kvp__sqlparam
+        ("SocialAuthAvatar", p.SocialAuthAvatar) |> kvp__sqlparam
+        ("Email", p.Email) |> kvp__sqlparam
+        ("Tel", p.Tel) |> kvp__sqlparam
+        ("Gender", p.Gender) |> kvp__sqlparam
+        ("Status", p.Status) |> kvp__sqlparam
+        ("Admin", p.Admin) |> kvp__sqlparam
+        ("BizPartner", p.BizPartner) |> kvp__sqlparam
+        ("Privilege", p.Privilege) |> kvp__sqlparam
+        ("Verify", p.Verify) |> kvp__sqlparam
+        ("Pwd", p.Pwd) |> kvp__sqlparam
+        ("Online", p.Online) |> kvp__sqlparam
+        ("Icon", p.Icon) |> kvp__sqlparam
+        ("Background", p.Background) |> kvp__sqlparam
+        ("BasicAcct", p.BasicAcct) |> kvp__sqlparam
+        ("Citizen", p.Citizen) |> kvp__sqlparam
+        ("Refer", p.Refer) |> kvp__sqlparam
+        ("Referer", p.Referer) |> kvp__sqlparam
+        ("Url", p.Url) |> kvp__sqlparam
+        ("About", p.About) |> kvp__sqlparam |]
 
 let db__EU = db__Rcd db__pEU
 
@@ -7069,17 +7077,18 @@ let db__pFILE(line:Object[]): pFILE =
 
     p
 
-let pFILE__sps (p:pFILE) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Encrypt", p.Encrypt)
-    new SqlParameter("SHA256", p.SHA256)
-    new SqlParameter("Size", p.Size)
-    new SqlParameter("Bind", p.Bind)
-    new SqlParameter("BindType", p.BindType)
-    new SqlParameter("State", p.State)
-    new SqlParameter("Folder", p.Folder)
-    new SqlParameter("FileType", p.FileType)
-    new SqlParameter("JSON", p.JSON) |]
+let pFILE__sps (p:pFILE) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Encrypt", p.Encrypt) |> kvp__sqlparam
+        ("SHA256", p.SHA256) |> kvp__sqlparam
+        ("Size", p.Size) |> kvp__sqlparam
+        ("Bind", p.Bind) |> kvp__sqlparam
+        ("BindType", p.BindType) |> kvp__sqlparam
+        ("State", p.State) |> kvp__sqlparam
+        ("Folder", p.Folder) |> kvp__sqlparam
+        ("FileType", p.FileType) |> kvp__sqlparam
+        ("JSON", p.JSON) |> kvp__sqlparam |]
 
 let db__FILE = db__Rcd db__pFILE
 
@@ -7182,12 +7191,13 @@ let db__pFOLDER(line:Object[]): pFOLDER =
 
     p
 
-let pFOLDER__sps (p:pFOLDER) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Encrypt", p.Encrypt)
-    new SqlParameter("Bind", p.Bind)
-    new SqlParameter("BindType", p.BindType)
-    new SqlParameter("Parent", p.Parent) |]
+let pFOLDER__sps (p:pFOLDER) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Encrypt", p.Encrypt) |> kvp__sqlparam
+        ("Bind", p.Bind) |> kvp__sqlparam
+        ("BindType", p.BindType) |> kvp__sqlparam
+        ("Parent", p.Parent) |> kvp__sqlparam |]
 
 let db__FOLDER = db__Rcd db__pFOLDER
 
@@ -7285,17 +7295,18 @@ let db__pLANG(line:Object[]): pLANG =
 
     p
 
-let pLANG__sps (p:pLANG) = [|
-    new SqlParameter("Code2", p.Code2)
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Native", p.Native)
-    new SqlParameter("Icon", p.Icon)
-    new SqlParameter("IsBlank", p.IsBlank)
-    new SqlParameter("IsLocale", p.IsLocale)
-    new SqlParameter("IsContent", p.IsContent)
-    new SqlParameter("IsAutoTranslate", p.IsAutoTranslate)
-    new SqlParameter("IsMiles", p.IsMiles)
-    new SqlParameter("TextDirection", p.TextDirection) |]
+let pLANG__sps (p:pLANG) =
+    [|
+        ("Code2", p.Code2) |> kvp__sqlparam
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Native", p.Native) |> kvp__sqlparam
+        ("Icon", p.Icon) |> kvp__sqlparam
+        ("IsBlank", p.IsBlank) |> kvp__sqlparam
+        ("IsLocale", p.IsLocale) |> kvp__sqlparam
+        ("IsContent", p.IsContent) |> kvp__sqlparam
+        ("IsAutoTranslate", p.IsAutoTranslate) |> kvp__sqlparam
+        ("IsMiles", p.IsMiles) |> kvp__sqlparam
+        ("TextDirection", p.TextDirection) |> kvp__sqlparam |]
 
 let db__LANG = db__Rcd db__pLANG
 
@@ -7397,11 +7408,12 @@ let db__pLOCALE(line:Object[]): pLOCALE =
 
     p
 
-let pLOCALE__sps (p:pLOCALE) = [|
-    new SqlParameter("Code", p.Code)
-    new SqlParameter("Lang", p.Lang)
-    new SqlParameter("Zh", p.Zh)
-    new SqlParameter("Text", p.Text) |]
+let pLOCALE__sps (p:pLOCALE) =
+    [|
+        ("Code", p.Code) |> kvp__sqlparam
+        ("Lang", p.Lang) |> kvp__sqlparam
+        ("Zh", p.Zh) |> kvp__sqlparam
+        ("Text", p.Text) |> kvp__sqlparam |]
 
 let db__LOCALE = db__Rcd db__pLOCALE
 
@@ -7490,10 +7502,11 @@ let db__pCSI(line:Object[]): pCSI =
 
     p
 
-let pCSI__sps (p:pCSI) = [|
-    new SqlParameter("Type", p.Type)
-    new SqlParameter("Lang", p.Lang)
-    new SqlParameter("Bind", p.Bind) |]
+let pCSI__sps (p:pCSI) =
+    [|
+        ("Type", p.Type) |> kvp__sqlparam
+        ("Lang", p.Lang) |> kvp__sqlparam
+        ("Bind", p.Bind) |> kvp__sqlparam |]
 
 let db__CSI = db__Rcd db__pCSI
 
@@ -7583,13 +7596,14 @@ let db__pCWC(line:Object[]): pCWC =
 
     p
 
-let pCWC__sps (p:pCWC) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("ExternalId", p.ExternalId)
-    new SqlParameter("Icon", p.Icon)
-    new SqlParameter("EU", p.EU)
-    new SqlParameter("Biz", p.Biz)
-    new SqlParameter("Json", p.Json) |]
+let pCWC__sps (p:pCWC) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("ExternalId", p.ExternalId) |> kvp__sqlparam
+        ("Icon", p.Icon) |> kvp__sqlparam
+        ("EU", p.EU) |> kvp__sqlparam
+        ("Biz", p.Biz) |> kvp__sqlparam
+        ("Json", p.Json) |> kvp__sqlparam |]
 
 let db__CWC = db__Rcd db__pCWC
 
@@ -7686,14 +7700,15 @@ let db__pINS(line:Object[]): pINS =
 
     p
 
-let pINS__sps (p:pINS) = [|
-    new SqlParameter("Desc", p.Desc)
-    new SqlParameter("Code", p.Code)
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Long", p.Long)
-    new SqlParameter("LongCode", p.LongCode)
-    new SqlParameter("Short", p.Short)
-    new SqlParameter("ShortCode", p.ShortCode) |]
+let pINS__sps (p:pINS) =
+    [|
+        ("Desc", p.Desc) |> kvp__sqlparam
+        ("Code", p.Code) |> kvp__sqlparam
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Long", p.Long) |> kvp__sqlparam
+        ("LongCode", p.LongCode) |> kvp__sqlparam
+        ("Short", p.Short) |> kvp__sqlparam
+        ("ShortCode", p.ShortCode) |> kvp__sqlparam |]
 
 let db__INS = db__Rcd db__pINS
 
@@ -7844,66 +7859,67 @@ let db__pTICKET(line:Object[]): pTICKET =
 
     p
 
-let pTICKET__sps (p:pTICKET) = [|
-    new SqlParameter("EndUser", p.EndUser)
-    new SqlParameter("TradeAcct", p.TradeAcct)
-    new SqlParameter("Ins", p.Ins)
-    new SqlParameter("Code", p.Code)
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("TradeMode", p.TradeMode)
-    new SqlParameter("Lot", p.Lot)
-    new SqlParameter("PriceOpened", p.PriceOpened)
-    new SqlParameter("PriceOpen", p.PriceOpen)
-    new SqlParameter("PriceSL", p.PriceSL)
-    new SqlParameter("PriceTP", p.PriceTP)
-    new SqlParameter("PriceClose", p.PriceClose)
-    new SqlParameter("Status", p.Status)
-    new SqlParameter("CP", p.CP)
-    new SqlParameter("CptAcct", p.CptAcct)
-    new SqlParameter("Ref", p.Ref)
-    new SqlParameter("OpenRef", p.OpenRef)
-    new SqlParameter("CloseRef", p.CloseRef)
-    new SqlParameter("Origin", p.Origin)
-    new SqlParameter("PnL", p.PnL)
-    new SqlParameter("PnLSpread", p.PnLSpread)
-    new SqlParameter("Margin", p.Margin)
-    new SqlParameter("RO", p.RO)
-    new SqlParameter("Tax", p.Tax)
-    new SqlParameter("CloseType", p.CloseType)
-    new SqlParameter("CommitType", p.CommitType)
-    new SqlParameter("Cmt", p.Cmt)
-    new SqlParameter("Opendat", p.Opendat.Ticks)
-    new SqlParameter("Closedat", p.Closedat.Ticks)
-    new SqlParameter("CaStrategyAmt", p.CaStrategyAmt)
-    new SqlParameter("CaRo", p.CaRo)
-    new SqlParameter("CaAsa", p.CaAsa)
-    new SqlParameter("CaCmphsvCharge", p.CaCmphsvCharge)
-    new SqlParameter("RoCheckedat", p.RoCheckedat.Ticks)
-    new SqlParameter("Expiry", p.Expiry.Ticks)
-    new SqlParameter("HedgetCP", p.HedgetCP)
-    new SqlParameter("PendingPrice", p.PendingPrice)
-    new SqlParameter("ClosedLot", p.ClosedLot)
-    new SqlParameter("ClosedAmt", p.ClosedAmt)
-    new SqlParameter("PendingAmt", p.PendingAmt)
-    new SqlParameter("DrvPreminum", p.DrvPreminum)
-    new SqlParameter("DrvExpiry", p.DrvExpiry.Ticks)
-    new SqlParameter("DrvPeriod", p.DrvPeriod)
-    new SqlParameter("DrvDirection", p.DrvDirection)
-    new SqlParameter("DrvPrice", p.DrvPrice)
-    new SqlParameter("DoubleCp", p.DoubleCp)
-    new SqlParameter("ClearStatus", p.ClearStatus)
-    new SqlParameter("FollowTicket", p.FollowTicket)
-    new SqlParameter("Config", p.Config)
-    new SqlParameter("OptionStatus", p.OptionStatus)
-    new SqlParameter("NotionalPrincipal", p.NotionalPrincipal)
-    new SqlParameter("ExercisedPrincipal", p.ExercisedPrincipal)
-    new SqlParameter("ExerciseMode", p.ExerciseMode)
-    new SqlParameter("ExercisePrice", p.ExercisePrice)
-    new SqlParameter("ExternalTicketOpen", p.ExternalTicketOpen)
-    new SqlParameter("ExternalTicketClose", p.ExternalTicketClose)
-    new SqlParameter("ExternalTicketPending", p.ExternalTicketPending)
-    new SqlParameter("ExternalTicketCancel", p.ExternalTicketCancel)
-    new SqlParameter("Desc", p.Desc) |]
+let pTICKET__sps (p:pTICKET) =
+    [|
+        ("EndUser", p.EndUser) |> kvp__sqlparam
+        ("TradeAcct", p.TradeAcct) |> kvp__sqlparam
+        ("Ins", p.Ins) |> kvp__sqlparam
+        ("Code", p.Code) |> kvp__sqlparam
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("TradeMode", p.TradeMode) |> kvp__sqlparam
+        ("Lot", p.Lot) |> kvp__sqlparam
+        ("PriceOpened", p.PriceOpened) |> kvp__sqlparam
+        ("PriceOpen", p.PriceOpen) |> kvp__sqlparam
+        ("PriceSL", p.PriceSL) |> kvp__sqlparam
+        ("PriceTP", p.PriceTP) |> kvp__sqlparam
+        ("PriceClose", p.PriceClose) |> kvp__sqlparam
+        ("Status", p.Status) |> kvp__sqlparam
+        ("CP", p.CP) |> kvp__sqlparam
+        ("CptAcct", p.CptAcct) |> kvp__sqlparam
+        ("Ref", p.Ref) |> kvp__sqlparam
+        ("OpenRef", p.OpenRef) |> kvp__sqlparam
+        ("CloseRef", p.CloseRef) |> kvp__sqlparam
+        ("Origin", p.Origin) |> kvp__sqlparam
+        ("PnL", p.PnL) |> kvp__sqlparam
+        ("PnLSpread", p.PnLSpread) |> kvp__sqlparam
+        ("Margin", p.Margin) |> kvp__sqlparam
+        ("RO", p.RO) |> kvp__sqlparam
+        ("Tax", p.Tax) |> kvp__sqlparam
+        ("CloseType", p.CloseType) |> kvp__sqlparam
+        ("CommitType", p.CommitType) |> kvp__sqlparam
+        ("Cmt", p.Cmt) |> kvp__sqlparam
+        ("Opendat", p.Opendat.Ticks) |> kvp__sqlparam
+        ("Closedat", p.Closedat.Ticks) |> kvp__sqlparam
+        ("CaStrategyAmt", p.CaStrategyAmt) |> kvp__sqlparam
+        ("CaRo", p.CaRo) |> kvp__sqlparam
+        ("CaAsa", p.CaAsa) |> kvp__sqlparam
+        ("CaCmphsvCharge", p.CaCmphsvCharge) |> kvp__sqlparam
+        ("RoCheckedat", p.RoCheckedat.Ticks) |> kvp__sqlparam
+        ("Expiry", p.Expiry.Ticks) |> kvp__sqlparam
+        ("HedgetCP", p.HedgetCP) |> kvp__sqlparam
+        ("PendingPrice", p.PendingPrice) |> kvp__sqlparam
+        ("ClosedLot", p.ClosedLot) |> kvp__sqlparam
+        ("ClosedAmt", p.ClosedAmt) |> kvp__sqlparam
+        ("PendingAmt", p.PendingAmt) |> kvp__sqlparam
+        ("DrvPreminum", p.DrvPreminum) |> kvp__sqlparam
+        ("DrvExpiry", p.DrvExpiry.Ticks) |> kvp__sqlparam
+        ("DrvPeriod", p.DrvPeriod) |> kvp__sqlparam
+        ("DrvDirection", p.DrvDirection) |> kvp__sqlparam
+        ("DrvPrice", p.DrvPrice) |> kvp__sqlparam
+        ("DoubleCp", p.DoubleCp) |> kvp__sqlparam
+        ("ClearStatus", p.ClearStatus) |> kvp__sqlparam
+        ("FollowTicket", p.FollowTicket) |> kvp__sqlparam
+        ("Config", p.Config) |> kvp__sqlparam
+        ("OptionStatus", p.OptionStatus) |> kvp__sqlparam
+        ("NotionalPrincipal", p.NotionalPrincipal) |> kvp__sqlparam
+        ("ExercisedPrincipal", p.ExercisedPrincipal) |> kvp__sqlparam
+        ("ExerciseMode", p.ExerciseMode) |> kvp__sqlparam
+        ("ExercisePrice", p.ExercisePrice) |> kvp__sqlparam
+        ("ExternalTicketOpen", p.ExternalTicketOpen) |> kvp__sqlparam
+        ("ExternalTicketClose", p.ExternalTicketClose) |> kvp__sqlparam
+        ("ExternalTicketPending", p.ExternalTicketPending) |> kvp__sqlparam
+        ("ExternalTicketCancel", p.ExternalTicketCancel) |> kvp__sqlparam
+        ("Desc", p.Desc) |> kvp__sqlparam |]
 
 let db__TICKET = db__Rcd db__pTICKET
 
@@ -8113,21 +8129,22 @@ let db__pTACCT(line:Object[]): pTACCT =
 
     p
 
-let pTACCT__sps (p:pTACCT) = [|
-    new SqlParameter("SAC", p.SAC)
-    new SqlParameter("State", p.State)
-    new SqlParameter("TradeType", p.TradeType)
-    new SqlParameter("RealDemo", p.RealDemo)
-    new SqlParameter("PnL", p.PnL)
-    new SqlParameter("Frozen", p.Frozen)
-    new SqlParameter("Leverage", p.Leverage)
-    new SqlParameter("Margin", p.Margin)
-    new SqlParameter("MarginCallRateWarning", p.MarginCallRateWarning)
-    new SqlParameter("MarginCallRateWarningII", p.MarginCallRateWarningII)
-    new SqlParameter("MarginCallRateLiq", p.MarginCallRateLiq)
-    new SqlParameter("PwdTrade", p.PwdTrade)
-    new SqlParameter("PwdReadonly", p.PwdReadonly)
-    new SqlParameter("Desc", p.Desc) |]
+let pTACCT__sps (p:pTACCT) =
+    [|
+        ("SAC", p.SAC) |> kvp__sqlparam
+        ("State", p.State) |> kvp__sqlparam
+        ("TradeType", p.TradeType) |> kvp__sqlparam
+        ("RealDemo", p.RealDemo) |> kvp__sqlparam
+        ("PnL", p.PnL) |> kvp__sqlparam
+        ("Frozen", p.Frozen) |> kvp__sqlparam
+        ("Leverage", p.Leverage) |> kvp__sqlparam
+        ("Margin", p.Margin) |> kvp__sqlparam
+        ("MarginCallRateWarning", p.MarginCallRateWarning) |> kvp__sqlparam
+        ("MarginCallRateWarningII", p.MarginCallRateWarningII) |> kvp__sqlparam
+        ("MarginCallRateLiq", p.MarginCallRateLiq) |> kvp__sqlparam
+        ("PwdTrade", p.PwdTrade) |> kvp__sqlparam
+        ("PwdReadonly", p.PwdReadonly) |> kvp__sqlparam
+        ("Desc", p.Desc) |> kvp__sqlparam |]
 
 let db__TACCT = db__Rcd db__pTACCT
 
@@ -8242,16 +8259,17 @@ let db__pBOOKMARK(line:Object[]): pBOOKMARK =
 
     p
 
-let pBOOKMARK__sps (p:pBOOKMARK) = [|
-    new SqlParameter("Agent", p.Agent)
-    new SqlParameter("EndUser", p.EndUser)
-    new SqlParameter("Bind", p.Bind)
-    new SqlParameter("BindType", p.BindType)
-    new SqlParameter("BookmarkList", p.BookmarkList)
-    new SqlParameter("Notes", p.Notes)
-    new SqlParameter("Path", p.Path)
-    new SqlParameter("Group", p.Group)
-    new SqlParameter("Type", p.Type) |]
+let pBOOKMARK__sps (p:pBOOKMARK) =
+    [|
+        ("Agent", p.Agent) |> kvp__sqlparam
+        ("EndUser", p.EndUser) |> kvp__sqlparam
+        ("Bind", p.Bind) |> kvp__sqlparam
+        ("BindType", p.BindType) |> kvp__sqlparam
+        ("BookmarkList", p.BookmarkList) |> kvp__sqlparam
+        ("Notes", p.Notes) |> kvp__sqlparam
+        ("Path", p.Path) |> kvp__sqlparam
+        ("Group", p.Group) |> kvp__sqlparam
+        ("Type", p.Type) |> kvp__sqlparam |]
 
 let db__BOOKMARK = db__Rcd db__pBOOKMARK
 
@@ -8355,15 +8373,16 @@ let db__pSBL(line:Object[]): pSBL =
 
     p
 
-let pSBL__sps (p:pSBL) = [|
-    new SqlParameter("EndUser", p.EndUser)
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Icon", p.Icon)
-    new SqlParameter("Background", p.Background)
-    new SqlParameter("Desc", p.Desc)
-    new SqlParameter("Privacy", p.Privacy)
-    new SqlParameter("Moment", p.Moment)
-    new SqlParameter("Type", p.Type) |]
+let pSBL__sps (p:pSBL) =
+    [|
+        ("EndUser", p.EndUser) |> kvp__sqlparam
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Icon", p.Icon) |> kvp__sqlparam
+        ("Background", p.Background) |> kvp__sqlparam
+        ("Desc", p.Desc) |> kvp__sqlparam
+        ("Privacy", p.Privacy) |> kvp__sqlparam
+        ("Moment", p.Moment) |> kvp__sqlparam
+        ("Type", p.Type) |> kvp__sqlparam |]
 
 let db__SBL = db__Rcd db__pSBL
 
@@ -8460,10 +8479,11 @@ let db__pFOLLOW(line:Object[]): pFOLLOW =
 
     p
 
-let pFOLLOW__sps (p:pFOLLOW) = [|
-    new SqlParameter("EndUser", p.EndUser)
-    new SqlParameter("Followee", p.Followee)
-    new SqlParameter("FollowType", p.FollowType) |]
+let pFOLLOW__sps (p:pFOLLOW) =
+    [|
+        ("EndUser", p.EndUser) |> kvp__sqlparam
+        ("Followee", p.Followee) |> kvp__sqlparam
+        ("FollowType", p.FollowType) |> kvp__sqlparam |]
 
 let db__FOLLOW = db__Rcd db__pFOLLOW
 
@@ -8568,28 +8588,29 @@ let db__pMOMENT(line:Object[]): pMOMENT =
 
     p
 
-let pMOMENT__sps (p:pMOMENT) = [|
-    new SqlParameter("Agent", p.Agent)
-    new SqlParameter("Bind", p.Bind)
-    new SqlParameter("BindType", p.BindType)
-    new SqlParameter("BizCode", p.BizCode)
-    new SqlParameter("Lang", p.Lang)
-    new SqlParameter("Title", p.Title)
-    new SqlParameter("Summary", p.Summary)
-    new SqlParameter("FullText", p.FullText)
-    new SqlParameter("PreviewImgUrl", p.PreviewImgUrl)
-    new SqlParameter("Link", p.Link)
-    new SqlParameter("Type", p.Type)
-    new SqlParameter("Question", p.Question)
-    new SqlParameter("State", p.State)
-    new SqlParameter("Group", p.Group)
-    new SqlParameter("Postedat", p.Postedat.Ticks)
-    new SqlParameter("Keywords", p.Keywords)
-    new SqlParameter("MediaType", p.MediaType)
-    new SqlParameter("UrlOriginal", p.UrlOriginal)
-    new SqlParameter("OID", p.OID)
-    new SqlParameter("PostType", p.PostType)
-    new SqlParameter("AudioUrl", p.AudioUrl) |]
+let pMOMENT__sps (p:pMOMENT) =
+    [|
+        ("Agent", p.Agent) |> kvp__sqlparam
+        ("Bind", p.Bind) |> kvp__sqlparam
+        ("BindType", p.BindType) |> kvp__sqlparam
+        ("BizCode", p.BizCode) |> kvp__sqlparam
+        ("Lang", p.Lang) |> kvp__sqlparam
+        ("Title", p.Title) |> kvp__sqlparam
+        ("Summary", p.Summary) |> kvp__sqlparam
+        ("FullText", p.FullText) |> kvp__sqlparam
+        ("PreviewImgUrl", p.PreviewImgUrl) |> kvp__sqlparam
+        ("Link", p.Link) |> kvp__sqlparam
+        ("Type", p.Type) |> kvp__sqlparam
+        ("Question", p.Question) |> kvp__sqlparam
+        ("State", p.State) |> kvp__sqlparam
+        ("Group", p.Group) |> kvp__sqlparam
+        ("Postedat", p.Postedat.Ticks) |> kvp__sqlparam
+        ("Keywords", p.Keywords) |> kvp__sqlparam
+        ("MediaType", p.MediaType) |> kvp__sqlparam
+        ("UrlOriginal", p.UrlOriginal) |> kvp__sqlparam
+        ("OID", p.OID) |> kvp__sqlparam
+        ("PostType", p.PostType) |> kvp__sqlparam
+        ("AudioUrl", p.AudioUrl) |> kvp__sqlparam |]
 
 let db__MOMENT = db__Rcd db__pMOMENT
 
@@ -8712,10 +8733,11 @@ let db__pLOG(line:Object[]): pLOG =
 
     p
 
-let pLOG__sps (p:pLOG) = [|
-    new SqlParameter("Location", p.Location)
-    new SqlParameter("Content", p.Content)
-    new SqlParameter("Sql", p.Sql) |]
+let pLOG__sps (p:pLOG) =
+    [|
+        ("Location", p.Location) |> kvp__sqlparam
+        ("Content", p.Content) |> kvp__sqlparam
+        ("Sql", p.Sql) |> kvp__sqlparam |]
 
 let db__LOG = db__Rcd db__pLOG
 
@@ -8808,16 +8830,17 @@ let db__pARBITRAGE(line:Object[]): pARBITRAGE =
 
     p
 
-let pARBITRAGE__sps (p:pARBITRAGE) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Code", p.Code)
-    new SqlParameter("Desc", p.Desc)
-    new SqlParameter("Ins", p.Ins)
-    new SqlParameter("Stake", p.Stake)
-    new SqlParameter("Entry", p.Entry)
-    new SqlParameter("Exit", p.Exit)
-    new SqlParameter("Fund", p.Fund)
-    new SqlParameter("EndUser", p.EndUser) |]
+let pARBITRAGE__sps (p:pARBITRAGE) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Code", p.Code) |> kvp__sqlparam
+        ("Desc", p.Desc) |> kvp__sqlparam
+        ("Ins", p.Ins) |> kvp__sqlparam
+        ("Stake", p.Stake) |> kvp__sqlparam
+        ("Entry", p.Entry) |> kvp__sqlparam
+        ("Exit", p.Exit) |> kvp__sqlparam
+        ("Fund", p.Fund) |> kvp__sqlparam
+        ("EndUser", p.EndUser) |> kvp__sqlparam |]
 
 let db__ARBITRAGE = db__Rcd db__pARBITRAGE
 
@@ -8917,11 +8940,12 @@ let db__pFUND(line:Object[]): pFUND =
 
     p
 
-let pFUND__sps (p:pFUND) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Desc", p.Desc)
-    new SqlParameter("Bind", p.Bind)
-    new SqlParameter("BindType", p.BindType) |]
+let pFUND__sps (p:pFUND) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Desc", p.Desc) |> kvp__sqlparam
+        ("Bind", p.Bind) |> kvp__sqlparam
+        ("BindType", p.BindType) |> kvp__sqlparam |]
 
 let db__FUND = db__Rcd db__pFUND
 
@@ -9012,12 +9036,13 @@ let db__pPORTFOLIO(line:Object[]): pPORTFOLIO =
 
     p
 
-let pPORTFOLIO__sps (p:pPORTFOLIO) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Desc", p.Desc)
-    new SqlParameter("Fund", p.Fund)
-    new SqlParameter("Bind", p.Bind)
-    new SqlParameter("BindType", p.BindType) |]
+let pPORTFOLIO__sps (p:pPORTFOLIO) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Desc", p.Desc) |> kvp__sqlparam
+        ("Fund", p.Fund) |> kvp__sqlparam
+        ("Bind", p.Bind) |> kvp__sqlparam
+        ("BindType", p.BindType) |> kvp__sqlparam |]
 
 let db__PORTFOLIO = db__Rcd db__pPORTFOLIO
 
@@ -9110,12 +9135,13 @@ let db__pTRADER(line:Object[]): pTRADER =
 
     p
 
-let pTRADER__sps (p:pTRADER) = [|
-    new SqlParameter("Caption", p.Caption)
-    new SqlParameter("Desc", p.Desc)
-    new SqlParameter("Fund", p.Fund)
-    new SqlParameter("Portfolio", p.Portfolio)
-    new SqlParameter("EndUser", p.EndUser) |]
+let pTRADER__sps (p:pTRADER) =
+    [|
+        ("Caption", p.Caption) |> kvp__sqlparam
+        ("Desc", p.Desc) |> kvp__sqlparam
+        ("Fund", p.Fund) |> kvp__sqlparam
+        ("Portfolio", p.Portfolio) |> kvp__sqlparam
+        ("EndUser", p.EndUser) |> kvp__sqlparam |]
 
 let db__TRADER = db__Rcd db__pTRADER
 
