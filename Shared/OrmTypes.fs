@@ -20,7 +20,7 @@ open Util.Orm
 open PreOrm
 
 
-rdbms <- Rdbms.PostgreSql
+rdbms <- Rdbms.SqlServer
 
 
 // [Ca_Address] (ADDRESS)
@@ -780,7 +780,7 @@ let pEU_fields = [|
     Link("Background", 256)
     FK("BasicAcct")
     FK("Citizen")
-    Caption("Refer", 7)
+    Caption("Refer", 9)
     FK("Referer")
     Text("Url")
     Text("About") |]

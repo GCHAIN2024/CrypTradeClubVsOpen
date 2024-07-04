@@ -1873,7 +1873,7 @@ let json__pEUo (json:Json):pEU option =
     
     p.Citizen <- checkfield fields "Citizen" |> parse_int64
     
-    p.Refer <- checkfieldz fields "Refer" 7
+    p.Refer <- checkfieldz fields "Refer" 9
     
     p.Referer <- checkfield fields "Referer" |> parse_int64
     
@@ -1940,7 +1940,7 @@ let json__EUo (json:Json):EU option =
         
         p.Citizen <- checkfield fields "Citizen" |> parse_int64
         
-        p.Refer <- checkfieldz fields "Refer" 7
+        p.Refer <- checkfieldz fields "Refer" 9
         
         p.Referer <- checkfield fields "Referer" |> parse_int64
         

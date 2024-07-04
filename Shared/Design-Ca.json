@@ -532,7 +532,7 @@
       },
       {
         "enum": "Caption",
-        "length": 7,
+        "length": 9,
         "name": "Refer"
       },
       {
