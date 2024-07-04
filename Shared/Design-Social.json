@@ -198,7 +198,7 @@
       },
       {
         "enum": "Text",
-        "name": "Desc"
+        "name": "DescTxt"
       },
       {
         "enum": "SelectLines",

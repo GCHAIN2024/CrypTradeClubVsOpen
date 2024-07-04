@@ -375,7 +375,7 @@
       },
       {
         "enum": "Text",
-        "name": "Desc"
+        "name": "DescTxt"
       },
       {
         "enum": "Link",

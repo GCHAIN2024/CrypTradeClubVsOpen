@@ -518,9 +518,9 @@ let pBIZ__bin (bb:BytesBuilder) (p:pBIZ) =
     
     p.BasicAcct |> BitConverter.GetBytes |> bb.append
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
     
     let binWebsite = p.Website |> Encoding.UTF8.GetBytes
     binWebsite.Length |> BitConverter.GetBytes |> bb.append
@@ -605,10 +605,10 @@ let bin__pBIZ (bi:BinIndexed):pBIZ =
     p.BasicAcct <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     let count_Website = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
@@ -715,7 +715,7 @@ let pBIZ__json (p:pBIZ) =
         ("Caption",p.Caption |> Json.Str)
         ("Parent",p.Parent.ToString() |> Json.Num)
         ("BasicAcct",p.BasicAcct.ToString() |> Json.Num)
-        ("Desc",p.Desc |> Json.Str)
+        ("DescTxt",p.DescTxt |> Json.Str)
         ("Website",p.Website |> Json.Str)
         ("Icon",p.Icon |> Json.Str)
         ("City",p.City.ToString() |> Json.Num)
@@ -771,7 +771,7 @@ let json__pBIZo (json:Json):pBIZ option =
     
     p.BasicAcct <- checkfield fields "BasicAcct" |> parse_int64
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p.Website <- checkfieldz fields "Website" 256
     
@@ -846,7 +846,7 @@ let json__BIZo (json:Json):BIZ option =
         
         p.BasicAcct <- checkfield fields "BasicAcct" |> parse_int64
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         p.Website <- checkfieldz fields "Website" 256
         
@@ -4530,9 +4530,9 @@ let pSBL__bin (bb:BytesBuilder) (p:pSBL) =
     binBackground.Length |> BitConverter.GetBytes |> bb.append
     binBackground |> bb.append
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
     
     p.Privacy |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
@@ -4571,10 +4571,10 @@ let bin__pSBL (bi:BinIndexed):pSBL =
     p.Background <- Encoding.UTF8.GetString(bin,index.Value,count_Background)
     index.Value <- index.Value + count_Background
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     p.Privacy <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
@@ -4614,7 +4614,7 @@ let pSBL__json (p:pSBL) =
         ("Caption",p.Caption |> Json.Str)
         ("Icon",p.Icon |> Json.Str)
         ("Background",p.Background |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
+        ("DescTxt",p.DescTxt |> Json.Str)
         ("Privacy",(p.Privacy |> EnumToValue).ToString() |> Json.Num)
         ("Moment",p.Moment.ToString() |> Json.Num)
         ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num) |]
@@ -4651,7 +4651,7 @@ let json__pSBLo (json:Json):pSBL option =
     
     p.Background <- checkfieldz fields "Background" 256
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p.Privacy <- checkfield fields "Privacy" |> parse_int32 |> EnumOfValue
     
@@ -4688,7 +4688,7 @@ let json__SBLo (json:Json):SBL option =
         
         p.Background <- checkfieldz fields "Background" 256
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         p.Privacy <- checkfield fields "Privacy" |> parse_int32 |> EnumOfValue
         
@@ -6234,7 +6234,7 @@ let db__pBIZ(line:Object[]): pBIZ =
     p.Caption <- string(line.[5]).TrimEnd()
     p.Parent <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
     p.BasicAcct <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
-    p.Desc <- string(line.[8]).TrimEnd()
+    p.DescTxt <- string(line.[8]).TrimEnd()
     p.Website <- string(line.[9]).TrimEnd()
     p.Icon <- string(line.[10]).TrimEnd()
     p.City <- if Convert.IsDBNull(line.[11]) then 0L else line.[11] :?> int64
@@ -6266,7 +6266,7 @@ let pBIZ__sps (p:pBIZ) =
         ("Caption", p.Caption) |> kvp__sqlparam
         ("Parent", p.Parent) |> kvp__sqlparam
         ("BasicAcct", p.BasicAcct) |> kvp__sqlparam
-        ("Desc", p.Desc) |> kvp__sqlparam
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam
         ("Website", p.Website) |> kvp__sqlparam
         ("Icon", p.Icon) |> kvp__sqlparam
         ("City", p.City) |> kvp__sqlparam
@@ -6301,7 +6301,7 @@ let pBIZ_clone (p:pBIZ): pBIZ = {
     Caption = p.Caption
     Parent = p.Parent
     BasicAcct = p.BasicAcct
-    Desc = p.Desc
+    DescTxt = p.DescTxt
     Website = p.Website
     Icon = p.Icon
     City = p.City
@@ -6387,7 +6387,7 @@ let BIZTxSqlServer =
     ,[Caption]
     ,[Parent]
     ,[BasicAcct]
-    ,[Desc]
+    ,[DescTxt]
     ,[Website]
     ,[Icon]
     ,[City]
@@ -8366,7 +8366,7 @@ let db__pSBL(line:Object[]): pSBL =
     p.Caption <- string(line.[5]).TrimEnd()
     p.Icon <- string(line.[6]).TrimEnd()
     p.Background <- string(line.[7]).TrimEnd()
-    p.Desc <- string(line.[8]).TrimEnd()
+    p.DescTxt <- string(line.[8]).TrimEnd()
     p.Privacy <- EnumOfValue(if Convert.IsDBNull(line.[9]) then 0 else line.[9] :?> int)
     p.Moment <- if Convert.IsDBNull(line.[10]) then 0L else line.[10] :?> int64
     p.Type <- EnumOfValue(if Convert.IsDBNull(line.[11]) then 0 else line.[11] :?> int)
@@ -8379,7 +8379,7 @@ let pSBL__sps (p:pSBL) =
         ("Caption", p.Caption) |> kvp__sqlparam
         ("Icon", p.Icon) |> kvp__sqlparam
         ("Background", p.Background) |> kvp__sqlparam
-        ("Desc", p.Desc) |> kvp__sqlparam
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam
         ("Privacy", p.Privacy) |> kvp__sqlparam
         ("Moment", p.Moment) |> kvp__sqlparam
         ("Type", p.Type) |> kvp__sqlparam |]
@@ -8395,7 +8395,7 @@ let pSBL_clone (p:pSBL): pSBL = {
     Caption = p.Caption
     Icon = p.Icon
     Background = p.Background
-    Desc = p.Desc
+    DescTxt = p.DescTxt
     Privacy = p.Privacy
     Moment = p.Moment
     Type = p.Type }
@@ -8462,7 +8462,7 @@ let SBLTxSqlServer =
     ,[Caption]
     ,[Icon]
     ,[Background]
-    ,[Desc]
+    ,[DescTxt]
     ,[Privacy]
     ,[Moment]
     ,[Type])

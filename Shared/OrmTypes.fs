@@ -20,7 +20,7 @@ open Util.Orm
 open PreOrm
 
 
-rdbms <- Rdbms.SqlServer
+rdbms <- Rdbms.PostgreSql
 
 
 // [Ca_Address] (ADDRESS)
@@ -190,7 +190,7 @@ mutable Code: Chars
 mutable Caption: Caption
 mutable Parent: FK
 mutable BasicAcct: FK
-mutable Desc: Text
+mutable DescTxt: Text
 mutable Website: Link
 mutable Icon: Link
 mutable City: FK
@@ -217,14 +217,14 @@ mutable ConfiguredCats: Text}
 
 type BIZ = Rcd<pBIZ>
 
-let BIZ_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Code],[Caption],[Parent],[BasicAcct],[Desc],[Website],[Icon],[City],[Country],[Lang],[IsSocial],[IsCmsSource],[IsPay],[MomentLatest],[CountFollowers],[CountFollows],[CountMoments],[CountViews],[CountComments],[CountThumbUps],[CountThumbDns],[IsCrawling],[IsGSeries],[RemarksCentral],[Agent],[SiteCats],[ConfiguredCats]"
+let BIZ_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Code],[Caption],[Parent],[BasicAcct],[DescTxt],[Website],[Icon],[City],[Country],[Lang],[IsSocial],[IsCmsSource],[IsPay],[MomentLatest],[CountFollowers],[CountFollows],[CountMoments],[CountViews],[CountComments],[CountThumbUps],[CountThumbDns],[IsCrawling],[IsGSeries],[RemarksCentral],[Agent],[SiteCats],[ConfiguredCats]"
 
 let pBIZ_fieldordersArray = [|
     "Code"
     "Caption"
     "Parent"
     "BasicAcct"
-    "Desc"
+    "DescTxt"
     "Website"
     "Icon"
     "City"
@@ -248,14 +248,14 @@ let pBIZ_fieldordersArray = [|
     "SiteCats"
     "ConfiguredCats" |]
 
-let BIZ_sql_update = "[Updatedat]=@Updatedat,[Code]=@Code,[Caption]=@Caption,[Parent]=@Parent,[BasicAcct]=@BasicAcct,[Desc]=@Desc,[Website]=@Website,[Icon]=@Icon,[City]=@City,[Country]=@Country,[Lang]=@Lang,[IsSocial]=@IsSocial,[IsCmsSource]=@IsCmsSource,[IsPay]=@IsPay,[MomentLatest]=@MomentLatest,[CountFollowers]=@CountFollowers,[CountFollows]=@CountFollows,[CountMoments]=@CountMoments,[CountViews]=@CountViews,[CountComments]=@CountComments,[CountThumbUps]=@CountThumbUps,[CountThumbDns]=@CountThumbDns,[IsCrawling]=@IsCrawling,[IsGSeries]=@IsGSeries,[RemarksCentral]=@RemarksCentral,[Agent]=@Agent,[SiteCats]=@SiteCats,[ConfiguredCats]=@ConfiguredCats"
+let BIZ_sql_update = "[Updatedat]=@Updatedat,[Code]=@Code,[Caption]=@Caption,[Parent]=@Parent,[BasicAcct]=@BasicAcct,[DescTxt]=@DescTxt,[Website]=@Website,[Icon]=@Icon,[City]=@City,[Country]=@Country,[Lang]=@Lang,[IsSocial]=@IsSocial,[IsCmsSource]=@IsCmsSource,[IsPay]=@IsPay,[MomentLatest]=@MomentLatest,[CountFollowers]=@CountFollowers,[CountFollows]=@CountFollows,[CountMoments]=@CountMoments,[CountViews]=@CountViews,[CountComments]=@CountComments,[CountThumbUps]=@CountThumbUps,[CountThumbDns]=@CountThumbDns,[IsCrawling]=@IsCrawling,[IsGSeries]=@IsGSeries,[RemarksCentral]=@RemarksCentral,[Agent]=@Agent,[SiteCats]=@SiteCats,[ConfiguredCats]=@ConfiguredCats"
 
 let pBIZ_fields = [|
     Chars("Code", 256)
     Caption("Caption", 256)
     FK("Parent")
     FK("BasicAcct")
-    Text("Desc")
+    Text("DescTxt")
     Link("Website", 256)
     Link("Icon", 256)
     FK("City")
@@ -284,7 +284,7 @@ let pBIZ_empty(): pBIZ = {
     Caption = ""
     Parent = 0L
     BasicAcct = 0L
-    Desc = ""
+    DescTxt = ""
     Website = ""
     Icon = ""
     City = 0L
@@ -2326,7 +2326,7 @@ mutable EndUser: FK
 mutable Caption: Caption
 mutable Icon: Link
 mutable Background: Link
-mutable Desc: Text
+mutable DescTxt: Text
 mutable Privacy: sblPrivacyEnum
 mutable Moment: FK
 mutable Type: sblTypeEnum}
@@ -2334,26 +2334,26 @@ mutable Type: sblTypeEnum}
 
 type SBL = Rcd<pSBL>
 
-let SBL_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[EndUser],[Caption],[Icon],[Background],[Desc],[Privacy],[Moment],[Type]"
+let SBL_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[EndUser],[Caption],[Icon],[Background],[DescTxt],[Privacy],[Moment],[Type]"
 
 let pSBL_fieldordersArray = [|
     "EndUser"
     "Caption"
     "Icon"
     "Background"
-    "Desc"
+    "DescTxt"
     "Privacy"
     "Moment"
     "Type" |]
 
-let SBL_sql_update = "[Updatedat]=@Updatedat,[EndUser]=@EndUser,[Caption]=@Caption,[Icon]=@Icon,[Background]=@Background,[Desc]=@Desc,[Privacy]=@Privacy,[Moment]=@Moment,[Type]=@Type"
+let SBL_sql_update = "[Updatedat]=@Updatedat,[EndUser]=@EndUser,[Caption]=@Caption,[Icon]=@Icon,[Background]=@Background,[DescTxt]=@DescTxt,[Privacy]=@Privacy,[Moment]=@Moment,[Type]=@Type"
 
 let pSBL_fields = [|
     FK("EndUser")
     Caption("Caption", 256)
     Link("Icon", 256)
     Link("Background", 256)
-    Text("Desc")
+    Text("DescTxt")
     SelectLines("Privacy", [| ("Private","私有");("Public","公开") |])
     FK("Moment")
     SelectLines("Type", [| ("Default","默认");("PlayList","播放列表");("PlayChanel","播放频道") |]) |]
@@ -2363,7 +2363,7 @@ let pSBL_empty(): pSBL = {
     Caption = ""
     Icon = ""
     Background = ""
-    Desc = ""
+    DescTxt = ""
     Privacy = EnumOfValue 0
     Moment = 0L
     Type = EnumOfValue 0 }
