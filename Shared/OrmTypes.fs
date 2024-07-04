@@ -25,40 +25,40 @@ rdbms <- Rdbms.PostgreSql
 
 // [Ca_Address] (ADDRESS)
 
-type addressTypeEnum = 
+type addressAddressTypeEnum = 
 | Default = 0 // 默认
 | Biz = 1 // 机构
 | EndUser = 2 // 用户
 
-let addressTypeEnums = [| addressTypeEnum.Default; addressTypeEnum.Biz; addressTypeEnum.EndUser |]
-let addressTypeEnumstrs = [| "addressTypeEnum"; "addressTypeEnum"; "addressTypeEnum" |]
-let addressTypeNum = 3
+let addressAddressTypeEnums = [| addressAddressTypeEnum.Default; addressAddressTypeEnum.Biz; addressAddressTypeEnum.EndUser |]
+let addressAddressTypeEnumstrs = [| "addressAddressTypeEnum"; "addressAddressTypeEnum"; "addressAddressTypeEnum" |]
+let addressAddressTypeNum = 3
 
-let int__addressTypeEnum v =
+let int__addressAddressTypeEnum v =
     match v with
-    | 0 -> Some addressTypeEnum.Default
-    | 1 -> Some addressTypeEnum.Biz
-    | 2 -> Some addressTypeEnum.EndUser
+    | 0 -> Some addressAddressTypeEnum.Default
+    | 1 -> Some addressAddressTypeEnum.Biz
+    | 2 -> Some addressAddressTypeEnum.EndUser
     | _ -> None
 
-let str__addressTypeEnum s =
+let str__addressAddressTypeEnum s =
     match s with
-    | "Default" -> Some addressTypeEnum.Default
-    | "Biz" -> Some addressTypeEnum.Biz
-    | "EndUser" -> Some addressTypeEnum.EndUser
+    | "Default" -> Some addressAddressTypeEnum.Default
+    | "Biz" -> Some addressAddressTypeEnum.Biz
+    | "EndUser" -> Some addressAddressTypeEnum.EndUser
     | _ -> None
 
-let addressTypeEnum__caption e =
+let addressAddressTypeEnum__caption e =
     match e with
-    | addressTypeEnum.Default -> "默认"
-    | addressTypeEnum.Biz -> "机构"
-    | addressTypeEnum.EndUser -> "用户"
+    | addressAddressTypeEnum.Default -> "默认"
+    | addressAddressTypeEnum.Biz -> "机构"
+    | addressAddressTypeEnum.EndUser -> "用户"
     | _ -> ""
 
 type pADDRESS = {
 mutable Caption: Caption
 mutable Bind: Integer
-mutable Type: addressTypeEnum
+mutable AddressType: addressAddressTypeEnum
 mutable Line1: Chars
 mutable Line2: Chars
 mutable State: Chars
@@ -75,12 +75,12 @@ mutable Remarks: Text}
 
 type ADDRESS = Rcd<pADDRESS>
 
-let ADDRESS_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Bind],[Type],[Line1],[Line2],[State],[County],[Town],[Contact],[Tel],[Email],[Zip],[City],[Country],[Remarks]"
+let ADDRESS_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Bind],[AddressType],[Line1],[Line2],[State],[County],[Town],[Contact],[Tel],[Email],[Zip],[City],[Country],[Remarks]"
 
 let pADDRESS_fieldordersArray = [|
     "Caption"
     "Bind"
-    "Type"
+    "AddressType"
     "Line1"
     "Line2"
     "State"
@@ -94,12 +94,12 @@ let pADDRESS_fieldordersArray = [|
     "Country"
     "Remarks" |]
 
-let ADDRESS_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Bind]=@Bind,[Type]=@Type,[Line1]=@Line1,[Line2]=@Line2,[State]=@State,[County]=@County,[Town]=@Town,[Contact]=@Contact,[Tel]=@Tel,[Email]=@Email,[Zip]=@Zip,[City]=@City,[Country]=@Country,[Remarks]=@Remarks"
+let ADDRESS_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Bind]=@Bind,[AddressType]=@AddressType,[Line1]=@Line1,[Line2]=@Line2,[State]=@State,[County]=@County,[Town]=@Town,[Contact]=@Contact,[Tel]=@Tel,[Email]=@Email,[Zip]=@Zip,[City]=@City,[Country]=@Country,[Remarks]=@Remarks"
 
 let pADDRESS_fields = [|
     Caption("Caption", 256)
     Integer("Bind")
-    SelectLines("Type", [| ("Default","默认");("Biz","机构");("EndUser","用户") |])
+    SelectLines("AddressType", [| ("Default","默认");("Biz","机构");("EndUser","用户") |])
     Chars("Line1", 300)
     Chars("Line2", 300)
     Chars("State", 16)
@@ -116,7 +116,7 @@ let pADDRESS_fields = [|
 let pADDRESS_empty(): pADDRESS = {
     Caption = ""
     Bind = 0L
-    Type = EnumOfValue 0
+    AddressType = EnumOfValue 0
     Line1 = ""
     Line2 = ""
     State = ""
@@ -133,55 +133,6 @@ let pADDRESS_empty(): pADDRESS = {
 let ADDRESS_id = ref 0L
 let ADDRESS_count = ref 0
 let ADDRESS_table = "Ca_Address"
-
-// [Ca_Airport] (AIRPORT)
-
-type pAIRPORT = {
-mutable Code3IATA: Chars
-mutable Code4ICAO: Chars
-mutable Caption: Chars
-mutable CaptionEn: Chars
-mutable Country: FK
-mutable City: FK
-mutable IsMetropolitan: Boolean}
-
-
-type AIRPORT = Rcd<pAIRPORT>
-
-let AIRPORT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Code3IATA],[Code4ICAO],[Caption],[CaptionEn],[Country],[City],[IsMetropolitan]"
-
-let pAIRPORT_fieldordersArray = [|
-    "Code3IATA"
-    "Code4ICAO"
-    "Caption"
-    "CaptionEn"
-    "Country"
-    "City"
-    "IsMetropolitan" |]
-
-let AIRPORT_sql_update = "[Updatedat]=@Updatedat,[Code3IATA]=@Code3IATA,[Code4ICAO]=@Code4ICAO,[Caption]=@Caption,[CaptionEn]=@CaptionEn,[Country]=@Country,[City]=@City,[IsMetropolitan]=@IsMetropolitan"
-
-let pAIRPORT_fields = [|
-    Chars("Code3IATA", 3)
-    Chars("Code4ICAO", 4)
-    Chars("Caption", 64)
-    Chars("CaptionEn", 64)
-    FK("Country")
-    FK("City")
-    Boolean("IsMetropolitan") |]
-
-let pAIRPORT_empty(): pAIRPORT = {
-    Code3IATA = ""
-    Code4ICAO = ""
-    Caption = ""
-    CaptionEn = ""
-    Country = 0L
-    City = 0L
-    IsMetropolitan = true }
-
-let AIRPORT_id = ref 1001L
-let AIRPORT_count = ref 0
-let AIRPORT_table = "Ca_Airport"
 
 // [Ca_Biz] (BIZ)
 
@@ -314,34 +265,34 @@ let BIZ_table = "Ca_Biz"
 
 // [Ca_Cat] (CAT)
 
-type catStateEnum = 
+type catCatStateEnum = 
 | Normal = 0 // 正常
 | Hidden = 1 // 隐藏
 | Obsolete = 2 // 过时
 
-let catStateEnums = [| catStateEnum.Normal; catStateEnum.Hidden; catStateEnum.Obsolete |]
-let catStateEnumstrs = [| "catStateEnum"; "catStateEnum"; "catStateEnum" |]
-let catStateNum = 3
+let catCatStateEnums = [| catCatStateEnum.Normal; catCatStateEnum.Hidden; catCatStateEnum.Obsolete |]
+let catCatStateEnumstrs = [| "catCatStateEnum"; "catCatStateEnum"; "catCatStateEnum" |]
+let catCatStateNum = 3
 
-let int__catStateEnum v =
+let int__catCatStateEnum v =
     match v with
-    | 0 -> Some catStateEnum.Normal
-    | 1 -> Some catStateEnum.Hidden
-    | 2 -> Some catStateEnum.Obsolete
+    | 0 -> Some catCatStateEnum.Normal
+    | 1 -> Some catCatStateEnum.Hidden
+    | 2 -> Some catCatStateEnum.Obsolete
     | _ -> None
 
-let str__catStateEnum s =
+let str__catCatStateEnum s =
     match s with
-    | "Normal" -> Some catStateEnum.Normal
-    | "Hidden" -> Some catStateEnum.Hidden
-    | "Obsolete" -> Some catStateEnum.Obsolete
+    | "Normal" -> Some catCatStateEnum.Normal
+    | "Hidden" -> Some catCatStateEnum.Hidden
+    | "Obsolete" -> Some catCatStateEnum.Obsolete
     | _ -> None
 
-let catStateEnum__caption e =
+let catCatStateEnum__caption e =
     match e with
-    | catStateEnum.Normal -> "正常"
-    | catStateEnum.Hidden -> "隐藏"
-    | catStateEnum.Obsolete -> "过时"
+    | catCatStateEnum.Normal -> "正常"
+    | catCatStateEnum.Hidden -> "隐藏"
+    | catCatStateEnum.Obsolete -> "过时"
     | _ -> ""
 
 type pCAT = {
@@ -349,35 +300,35 @@ mutable Caption: Chars
 mutable Lang: FK
 mutable Zh: FK
 mutable Parent: FK
-mutable State: catStateEnum}
+mutable CatState: catCatStateEnum}
 
 
 type CAT = Rcd<pCAT>
 
-let CAT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Lang],[Zh],[Parent],[State]"
+let CAT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Lang],[Zh],[Parent],[CatState]"
 
 let pCAT_fieldordersArray = [|
     "Caption"
     "Lang"
     "Zh"
     "Parent"
-    "State" |]
+    "CatState" |]
 
-let CAT_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Lang]=@Lang,[Zh]=@Zh,[Parent]=@Parent,[State]=@State"
+let CAT_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Lang]=@Lang,[Zh]=@Zh,[Parent]=@Parent,[CatState]=@CatState"
 
 let pCAT_fields = [|
     Chars("Caption", 64)
     FK("Lang")
     FK("Zh")
     FK("Parent")
-    SelectLines("State", [| ("Normal","正常");("Hidden","隐藏");("Obsolete","过时") |]) |]
+    SelectLines("CatState", [| ("Normal","正常");("Hidden","隐藏");("Obsolete","过时") |]) |]
 
 let pCAT_empty(): pCAT = {
     Caption = ""
     Lang = 0L
     Zh = 0L
     Parent = 0L
-    State = EnumOfValue 0 }
+    CatState = EnumOfValue 0 }
 
 let CAT_id = ref 0L
 let CAT_count = ref 0
@@ -386,7 +337,7 @@ let CAT_table = "Ca_Cat"
 // [Ca_City] (CITY)
 
 type pCITY = {
-mutable Name: Chars
+mutable Fullname: Chars
 mutable MetropolitanCode3IATA: Chars
 mutable NameEn: Chars
 mutable Country: FK
@@ -397,10 +348,10 @@ mutable Tel: Chars}
 
 type CITY = Rcd<pCITY>
 
-let CITY_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Name],[MetropolitanCode3IATA],[NameEn],[Country],[Place],[Icon],[Tel]"
+let CITY_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Fullname],[MetropolitanCode3IATA],[NameEn],[Country],[Place],[Icon],[Tel]"
 
 let pCITY_fieldordersArray = [|
-    "Name"
+    "Fullname"
     "MetropolitanCode3IATA"
     "NameEn"
     "Country"
@@ -408,10 +359,10 @@ let pCITY_fieldordersArray = [|
     "Icon"
     "Tel" |]
 
-let CITY_sql_update = "[Updatedat]=@Updatedat,[Name]=@Name,[MetropolitanCode3IATA]=@MetropolitanCode3IATA,[NameEn]=@NameEn,[Country]=@Country,[Place]=@Place,[Icon]=@Icon,[Tel]=@Tel"
+let CITY_sql_update = "[Updatedat]=@Updatedat,[Fullname]=@Fullname,[MetropolitanCode3IATA]=@MetropolitanCode3IATA,[NameEn]=@NameEn,[Country]=@Country,[Place]=@Place,[Icon]=@Icon,[Tel]=@Tel"
 
 let pCITY_fields = [|
-    Chars("Name", 64)
+    Chars("Fullname", 64)
     Chars("MetropolitanCode3IATA", 3)
     Chars("NameEn", 64)
     FK("Country")
@@ -420,7 +371,7 @@ let pCITY_fields = [|
     Chars("Tel", 4) |]
 
 let pCITY_empty(): pCITY = {
-    Name = ""
+    Fullname = ""
     MetropolitanCode3IATA = ""
     NameEn = ""
     Country = 0L
@@ -520,7 +471,7 @@ let curCurTypeEnum__caption e =
 type pCUR = {
 mutable Code: Chars
 mutable Caption: Caption
-mutable Hidden: Boolean
+mutable IsHidden: Boolean
 mutable IsSac: Boolean
 mutable IsTransfer: Boolean
 mutable IsCash: Boolean
@@ -528,7 +479,7 @@ mutable EnableReward: Boolean
 mutable EnableOTC: Boolean
 mutable Icon: Link
 mutable CurType: curCurTypeEnum
-mutable Dec: Integer
+mutable FloatDec: Integer
 mutable AnchorRate: Float
 mutable Freezable: Boolean
 mutable Authorizable: Boolean
@@ -541,12 +492,12 @@ mutable BaseRate: Float}
 
 type CUR = Rcd<pCUR>
 
-let CUR_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Code],[Caption],[Hidden],[IsSac],[IsTransfer],[IsCash],[EnableReward],[EnableOTC],[Icon],[CurType],[Dec],[AnchorRate],[Freezable],[Authorizable],[ChaninID],[ChaninName],[ContractAddress],[WalletAddress],[BaseRate]"
+let CUR_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Code],[Caption],[IsHidden],[IsSac],[IsTransfer],[IsCash],[EnableReward],[EnableOTC],[Icon],[CurType],[FloatDec],[AnchorRate],[Freezable],[Authorizable],[ChaninID],[ChaninName],[ContractAddress],[WalletAddress],[BaseRate]"
 
 let pCUR_fieldordersArray = [|
     "Code"
     "Caption"
-    "Hidden"
+    "IsHidden"
     "IsSac"
     "IsTransfer"
     "IsCash"
@@ -554,7 +505,7 @@ let pCUR_fieldordersArray = [|
     "EnableOTC"
     "Icon"
     "CurType"
-    "Dec"
+    "FloatDec"
     "AnchorRate"
     "Freezable"
     "Authorizable"
@@ -564,12 +515,12 @@ let pCUR_fieldordersArray = [|
     "WalletAddress"
     "BaseRate" |]
 
-let CUR_sql_update = "[Updatedat]=@Updatedat,[Code]=@Code,[Caption]=@Caption,[Hidden]=@Hidden,[IsSac]=@IsSac,[IsTransfer]=@IsTransfer,[IsCash]=@IsCash,[EnableReward]=@EnableReward,[EnableOTC]=@EnableOTC,[Icon]=@Icon,[CurType]=@CurType,[Dec]=@Dec,[AnchorRate]=@AnchorRate,[Freezable]=@Freezable,[Authorizable]=@Authorizable,[ChaninID]=@ChaninID,[ChaninName]=@ChaninName,[ContractAddress]=@ContractAddress,[WalletAddress]=@WalletAddress,[BaseRate]=@BaseRate"
+let CUR_sql_update = "[Updatedat]=@Updatedat,[Code]=@Code,[Caption]=@Caption,[IsHidden]=@IsHidden,[IsSac]=@IsSac,[IsTransfer]=@IsTransfer,[IsCash]=@IsCash,[EnableReward]=@EnableReward,[EnableOTC]=@EnableOTC,[Icon]=@Icon,[CurType]=@CurType,[FloatDec]=@FloatDec,[AnchorRate]=@AnchorRate,[Freezable]=@Freezable,[Authorizable]=@Authorizable,[ChaninID]=@ChaninID,[ChaninName]=@ChaninName,[ContractAddress]=@ContractAddress,[WalletAddress]=@WalletAddress,[BaseRate]=@BaseRate"
 
 let pCUR_fields = [|
     Chars("Code", 16)
     Caption("Caption", 64)
-    Boolean("Hidden")
+    Boolean("IsHidden")
     Boolean("IsSac")
     Boolean("IsTransfer")
     Boolean("IsCash")
@@ -577,7 +528,7 @@ let pCUR_fields = [|
     Boolean("EnableOTC")
     Link("Icon", 512)
     SelectLines("CurType", [| ("Fiat","法币");("Crypto","数字币") |])
-    Integer("Dec")
+    Integer("FloatDec")
     Float("AnchorRate")
     Boolean("Freezable")
     Boolean("Authorizable")
@@ -590,7 +541,7 @@ let pCUR_fields = [|
 let pCUR_empty(): pCUR = {
     Code = ""
     Caption = ""
-    Hidden = true
+    IsHidden = true
     IsSac = true
     IsTransfer = true
     IsCash = true
@@ -598,7 +549,7 @@ let pCUR_empty(): pCUR = {
     EnableOTC = true
     Icon = ""
     CurType = EnumOfValue 0
-    Dec = 0L
+    FloatDec = 0L
     AnchorRate = 0.0
     Freezable = true
     Authorizable = true
@@ -1412,7 +1363,7 @@ let CWC_table = "Ca_WebCredential"
 // [Market_Instrument] (INS)
 
 type pINS = {
-mutable Desc: Text
+mutable DescTxt: Text
 mutable Code: Chars
 mutable Caption: Chars
 mutable Long: FK
@@ -1423,10 +1374,10 @@ mutable ShortCode: Chars}
 
 type INS = Rcd<pINS>
 
-let INS_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Desc],[Code],[Caption],[Long],[LongCode],[Short],[ShortCode]"
+let INS_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[DescTxt],[Code],[Caption],[Long],[LongCode],[Short],[ShortCode]"
 
 let pINS_fieldordersArray = [|
-    "Desc"
+    "DescTxt"
     "Code"
     "Caption"
     "Long"
@@ -1434,10 +1385,10 @@ let pINS_fieldordersArray = [|
     "Short"
     "ShortCode" |]
 
-let INS_sql_update = "[Updatedat]=@Updatedat,[Desc]=@Desc,[Code]=@Code,[Caption]=@Caption,[Long]=@Long,[LongCode]=@LongCode,[Short]=@Short,[ShortCode]=@ShortCode"
+let INS_sql_update = "[Updatedat]=@Updatedat,[DescTxt]=@DescTxt,[Code]=@Code,[Caption]=@Caption,[Long]=@Long,[LongCode]=@LongCode,[Short]=@Short,[ShortCode]=@ShortCode"
 
 let pINS_fields = [|
-    Text("Desc")
+    Text("DescTxt")
     Chars("Code", 64)
     Chars("Caption", 64)
     FK("Long")
@@ -1446,7 +1397,7 @@ let pINS_fields = [|
     Chars("ShortCode", 16) |]
 
 let pINS_empty(): pINS = {
-    Desc = ""
+    DescTxt = ""
     Code = ""
     Caption = ""
     Long = 0L
@@ -1797,12 +1748,12 @@ mutable ExternalTicketOpen: FK
 mutable ExternalTicketClose: FK
 mutable ExternalTicketPending: FK
 mutable ExternalTicketCancel: FK
-mutable Desc: Text}
+mutable DescTxt: Text}
 
 
 type TICKET = Rcd<pTICKET>
 
-let TICKET_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[EndUser],[TradeAcct],[Ins],[Code],[Caption],[TradeMode],[Lot],[PriceOpened],[PriceOpen],[PriceSL],[PriceTP],[PriceClose],[Status],[CP],[CptAcct],[Ref],[OpenRef],[CloseRef],[Origin],[PnL],[PnLSpread],[Margin],[RO],[Tax],[CloseType],[CommitType],[Cmt],[Opendat],[Closedat],[CaStrategyAmt],[CaRo],[CaAsa],[CaCmphsvCharge],[RoCheckedat],[Expiry],[HedgetCP],[PendingPrice],[ClosedLot],[ClosedAmt],[PendingAmt],[DrvPreminum],[DrvExpiry],[DrvPeriod],[DrvDirection],[DrvPrice],[DoubleCp],[ClearStatus],[FollowTicket],[Config],[OptionStatus],[NotionalPrincipal],[ExercisedPrincipal],[ExerciseMode],[ExercisePrice],[ExternalTicketOpen],[ExternalTicketClose],[ExternalTicketPending],[ExternalTicketCancel],[Desc]"
+let TICKET_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[EndUser],[TradeAcct],[Ins],[Code],[Caption],[TradeMode],[Lot],[PriceOpened],[PriceOpen],[PriceSL],[PriceTP],[PriceClose],[Status],[CP],[CptAcct],[Ref],[OpenRef],[CloseRef],[Origin],[PnL],[PnLSpread],[Margin],[RO],[Tax],[CloseType],[CommitType],[Cmt],[Opendat],[Closedat],[CaStrategyAmt],[CaRo],[CaAsa],[CaCmphsvCharge],[RoCheckedat],[Expiry],[HedgetCP],[PendingPrice],[ClosedLot],[ClosedAmt],[PendingAmt],[DrvPreminum],[DrvExpiry],[DrvPeriod],[DrvDirection],[DrvPrice],[DoubleCp],[ClearStatus],[FollowTicket],[Config],[OptionStatus],[NotionalPrincipal],[ExercisedPrincipal],[ExerciseMode],[ExercisePrice],[ExternalTicketOpen],[ExternalTicketClose],[ExternalTicketPending],[ExternalTicketCancel],[DescTxt]"
 
 let pTICKET_fieldordersArray = [|
     "EndUser"
@@ -1863,9 +1814,9 @@ let pTICKET_fieldordersArray = [|
     "ExternalTicketClose"
     "ExternalTicketPending"
     "ExternalTicketCancel"
-    "Desc" |]
+    "DescTxt" |]
 
-let TICKET_sql_update = "[Updatedat]=@Updatedat,[EndUser]=@EndUser,[TradeAcct]=@TradeAcct,[Ins]=@Ins,[Code]=@Code,[Caption]=@Caption,[TradeMode]=@TradeMode,[Lot]=@Lot,[PriceOpened]=@PriceOpened,[PriceOpen]=@PriceOpen,[PriceSL]=@PriceSL,[PriceTP]=@PriceTP,[PriceClose]=@PriceClose,[Status]=@Status,[CP]=@CP,[CptAcct]=@CptAcct,[Ref]=@Ref,[OpenRef]=@OpenRef,[CloseRef]=@CloseRef,[Origin]=@Origin,[PnL]=@PnL,[PnLSpread]=@PnLSpread,[Margin]=@Margin,[RO]=@RO,[Tax]=@Tax,[CloseType]=@CloseType,[CommitType]=@CommitType,[Cmt]=@Cmt,[Opendat]=@Opendat,[Closedat]=@Closedat,[CaStrategyAmt]=@CaStrategyAmt,[CaRo]=@CaRo,[CaAsa]=@CaAsa,[CaCmphsvCharge]=@CaCmphsvCharge,[RoCheckedat]=@RoCheckedat,[Expiry]=@Expiry,[HedgetCP]=@HedgetCP,[PendingPrice]=@PendingPrice,[ClosedLot]=@ClosedLot,[ClosedAmt]=@ClosedAmt,[PendingAmt]=@PendingAmt,[DrvPreminum]=@DrvPreminum,[DrvExpiry]=@DrvExpiry,[DrvPeriod]=@DrvPeriod,[DrvDirection]=@DrvDirection,[DrvPrice]=@DrvPrice,[DoubleCp]=@DoubleCp,[ClearStatus]=@ClearStatus,[FollowTicket]=@FollowTicket,[Config]=@Config,[OptionStatus]=@OptionStatus,[NotionalPrincipal]=@NotionalPrincipal,[ExercisedPrincipal]=@ExercisedPrincipal,[ExerciseMode]=@ExerciseMode,[ExercisePrice]=@ExercisePrice,[ExternalTicketOpen]=@ExternalTicketOpen,[ExternalTicketClose]=@ExternalTicketClose,[ExternalTicketPending]=@ExternalTicketPending,[ExternalTicketCancel]=@ExternalTicketCancel,[Desc]=@Desc"
+let TICKET_sql_update = "[Updatedat]=@Updatedat,[EndUser]=@EndUser,[TradeAcct]=@TradeAcct,[Ins]=@Ins,[Code]=@Code,[Caption]=@Caption,[TradeMode]=@TradeMode,[Lot]=@Lot,[PriceOpened]=@PriceOpened,[PriceOpen]=@PriceOpen,[PriceSL]=@PriceSL,[PriceTP]=@PriceTP,[PriceClose]=@PriceClose,[Status]=@Status,[CP]=@CP,[CptAcct]=@CptAcct,[Ref]=@Ref,[OpenRef]=@OpenRef,[CloseRef]=@CloseRef,[Origin]=@Origin,[PnL]=@PnL,[PnLSpread]=@PnLSpread,[Margin]=@Margin,[RO]=@RO,[Tax]=@Tax,[CloseType]=@CloseType,[CommitType]=@CommitType,[Cmt]=@Cmt,[Opendat]=@Opendat,[Closedat]=@Closedat,[CaStrategyAmt]=@CaStrategyAmt,[CaRo]=@CaRo,[CaAsa]=@CaAsa,[CaCmphsvCharge]=@CaCmphsvCharge,[RoCheckedat]=@RoCheckedat,[Expiry]=@Expiry,[HedgetCP]=@HedgetCP,[PendingPrice]=@PendingPrice,[ClosedLot]=@ClosedLot,[ClosedAmt]=@ClosedAmt,[PendingAmt]=@PendingAmt,[DrvPreminum]=@DrvPreminum,[DrvExpiry]=@DrvExpiry,[DrvPeriod]=@DrvPeriod,[DrvDirection]=@DrvDirection,[DrvPrice]=@DrvPrice,[DoubleCp]=@DoubleCp,[ClearStatus]=@ClearStatus,[FollowTicket]=@FollowTicket,[Config]=@Config,[OptionStatus]=@OptionStatus,[NotionalPrincipal]=@NotionalPrincipal,[ExercisedPrincipal]=@ExercisedPrincipal,[ExerciseMode]=@ExerciseMode,[ExercisePrice]=@ExercisePrice,[ExternalTicketOpen]=@ExternalTicketOpen,[ExternalTicketClose]=@ExternalTicketClose,[ExternalTicketPending]=@ExternalTicketPending,[ExternalTicketCancel]=@ExternalTicketCancel,[DescTxt]=@DescTxt"
 
 let pTICKET_fields = [|
     FK("EndUser")
@@ -1926,7 +1877,7 @@ let pTICKET_fields = [|
     FK("ExternalTicketClose")
     FK("ExternalTicketPending")
     FK("ExternalTicketCancel")
-    Text("Desc") |]
+    Text("DescTxt") |]
 
 let pTICKET_empty(): pTICKET = {
     EndUser = 0L
@@ -1987,7 +1938,7 @@ let pTICKET_empty(): pTICKET = {
     ExternalTicketClose = 0L
     ExternalTicketPending = 0L
     ExternalTicketCancel = 0L
-    Desc = "" }
+    DescTxt = "" }
 
 let TICKET_id = ref 75921367L
 let TICKET_count = ref 0
@@ -2103,12 +2054,12 @@ mutable MarginCallRateWarningII: Float
 mutable MarginCallRateLiq: Float
 mutable PwdTrade: Caption
 mutable PwdReadonly: Caption
-mutable Desc: Text}
+mutable DescTxt: Text}
 
 
 type TACCT = Rcd<pTACCT>
 
-let TACCT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[SAC],[State],[TradeType],[RealDemo],[PnL],[Frozen],[Leverage],[Margin],[MarginCallRateWarning],[MarginCallRateWarningII],[MarginCallRateLiq],[PwdTrade],[PwdReadonly],[Desc]"
+let TACCT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[SAC],[State],[TradeType],[RealDemo],[PnL],[Frozen],[Leverage],[Margin],[MarginCallRateWarning],[MarginCallRateWarningII],[MarginCallRateLiq],[PwdTrade],[PwdReadonly],[DescTxt]"
 
 let pTACCT_fieldordersArray = [|
     "SAC"
@@ -2124,9 +2075,9 @@ let pTACCT_fieldordersArray = [|
     "MarginCallRateLiq"
     "PwdTrade"
     "PwdReadonly"
-    "Desc" |]
+    "DescTxt" |]
 
-let TACCT_sql_update = "[Updatedat]=@Updatedat,[SAC]=@SAC,[State]=@State,[TradeType]=@TradeType,[RealDemo]=@RealDemo,[PnL]=@PnL,[Frozen]=@Frozen,[Leverage]=@Leverage,[Margin]=@Margin,[MarginCallRateWarning]=@MarginCallRateWarning,[MarginCallRateWarningII]=@MarginCallRateWarningII,[MarginCallRateLiq]=@MarginCallRateLiq,[PwdTrade]=@PwdTrade,[PwdReadonly]=@PwdReadonly,[Desc]=@Desc"
+let TACCT_sql_update = "[Updatedat]=@Updatedat,[SAC]=@SAC,[State]=@State,[TradeType]=@TradeType,[RealDemo]=@RealDemo,[PnL]=@PnL,[Frozen]=@Frozen,[Leverage]=@Leverage,[Margin]=@Margin,[MarginCallRateWarning]=@MarginCallRateWarning,[MarginCallRateWarningII]=@MarginCallRateWarningII,[MarginCallRateLiq]=@MarginCallRateLiq,[PwdTrade]=@PwdTrade,[PwdReadonly]=@PwdReadonly,[DescTxt]=@DescTxt"
 
 let pTACCT_fields = [|
     FK("SAC")
@@ -2142,7 +2093,7 @@ let pTACCT_fields = [|
     Float("MarginCallRateLiq")
     Caption("PwdTrade", 64)
     Caption("PwdReadonly", 64)
-    Text("Desc") |]
+    Text("DescTxt") |]
 
 let pTACCT_empty(): pTACCT = {
     SAC = 0L
@@ -2158,7 +2109,7 @@ let pTACCT_empty(): pTACCT = {
     MarginCallRateLiq = 0.0
     PwdTrade = ""
     PwdReadonly = ""
-    Desc = "" }
+    DescTxt = "" }
 
 let TACCT_id = ref 96721375L
 let TACCT_count = ref 0
@@ -2216,13 +2167,13 @@ mutable BindType: bookmarkBindTypeEnum
 mutable BookmarkList: FK
 mutable Notes: Text
 mutable Path: Text
-mutable Group: Caption
+mutable UserGroup: Caption
 mutable Type: Integer}
 
 
 type BOOKMARK = Rcd<pBOOKMARK>
 
-let BOOKMARK_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[EndUser],[Bind],[BindType],[BookmarkList],[Notes],[Path],[Group],[Type]"
+let BOOKMARK_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[EndUser],[Bind],[BindType],[BookmarkList],[Notes],[Path],[UserGroup],[Type]"
 
 let pBOOKMARK_fieldordersArray = [|
     "Agent"
@@ -2232,10 +2183,10 @@ let pBOOKMARK_fieldordersArray = [|
     "BookmarkList"
     "Notes"
     "Path"
-    "Group"
+    "UserGroup"
     "Type" |]
 
-let BOOKMARK_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[EndUser]=@EndUser,[Bind]=@Bind,[BindType]=@BindType,[BookmarkList]=@BookmarkList,[Notes]=@Notes,[Path]=@Path,[Group]=@Group,[Type]=@Type"
+let BOOKMARK_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[EndUser]=@EndUser,[Bind]=@Bind,[BindType]=@BindType,[BookmarkList]=@BookmarkList,[Notes]=@Notes,[Path]=@Path,[UserGroup]=@UserGroup,[Type]=@Type"
 
 let pBOOKMARK_fields = [|
     FK("Agent")
@@ -2245,7 +2196,7 @@ let pBOOKMARK_fields = [|
     FK("BookmarkList")
     Text("Notes")
     Text("Path")
-    Caption("Group", 64)
+    Caption("UserGroup", 64)
     Integer("Type") |]
 
 let pBOOKMARK_empty(): pBOOKMARK = {
@@ -2256,7 +2207,7 @@ let pBOOKMARK_empty(): pBOOKMARK = {
     BookmarkList = 0L
     Notes = ""
     Path = ""
-    Group = ""
+    UserGroup = ""
     Type = 0L }
 
 let BOOKMARK_id = ref 0L
@@ -2637,7 +2588,7 @@ mutable Link: Text
 mutable Type: momentTypeEnum
 mutable Question: FK
 mutable State: momentStateEnum
-mutable Group: FK
+mutable UserGroup: FK
 mutable Postedat: Timestamp
 mutable Keywords: Text
 mutable MediaType: momentMediaTypeEnum
@@ -2649,7 +2600,7 @@ mutable AudioUrl: Text}
 
 type MOMENT = Rcd<pMOMENT>
 
-let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[BizCode],[Lang],[Title],[Summary],[FullText],[PreviewImgUrl],[Link],[Type],[Question],[State],[Group],[Postedat],[Keywords],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
+let MOMENT_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Agent],[Bind],[BindType],[BizCode],[Lang],[Title],[Summary],[FullText],[PreviewImgUrl],[Link],[Type],[Question],[State],[UserGroup],[Postedat],[Keywords],[MediaType],[UrlOriginal],[OID],[PostType],[AudioUrl]"
 
 let pMOMENT_fieldordersArray = [|
     "Agent"
@@ -2665,7 +2616,7 @@ let pMOMENT_fieldordersArray = [|
     "Type"
     "Question"
     "State"
-    "Group"
+    "UserGroup"
     "Postedat"
     "Keywords"
     "MediaType"
@@ -2674,7 +2625,7 @@ let pMOMENT_fieldordersArray = [|
     "PostType"
     "AudioUrl" |]
 
-let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[BizCode]=@BizCode,[Lang]=@Lang,[Title]=@Title,[Summary]=@Summary,[FullText]=@FullText,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[Group]=@Group,[Postedat]=@Postedat,[Keywords]=@Keywords,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
+let MOMENT_sql_update = "[Updatedat]=@Updatedat,[Agent]=@Agent,[Bind]=@Bind,[BindType]=@BindType,[BizCode]=@BizCode,[Lang]=@Lang,[Title]=@Title,[Summary]=@Summary,[FullText]=@FullText,[PreviewImgUrl]=@PreviewImgUrl,[Link]=@Link,[Type]=@Type,[Question]=@Question,[State]=@State,[UserGroup]=@UserGroup,[Postedat]=@Postedat,[Keywords]=@Keywords,[MediaType]=@MediaType,[UrlOriginal]=@UrlOriginal,[OID]=@OID,[PostType]=@PostType,[AudioUrl]=@AudioUrl"
 
 let pMOMENT_fields = [|
     FK("Agent")
@@ -2690,7 +2641,7 @@ let pMOMENT_fields = [|
     SelectLines("Type", [| ("Original","原创图文视频");("Repost","转发");("Thread","文章");("Forum","论坛");("Question","问题");("Answer","回答");("BookmarkList","收藏夹");("Poll","投票");("Miles","文贵直播文字版");("Dict","辞典");("WebPage","页面");("MediaFile","媒体文件") |])
     FK("Question")
     SelectLines("State", [| ("Normal","正常");("Deleted","标记删除");("Scratch","草稿");("Submitted","已投稿") |])
-    FK("Group")
+    FK("UserGroup")
     Timestamp("Postedat")
     Text("Keywords")
     SelectLines("MediaType", [| ("None","无");("Video","视频");("Audio","音频") |])
@@ -2713,7 +2664,7 @@ let pMOMENT_empty(): pMOMENT = {
     Type = EnumOfValue 0
     Question = 0L
     State = EnumOfValue 0
-    Group = 0L
+    UserGroup = 0L
     Postedat = DateTime.MinValue
     Keywords = ""
     MediaType = EnumOfValue 0
@@ -2764,7 +2715,7 @@ let LOG_table = "Sys_Log"
 type pARBITRAGE = {
 mutable Caption: Chars
 mutable Code: Chars
-mutable Desc: Text
+mutable DescTxt: Text
 mutable Ins: FK
 mutable Stake: Float
 mutable Entry: Float
@@ -2775,12 +2726,12 @@ mutable EndUser: FK}
 
 type ARBITRAGE = Rcd<pARBITRAGE>
 
-let ARBITRAGE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Code],[Desc],[Ins],[Stake],[Entry],[Exit],[Fund],[EndUser]"
+let ARBITRAGE_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Code],[DescTxt],[Ins],[Stake],[Entry],[Exit],[Fund],[EndUser]"
 
 let pARBITRAGE_fieldordersArray = [|
     "Caption"
     "Code"
-    "Desc"
+    "DescTxt"
     "Ins"
     "Stake"
     "Entry"
@@ -2788,12 +2739,12 @@ let pARBITRAGE_fieldordersArray = [|
     "Fund"
     "EndUser" |]
 
-let ARBITRAGE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Code]=@Code,[Desc]=@Desc,[Ins]=@Ins,[Stake]=@Stake,[Entry]=@Entry,[Exit]=@Exit,[Fund]=@Fund,[EndUser]=@EndUser"
+let ARBITRAGE_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Code]=@Code,[DescTxt]=@DescTxt,[Ins]=@Ins,[Stake]=@Stake,[Entry]=@Entry,[Exit]=@Exit,[Fund]=@Fund,[EndUser]=@EndUser"
 
 let pARBITRAGE_fields = [|
     Chars("Caption", 64)
     Chars("Code", 64)
-    Text("Desc")
+    Text("DescTxt")
     FK("Ins")
     Float("Stake")
     Float("Entry")
@@ -2804,7 +2755,7 @@ let pARBITRAGE_fields = [|
 let pARBITRAGE_empty(): pARBITRAGE = {
     Caption = ""
     Code = ""
-    Desc = ""
+    DescTxt = ""
     Ins = 0L
     Stake = 0.0
     Entry = 0.0
@@ -2846,32 +2797,32 @@ let fundBindTypeEnum__caption e =
 
 type pFUND = {
 mutable Caption: Chars
-mutable Desc: Text
+mutable DescTxt: Text
 mutable Bind: Integer
 mutable BindType: fundBindTypeEnum}
 
 
 type FUND = Rcd<pFUND>
 
-let FUND_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Bind],[BindType]"
+let FUND_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[DescTxt],[Bind],[BindType]"
 
 let pFUND_fieldordersArray = [|
     "Caption"
-    "Desc"
+    "DescTxt"
     "Bind"
     "BindType" |]
 
-let FUND_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Bind]=@Bind,[BindType]=@BindType"
+let FUND_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[DescTxt]=@DescTxt,[Bind]=@Bind,[BindType]=@BindType"
 
 let pFUND_fields = [|
     Chars("Caption", 64)
-    Text("Desc")
+    Text("DescTxt")
     Integer("Bind")
     SelectLines("BindType", [| ("EndUser","用户");("Biz","机构") |]) |]
 
 let pFUND_empty(): pFUND = {
     Caption = ""
-    Desc = ""
+    DescTxt = ""
     Bind = 0L
     BindType = EnumOfValue 0 }
 
@@ -2909,7 +2860,7 @@ let portfolioBindTypeEnum__caption e =
 
 type pPORTFOLIO = {
 mutable Caption: Chars
-mutable Desc: Text
+mutable DescTxt: Text
 mutable Fund: FK
 mutable Bind: Integer
 mutable BindType: portfolioBindTypeEnum}
@@ -2917,27 +2868,27 @@ mutable BindType: portfolioBindTypeEnum}
 
 type PORTFOLIO = Rcd<pPORTFOLIO>
 
-let PORTFOLIO_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Fund],[Bind],[BindType]"
+let PORTFOLIO_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[DescTxt],[Fund],[Bind],[BindType]"
 
 let pPORTFOLIO_fieldordersArray = [|
     "Caption"
-    "Desc"
+    "DescTxt"
     "Fund"
     "Bind"
     "BindType" |]
 
-let PORTFOLIO_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Fund]=@Fund,[Bind]=@Bind,[BindType]=@BindType"
+let PORTFOLIO_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[DescTxt]=@DescTxt,[Fund]=@Fund,[Bind]=@Bind,[BindType]=@BindType"
 
 let pPORTFOLIO_fields = [|
     Chars("Caption", 64)
-    Text("Desc")
+    Text("DescTxt")
     FK("Fund")
     Integer("Bind")
     SelectLines("BindType", [| ("EndUser","用户");("Biz","机构") |]) |]
 
 let pPORTFOLIO_empty(): pPORTFOLIO = {
     Caption = ""
-    Desc = ""
+    DescTxt = ""
     Fund = 0L
     Bind = 0L
     BindType = EnumOfValue 0 }
@@ -2950,7 +2901,7 @@ let PORTFOLIO_table = "Trade_Porfolio"
 
 type pTRADER = {
 mutable Caption: Chars
-mutable Desc: Text
+mutable DescTxt: Text
 mutable Fund: FK
 mutable Portfolio: FK
 mutable EndUser: FK}
@@ -2958,27 +2909,27 @@ mutable EndUser: FK}
 
 type TRADER = Rcd<pTRADER>
 
-let TRADER_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[Desc],[Fund],[Portfolio],[EndUser]"
+let TRADER_fieldorders = "[ID],[Createdat],[Updatedat],[Sort],[Caption],[DescTxt],[Fund],[Portfolio],[EndUser]"
 
 let pTRADER_fieldordersArray = [|
     "Caption"
-    "Desc"
+    "DescTxt"
     "Fund"
     "Portfolio"
     "EndUser" |]
 
-let TRADER_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[Desc]=@Desc,[Fund]=@Fund,[Portfolio]=@Portfolio,[EndUser]=@EndUser"
+let TRADER_sql_update = "[Updatedat]=@Updatedat,[Caption]=@Caption,[DescTxt]=@DescTxt,[Fund]=@Fund,[Portfolio]=@Portfolio,[EndUser]=@EndUser"
 
 let pTRADER_fields = [|
     Chars("Caption", 64)
-    Text("Desc")
+    Text("DescTxt")
     FK("Fund")
     FK("Portfolio")
     FK("EndUser") |]
 
 let pTRADER_empty(): pTRADER = {
     Caption = ""
-    Desc = ""
+    DescTxt = ""
     Fund = 0L
     Portfolio = 0L
     EndUser = 0L }

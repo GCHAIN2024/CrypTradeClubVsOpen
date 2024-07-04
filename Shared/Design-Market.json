@@ -70,8 +70,7 @@
 
       {
         "enum": "Text",
-        "cmt": "备注",
-        "name": "Desc"
+        "name": "DescTxt"
       }
     ]
   },
@@ -83,7 +82,7 @@
     "fields": [
       {
         "enum": "Text",
-        "name": "Desc"
+        "name": "DescTxt"
       },
       {
         "enum": "Chars",
@@ -436,8 +435,7 @@
 
       {
         "enum": "Text",
-        "cmt": "备注",
-        "name": "Desc"
+        "name": "DescTxt"
       }
     ]
   }

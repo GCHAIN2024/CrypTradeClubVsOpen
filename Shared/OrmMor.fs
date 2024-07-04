@@ -36,7 +36,7 @@ let pADDRESS__bin (bb:BytesBuilder) (p:pADDRESS) =
     
     p.Bind |> BitConverter.GetBytes |> bb.append
     
-    p.Type |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    p.AddressType |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
     let binLine1 = p.Line1 |> Encoding.UTF8.GetBytes
     binLine1.Length |> BitConverter.GetBytes |> bb.append
@@ -103,7 +103,7 @@ let bin__pADDRESS (bi:BinIndexed):pADDRESS =
     p.Bind <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
-    p.Type <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    p.AddressType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
     
     let count_Line1 = BitConverter.ToInt32(bin,index.Value)
@@ -189,7 +189,7 @@ let pADDRESS__json (p:pADDRESS) =
     [|
         ("Caption",p.Caption |> Json.Str)
         ("Bind",p.Bind.ToString() |> Json.Num)
-        ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
+        ("AddressType",(p.AddressType |> EnumToValue).ToString() |> Json.Num)
         ("Line1",p.Line1 |> Json.Str)
         ("Line2",p.Line2 |> Json.Str)
         ("State",p.State |> Json.Str)
@@ -231,7 +231,7 @@ let json__pADDRESSo (json:Json):pADDRESS option =
     
     p.Bind <- checkfield fields "Bind" |> parse_int64
     
-    p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+    p.AddressType <- checkfield fields "AddressType" |> parse_int32 |> EnumOfValue
     
     p.Line1 <- checkfieldz fields "Line1" 300
     
@@ -282,7 +282,7 @@ let json__ADDRESSo (json:Json):ADDRESS option =
         
         p.Bind <- checkfield fields "Bind" |> parse_int64
         
-        p.Type <- checkfield fields "Type" |> parse_int32 |> EnumOfValue
+        p.AddressType <- checkfield fields "AddressType" |> parse_int32 |> EnumOfValue
         
         p.Line1 <- checkfieldz fields "Line1" 300
         
@@ -307,190 +307,6 @@ let json__ADDRESSo (json:Json):ADDRESS option =
         p.Country <- checkfield fields "Country" |> parse_int64
         
         p.Remarks <- checkfield fields "Remarks"
-        
-        {
-            ID = ID
-            Sort = Sort
-            Createdat = Createdat
-            Updatedat = Updatedat
-            p = p } |> Some
-        
-    | None -> None
-
-// [AIRPORT] Structure
-
-let pAIRPORT__bin (bb:BytesBuilder) (p:pAIRPORT) =
-
-    
-    let binCode3IATA = p.Code3IATA |> Encoding.UTF8.GetBytes
-    binCode3IATA.Length |> BitConverter.GetBytes |> bb.append
-    binCode3IATA |> bb.append
-    
-    let binCode4ICAO = p.Code4ICAO |> Encoding.UTF8.GetBytes
-    binCode4ICAO.Length |> BitConverter.GetBytes |> bb.append
-    binCode4ICAO |> bb.append
-    
-    let binCaption = p.Caption |> Encoding.UTF8.GetBytes
-    binCaption.Length |> BitConverter.GetBytes |> bb.append
-    binCaption |> bb.append
-    
-    let binCaptionEn = p.CaptionEn |> Encoding.UTF8.GetBytes
-    binCaptionEn.Length |> BitConverter.GetBytes |> bb.append
-    binCaptionEn |> bb.append
-    
-    p.Country |> BitConverter.GetBytes |> bb.append
-    
-    p.City |> BitConverter.GetBytes |> bb.append
-    
-    p.IsMetropolitan |> BitConverter.GetBytes |> bb.append
-
-let AIRPORT__bin (bb:BytesBuilder) (v:AIRPORT) =
-    v.ID |> BitConverter.GetBytes |> bb.append
-    v.Sort |> BitConverter.GetBytes |> bb.append
-    DateTime__bin bb v.Createdat
-    DateTime__bin bb v.Updatedat
-    
-    pAIRPORT__bin bb v.p
-
-let bin__pAIRPORT (bi:BinIndexed):pAIRPORT =
-    let bin,index = bi
-
-    let p = pAIRPORT_empty()
-    
-    let count_Code3IATA = BitConverter.ToInt32(bin,index.Value)
-    index.Value <- index.Value + 4
-    p.Code3IATA <- Encoding.UTF8.GetString(bin,index.Value,count_Code3IATA)
-    index.Value <- index.Value + count_Code3IATA
-    
-    let count_Code4ICAO = BitConverter.ToInt32(bin,index.Value)
-    index.Value <- index.Value + 4
-    p.Code4ICAO <- Encoding.UTF8.GetString(bin,index.Value,count_Code4ICAO)
-    index.Value <- index.Value + count_Code4ICAO
-    
-    let count_Caption = BitConverter.ToInt32(bin,index.Value)
-    index.Value <- index.Value + 4
-    p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
-    index.Value <- index.Value + count_Caption
-    
-    let count_CaptionEn = BitConverter.ToInt32(bin,index.Value)
-    index.Value <- index.Value + 4
-    p.CaptionEn <- Encoding.UTF8.GetString(bin,index.Value,count_CaptionEn)
-    index.Value <- index.Value + count_CaptionEn
-    
-    p.Country <- BitConverter.ToInt64(bin,index.Value)
-    index.Value <- index.Value + 8
-    
-    p.City <- BitConverter.ToInt64(bin,index.Value)
-    index.Value <- index.Value + 8
-    
-    p.IsMetropolitan <- BitConverter.ToBoolean(bin,index.Value)
-    index.Value <- index.Value + 1
-    
-    p
-
-let bin__AIRPORT (bi:BinIndexed):AIRPORT =
-    let bin,index = bi
-
-    let ID = BitConverter.ToInt64(bin,index.Value)
-    index.Value <- index.Value + 8
-    
-    let Sort = BitConverter.ToInt64(bin,index.Value)
-    index.Value <- index.Value + 8
-    
-    let Createdat = bin__DateTime bi
-    
-    let Updatedat = bin__DateTime bi
-    
-    {
-        ID = ID
-        Sort = Sort
-        Createdat = Createdat
-        Updatedat = Updatedat
-        p = bin__pAIRPORT bi }
-
-let pAIRPORT__json (p:pAIRPORT) =
-
-    [|
-        ("Code3IATA",p.Code3IATA |> Json.Str)
-        ("Code4ICAO",p.Code4ICAO |> Json.Str)
-        ("Caption",p.Caption |> Json.Str)
-        ("CaptionEn",p.CaptionEn |> Json.Str)
-        ("Country",p.Country.ToString() |> Json.Num)
-        ("City",p.City.ToString() |> Json.Num)
-        ("IsMetropolitan",if p.IsMetropolitan then Json.True else Json.False) |]
-    |> Json.Braket
-
-let AIRPORT__json (v:AIRPORT) =
-
-    let p = v.p
-    
-    [|  ("id",v.ID.ToString() |> Json.Num)
-        ("sort",v.Sort.ToString() |> Json.Num)
-        ("createdat",(v.Createdat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("updatedat",(v.Updatedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
-        ("p",pAIRPORT__json v.p) |]
-    |> Json.Braket
-
-let AIRPORT__jsonTbw (w:TextBlockWriter) (v:AIRPORT) =
-    json__str w (AIRPORT__json v)
-
-let AIRPORT__jsonStr (v:AIRPORT) =
-    (AIRPORT__json v) |> json__strFinal
-
-
-let json__pAIRPORTo (json:Json):pAIRPORT option =
-    let fields = json |> json__items
-
-    let p = pAIRPORT_empty()
-    
-    p.Code3IATA <- checkfieldz fields "Code3IATA" 3
-    
-    p.Code4ICAO <- checkfieldz fields "Code4ICAO" 4
-    
-    p.Caption <- checkfieldz fields "Caption" 64
-    
-    p.CaptionEn <- checkfieldz fields "CaptionEn" 64
-    
-    p.Country <- checkfield fields "Country" |> parse_int64
-    
-    p.City <- checkfield fields "City" |> parse_int64
-    
-    p.IsMetropolitan <- checkfield fields "IsMetropolitan" = "true"
-    
-    p |> Some
-    
-
-let json__AIRPORTo (json:Json):AIRPORT option =
-    let fields = json |> json__items
-
-    let ID = checkfield fields "id" |> parse_int64
-    let Sort = checkfield fields "sort" |> parse_int64
-    let Createdat = checkfield fields "createdat" |> parse_int64 |> DateTime.FromBinary
-    let Updatedat = checkfield fields "updatedat" |> parse_int64 |> DateTime.FromBinary
-    
-    let o  =
-        match
-            json
-            |> tryFindByAtt "p" with
-        | Some (s,v) -> json__pAIRPORTo v
-        | None -> None
-    
-    match o with
-    | Some p ->
-        
-        p.Code3IATA <- checkfieldz fields "Code3IATA" 3
-        
-        p.Code4ICAO <- checkfieldz fields "Code4ICAO" 4
-        
-        p.Caption <- checkfieldz fields "Caption" 64
-        
-        p.CaptionEn <- checkfieldz fields "CaptionEn" 64
-        
-        p.Country <- checkfield fields "Country" |> parse_int64
-        
-        p.City <- checkfield fields "City" |> parse_int64
-        
-        p.IsMetropolitan <- checkfield fields "IsMetropolitan" = "true"
         
         {
             ID = ID
@@ -916,7 +732,7 @@ let pCAT__bin (bb:BytesBuilder) (p:pCAT) =
     
     p.Parent |> BitConverter.GetBytes |> bb.append
     
-    p.State |> EnumToValue |> BitConverter.GetBytes |> bb.append
+    p.CatState |> EnumToValue |> BitConverter.GetBytes |> bb.append
 
 let CAT__bin (bb:BytesBuilder) (v:CAT) =
     v.ID |> BitConverter.GetBytes |> bb.append
@@ -945,7 +761,7 @@ let bin__pCAT (bi:BinIndexed):pCAT =
     p.Parent <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
-    p.State <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
+    p.CatState <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
     
     p
@@ -977,7 +793,7 @@ let pCAT__json (p:pCAT) =
         ("Lang",p.Lang.ToString() |> Json.Num)
         ("Zh",p.Zh.ToString() |> Json.Num)
         ("Parent",p.Parent.ToString() |> Json.Num)
-        ("State",(p.State |> EnumToValue).ToString() |> Json.Num) |]
+        ("CatState",(p.CatState |> EnumToValue).ToString() |> Json.Num) |]
     |> Json.Braket
 
 let CAT__json (v:CAT) =
@@ -1011,7 +827,7 @@ let json__pCATo (json:Json):pCAT option =
     
     p.Parent <- checkfield fields "Parent" |> parse_int64
     
-    p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+    p.CatState <- checkfield fields "CatState" |> parse_int32 |> EnumOfValue
     
     p |> Some
     
@@ -1042,7 +858,7 @@ let json__CATo (json:Json):CAT option =
         
         p.Parent <- checkfield fields "Parent" |> parse_int64
         
-        p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
+        p.CatState <- checkfield fields "CatState" |> parse_int32 |> EnumOfValue
         
         {
             ID = ID
@@ -1058,9 +874,9 @@ let json__CATo (json:Json):CAT option =
 let pCITY__bin (bb:BytesBuilder) (p:pCITY) =
 
     
-    let binName = p.Name |> Encoding.UTF8.GetBytes
-    binName.Length |> BitConverter.GetBytes |> bb.append
-    binName |> bb.append
+    let binFullname = p.Fullname |> Encoding.UTF8.GetBytes
+    binFullname.Length |> BitConverter.GetBytes |> bb.append
+    binFullname |> bb.append
     
     let binMetropolitanCode3IATA = p.MetropolitanCode3IATA |> Encoding.UTF8.GetBytes
     binMetropolitanCode3IATA.Length |> BitConverter.GetBytes |> bb.append
@@ -1095,10 +911,10 @@ let bin__pCITY (bi:BinIndexed):pCITY =
 
     let p = pCITY_empty()
     
-    let count_Name = BitConverter.ToInt32(bin,index.Value)
+    let count_Fullname = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Name <- Encoding.UTF8.GetString(bin,index.Value,count_Name)
-    index.Value <- index.Value + count_Name
+    p.Fullname <- Encoding.UTF8.GetString(bin,index.Value,count_Fullname)
+    index.Value <- index.Value + count_Fullname
     
     let count_MetropolitanCode3IATA = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
@@ -1151,7 +967,7 @@ let bin__CITY (bi:BinIndexed):CITY =
 let pCITY__json (p:pCITY) =
 
     [|
-        ("Name",p.Name |> Json.Str)
+        ("Fullname",p.Fullname |> Json.Str)
         ("MetropolitanCode3IATA",p.MetropolitanCode3IATA |> Json.Str)
         ("NameEn",p.NameEn |> Json.Str)
         ("Country",p.Country.ToString() |> Json.Num)
@@ -1183,7 +999,7 @@ let json__pCITYo (json:Json):pCITY option =
 
     let p = pCITY_empty()
     
-    p.Name <- checkfieldz fields "Name" 64
+    p.Fullname <- checkfieldz fields "Fullname" 64
     
     p.MetropolitanCode3IATA <- checkfieldz fields "MetropolitanCode3IATA" 3
     
@@ -1218,7 +1034,7 @@ let json__CITYo (json:Json):CITY option =
     match o with
     | Some p ->
         
-        p.Name <- checkfieldz fields "Name" 64
+        p.Fullname <- checkfieldz fields "Fullname" 64
         
         p.MetropolitanCode3IATA <- checkfieldz fields "MetropolitanCode3IATA" 3
         
@@ -1462,7 +1278,7 @@ let pCUR__bin (bb:BytesBuilder) (p:pCUR) =
     binCaption.Length |> BitConverter.GetBytes |> bb.append
     binCaption |> bb.append
     
-    p.Hidden |> BitConverter.GetBytes |> bb.append
+    p.IsHidden |> BitConverter.GetBytes |> bb.append
     
     p.IsSac |> BitConverter.GetBytes |> bb.append
     
@@ -1480,7 +1296,7 @@ let pCUR__bin (bb:BytesBuilder) (p:pCUR) =
     
     p.CurType |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
-    p.Dec |> BitConverter.GetBytes |> bb.append
+    p.FloatDec |> BitConverter.GetBytes |> bb.append
     
     p.AnchorRate |> BitConverter.GetBytes |> bb.append
     
@@ -1529,7 +1345,7 @@ let bin__pCUR (bi:BinIndexed):pCUR =
     p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
     index.Value <- index.Value + count_Caption
     
-    p.Hidden <- BitConverter.ToBoolean(bin,index.Value)
+    p.IsHidden <- BitConverter.ToBoolean(bin,index.Value)
     index.Value <- index.Value + 1
     
     p.IsSac <- BitConverter.ToBoolean(bin,index.Value)
@@ -1555,7 +1371,7 @@ let bin__pCUR (bi:BinIndexed):pCUR =
     p.CurType <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
     
-    p.Dec <- BitConverter.ToInt64(bin,index.Value)
+    p.FloatDec <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
     p.AnchorRate <- BitConverter.ToDouble(bin,index.Value)
@@ -1617,7 +1433,7 @@ let pCUR__json (p:pCUR) =
     [|
         ("Code",p.Code |> Json.Str)
         ("Caption",p.Caption |> Json.Str)
-        ("Hidden",if p.Hidden then Json.True else Json.False)
+        ("IsHidden",if p.IsHidden then Json.True else Json.False)
         ("IsSac",if p.IsSac then Json.True else Json.False)
         ("IsTransfer",if p.IsTransfer then Json.True else Json.False)
         ("IsCash",if p.IsCash then Json.True else Json.False)
@@ -1625,7 +1441,7 @@ let pCUR__json (p:pCUR) =
         ("EnableOTC",if p.EnableOTC then Json.True else Json.False)
         ("Icon",p.Icon |> Json.Str)
         ("CurType",(p.CurType |> EnumToValue).ToString() |> Json.Num)
-        ("Dec",p.Dec.ToString() |> Json.Num)
+        ("FloatDec",p.FloatDec.ToString() |> Json.Num)
         ("AnchorRate",p.AnchorRate.ToString() |> Json.Num)
         ("Freezable",if p.Freezable then Json.True else Json.False)
         ("Authorizable",if p.Authorizable then Json.True else Json.False)
@@ -1663,7 +1479,7 @@ let json__pCURo (json:Json):pCUR option =
     
     p.Caption <- checkfieldz fields "Caption" 64
     
-    p.Hidden <- checkfield fields "Hidden" = "true"
+    p.IsHidden <- checkfield fields "IsHidden" = "true"
     
     p.IsSac <- checkfield fields "IsSac" = "true"
     
@@ -1679,7 +1495,7 @@ let json__pCURo (json:Json):pCUR option =
     
     p.CurType <- checkfield fields "CurType" |> parse_int32 |> EnumOfValue
     
-    p.Dec <- checkfield fields "Dec" |> parse_int64
+    p.FloatDec <- checkfield fields "FloatDec" |> parse_int64
     
     p.AnchorRate <- checkfield fields "AnchorRate" |> parse_float
     
@@ -1722,7 +1538,7 @@ let json__CURo (json:Json):CUR option =
         
         p.Caption <- checkfieldz fields "Caption" 64
         
-        p.Hidden <- checkfield fields "Hidden" = "true"
+        p.IsHidden <- checkfield fields "IsHidden" = "true"
         
         p.IsSac <- checkfield fields "IsSac" = "true"
         
@@ -1738,7 +1554,7 @@ let json__CURo (json:Json):CUR option =
         
         p.CurType <- checkfield fields "CurType" |> parse_int32 |> EnumOfValue
         
-        p.Dec <- checkfield fields "Dec" |> parse_int64
+        p.FloatDec <- checkfield fields "FloatDec" |> parse_int64
         
         p.AnchorRate <- checkfield fields "AnchorRate" |> parse_float
         
@@ -3170,9 +2986,9 @@ let json__CWCo (json:Json):CWC option =
 let pINS__bin (bb:BytesBuilder) (p:pINS) =
 
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
     
     let binCode = p.Code |> Encoding.UTF8.GetBytes
     binCode.Length |> BitConverter.GetBytes |> bb.append
@@ -3207,10 +3023,10 @@ let bin__pINS (bi:BinIndexed):pINS =
 
     let p = pINS_empty()
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     let count_Code = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
@@ -3263,7 +3079,7 @@ let bin__INS (bi:BinIndexed):INS =
 let pINS__json (p:pINS) =
 
     [|
-        ("Desc",p.Desc |> Json.Str)
+        ("DescTxt",p.DescTxt |> Json.Str)
         ("Code",p.Code |> Json.Str)
         ("Caption",p.Caption |> Json.Str)
         ("Long",p.Long.ToString() |> Json.Num)
@@ -3295,7 +3111,7 @@ let json__pINSo (json:Json):pINS option =
 
     let p = pINS_empty()
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p.Code <- checkfieldz fields "Code" 64
     
@@ -3330,7 +3146,7 @@ let json__INSo (json:Json):INS option =
     match o with
     | Some p ->
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         p.Code <- checkfieldz fields "Code" 64
         
@@ -3482,9 +3298,9 @@ let pTICKET__bin (bb:BytesBuilder) (p:pTICKET) =
     
     p.ExternalTicketCancel |> BitConverter.GetBytes |> bb.append
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
 
 let TICKET__bin (bb:BytesBuilder) (v:TICKET) =
     v.ID |> BitConverter.GetBytes |> bb.append
@@ -3681,10 +3497,10 @@ let bin__pTICKET (bi:BinIndexed):pTICKET =
     p.ExternalTicketCancel <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     p
 
@@ -3769,7 +3585,7 @@ let pTICKET__json (p:pTICKET) =
         ("ExternalTicketClose",p.ExternalTicketClose.ToString() |> Json.Num)
         ("ExternalTicketPending",p.ExternalTicketPending.ToString() |> Json.Num)
         ("ExternalTicketCancel",p.ExternalTicketCancel.ToString() |> Json.Num)
-        ("Desc",p.Desc |> Json.Str) |]
+        ("DescTxt",p.DescTxt |> Json.Str) |]
     |> Json.Braket
 
 let TICKET__json (v:TICKET) =
@@ -3911,7 +3727,7 @@ let json__pTICKETo (json:Json):pTICKET option =
     
     p.ExternalTicketCancel <- checkfield fields "ExternalTicketCancel" |> parse_int64
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p |> Some
     
@@ -4050,7 +3866,7 @@ let json__TICKETo (json:Json):TICKET option =
         
         p.ExternalTicketCancel <- checkfield fields "ExternalTicketCancel" |> parse_int64
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         {
             ID = ID
@@ -4096,9 +3912,9 @@ let pTACCT__bin (bb:BytesBuilder) (p:pTACCT) =
     binPwdReadonly.Length |> BitConverter.GetBytes |> bb.append
     binPwdReadonly |> bb.append
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
 
 let TACCT__bin (bb:BytesBuilder) (v:TACCT) =
     v.ID |> BitConverter.GetBytes |> bb.append
@@ -4156,10 +3972,10 @@ let bin__pTACCT (bi:BinIndexed):pTACCT =
     p.PwdReadonly <- Encoding.UTF8.GetString(bin,index.Value,count_PwdReadonly)
     index.Value <- index.Value + count_PwdReadonly
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     p
 
@@ -4199,7 +4015,7 @@ let pTACCT__json (p:pTACCT) =
         ("MarginCallRateLiq",p.MarginCallRateLiq.ToString() |> Json.Num)
         ("PwdTrade",p.PwdTrade |> Json.Str)
         ("PwdReadonly",p.PwdReadonly |> Json.Str)
-        ("Desc",p.Desc |> Json.Str) |]
+        ("DescTxt",p.DescTxt |> Json.Str) |]
     |> Json.Braket
 
 let TACCT__json (v:TACCT) =
@@ -4251,7 +4067,7 @@ let json__pTACCTo (json:Json):pTACCT option =
     
     p.PwdReadonly <- checkfieldz fields "PwdReadonly" 64
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p |> Some
     
@@ -4300,7 +4116,7 @@ let json__TACCTo (json:Json):TACCT option =
         
         p.PwdReadonly <- checkfieldz fields "PwdReadonly" 64
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         {
             ID = ID
@@ -4334,9 +4150,9 @@ let pBOOKMARK__bin (bb:BytesBuilder) (p:pBOOKMARK) =
     binPath.Length |> BitConverter.GetBytes |> bb.append
     binPath |> bb.append
     
-    let binGroup = p.Group |> Encoding.UTF8.GetBytes
-    binGroup.Length |> BitConverter.GetBytes |> bb.append
-    binGroup |> bb.append
+    let binUserGroup = p.UserGroup |> Encoding.UTF8.GetBytes
+    binUserGroup.Length |> BitConverter.GetBytes |> bb.append
+    binUserGroup |> bb.append
     
     p.Type |> BitConverter.GetBytes |> bb.append
 
@@ -4378,10 +4194,10 @@ let bin__pBOOKMARK (bi:BinIndexed):pBOOKMARK =
     p.Path <- Encoding.UTF8.GetString(bin,index.Value,count_Path)
     index.Value <- index.Value + count_Path
     
-    let count_Group = BitConverter.ToInt32(bin,index.Value)
+    let count_UserGroup = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Group <- Encoding.UTF8.GetString(bin,index.Value,count_Group)
-    index.Value <- index.Value + count_Group
+    p.UserGroup <- Encoding.UTF8.GetString(bin,index.Value,count_UserGroup)
+    index.Value <- index.Value + count_UserGroup
     
     p.Type <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
@@ -4418,7 +4234,7 @@ let pBOOKMARK__json (p:pBOOKMARK) =
         ("BookmarkList",p.BookmarkList.ToString() |> Json.Num)
         ("Notes",p.Notes |> Json.Str)
         ("Path",p.Path |> Json.Str)
-        ("Group",p.Group |> Json.Str)
+        ("UserGroup",p.UserGroup |> Json.Str)
         ("Type",p.Type.ToString() |> Json.Num) |]
     |> Json.Braket
 
@@ -4459,7 +4275,7 @@ let json__pBOOKMARKo (json:Json):pBOOKMARK option =
     
     p.Path <- checkfield fields "Path"
     
-    p.Group <- checkfieldz fields "Group" 64
+    p.UserGroup <- checkfieldz fields "UserGroup" 64
     
     p.Type <- checkfield fields "Type" |> parse_int64
     
@@ -4498,7 +4314,7 @@ let json__BOOKMARKo (json:Json):BOOKMARK option =
         
         p.Path <- checkfield fields "Path"
         
-        p.Group <- checkfieldz fields "Group" 64
+        p.UserGroup <- checkfieldz fields "UserGroup" 64
         
         p.Type <- checkfield fields "Type" |> parse_int64
         
@@ -4876,7 +4692,7 @@ let pMOMENT__bin (bb:BytesBuilder) (p:pMOMENT) =
     
     p.State |> EnumToValue |> BitConverter.GetBytes |> bb.append
     
-    p.Group |> BitConverter.GetBytes |> bb.append
+    p.UserGroup |> BitConverter.GetBytes |> bb.append
     
     p.Postedat.Ticks |> BitConverter.GetBytes |> bb.append
     
@@ -4964,7 +4780,7 @@ let bin__pMOMENT (bi:BinIndexed):pMOMENT =
     p.State <- BitConverter.ToInt32(bin,index.Value) |> EnumOfValue
     index.Value <- index.Value + 4
     
-    p.Group <- BitConverter.ToInt64(bin,index.Value)
+    p.UserGroup <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
     
     p.Postedat <- BitConverter.ToInt64(bin,index.Value) |> DateTime.FromBinary
@@ -5034,7 +4850,7 @@ let pMOMENT__json (p:pMOMENT) =
         ("Type",(p.Type |> EnumToValue).ToString() |> Json.Num)
         ("Question",p.Question.ToString() |> Json.Num)
         ("State",(p.State |> EnumToValue).ToString() |> Json.Num)
-        ("Group",p.Group.ToString() |> Json.Num)
+        ("UserGroup",p.UserGroup.ToString() |> Json.Num)
         ("Postedat",(p.Postedat |> Util.Time.wintime__unixtime).ToString() |> Json.Num)
         ("Keywords",p.Keywords |> Json.Str)
         ("MediaType",(p.MediaType |> EnumToValue).ToString() |> Json.Num)
@@ -5093,7 +4909,7 @@ let json__pMOMENTo (json:Json):pMOMENT option =
     
     p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
     
-    p.Group <- checkfield fields "Group" |> parse_int64
+    p.UserGroup <- checkfield fields "UserGroup" |> parse_int64
     
     p.Postedat <- checkfield fields "Postedat" |> parse_int64 |> Util.Time.unixtime__wintime
     
@@ -5156,7 +4972,7 @@ let json__MOMENTo (json:Json):MOMENT option =
         
         p.State <- checkfield fields "State" |> parse_int32 |> EnumOfValue
         
-        p.Group <- checkfield fields "Group" |> parse_int64
+        p.UserGroup <- checkfield fields "UserGroup" |> parse_int64
         
         p.Postedat <- checkfield fields "Postedat" |> parse_int64 |> Util.Time.unixtime__wintime
         
@@ -5334,9 +5150,9 @@ let pARBITRAGE__bin (bb:BytesBuilder) (p:pARBITRAGE) =
     binCode.Length |> BitConverter.GetBytes |> bb.append
     binCode |> bb.append
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
     
     p.Ins |> BitConverter.GetBytes |> bb.append
     
@@ -5373,10 +5189,10 @@ let bin__pARBITRAGE (bi:BinIndexed):pARBITRAGE =
     p.Code <- Encoding.UTF8.GetString(bin,index.Value,count_Code)
     index.Value <- index.Value + count_Code
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     p.Ins <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
@@ -5423,7 +5239,7 @@ let pARBITRAGE__json (p:pARBITRAGE) =
     [|
         ("Caption",p.Caption |> Json.Str)
         ("Code",p.Code |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
+        ("DescTxt",p.DescTxt |> Json.Str)
         ("Ins",p.Ins.ToString() |> Json.Num)
         ("Stake",p.Stake.ToString() |> Json.Num)
         ("Entry",p.Entry.ToString() |> Json.Num)
@@ -5459,7 +5275,7 @@ let json__pARBITRAGEo (json:Json):pARBITRAGE option =
     
     p.Code <- checkfieldz fields "Code" 64
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p.Ins <- checkfield fields "Ins" |> parse_int64
     
@@ -5498,7 +5314,7 @@ let json__ARBITRAGEo (json:Json):ARBITRAGE option =
         
         p.Code <- checkfieldz fields "Code" 64
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         p.Ins <- checkfield fields "Ins" |> parse_int64
         
@@ -5530,9 +5346,9 @@ let pFUND__bin (bb:BytesBuilder) (p:pFUND) =
     binCaption.Length |> BitConverter.GetBytes |> bb.append
     binCaption |> bb.append
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
     
     p.Bind |> BitConverter.GetBytes |> bb.append
     
@@ -5556,10 +5372,10 @@ let bin__pFUND (bi:BinIndexed):pFUND =
     p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
     index.Value <- index.Value + count_Caption
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     p.Bind <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
@@ -5593,7 +5409,7 @@ let pFUND__json (p:pFUND) =
 
     [|
         ("Caption",p.Caption |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
+        ("DescTxt",p.DescTxt |> Json.Str)
         ("Bind",p.Bind.ToString() |> Json.Num)
         ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num) |]
     |> Json.Braket
@@ -5623,7 +5439,7 @@ let json__pFUNDo (json:Json):pFUND option =
     
     p.Caption <- checkfieldz fields "Caption" 64
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p.Bind <- checkfield fields "Bind" |> parse_int64
     
@@ -5652,7 +5468,7 @@ let json__FUNDo (json:Json):FUND option =
         
         p.Caption <- checkfieldz fields "Caption" 64
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         p.Bind <- checkfield fields "Bind" |> parse_int64
         
@@ -5676,9 +5492,9 @@ let pPORTFOLIO__bin (bb:BytesBuilder) (p:pPORTFOLIO) =
     binCaption.Length |> BitConverter.GetBytes |> bb.append
     binCaption |> bb.append
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
     
     p.Fund |> BitConverter.GetBytes |> bb.append
     
@@ -5704,10 +5520,10 @@ let bin__pPORTFOLIO (bi:BinIndexed):pPORTFOLIO =
     p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
     index.Value <- index.Value + count_Caption
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     p.Fund <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
@@ -5744,7 +5560,7 @@ let pPORTFOLIO__json (p:pPORTFOLIO) =
 
     [|
         ("Caption",p.Caption |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
+        ("DescTxt",p.DescTxt |> Json.Str)
         ("Fund",p.Fund.ToString() |> Json.Num)
         ("Bind",p.Bind.ToString() |> Json.Num)
         ("BindType",(p.BindType |> EnumToValue).ToString() |> Json.Num) |]
@@ -5775,7 +5591,7 @@ let json__pPORTFOLIOo (json:Json):pPORTFOLIO option =
     
     p.Caption <- checkfieldz fields "Caption" 64
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p.Fund <- checkfield fields "Fund" |> parse_int64
     
@@ -5806,7 +5622,7 @@ let json__PORTFOLIOo (json:Json):PORTFOLIO option =
         
         p.Caption <- checkfieldz fields "Caption" 64
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         p.Fund <- checkfield fields "Fund" |> parse_int64
         
@@ -5832,9 +5648,9 @@ let pTRADER__bin (bb:BytesBuilder) (p:pTRADER) =
     binCaption.Length |> BitConverter.GetBytes |> bb.append
     binCaption |> bb.append
     
-    let binDesc = p.Desc |> Encoding.UTF8.GetBytes
-    binDesc.Length |> BitConverter.GetBytes |> bb.append
-    binDesc |> bb.append
+    let binDescTxt = p.DescTxt |> Encoding.UTF8.GetBytes
+    binDescTxt.Length |> BitConverter.GetBytes |> bb.append
+    binDescTxt |> bb.append
     
     p.Fund |> BitConverter.GetBytes |> bb.append
     
@@ -5860,10 +5676,10 @@ let bin__pTRADER (bi:BinIndexed):pTRADER =
     p.Caption <- Encoding.UTF8.GetString(bin,index.Value,count_Caption)
     index.Value <- index.Value + count_Caption
     
-    let count_Desc = BitConverter.ToInt32(bin,index.Value)
+    let count_DescTxt = BitConverter.ToInt32(bin,index.Value)
     index.Value <- index.Value + 4
-    p.Desc <- Encoding.UTF8.GetString(bin,index.Value,count_Desc)
-    index.Value <- index.Value + count_Desc
+    p.DescTxt <- Encoding.UTF8.GetString(bin,index.Value,count_DescTxt)
+    index.Value <- index.Value + count_DescTxt
     
     p.Fund <- BitConverter.ToInt64(bin,index.Value)
     index.Value <- index.Value + 8
@@ -5900,7 +5716,7 @@ let pTRADER__json (p:pTRADER) =
 
     [|
         ("Caption",p.Caption |> Json.Str)
-        ("Desc",p.Desc |> Json.Str)
+        ("DescTxt",p.DescTxt |> Json.Str)
         ("Fund",p.Fund.ToString() |> Json.Num)
         ("Portfolio",p.Portfolio.ToString() |> Json.Num)
         ("EndUser",p.EndUser.ToString() |> Json.Num) |]
@@ -5931,7 +5747,7 @@ let json__pTRADERo (json:Json):pTRADER option =
     
     p.Caption <- checkfieldz fields "Caption" 64
     
-    p.Desc <- checkfield fields "Desc"
+    p.DescTxt <- checkfield fields "DescTxt"
     
     p.Fund <- checkfield fields "Fund" |> parse_int64
     
@@ -5962,7 +5778,7 @@ let json__TRADERo (json:Json):TRADER option =
         
         p.Caption <- checkfieldz fields "Caption" 64
         
-        p.Desc <- checkfield fields "Desc"
+        p.DescTxt <- checkfield fields "DescTxt"
         
         p.Fund <- checkfield fields "Fund" |> parse_int64
         
@@ -5986,7 +5802,7 @@ let db__pADDRESS(line:Object[]): pADDRESS =
 
     p.Caption <- string(line.[4]).TrimEnd()
     p.Bind <- if Convert.IsDBNull(line.[5]) then 0L else line.[5] :?> int64
-    p.Type <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
+    p.AddressType <- EnumOfValue(if Convert.IsDBNull(line.[6]) then 0 else line.[6] :?> int)
     p.Line1 <- string(line.[7]).TrimEnd()
     p.Line2 <- string(line.[8]).TrimEnd()
     p.State <- string(line.[9]).TrimEnd()
@@ -6006,7 +5822,7 @@ let pADDRESS__sps (p:pADDRESS) =
     [|
         ("Caption", p.Caption) |> kvp__sqlparam
         ("Bind", p.Bind) |> kvp__sqlparam
-        ("Type", p.Type) |> kvp__sqlparam
+        ("AddressType", p.AddressType) |> kvp__sqlparam
         ("Line1", p.Line1) |> kvp__sqlparam
         ("Line2", p.Line2) |> kvp__sqlparam
         ("State", p.State) |> kvp__sqlparam
@@ -6029,7 +5845,7 @@ let ADDRESS_wrapper item: ADDRESS =
 let pADDRESS_clone (p:pADDRESS): pADDRESS = {
     Caption = p.Caption
     Bind = p.Bind
-    Type = p.Type
+    AddressType = p.AddressType
     Line1 = p.Line1
     Line2 = p.Line2
     State = p.State
@@ -6103,7 +5919,7 @@ let ADDRESSTxSqlServer =
     ,[Sort] BIGINT NOT NULL,
     ,[Caption]
     ,[Bind]
-    ,[Type]
+    ,[AddressType]
     ,[Line1]
     ,[Line2]
     ,[State]
@@ -6116,113 +5932,6 @@ let ADDRESSTxSqlServer =
     ,[City]
     ,[Country]
     ,[Remarks])
-    END
-    """
-
-
-let db__pAIRPORT(line:Object[]): pAIRPORT =
-    let p = pAIRPORT_empty()
-
-    p.Code3IATA <- string(line.[4]).TrimEnd()
-    p.Code4ICAO <- string(line.[5]).TrimEnd()
-    p.Caption <- string(line.[6]).TrimEnd()
-    p.CaptionEn <- string(line.[7]).TrimEnd()
-    p.Country <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
-    p.City <- if Convert.IsDBNull(line.[9]) then 0L else line.[9] :?> int64
-    p.IsMetropolitan <- if Convert.IsDBNull(line.[10]) then false else line.[10] :?> bool
-
-    p
-
-let pAIRPORT__sps (p:pAIRPORT) =
-    [|
-        ("Code3IATA", p.Code3IATA) |> kvp__sqlparam
-        ("Code4ICAO", p.Code4ICAO) |> kvp__sqlparam
-        ("Caption", p.Caption) |> kvp__sqlparam
-        ("CaptionEn", p.CaptionEn) |> kvp__sqlparam
-        ("Country", p.Country) |> kvp__sqlparam
-        ("City", p.City) |> kvp__sqlparam
-        ("IsMetropolitan", p.IsMetropolitan) |> kvp__sqlparam |]
-
-let db__AIRPORT = db__Rcd db__pAIRPORT
-
-let AIRPORT_wrapper item: AIRPORT =
-    let (i,c,u,s),p = item
-    { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
-
-let pAIRPORT_clone (p:pAIRPORT): pAIRPORT = {
-    Code3IATA = p.Code3IATA
-    Code4ICAO = p.Code4ICAO
-    Caption = p.Caption
-    CaptionEn = p.CaptionEn
-    Country = p.Country
-    City = p.City
-    IsMetropolitan = p.IsMetropolitan }
-
-let AIRPORT_update_transaction output (updater,suc,fail) (rcd:AIRPORT) =
-    let rollback_p = rcd.p |> pAIRPORT_clone
-    let rollback_updatedat = rcd.Updatedat
-    updater rcd.p
-    let ctime,res =
-        (rcd.ID,rcd.p,rollback_p,rollback_updatedat)
-        |> update (conn,output,AIRPORT_table,AIRPORT_sql_update,pAIRPORT__sps,suc,fail)
-    match res with
-    | Suc ctx ->
-        rcd.Updatedat <- ctime
-        suc(ctime,ctx)
-    | Fail(eso,ctx) ->
-        rcd.p <- rollback_p
-        rcd.Updatedat <- rollback_updatedat
-        fail eso
-
-let AIRPORT_update output (rcd:AIRPORT) =
-    rcd
-    |> AIRPORT_update_transaction output ((fun p -> ()),(fun (ctime,ctx) -> ()),(fun dte -> ()))
-
-let AIRPORT_create_incremental_transaction output (suc,fail) p =
-    let cid = Interlocked.Increment AIRPORT_id
-    let ctime = DateTime.UtcNow
-    match create (conn,output,AIRPORT_table,pAIRPORT__sps) (cid,ctime,p) with
-    | Suc ctx -> ((cid,ctime,ctime,cid),p) |> AIRPORT_wrapper |> suc
-    | Fail(eso,ctx) -> fail(eso,ctx)
-
-let AIRPORT_create output p =
-    AIRPORT_create_incremental_transaction output ((fun rcd -> ()),(fun (eso,ctx) -> ())) p
-    
-
-let id__AIRPORTo id: AIRPORT option = id__rcd(conn,AIRPORT_fieldorders,AIRPORT_table,db__AIRPORT) id
-
-let AIRPORT_metadata = {
-    fieldorders = AIRPORT_fieldorders
-    db__rcd = db__AIRPORT 
-    wrapper = AIRPORT_wrapper
-    sps = pAIRPORT__sps
-    id = AIRPORT_id
-    id__rcdo = id__AIRPORTo
-    clone = pAIRPORT_clone
-    empty__p = pAIRPORT_empty
-    rcd__bin = AIRPORT__bin
-    bin__rcd = bin__AIRPORT
-    sql_update = AIRPORT_sql_update
-    rcd_update = AIRPORT_update
-    table = AIRPORT_table
-    shorthand = "airport" }
-
-let AIRPORTTxSqlServer =
-    """
-    IF NOT EXISTS(SELECT * FROM sysobjects WHERE [name]='Ca_Airport' AND xtype='U')
-    BEGIN
-
-        CREATE TABLE Ca_Airport ([ID] BIGINT NOT NULL
-    ,[Createdat] BIGINT NOT NULL
-    ,[Updatedat] BIGINT NOT NULL
-    ,[Sort] BIGINT NOT NULL,
-    ,[Code3IATA]
-    ,[Code4ICAO]
-    ,[Caption]
-    ,[CaptionEn]
-    ,[Country]
-    ,[City]
-    ,[IsMetropolitan])
     END
     """
 
@@ -6421,7 +6130,7 @@ let db__pCAT(line:Object[]): pCAT =
     p.Lang <- if Convert.IsDBNull(line.[5]) then 0L else line.[5] :?> int64
     p.Zh <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
     p.Parent <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
-    p.State <- EnumOfValue(if Convert.IsDBNull(line.[8]) then 0 else line.[8] :?> int)
+    p.CatState <- EnumOfValue(if Convert.IsDBNull(line.[8]) then 0 else line.[8] :?> int)
 
     p
 
@@ -6431,7 +6140,7 @@ let pCAT__sps (p:pCAT) =
         ("Lang", p.Lang) |> kvp__sqlparam
         ("Zh", p.Zh) |> kvp__sqlparam
         ("Parent", p.Parent) |> kvp__sqlparam
-        ("State", p.State) |> kvp__sqlparam |]
+        ("CatState", p.CatState) |> kvp__sqlparam |]
 
 let db__CAT = db__Rcd db__pCAT
 
@@ -6444,7 +6153,7 @@ let pCAT_clone (p:pCAT): pCAT = {
     Lang = p.Lang
     Zh = p.Zh
     Parent = p.Parent
-    State = p.State }
+    CatState = p.CatState }
 
 let CAT_update_transaction output (updater,suc,fail) (rcd:CAT) =
     let rollback_p = rcd.p |> pCAT_clone
@@ -6508,7 +6217,7 @@ let CATTxSqlServer =
     ,[Lang]
     ,[Zh]
     ,[Parent]
-    ,[State])
+    ,[CatState])
     END
     """
 
@@ -6516,7 +6225,7 @@ let CATTxSqlServer =
 let db__pCITY(line:Object[]): pCITY =
     let p = pCITY_empty()
 
-    p.Name <- string(line.[4]).TrimEnd()
+    p.Fullname <- string(line.[4]).TrimEnd()
     p.MetropolitanCode3IATA <- string(line.[5]).TrimEnd()
     p.NameEn <- string(line.[6]).TrimEnd()
     p.Country <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
@@ -6528,7 +6237,7 @@ let db__pCITY(line:Object[]): pCITY =
 
 let pCITY__sps (p:pCITY) =
     [|
-        ("Name", p.Name) |> kvp__sqlparam
+        ("Fullname", p.Fullname) |> kvp__sqlparam
         ("MetropolitanCode3IATA", p.MetropolitanCode3IATA) |> kvp__sqlparam
         ("NameEn", p.NameEn) |> kvp__sqlparam
         ("Country", p.Country) |> kvp__sqlparam
@@ -6543,7 +6252,7 @@ let CITY_wrapper item: CITY =
     { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
 
 let pCITY_clone (p:pCITY): pCITY = {
-    Name = p.Name
+    Fullname = p.Fullname
     MetropolitanCode3IATA = p.MetropolitanCode3IATA
     NameEn = p.NameEn
     Country = p.Country
@@ -6609,7 +6318,7 @@ let CITYTxSqlServer =
     ,[Createdat] BIGINT NOT NULL
     ,[Updatedat] BIGINT NOT NULL
     ,[Sort] BIGINT NOT NULL,
-    ,[Name]
+    ,[Fullname]
     ,[MetropolitanCode3IATA]
     ,[NameEn]
     ,[Country]
@@ -6740,7 +6449,7 @@ let db__pCUR(line:Object[]): pCUR =
 
     p.Code <- string(line.[4]).TrimEnd()
     p.Caption <- string(line.[5]).TrimEnd()
-    p.Hidden <- if Convert.IsDBNull(line.[6]) then false else line.[6] :?> bool
+    p.IsHidden <- if Convert.IsDBNull(line.[6]) then false else line.[6] :?> bool
     p.IsSac <- if Convert.IsDBNull(line.[7]) then false else line.[7] :?> bool
     p.IsTransfer <- if Convert.IsDBNull(line.[8]) then false else line.[8] :?> bool
     p.IsCash <- if Convert.IsDBNull(line.[9]) then false else line.[9] :?> bool
@@ -6748,7 +6457,7 @@ let db__pCUR(line:Object[]): pCUR =
     p.EnableOTC <- if Convert.IsDBNull(line.[11]) then false else line.[11] :?> bool
     p.Icon <- string(line.[12]).TrimEnd()
     p.CurType <- EnumOfValue(if Convert.IsDBNull(line.[13]) then 0 else line.[13] :?> int)
-    p.Dec <- if Convert.IsDBNull(line.[14]) then 0L else line.[14] :?> int64
+    p.FloatDec <- if Convert.IsDBNull(line.[14]) then 0L else line.[14] :?> int64
     p.AnchorRate <- if Convert.IsDBNull(line.[15]) then 0.0 else line.[15] :?> float
     p.Freezable <- if Convert.IsDBNull(line.[16]) then false else line.[16] :?> bool
     p.Authorizable <- if Convert.IsDBNull(line.[17]) then false else line.[17] :?> bool
@@ -6764,7 +6473,7 @@ let pCUR__sps (p:pCUR) =
     [|
         ("Code", p.Code) |> kvp__sqlparam
         ("Caption", p.Caption) |> kvp__sqlparam
-        ("Hidden", p.Hidden) |> kvp__sqlparam
+        ("IsHidden", p.IsHidden) |> kvp__sqlparam
         ("IsSac", p.IsSac) |> kvp__sqlparam
         ("IsTransfer", p.IsTransfer) |> kvp__sqlparam
         ("IsCash", p.IsCash) |> kvp__sqlparam
@@ -6772,7 +6481,7 @@ let pCUR__sps (p:pCUR) =
         ("EnableOTC", p.EnableOTC) |> kvp__sqlparam
         ("Icon", p.Icon) |> kvp__sqlparam
         ("CurType", p.CurType) |> kvp__sqlparam
-        ("Dec", p.Dec) |> kvp__sqlparam
+        ("FloatDec", p.FloatDec) |> kvp__sqlparam
         ("AnchorRate", p.AnchorRate) |> kvp__sqlparam
         ("Freezable", p.Freezable) |> kvp__sqlparam
         ("Authorizable", p.Authorizable) |> kvp__sqlparam
@@ -6791,7 +6500,7 @@ let CUR_wrapper item: CUR =
 let pCUR_clone (p:pCUR): pCUR = {
     Code = p.Code
     Caption = p.Caption
-    Hidden = p.Hidden
+    IsHidden = p.IsHidden
     IsSac = p.IsSac
     IsTransfer = p.IsTransfer
     IsCash = p.IsCash
@@ -6799,7 +6508,7 @@ let pCUR_clone (p:pCUR): pCUR = {
     EnableOTC = p.EnableOTC
     Icon = p.Icon
     CurType = p.CurType
-    Dec = p.Dec
+    FloatDec = p.FloatDec
     AnchorRate = p.AnchorRate
     Freezable = p.Freezable
     Authorizable = p.Authorizable
@@ -6869,7 +6578,7 @@ let CURTxSqlServer =
     ,[Sort] BIGINT NOT NULL,
     ,[Code]
     ,[Caption]
-    ,[Hidden]
+    ,[IsHidden]
     ,[IsSac]
     ,[IsTransfer]
     ,[IsCash]
@@ -6877,7 +6586,7 @@ let CURTxSqlServer =
     ,[EnableOTC]
     ,[Icon]
     ,[CurType]
-    ,[Dec]
+    ,[FloatDec]
     ,[AnchorRate]
     ,[Freezable]
     ,[Authorizable]
@@ -7690,7 +7399,7 @@ let CWCTxSqlServer =
 let db__pINS(line:Object[]): pINS =
     let p = pINS_empty()
 
-    p.Desc <- string(line.[4]).TrimEnd()
+    p.DescTxt <- string(line.[4]).TrimEnd()
     p.Code <- string(line.[5]).TrimEnd()
     p.Caption <- string(line.[6]).TrimEnd()
     p.Long <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
@@ -7702,7 +7411,7 @@ let db__pINS(line:Object[]): pINS =
 
 let pINS__sps (p:pINS) =
     [|
-        ("Desc", p.Desc) |> kvp__sqlparam
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam
         ("Code", p.Code) |> kvp__sqlparam
         ("Caption", p.Caption) |> kvp__sqlparam
         ("Long", p.Long) |> kvp__sqlparam
@@ -7717,7 +7426,7 @@ let INS_wrapper item: INS =
     { ID = i; Createdat = c; Updatedat = u; Sort = s; p = p }
 
 let pINS_clone (p:pINS): pINS = {
-    Desc = p.Desc
+    DescTxt = p.DescTxt
     Code = p.Code
     Caption = p.Caption
     Long = p.Long
@@ -7783,7 +7492,7 @@ let INSTxSqlServer =
     ,[Createdat] BIGINT NOT NULL
     ,[Updatedat] BIGINT NOT NULL
     ,[Sort] BIGINT NOT NULL,
-    ,[Desc]
+    ,[DescTxt]
     ,[Code]
     ,[Caption]
     ,[Long]
@@ -7855,7 +7564,7 @@ let db__pTICKET(line:Object[]): pTICKET =
     p.ExternalTicketClose <- if Convert.IsDBNull(line.[59]) then 0L else line.[59] :?> int64
     p.ExternalTicketPending <- if Convert.IsDBNull(line.[60]) then 0L else line.[60] :?> int64
     p.ExternalTicketCancel <- if Convert.IsDBNull(line.[61]) then 0L else line.[61] :?> int64
-    p.Desc <- string(line.[62]).TrimEnd()
+    p.DescTxt <- string(line.[62]).TrimEnd()
 
     p
 
@@ -7919,7 +7628,7 @@ let pTICKET__sps (p:pTICKET) =
         ("ExternalTicketClose", p.ExternalTicketClose) |> kvp__sqlparam
         ("ExternalTicketPending", p.ExternalTicketPending) |> kvp__sqlparam
         ("ExternalTicketCancel", p.ExternalTicketCancel) |> kvp__sqlparam
-        ("Desc", p.Desc) |> kvp__sqlparam |]
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam |]
 
 let db__TICKET = db__Rcd db__pTICKET
 
@@ -7986,7 +7695,7 @@ let pTICKET_clone (p:pTICKET): pTICKET = {
     ExternalTicketClose = p.ExternalTicketClose
     ExternalTicketPending = p.ExternalTicketPending
     ExternalTicketCancel = p.ExternalTicketCancel
-    Desc = p.Desc }
+    DescTxt = p.DescTxt }
 
 let TICKET_update_transaction output (updater,suc,fail) (rcd:TICKET) =
     let rollback_p = rcd.p |> pTICKET_clone
@@ -8104,7 +7813,7 @@ let TICKETTxSqlServer =
     ,[ExternalTicketClose]
     ,[ExternalTicketPending]
     ,[ExternalTicketCancel]
-    ,[Desc])
+    ,[DescTxt])
     END
     """
 
@@ -8125,7 +7834,7 @@ let db__pTACCT(line:Object[]): pTACCT =
     p.MarginCallRateLiq <- if Convert.IsDBNull(line.[14]) then 0.0 else line.[14] :?> float
     p.PwdTrade <- string(line.[15]).TrimEnd()
     p.PwdReadonly <- string(line.[16]).TrimEnd()
-    p.Desc <- string(line.[17]).TrimEnd()
+    p.DescTxt <- string(line.[17]).TrimEnd()
 
     p
 
@@ -8144,7 +7853,7 @@ let pTACCT__sps (p:pTACCT) =
         ("MarginCallRateLiq", p.MarginCallRateLiq) |> kvp__sqlparam
         ("PwdTrade", p.PwdTrade) |> kvp__sqlparam
         ("PwdReadonly", p.PwdReadonly) |> kvp__sqlparam
-        ("Desc", p.Desc) |> kvp__sqlparam |]
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam |]
 
 let db__TACCT = db__Rcd db__pTACCT
 
@@ -8166,7 +7875,7 @@ let pTACCT_clone (p:pTACCT): pTACCT = {
     MarginCallRateLiq = p.MarginCallRateLiq
     PwdTrade = p.PwdTrade
     PwdReadonly = p.PwdReadonly
-    Desc = p.Desc }
+    DescTxt = p.DescTxt }
 
 let TACCT_update_transaction output (updater,suc,fail) (rcd:TACCT) =
     let rollback_p = rcd.p |> pTACCT_clone
@@ -8239,7 +7948,7 @@ let TACCTTxSqlServer =
     ,[MarginCallRateLiq]
     ,[PwdTrade]
     ,[PwdReadonly]
-    ,[Desc])
+    ,[DescTxt])
     END
     """
 
@@ -8254,7 +7963,7 @@ let db__pBOOKMARK(line:Object[]): pBOOKMARK =
     p.BookmarkList <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
     p.Notes <- string(line.[9]).TrimEnd()
     p.Path <- string(line.[10]).TrimEnd()
-    p.Group <- string(line.[11]).TrimEnd()
+    p.UserGroup <- string(line.[11]).TrimEnd()
     p.Type <- if Convert.IsDBNull(line.[12]) then 0L else line.[12] :?> int64
 
     p
@@ -8268,7 +7977,7 @@ let pBOOKMARK__sps (p:pBOOKMARK) =
         ("BookmarkList", p.BookmarkList) |> kvp__sqlparam
         ("Notes", p.Notes) |> kvp__sqlparam
         ("Path", p.Path) |> kvp__sqlparam
-        ("Group", p.Group) |> kvp__sqlparam
+        ("UserGroup", p.UserGroup) |> kvp__sqlparam
         ("Type", p.Type) |> kvp__sqlparam |]
 
 let db__BOOKMARK = db__Rcd db__pBOOKMARK
@@ -8285,7 +7994,7 @@ let pBOOKMARK_clone (p:pBOOKMARK): pBOOKMARK = {
     BookmarkList = p.BookmarkList
     Notes = p.Notes
     Path = p.Path
-    Group = p.Group
+    UserGroup = p.UserGroup
     Type = p.Type }
 
 let BOOKMARK_update_transaction output (updater,suc,fail) (rcd:BOOKMARK) =
@@ -8353,7 +8062,7 @@ let BOOKMARKTxSqlServer =
     ,[BookmarkList]
     ,[Notes]
     ,[Path]
-    ,[Group]
+    ,[UserGroup]
     ,[Type])
     END
     """
@@ -8577,7 +8286,7 @@ let db__pMOMENT(line:Object[]): pMOMENT =
     p.Type <- EnumOfValue(if Convert.IsDBNull(line.[14]) then 0 else line.[14] :?> int)
     p.Question <- if Convert.IsDBNull(line.[15]) then 0L else line.[15] :?> int64
     p.State <- EnumOfValue(if Convert.IsDBNull(line.[16]) then 0 else line.[16] :?> int)
-    p.Group <- if Convert.IsDBNull(line.[17]) then 0L else line.[17] :?> int64
+    p.UserGroup <- if Convert.IsDBNull(line.[17]) then 0L else line.[17] :?> int64
     p.Postedat <- DateTime.FromBinary(if Convert.IsDBNull(line.[18]) then DateTime.MinValue.Ticks else line.[18] :?> int64)
     p.Keywords <- string(line.[19]).TrimEnd()
     p.MediaType <- EnumOfValue(if Convert.IsDBNull(line.[20]) then 0 else line.[20] :?> int)
@@ -8603,7 +8312,7 @@ let pMOMENT__sps (p:pMOMENT) =
         ("Type", p.Type) |> kvp__sqlparam
         ("Question", p.Question) |> kvp__sqlparam
         ("State", p.State) |> kvp__sqlparam
-        ("Group", p.Group) |> kvp__sqlparam
+        ("UserGroup", p.UserGroup) |> kvp__sqlparam
         ("Postedat", p.Postedat.Ticks) |> kvp__sqlparam
         ("Keywords", p.Keywords) |> kvp__sqlparam
         ("MediaType", p.MediaType) |> kvp__sqlparam
@@ -8632,7 +8341,7 @@ let pMOMENT_clone (p:pMOMENT): pMOMENT = {
     Type = p.Type
     Question = p.Question
     State = p.State
-    Group = p.Group
+    UserGroup = p.UserGroup
     Postedat = p.Postedat
     Keywords = p.Keywords
     MediaType = p.MediaType
@@ -8712,7 +8421,7 @@ let MOMENTTxSqlServer =
     ,[Type]
     ,[Question]
     ,[State]
-    ,[Group]
+    ,[UserGroup]
     ,[Postedat]
     ,[Keywords]
     ,[MediaType]
@@ -8820,7 +8529,7 @@ let db__pARBITRAGE(line:Object[]): pARBITRAGE =
 
     p.Caption <- string(line.[4]).TrimEnd()
     p.Code <- string(line.[5]).TrimEnd()
-    p.Desc <- string(line.[6]).TrimEnd()
+    p.DescTxt <- string(line.[6]).TrimEnd()
     p.Ins <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
     p.Stake <- if Convert.IsDBNull(line.[8]) then 0.0 else line.[8] :?> float
     p.Entry <- if Convert.IsDBNull(line.[9]) then 0.0 else line.[9] :?> float
@@ -8834,7 +8543,7 @@ let pARBITRAGE__sps (p:pARBITRAGE) =
     [|
         ("Caption", p.Caption) |> kvp__sqlparam
         ("Code", p.Code) |> kvp__sqlparam
-        ("Desc", p.Desc) |> kvp__sqlparam
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam
         ("Ins", p.Ins) |> kvp__sqlparam
         ("Stake", p.Stake) |> kvp__sqlparam
         ("Entry", p.Entry) |> kvp__sqlparam
@@ -8851,7 +8560,7 @@ let ARBITRAGE_wrapper item: ARBITRAGE =
 let pARBITRAGE_clone (p:pARBITRAGE): pARBITRAGE = {
     Caption = p.Caption
     Code = p.Code
-    Desc = p.Desc
+    DescTxt = p.DescTxt
     Ins = p.Ins
     Stake = p.Stake
     Entry = p.Entry
@@ -8919,7 +8628,7 @@ let ARBITRAGETxSqlServer =
     ,[Sort] BIGINT NOT NULL,
     ,[Caption]
     ,[Code]
-    ,[Desc]
+    ,[DescTxt]
     ,[Ins]
     ,[Stake]
     ,[Entry]
@@ -8934,7 +8643,7 @@ let db__pFUND(line:Object[]): pFUND =
     let p = pFUND_empty()
 
     p.Caption <- string(line.[4]).TrimEnd()
-    p.Desc <- string(line.[5]).TrimEnd()
+    p.DescTxt <- string(line.[5]).TrimEnd()
     p.Bind <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
     p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[7]) then 0 else line.[7] :?> int)
 
@@ -8943,7 +8652,7 @@ let db__pFUND(line:Object[]): pFUND =
 let pFUND__sps (p:pFUND) =
     [|
         ("Caption", p.Caption) |> kvp__sqlparam
-        ("Desc", p.Desc) |> kvp__sqlparam
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam
         ("Bind", p.Bind) |> kvp__sqlparam
         ("BindType", p.BindType) |> kvp__sqlparam |]
 
@@ -8955,7 +8664,7 @@ let FUND_wrapper item: FUND =
 
 let pFUND_clone (p:pFUND): pFUND = {
     Caption = p.Caption
-    Desc = p.Desc
+    DescTxt = p.DescTxt
     Bind = p.Bind
     BindType = p.BindType }
 
@@ -9018,7 +8727,7 @@ let FUNDTxSqlServer =
     ,[Updatedat] BIGINT NOT NULL
     ,[Sort] BIGINT NOT NULL,
     ,[Caption]
-    ,[Desc]
+    ,[DescTxt]
     ,[Bind]
     ,[BindType])
     END
@@ -9029,7 +8738,7 @@ let db__pPORTFOLIO(line:Object[]): pPORTFOLIO =
     let p = pPORTFOLIO_empty()
 
     p.Caption <- string(line.[4]).TrimEnd()
-    p.Desc <- string(line.[5]).TrimEnd()
+    p.DescTxt <- string(line.[5]).TrimEnd()
     p.Fund <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
     p.Bind <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
     p.BindType <- EnumOfValue(if Convert.IsDBNull(line.[8]) then 0 else line.[8] :?> int)
@@ -9039,7 +8748,7 @@ let db__pPORTFOLIO(line:Object[]): pPORTFOLIO =
 let pPORTFOLIO__sps (p:pPORTFOLIO) =
     [|
         ("Caption", p.Caption) |> kvp__sqlparam
-        ("Desc", p.Desc) |> kvp__sqlparam
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam
         ("Fund", p.Fund) |> kvp__sqlparam
         ("Bind", p.Bind) |> kvp__sqlparam
         ("BindType", p.BindType) |> kvp__sqlparam |]
@@ -9052,7 +8761,7 @@ let PORTFOLIO_wrapper item: PORTFOLIO =
 
 let pPORTFOLIO_clone (p:pPORTFOLIO): pPORTFOLIO = {
     Caption = p.Caption
-    Desc = p.Desc
+    DescTxt = p.DescTxt
     Fund = p.Fund
     Bind = p.Bind
     BindType = p.BindType }
@@ -9116,7 +8825,7 @@ let PORTFOLIOTxSqlServer =
     ,[Updatedat] BIGINT NOT NULL
     ,[Sort] BIGINT NOT NULL,
     ,[Caption]
-    ,[Desc]
+    ,[DescTxt]
     ,[Fund]
     ,[Bind]
     ,[BindType])
@@ -9128,7 +8837,7 @@ let db__pTRADER(line:Object[]): pTRADER =
     let p = pTRADER_empty()
 
     p.Caption <- string(line.[4]).TrimEnd()
-    p.Desc <- string(line.[5]).TrimEnd()
+    p.DescTxt <- string(line.[5]).TrimEnd()
     p.Fund <- if Convert.IsDBNull(line.[6]) then 0L else line.[6] :?> int64
     p.Portfolio <- if Convert.IsDBNull(line.[7]) then 0L else line.[7] :?> int64
     p.EndUser <- if Convert.IsDBNull(line.[8]) then 0L else line.[8] :?> int64
@@ -9138,7 +8847,7 @@ let db__pTRADER(line:Object[]): pTRADER =
 let pTRADER__sps (p:pTRADER) =
     [|
         ("Caption", p.Caption) |> kvp__sqlparam
-        ("Desc", p.Desc) |> kvp__sqlparam
+        ("DescTxt", p.DescTxt) |> kvp__sqlparam
         ("Fund", p.Fund) |> kvp__sqlparam
         ("Portfolio", p.Portfolio) |> kvp__sqlparam
         ("EndUser", p.EndUser) |> kvp__sqlparam |]
@@ -9151,7 +8860,7 @@ let TRADER_wrapper item: TRADER =
 
 let pTRADER_clone (p:pTRADER): pTRADER = {
     Caption = p.Caption
-    Desc = p.Desc
+    DescTxt = p.DescTxt
     Fund = p.Fund
     Portfolio = p.Portfolio
     EndUser = p.EndUser }
@@ -9215,7 +8924,7 @@ let TRADERTxSqlServer =
     ,[Updatedat] BIGINT NOT NULL
     ,[Sort] BIGINT NOT NULL,
     ,[Caption]
-    ,[Desc]
+    ,[DescTxt]
     ,[Fund]
     ,[Portfolio]
     ,[EndUser])
@@ -9225,35 +8934,33 @@ let TRADERTxSqlServer =
 
 type MetadataEnum = 
 | ADDRESS = 0
-| AIRPORT = 1
-| BIZ = 2
-| CAT = 3
-| CITY = 4
-| CRY = 5
-| CUR = 6
-| EU = 7
-| FILE = 8
-| FOLDER = 9
-| LANG = 10
-| LOCALE = 11
-| CSI = 12
-| CWC = 13
-| INS = 14
-| TICKET = 15
-| TACCT = 16
-| BOOKMARK = 17
-| SBL = 18
-| FOLLOW = 19
-| MOMENT = 20
-| LOG = 21
-| ARBITRAGE = 22
-| FUND = 23
-| PORTFOLIO = 24
-| TRADER = 25
+| BIZ = 1
+| CAT = 2
+| CITY = 3
+| CRY = 4
+| CUR = 5
+| EU = 6
+| FILE = 7
+| FOLDER = 8
+| LANG = 9
+| LOCALE = 10
+| CSI = 11
+| CWC = 12
+| INS = 13
+| TICKET = 14
+| TACCT = 15
+| BOOKMARK = 16
+| SBL = 17
+| FOLLOW = 18
+| MOMENT = 19
+| LOG = 20
+| ARBITRAGE = 21
+| FUND = 22
+| PORTFOLIO = 23
+| TRADER = 24
 
 let tablenames = [|
     ADDRESS_metadata.table
-    AIRPORT_metadata.table
     BIZ_metadata.table
     CAT_metadata.table
     CITY_metadata.table
@@ -9290,17 +8997,6 @@ let init() =
 
     match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Ca_Address]") with
     | Some v -> ADDRESS_count.Value <- v :?> int32
-    | None -> ()
-
-    match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Ca_Airport]") with
-    | Some v ->
-        let max = v :?> int64
-        if max > AIRPORT_id.Value then
-            AIRPORT_id.Value <- max
-    | None -> ()
-
-    match singlevalue_query conn (str__sql "SELECT COUNT(ID) FROM [Ca_Airport]") with
-    | Some v -> AIRPORT_count.Value <- v :?> int32
     | None -> ()
 
     match singlevalue_query conn (str__sql "SELECT MAX(ID) FROM [Ca_Biz]") with

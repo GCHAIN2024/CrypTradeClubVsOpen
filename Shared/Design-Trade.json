@@ -13,7 +13,7 @@
       },
       {
         "enum": "Text",
-        "name": "Desc"
+        "name": "DescTxt"
       },
       {
         "enum": "Integer",
@@ -39,7 +39,7 @@
       },
       {
         "enum": "Text",
-        "name": "Desc"
+        "name": "DescTxt"
       },
       {
         "enum": "FK",
@@ -69,7 +69,7 @@
       },
       {
         "enum": "Text",
-        "name": "Desc"
+        "name": "DescTxt"
       },
       {
         "enum": "FK",
@@ -103,7 +103,7 @@
       },
       {
         "enum": "Text",
-        "name": "Desc"
+        "name": "DescTxt"
       },
       {
         "enum": "FK",

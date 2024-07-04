@@ -109,46 +109,6 @@
     "cache": true
   },
   {
-    "name": "Ca_Airport",
-    "shorthand": "airport",
-    "id": 1001,
-    "fields": [
-      {
-        "enum": "Chars",
-        "length": 3,
-        "name": "Code3IATA"
-      },
-      {
-        "enum": "Chars",
-        "length": 4,
-        "name": "Code4ICAO"
-      },
-      {
-        "enum": "Chars",
-        "length": 64,
-        "name": "Caption"
-      },
-      {
-        "enum": "Chars",
-        "length": 64,
-        "name": "CaptionEn"
-      },
-      {
-        "enum": "FK",
-        "name": "Country"
-      },
-      {
-        "enum": "FK",
-        "name": "City"
-      },
-      {
-        "enum": "Boolean",
-        "name": "IsMetropolitan"
-      }
-    ],
-    "cache": true
-  },
-  {
     "name": "Ca_City",
     "shorthand": "city",
     "id": 1001,
@@ -156,7 +116,7 @@
       {
         "enum": "Chars",
         "length": 64,
-        "name": "Name"
+        "name": "Fullname"
       },
       {
         "enum": "Chars",
@@ -216,7 +176,7 @@
       {
         "enum": "SelectLines",
         "lines": "Normal//正常///Hidden//隐藏///Obsolete//过时",
-        "name": "State"
+        "name": "CatState"
       }
     ],
     "cache": true
@@ -256,7 +216,7 @@
       },
       {
         "enum": "Boolean",
-        "name": "Hidden"
+        "name": "IsHidden"
       },
       {
         "enum": "Boolean",
@@ -296,7 +256,7 @@
       {
         "enum": "Integer",
         "cmt": "显示小数位数",
-        "name": "Dec"
+        "name": "FloatDec"
       },
       {
         "enum": "Float",
@@ -749,7 +709,7 @@
       {
         "enum": "SelectLines",
         "lines": "Default//默认///Biz//机构///EndUser//用户",
-        "name": "Type"
+        "name": "AddressType"
       },
 
       {

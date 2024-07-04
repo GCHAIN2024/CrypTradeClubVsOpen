@@ -69,7 +69,7 @@
       {
         "enum": "FK",
         "ref": "Social_Group",
-        "name": "Group"
+        "name": "UserGroup"
       },
       {
         "enum": "Timestamp",
@@ -165,7 +165,7 @@
       {
         "enum": "Caption",
         "length": 64,
-        "name": "Group"
+        "name": "UserGroup"
       },
       {
         "enum": "Integer",
