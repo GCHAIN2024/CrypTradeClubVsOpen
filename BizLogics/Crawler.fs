@@ -168,8 +168,14 @@ let cDECRYPTCO =
         (fun url -> (empty__HttpClient().get url).html)
         (fun p html -> ())
 
-// https://news.bitcoin.com/
-// https://www.coingecko.com/en/news
+// https://coingape.com/
+// https://watcher.guru/news/
+// https://en.coin-turk.com/
+// https://dailyhodl.com/news/
+// https://www.theblock.co/
+// https://ambcrypto.com/
+// https://bitcoinist.com/
+// https://coinedition.com/
 
 let launchNewsCrawlers (runtime:Runtime) = 
 
@@ -182,3 +188,4 @@ let launchNewsCrawlers (runtime:Runtime) =
         (fun _ -> 
             f runtime runtime.data.bcs[c])
         |> asyncCyclerInterval (15 * 60 * 1000))
+
