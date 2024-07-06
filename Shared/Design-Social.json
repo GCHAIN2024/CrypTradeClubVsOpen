@@ -120,7 +120,7 @@
       },
       {
         "enum": "SelectLines",
-        "lines": "EndUser//用户///Biz//机构///BookmarkList//收藏夹",
+        "lines": "EndUser//End User///Biz//Biz///Instrument//Instrument///BookmarkList//Bookmark List",
         "name": "FollowType"
       }
     ]

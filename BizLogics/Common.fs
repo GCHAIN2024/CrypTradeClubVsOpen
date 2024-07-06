@@ -56,9 +56,10 @@ type RuntimeData = {
 mutable facts: Fact list
 langs: ConcurrentDictionary<string,LANG>
 curs: ConcurrentDictionary<string,CUR>
-inss: ConcurrentDictionary<string,INS>
+ics: ConcurrentDictionary<string,InsComplex>
 arbitrages: ConcurrentDictionary<int64,ARBITRAGE>
 bcs: ConcurrentDictionary<string,BizComplex>
+follows: ConcurrentDictionary<int64,FOLLOW>
 mcs: ConcurrentDictionary<int64,MomentComplex> }
 
 type Runtime = RuntimeTemplate<EuComplex,unit,RuntimeData>
@@ -104,8 +105,9 @@ let runtime:Runtime =
             langs = new ConcurrentDictionary<string,LANG>()
             curs = new ConcurrentDictionary<string,CUR>()
             bcs = new ConcurrentDictionary<string,BizComplex>()
-            inss = new ConcurrentDictionary<string,INS>()
+            ics = new ConcurrentDictionary<string,InsComplex>()
             arbitrages = new ConcurrentDictionary<int64,ARBITRAGE>()
+            follows = new ConcurrentDictionary<int64,FOLLOW>()
             mcs = new ConcurrentDictionary<int64,MomentComplex>() }
         users = new ConcurrentDictionary<int64,EuComplex>()
         sessions = new ConcurrentDictionary<string,Session>()

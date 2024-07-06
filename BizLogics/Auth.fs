@@ -42,7 +42,10 @@ let ap = {
     getSocialAuthAvatar = fun p -> p.SocialAuthAvatar
     setSocialAuthAvatar = fun p v -> p.SocialAuthAvatar <- v
     metadata = EU_metadata
-    p__complex = fun eu -> { eu = eu }
+    p__complex = fun eu -> { 
+        arbitrages = new Dictionary<int64,ARBITRAGE>()
+        follows = new Dictionary<int64,FOLLOW>()
+        eu = eu }
     complex__ids = fun ec -> (ec.eu.p.SocialAuthBiz,ec.eu.p.SocialAuthId)
     conn = conn }
 

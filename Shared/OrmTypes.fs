@@ -2326,33 +2326,37 @@ let SBL_table = "Social_BookmarkList"
 // [Social_Follow] (FOLLOW)
 
 type followFollowTypeEnum = 
-| EndUser = 0 // 用户
-| Biz = 1 // 机构
-| BookmarkList = 2 // 收藏夹
+| EndUser = 0 // End User
+| Biz = 1 // Biz
+| Instrument = 2 // Instrument
+| BookmarkList = 3 // Bookmark List
 
-let followFollowTypeEnums = [| followFollowTypeEnum.EndUser; followFollowTypeEnum.Biz; followFollowTypeEnum.BookmarkList |]
-let followFollowTypeEnumstrs = [| "followFollowTypeEnum"; "followFollowTypeEnum"; "followFollowTypeEnum" |]
-let followFollowTypeNum = 3
+let followFollowTypeEnums = [| followFollowTypeEnum.EndUser; followFollowTypeEnum.Biz; followFollowTypeEnum.Instrument; followFollowTypeEnum.BookmarkList |]
+let followFollowTypeEnumstrs = [| "followFollowTypeEnum"; "followFollowTypeEnum"; "followFollowTypeEnum"; "followFollowTypeEnum" |]
+let followFollowTypeNum = 4
 
 let int__followFollowTypeEnum v =
     match v with
     | 0 -> Some followFollowTypeEnum.EndUser
     | 1 -> Some followFollowTypeEnum.Biz
-    | 2 -> Some followFollowTypeEnum.BookmarkList
+    | 2 -> Some followFollowTypeEnum.Instrument
+    | 3 -> Some followFollowTypeEnum.BookmarkList
     | _ -> None
 
 let str__followFollowTypeEnum s =
     match s with
     | "EndUser" -> Some followFollowTypeEnum.EndUser
     | "Biz" -> Some followFollowTypeEnum.Biz
+    | "Instrument" -> Some followFollowTypeEnum.Instrument
     | "BookmarkList" -> Some followFollowTypeEnum.BookmarkList
     | _ -> None
 
 let followFollowTypeEnum__caption e =
     match e with
-    | followFollowTypeEnum.EndUser -> "用户"
-    | followFollowTypeEnum.Biz -> "机构"
-    | followFollowTypeEnum.BookmarkList -> "收藏夹"
+    | followFollowTypeEnum.EndUser -> "End User"
+    | followFollowTypeEnum.Biz -> "Biz"
+    | followFollowTypeEnum.Instrument -> "Instrument"
+    | followFollowTypeEnum.BookmarkList -> "Bookmark List"
     | _ -> ""
 
 type pFOLLOW = {
@@ -2375,7 +2379,7 @@ let FOLLOW_sql_update = "[Updatedat]=@Updatedat,[EndUser]=@EndUser,[Followee]=@F
 let pFOLLOW_fields = [|
     FK("EndUser")
     Integer("Followee")
-    SelectLines("FollowType", [| ("EndUser","用户");("Biz","机构");("BookmarkList","收藏夹") |]) |]
+    SelectLines("FollowType", [| ("EndUser","End User");("Biz","Biz");("Instrument","Instrument");("BookmarkList","Bookmark List") |]) |]
 
 let pFOLLOW_empty(): pFOLLOW = {
     EndUser = 0L

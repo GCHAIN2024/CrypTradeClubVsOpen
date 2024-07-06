@@ -75,16 +75,103 @@ let json__MomentComplexo (json:Json):MomentComplex option =
     else
         None
 
+// [InsComplex] Structure
+
+let InsComplex__bin (bb:BytesBuilder) (v:InsComplex) =
+
+    Dictionary__bin (int64__bin) (FOLLOW__bin) bb v.follows
+    INS__bin bb v.ins
+
+let bin__InsComplex (bi:BinIndexed):InsComplex =
+    let bin,index = bi
+
+    {
+        follows =
+            bi
+            |> (fun bi ->
+                let v = new Dictionary<int64,FOLLOW>()
+                bin__Dictionary (bin__int64) (bin__FOLLOW) v bi
+                v)
+        ins =
+            bi
+            |> bin__INS
+    }
+
+let InsComplex__json (v:InsComplex) =
+
+    [|  ("follows",Dictionary__json (int64__json) (FOLLOW__json) v.follows)
+        ("ins",INS__json v.ins)
+         |]
+    |> Json.Braket
+
+let InsComplex__jsonTbw (w:TextBlockWriter) (v:InsComplex) =
+    json__str w (InsComplex__json v)
+
+let InsComplex__jsonStr (v:InsComplex) =
+    (InsComplex__json v) |> json__strFinal
+
+
+let json__InsComplexo (json:Json):InsComplex option =
+    let fields = json |> json__items
+
+    let mutable passOptions = true
+
+    let followso =
+        match json__tryFindByName json "follows" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> (fun json ->
+                json__Dictionaryo (json__int64o) (json__FOLLOWo) (new Dictionary<int64,FOLLOW>()) json) with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    let inso =
+        match json__tryFindByName json "ins" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> json__INSo with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    if passOptions then
+        {
+            follows = followso.Value
+            ins = inso.Value} |> Some
+    else
+        None
+
 // [EuComplex] Structure
 
 let EuComplex__bin (bb:BytesBuilder) (v:EuComplex) =
 
+    Dictionary__bin (int64__bin) (ARBITRAGE__bin) bb v.arbitrages
+    Dictionary__bin (int64__bin) (FOLLOW__bin) bb v.follows
     EU__bin bb v.eu
 
 let bin__EuComplex (bi:BinIndexed):EuComplex =
     let bin,index = bi
 
     {
+        arbitrages =
+            bi
+            |> (fun bi ->
+                let v = new Dictionary<int64,ARBITRAGE>()
+                bin__Dictionary (bin__int64) (bin__ARBITRAGE) v bi
+                v)
+        follows =
+            bi
+            |> (fun bi ->
+                let v = new Dictionary<int64,FOLLOW>()
+                bin__Dictionary (bin__int64) (bin__FOLLOW) v bi
+                v)
         eu =
             bi
             |> bin__EU
@@ -92,7 +179,9 @@ let bin__EuComplex (bi:BinIndexed):EuComplex =
 
 let EuComplex__json (v:EuComplex) =
 
-    [|  ("eu",EU__json v.eu)
+    [|  ("arbitrages",Dictionary__json (int64__json) (ARBITRAGE__json) v.arbitrages)
+        ("follows",Dictionary__json (int64__json) (FOLLOW__json) v.follows)
+        ("eu",EU__json v.eu)
          |]
     |> Json.Braket
 
@@ -108,6 +197,32 @@ let json__EuComplexo (json:Json):EuComplex option =
 
     let mutable passOptions = true
 
+    let arbitrageso =
+        match json__tryFindByName json "arbitrages" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> (fun json ->
+                json__Dictionaryo (json__int64o) (json__ARBITRAGEo) (new Dictionary<int64,ARBITRAGE>()) json) with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
+    let followso =
+        match json__tryFindByName json "follows" with
+        | None ->
+            passOptions <- false
+            None
+        | Some v -> 
+            match v |> (fun json ->
+                json__Dictionaryo (json__int64o) (json__FOLLOWo) (new Dictionary<int64,FOLLOW>()) json) with
+            | Some res -> Some res
+            | None ->
+                passOptions <- false
+                None
+
     let euo =
         match json__tryFindByName json "eu" with
         | None ->
@@ -122,6 +237,8 @@ let json__EuComplexo (json:Json):EuComplex option =
 
     if passOptions then
         {
+            arbitrages = arbitrageso.Value
+            follows = followso.Value
             eu = euo.Value} |> Some
     else
         None

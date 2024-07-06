@@ -32,7 +32,8 @@ open Shared.CustomMor
 open BizLogics.Common
 open BizLogics.Social
 open BizLogics.Auth
-open BizLogics.Api
+open BizLogics.ApiPublic
+open BizLogics.ApiEu
 
 
 let branching x = 
@@ -49,14 +50,20 @@ let branching x =
         | "listBiz" -> bindx api_Public_ListBiz
         | "listCur" -> bindx api_Public_ListCur
 
-        | "listArbitrage" -> bindx api_Public_ListArbitrage
-        | "createArbitrage" -> bindx api_Public_CreateArbitrage
-        | "updateArbitrage" -> bindx api_Public_UpdateArbitrage
-
         | "homepage" -> bindx api_Public_Homepage
         | "loadMoment" -> bindx api_Public_LoadMoment
         | _ -> Fail(Er.ApiNotExists,x)
-    | "eu" -> Fail(Er.ApiNotExists,x)
+    | "eu" -> 
+        match x.api with
+        | "listArbitrage" -> bindx api_Eu_ListMyArbitrage
+        | "createArbitrage" -> bindx api_Eu_CreateMyArbitrage
+        | "updateArbitrage" -> bindx api_Eu_UpdateMyArbitrage
+
+        | "listMyFollow" -> bindx api_Eu_ListMyFollow
+        | "toggleMyFollow" -> bindx api_Eu_ToggleMyFollow
+        | "updateMyFollow" -> bindx api_Eu_UpdateMyFollow
+
+        | _ -> Fail(Er.ApiNotExists,x)
     | "admin" -> Fail(Er.ApiNotExists,x)
     | "open" -> Fail(Er.ApiNotExists,x)
     | _ -> Fail(Er.ApiNotExists,x)

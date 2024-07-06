@@ -76,7 +76,7 @@ let crawler (runtime:Runtime) =
 
             let code = long.p.Code + "/" + short.p.Code
             
-            if runtime.data.inss.ContainsKey code = false then
+            if runtime.data.ics.ContainsKey code = false then
                 let p = pINS_empty()
                 p.Code <- code
                 p.Caption <- code
@@ -86,7 +86,9 @@ let crawler (runtime:Runtime) =
                 p.ShortCode <- short.p.Code
                 p__createRcd p INS_metadata "BizLogics.Market.crawler" conn
                 |> oPipelineSome (fun ins -> 
-                    runtime.data.inss[ins.p.Code] <- ins)
+                    runtime.data.ics[ins.p.Code] <- {
+                        follows = new Dictionary<int64,FOLLOW>()
+                        ins = ins })
                 |> ignore
 
         ())

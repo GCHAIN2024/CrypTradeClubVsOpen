@@ -13,7 +13,13 @@ open Shared.OrmTypes
 type MomentComplex = {
 m: MOMENT }
 
+type InsComplex = {
+follows: Dictionary<int64,FOLLOW>
+ins: INS }
+
 type EuComplex = {
+arbitrages: Dictionary<int64,ARBITRAGE>
+follows: Dictionary<int64,FOLLOW>
 eu: EU }
 
 type BizComplex = {

@@ -24,39 +24,6 @@ open Shared.OrmMor
 
 open BizLogics.Common
 
-let loadAllMoments runtime = 
-
-    use cw = new CodeWrapper("BizLogics.Social.loadAllMoments")
-
-    runtime.output "Loading Moments ..."
-
-
-    let mutable count = 0
-
-    let res = List<MOMENT>()
-
-    let h (line,x) =  
-        count <- count + 1
-        if count % 100000 = 0 then
-            count.ToString()
-            |> output
-        line |> db__MOMENT |> res.Add
-        true
-
-    match
-        [|  "SELECT " + MOMENT_fieldorders;
-            " FROM " + MOMENT_table;
-            " order by ID asc";
-        |]
-        |> linesConcat
-        |> str__sql
-        |> multiline_handle(conn,h) with
-    | Suc x -> ()
-    | Fail(exn,ctx) -> 
-        Util.Runtime.halt output "BizLogics.Social.loadAllMoments" ""
-
-    res.ToArray()
-
 let mc__ssrPage mc = 
     {
         title = mc.m.p.Title
